@@ -1599,6 +1599,13 @@ body.theme-light :where(.jpage,.jx) .trow .ti2.short,body.theme-light .hli .hdir
   .side>*,.topbar>*{zoom:var(--uiz,1)}
   .ov>.modal,#toasts>*{zoom:var(--uiz,1)}
 }
+
+/* v10.4 */
+.uizc{display:flex;align-items:center;gap:12px;flex:1 1 320px;justify-content:flex-end;min-width:0}
+.uizc input[type=range]{flex:1;max-width:280px;accent-color:var(--accent)}
+.uizc b{min-width:92px;text-align:right;font-variant-numeric:tabular-nums}
+.uizc .btn.on{border-color:var(--accent);color:var(--accent);background:var(--accentSoft)}
+@media (min-width:901px){ .hpage,.jpage{max-width:none!important} }
 </style>
 </head>
 <body class="">
@@ -1733,7 +1740,7 @@ body.theme-light :where(.jpage,.jx) .trow .ti2.short,body.theme-light .hli .hdir
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.3', BUILD: '2026-11-17'
+  VERSION: 'v10.4', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2442,8 +2449,8 @@ const CVARS=['--bg','--bg2','--panel','--panel2','--line','--line2','--ink','--i
 /* v10.2: grootte van de app — 'auto' rekent met de venstergrootte (ontwerp: 1500×920) */
 function uiScalePref(){ try{ return localStorage.getItem('twf_uiscale')||'auto' }catch(e){ return 'auto' } }
 function applyUiScale(){ const v=uiScalePref(); let z=1;
-  if(v==='auto'){ const w=innerWidth, h=innerHeight; if(w>900) z=Math.max(.7,Math.min(.9,Math.min(w/1760,h/1120))); z=Math.round(z*50)/50 }
-  else z=parseFloat(v)||1;
+  if(v==='auto'){ const w=innerWidth, h=innerHeight; if(w>900) z=Math.max(.84,Math.min(1.05,Math.min(w/1560,h/940))); z=Math.round(z*50)/50 }
+  else z=Math.max(.5,Math.min(2,parseFloat(v)||1));
   document.documentElement.style.setProperty('--uiz',z) }
 addEventListener('resize',()=>{ clearTimeout(window._uizT); window._uizT=setTimeout(applyUiScale,120) });
 try{ applyUiScale() }catch(e){}
@@ -3197,8 +3204,8 @@ function pageSettings(){
      <div class="srow"><div class="stx"><b>${L('Accentkleur','Accent colour')}</b><small>${L('Kleur van knoppen en highlights.','Colour of buttons and highlights.')}</small></div><div class="accs">${ACCENTS.map(([c,n],i)=>`<button class="accsw ${(pf.accent||ACCENTS[0][0])===c?'on':''}" data-acc="${i===0?'':c}" title="${n}" style="background:${c}"></button>`).join('')}</div></div>
      </div>
      <h3 style="margin:22px 0 10px">${L('Kleuren','Colours')}</h3><div class="box" id="colBox">${colorsHtml()}</div>
-     <h3 style="margin:22px 0 10px">${L('Grootte','Size')}</h3><div class="box"><div class="srow"><div class="stx"><b>${L('Grootte van de app','App size')}</b><small>${L('Auto maakt alles compact en past het aan je venster aan. Per apparaat.','Auto keeps everything compact and fits it to your window. Per device.')}</small></div>
-       <div class="seg">${[['auto',L('Auto','Auto')],['0.75','75%'],['0.85','85%'],['1','100%'],['1.15','115%']].map(([k,l])=>`<button class="${uiScalePref()===k?'on':''}" data-uiz="${k}">${l}</button>`).join('')}</div></div></div><div class="box" style="margin-top:14px">
+     <h3 style="margin:22px 0 10px">${L('Grootte','Size')}</h3><div class="box"><div class="srow"><div class="stx"><b>${L('Grootte van de app','App size')}</b><small>${L('Van 50% tot 200%. Auto past zich aan je venster aan. Wordt per apparaat onthouden.','From 50% to 200%. Auto fits your window. Saved per device.')}</small></div>
+       <div class="uizc"><button class="btn btn-g${uiScalePref()==='auto'?' on':''}" data-uiauto>${L('Auto','Auto')}</button><input type="range" min="50" max="200" step="5" id="uizR" value="${Math.round((uiScalePref()==='auto'?parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz'))||1:parseFloat(uiScalePref()))*100)}"><b id="uizV">${uiScalePref()==='auto'?'Auto · ':''}${Math.round((uiScalePref()==='auto'?parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz'))||1:parseFloat(uiScalePref()))*100)}%</b></div></div></div></div><div class="box" style="margin-top:14px">
      ${TOG('compact',!!pf.compact,L('Compacte weergave','Compact view'),L('Kleinere marges in lijsten en tabellen.','Tighter spacing in lists and tables.'))}
      ${TOG('anim',pf.anim!==false,L('Animaties','Animations'),L('Vloeiende overgangen in de app.','Smooth transitions in the app.'))}</div>
      <h3 style="margin:22px 0 10px">${L('Valuta','Currency')}</h3><div class="box">
@@ -3304,7 +3311,10 @@ function bindPage(){
   q('[data-tier]').forEach(b=>b.onclick=()=>{tier=b.dataset.tier;q('[data-tier]').forEach(x=>x.classList.toggle('on',x===b))});
   const ps=m.querySelector('#pSave'); if(ps) ps.onclick=async()=>{await DB.put('profile',{...profile(),id:'me',name:m.querySelector('#pName').value.trim()||profile().name,tier,bio:(m.querySelector('#pBio')||{}).value||profile().bio||''});toast(t('toast.saved'),'','ok');render()};
   q('[data-th]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.th);render()});
-  q('[data-uiz]').forEach(b=>b.onclick=()=>{ try{ localStorage.setItem('twf_uiscale',b.dataset.uiz) }catch(e){} applyUiScale(); q('[data-uiz]').forEach(x=>x.classList.toggle('on',x===b)) });
+  { const r=m.querySelector('#uizR'), vv=m.querySelector('#uizV'), ab=m.querySelector('[data-uiauto]');
+    if(r){ const set=v=>{ try{ localStorage.setItem('twf_uiscale',v) }catch(e){} applyUiScale() };
+      r.oninput=()=>{ vv.textContent=r.value+'%'; ab.classList.remove('on'); set(String(r.value/100)) };
+      ab.onclick=()=>{ set('auto'); ab.classList.add('on'); const z=Math.round((parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz'))||1)*100); r.value=z; vv.textContent='Auto · '+z+'%' } } }
   { const cb=m.querySelector('#colBox'); if(cb){ const rr=()=>{ cb.innerHTML=colorsHtml(); bindColors(cb,rr); m.querySelectorAll('[data-acc]').forEach(x=>x.classList.toggle('on',(x.dataset.acc||'')===((profile().prefs||{}).accent||''))) }; bindColors(cb,rr) } }
   q('[data-lg]').forEach(b=>b.onclick=()=>setLang(b.dataset.lg));
   const savePref=async(fn)=>{ const p=profile(); const np={...p,id:'me',prefs:{...(p.prefs||{})},trading:{...trSet()}}; fn(np); await DB.put('profile',np); toast(t('toast.saved'),'','ok',1400) };
