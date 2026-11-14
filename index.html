@@ -1530,9 +1530,25 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
 .cpick b{display:block;font-size:13.5px}.cpick small{display:block;color:var(--ink3);font-size:11.5px;font-family:ui-monospace,Menlo,monospace}
 /* groot scherm: alles vullen */
 @media (min-width:1500px){ .hpage,.jpage{max-width:none;padding-left:40px;padding-right:40px} .hgrid{grid-template-columns:repeat(4,minmax(0,1fr))} .hlive{grid-column:span 2;grid-row:span 2} }
-@media (min-width:1900px){ #main>*{zoom:1.12} :root{--side:270px} .side .nav button{font-size:15px} }
-@media (min-width:2300px){ #main>*{zoom:1.25} :root{--side:290px} .side .nav button{font-size:16px} }
-@media (min-width:2900px){ #main>*{zoom:1.45} }
+/* v10.2: app past zich zelf aan het venster aan (zie applyUiScale) */
+@media (min-width:901px){ #main>*{zoom:var(--uiz,1)} }
+/* donkere, dunne scrollbalken i.p.v. witte balken */
+*{scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+::-webkit-scrollbar{width:9px;height:9px;background:transparent}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--line2);border-radius:9px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:var(--ink3);background-clip:padding-box;border:2px solid transparent}
+.side{scrollbar-width:none}.side::-webkit-scrollbar{display:none}
+/* lage vensters (bijv. MacBook): compacte zijbalk zodat alles past */
+@media (min-width:901px) and (max-height:1020px){
+  .prof{flex-direction:row;gap:10px;padding:12px 6px 12px;justify-content:flex-start}
+  .prof .avatar{width:36px!important;height:36px!important;font-size:15px!important}.prof .avatar .badge{display:none}
+  .prof .nm{margin-top:0!important;font-size:14px;text-align:left}
+  .nav button{height:34px!important;font-size:13.5px!important}
+  .side .nav .grp{padding:9px 12px 2px}
+  .side .bottom{padding:8px 14px}
+}
+@media (min-width:901px) and (max-height:820px){ .nav button{height:30px!important} .side .bottom .ver{display:none} }
 
 /* ===== v10.1: inlogscherm ===== */
 #login{--panel:#0f131b;--panel2:rgba(255,255,255,.06);--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#eef1f6;--ink2:#c3cad6;--ink3:#8f9aac;color:var(--ink);
@@ -1544,7 +1560,7 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
 #login .art .candles{display:none}
 #login .art .logo .lgtile{width:40px;height:40px}#login .art .logo .mark b{font-size:24px}
 #login .lghero{max-width:620px}
-#login .art h1{font-size:clamp(44px,4.6vw,76px);line-height:1.02;letter-spacing:-.035em;margin:0 0 18px;background:linear-gradient(180deg,#fff,#b9c6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+#login .art h1{font-size:clamp(44px,4.6vw,76px);line-height:1.12;padding-bottom:.1em;letter-spacing:-.035em;margin:0 0 18px;background:linear-gradient(180deg,#fff,#b9c6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 #login .art p{font-size:clamp(16px,1.25vw,20px);color:#b8c2d3;max-width:520px;line-height:1.5}
 .lgfeat{display:flex;flex-direction:column;gap:12px;margin-top:34px;max-width:480px}
 .lgfeat>div{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
@@ -1701,7 +1717,7 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.1', BUILD: '2026-11-17'
+  VERSION: 'v10.2', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2407,6 +2423,14 @@ const cmix=(a,b,t)=>{ const A=hx(a),B=hx(b); return '#'+A.map((v,i)=>Math.round(
 const lum=h=>{ const [r,g,b]=hx(h).map(v=>v/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)); return .2126*r+.7152*g+.0722*b };
 function themeColors(th){ th=th||curTheme(); const c=((prefsSafe().colors)||{})[th]||{}; return {...CDEF[th],...c} }
 const CVARS=['--bg','--bg2','--panel','--panel2','--line','--line2','--ink','--ink2','--ink3','--pos','--neg'];
+/* v10.2: grootte van de app — 'auto' rekent met de venstergrootte (ontwerp: 1500×920) */
+function uiScalePref(){ try{ return localStorage.getItem('twf_uiscale')||'auto' }catch(e){ return 'auto' } }
+function applyUiScale(){ const v=uiScalePref(); let z=1;
+  if(v==='auto'){ const w=innerWidth, h=innerHeight; if(w>900) z=Math.max(.8,Math.min(1.3,Math.min(w/1500,h/920))); z=Math.round(z*20)/20; if(z>.95&&z<1.06) z=1 }
+  else z=parseFloat(v)||1;
+  document.documentElement.style.setProperty('--uiz',z) }
+addEventListener('resize',()=>{ clearTimeout(window._uizT); window._uizT=setTimeout(applyUiScale,120) });
+try{ applyUiScale() }catch(e){}
 function applyColors(){ const th=curTheme(), own=((prefsSafe().colors)||{})[th], st=document.body.style;
   if(!own||!Object.keys(own).length){ CVARS.forEach(k=>st.removeProperty(k)); return }
   const c=themeColors(th), dark=lum(c.bg)<.35;
@@ -3156,7 +3180,9 @@ function pageSettings(){
      <div class="srow"><div class="stx"><b>${t('set.lang')}</b><small>${L('De chart zelf is altijd Engels, net als TradingView.','The chart itself is always English, like TradingView.')}</small></div><div class="seg"><button class="${LANG==='nl'?'on':''}" data-lg="nl">NL</button><button class="${LANG==='en'?'on':''}" data-lg="en">EN</button></div></div>
      <div class="srow"><div class="stx"><b>${L('Accentkleur','Accent colour')}</b><small>${L('Kleur van knoppen en highlights.','Colour of buttons and highlights.')}</small></div><div class="accs">${ACCENTS.map(([c,n],i)=>`<button class="accsw ${(pf.accent||ACCENTS[0][0])===c?'on':''}" data-acc="${i===0?'':c}" title="${n}" style="background:${c}"></button>`).join('')}</div></div>
      </div>
-     <h3 style="margin:22px 0 10px">${L('Kleuren','Colours')}</h3><div class="box" id="colBox">${colorsHtml()}</div><div class="box" style="margin-top:14px">
+     <h3 style="margin:22px 0 10px">${L('Kleuren','Colours')}</h3><div class="box" id="colBox">${colorsHtml()}</div>
+     <h3 style="margin:22px 0 10px">${L('Grootte','Size')}</h3><div class="box"><div class="srow"><div class="stx"><b>${L('Grootte van de app','App size')}</b><small>${L('Automatisch past alles zich aan je venster aan. Per apparaat.','Automatic fits everything to your window. Per device.')}</small></div>
+       <div class="seg">${[['auto',L('Auto','Auto')],['0.85','85%'],['1','100%'],['1.15','115%'],['1.3','130%']].map(([k,l])=>`<button class="${uiScalePref()===k?'on':''}" data-uiz="${k}">${l}</button>`).join('')}</div></div></div><div class="box" style="margin-top:14px">
      ${TOG('compact',!!pf.compact,L('Compacte weergave','Compact view'),L('Kleinere marges in lijsten en tabellen.','Tighter spacing in lists and tables.'))}
      ${TOG('anim',pf.anim!==false,L('Animaties','Animations'),L('Vloeiende overgangen in de app.','Smooth transitions in the app.'))}</div>
      <h3 style="margin:22px 0 10px">${L('Valuta','Currency')}</h3><div class="box">
@@ -3262,6 +3288,7 @@ function bindPage(){
   q('[data-tier]').forEach(b=>b.onclick=()=>{tier=b.dataset.tier;q('[data-tier]').forEach(x=>x.classList.toggle('on',x===b))});
   const ps=m.querySelector('#pSave'); if(ps) ps.onclick=async()=>{await DB.put('profile',{...profile(),id:'me',name:m.querySelector('#pName').value.trim()||profile().name,tier,bio:(m.querySelector('#pBio')||{}).value||profile().bio||''});toast(t('toast.saved'),'','ok');render()};
   q('[data-th]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.th);render()});
+  q('[data-uiz]').forEach(b=>b.onclick=()=>{ try{ localStorage.setItem('twf_uiscale',b.dataset.uiz) }catch(e){} applyUiScale(); q('[data-uiz]').forEach(x=>x.classList.toggle('on',x===b)) });
   { const cb=m.querySelector('#colBox'); if(cb){ const rr=()=>{ cb.innerHTML=colorsHtml(); bindColors(cb,rr); m.querySelectorAll('[data-acc]').forEach(x=>x.classList.toggle('on',(x.dataset.acc||'')===((profile().prefs||{}).accent||''))) }; bindColors(cb,rr) } }
   q('[data-lg]').forEach(b=>b.onclick=()=>setLang(b.dataset.lg));
   const savePref=async(fn)=>{ const p=profile(); const np={...p,id:'me',prefs:{...(p.prefs||{})},trading:{...trSet()}}; fn(np); await DB.put('profile',np); toast(t('toast.saved'),'','ok',1400) };
@@ -4017,31 +4044,22 @@ function placeOverlay(force){
   const sig=sw+'|'+W+'|'+H+'|'+ys.map(y=>y==null?'x':Math.round(y)).join(',')+'|'+(SX.pos.length?SX.pos.map(p=>closeQuote(p)).join(','):'')+'|'+SX.ovItems.length+'|'+SX.olOpen;
   if(!force&&sig===SX.ovSig) return; SX.ovSig=sig;
   if(ov.style.right!==sw+'px') ov.style.right=sw+'px';
-  const LH=30, NG=Math.max(1,SX.ovGroups||1), BX=gi=>W-18-gi*12, R=W-BX(NG-1)+16;
+  const LH=28, R=8;
   const els=[...ov.querySelectorAll('.olab')];
   const vis=[]; els.forEach(el=>{ const i=+el.dataset.i, y=ys[i]; if(y==null||y<-14||y>H+14){ if(el.style.display!=='none') el.style.display='none'; return } if(el.style.display) el.style.display=''; vis.push({el,i,y}) });
-  vis.sort((a,b)=>a.y-b.y);
-  // labels die elkaar raken boven/onder elkaar zetten (blijven zo dicht mogelijk bij hun lijn)
-  const groups=[]; vis.forEach(v=>{ groups.push({items:[v],sum:v.y});
-    while(groups.length>1){ const a=groups[groups.length-2], b=groups[groups.length-1]; const aTop=a.sum/a.items.length-(a.items.length-1)*LH/2, bTop=b.sum/b.items.length-(b.items.length-1)*LH/2;
-      if(aTop+a.items.length*LH>bTop){ a.items.push(...b.items); a.sum+=b.sum; groups.pop() } else break } });
-  groups.forEach(g=>{ let top=g.sum/g.items.length-(g.items.length-1)*LH/2; top=Math.max(14,Math.min(H-14-(g.items.length-1)*LH,top));
-    g.items.forEach((v,k)=>{ v.yy=top+k*LH; v.el.style.top=(v.yy-13)+'px'; v.el.style.right=R+'px' }) });
   // waarden
   vis.forEach(v=>{ const it=SX.ovItems[v.i], el=v.el, val=el.querySelector('[data-v]'); if(!val) return; let n=null;
     if(it.k==='pos') n=pnlAt(it.p,closeQuote(it.p));
     else if(it.k==='tp'||it.k==='sl') n=pnlAt(it.p,it.price);
     else if(it.k==='otp'||it.k==='osl') n=(it.price-it.o.price)*(it.o.side==='buy'?1:-1)*it.o.qty*ccs(it.o.sym);
     const tx=n!=null?fmtUsd(n):(it.o.type==='limit'?'LMT ':'STP ')+it.price.toFixed(SYMCFG[SX.sym].dec); if(val.textContent!==tx) val.textContent=tx });
-  // beugel: verbindt entry/TP/SL van dezelfde positie of order
-  const svg=ov.querySelector('#sxBrk'); if(!svg) return; let h='';
-  const byG={}; vis.forEach(v=>{ const it=SX.ovItems[v.i]; (byG[it.g]=byG[it.g]||[]).push({v,it}) });
-  Object.keys(byG).forEach(gk=>{ const L=byG[gk], bx=BX(+gk), main=L.find(x=>x.it.k==='pos'||x.it.k==='ord'), col=main?main.it.c:L[0].it.c;
-    const yb=L.map(x=>Math.max(1,Math.min(H-1,x.v.y)));
-    if(L.length>1) h+=`<line x1="${bx}" x2="${bx}" y1="${Math.min(...yb)}" y2="${Math.max(...yb)}" stroke="${col}" stroke-width="1.5"/>`;
-    L.forEach((x,k)=>{ const lx=W-R, y0=x.v.yy, y1=yb[k], c=x.it.c, filled=x.it.k==='pos'||x.it.k==='ord';
-      h+=`<path d="M${lx} ${y0} L${bx-10} ${y0} L${bx} ${y1}" fill="none" stroke="${c}" stroke-width="1.5"/>`;
-      h+=`<circle cx="${bx}" cy="${y1}" r="${filled?4.5:4}" fill="${filled?col:'var(--panel)'}" stroke="${filled?col:c}" stroke-width="1.5"/>` }) });
+  // v10.2: elk label precies op zijn eigen prijslijn; raken labels elkaar, dan komen ze NAAST elkaar (geen draden/beugels meer)
+  const it0=i=>SX.ovItems[i], pri=v=>{ const k=it0(v.i).k; return k==='pos'||k==='ord'?0:1 };
+  vis.sort((a,b)=>pri(a)-pri(b)||a.y-b.y);
+  const placed=[]; vis.forEach(v=>{ const w=v.el.offsetWidth||90, yy=Math.max(14,Math.min(H-14,v.y)); let off=R, moved=true;
+    while(moved){ moved=false; for(const p of placed){ if(Math.abs(p.yy-yy)<LH-4&&off<p.off+p.w+6&&off+w>p.off-6){ off=p.off+p.w+6; moved=true } } }
+    placed.push({off,w,yy}); v.yy=yy; v.el.style.top=(yy-13)+'px'; v.el.style.right=off+'px' });
+  const svg=ov.querySelector('#sxBrk'); if(!svg) return; const h='';
   if(svg._h!==h){ svg._h=h; svg.innerHTML=h }
 }
 function drawSig(){ try{ const cv=SX.canvas||document.querySelector('#sxDraw'), lr=SX.chart.timeScale().getVisibleLogicalRange(), b=SX.rp&&SX.rp.current(), c=b?(b.close??b.value):0;
@@ -4488,7 +4506,10 @@ function barsBetween(t1,t2){const a=Math.min(t1,t2),b=Math.max(t1,t2);return bl(
 function drawOne(ctx,d,W,H){
   const P=d.pts.map(q=>({x:X(q.t),y:Y(q.p)})), st=d.style, ty=d.type, col=TEXTTYPES.includes(ty)?(st.textColor||st.color||textCol()):(st.color||textCol());
   const fillCol=hexA(st.fillColor||st.color||'#2962FF',st.fill);
-  ctx.save(); stroke(ctx,d);
+  let _gap=null; try{ _gap=textGap(ctx,d,P,W,H) }catch(e){}
+  ctx.save(); if(_gap){ ctx.beginPath(); ctx.rect(-10,-10,W+20,H+20); const {x,y,a,w,h}=_gap, c=Math.cos(a), sn=Math.sin(a), pt=(dx,dy)=>[x+dx*c-dy*sn,y+dx*sn+dy*c];
+    const q=[pt(-w/2,-h/2),pt(w/2,-h/2),pt(w/2,h/2),pt(-w/2,h/2)]; ctx.moveTo(...q[0]); q.slice(1).forEach(p=>ctx.lineTo(...p)); ctx.closePath(); ctx.clip('evenodd') }
+  stroke(ctx,d);
   switch(ty){
   case 'trend': case 'info': case 'angle': if(P.length<2) break; line(ctx,P[0],P[1]);
     if(ty==='info'){const dp=d.pts[1].p-d.pts[0].p,pc=dp/d.pts[0].p*100,bars=Math.round(timeToLogical(d.pts[1].t)-timeToLogical(d.pts[0].t));
@@ -4719,7 +4740,7 @@ function startCreate(k,pt,x,y){
   snap(); const d={id:uid(),type:k,pts:[pt],style:styleFor(k),text:''}; const fl=(profile().drawStyles||{}).fibLevels; if(k==='fib'&&fl) d.levels=[...fl];
   if(k==='emoji') d.text=SX.emoji||'⭐';
   if(k==='atext'){const cv=$('#sxDraw');d.anchor={x:x/cv._w,y:y/cv._h}}
-  if(k==='long'||k==='short'){ const vr=SX.series.coordinateToPrice(0)-SX.series.coordinateToPrice($('#sxDraw')._h); const dd=Math.abs(vr)*0.08, s=k==='long'?1:-1;
+  if(k==='long'||k==='short'){ const pv=((profile().drawStyles||{})[k]||{}).pos; if(pv) Object.assign(d,JSON.parse(JSON.stringify(pv))); delete d.style.pos; const vr=SX.series.coordinateToPrice(0)-SX.series.coordinateToPrice($('#sxDraw')._h); const dd=Math.abs(vr)*0.08, s=k==='long'?1:-1;
     d.stop=+(pt.p-s*dd).toFixed(SYMCFG[SX.sym].dec); d.target=+(pt.p+s*dd*2).toFixed(SYMCFG[SX.sym].dec); const vr2=SX.chart.timeScale().getVisibleLogicalRange(); d.wt=Math.round(Math.max(12,((vr2?vr2.to-vr2.from:140))*0.18))*tfSec(); d.risk=1; }
   drawings().push(d);
   const n=TOOLS[k].n;
@@ -4814,7 +4835,8 @@ function fibLevelsModal(d,after){
     if(ov.querySelector('#lvDef').checked){const p=profile();const ds={...(p.drawStyles||{})};ds.fibLevels=d.levels;DB.put('profile',{...p,id:'me',drawStyles:ds})}
     saveDrawLater(); ov.remove(); after&&after() };
 }
-function rememberStyle(d){ const p=profile(); const ds={...(p.drawStyles||{})}; ds[d.type]={...d.style}; p.drawStyles=ds; DB.put('profile',{...p,id:'me'}) }
+const POSKEYS=['cTarget','cStop','cLine','cText','fillA','compact','showPrices','alwaysStats'];
+function rememberStyle(d){ const p=profile(); const ds={...(p.drawStyles||{})}; ds[d.type]={...d.style}; if(d.type==='long'||d.type==='short'){ const pk={}; POSKEYS.forEach(k=>{ if(d[k]!==undefined) pk[k]=d[k] }); ds[d.type].pos=pk; if(pk.cTarget||pk.cStop){ const o=d.type==='long'?'short':'long'; ds[o]={...(ds[o]||{}),pos:{...((ds[o]||{}).pos||{}),...pk}} } } p.drawStyles=ds; DB.put('profile',{...p,id:'me'}) }
 function deleteSel(){ const list=drawings(), i=list.findIndex(x=>x.id===SX.sel); if(i<0) return; snap(); list.splice(i,1); SX.sel=null; saveDrawLater(); }
 function posToolToOrder(d){
   const e=d.pts[0].p, side=d.type==='long'?'buy':'sell', q=d._q||SPEC[SX.sym].step, cur=side==='buy'?ask():bid();
@@ -5771,6 +5793,17 @@ function drawLineExtras(ctx,d,P,W,H){
     if(out.length){ const pos=d.statsPos||'right', a=pos==='left'?P[0]:pos==='center'?{x:(P[0].x+P[1].x)/2,y:(P[0].y+P[1].y)/2}:P[1];
       label(ctx,out.join('\n'),a.x+(pos==='left'?-8:8),a.y,{align:pos==='left'?'right':'left',valign:'middle',bg:hexA('#131722',.92),color:'#d1d4dc',size:11,r:3,free:1}) } }
 }
+/* v10.2: tekst midden op een lijn onderbreekt alleen de lijn zelf (geen zwart blok over posities/vlakken) */
+function textGap(ctx,d,P,W,H){
+  if(!d.text||d._editing||TEXTTYPES.includes(d.type)||!P.length) return null;
+  const st=d.style, ty=d.type; if((st.valign||'middle')!=='middle') return null;
+  if(!(LINET.includes(ty)||['regr','channel','fibch'].includes(ty))) return null;
+  ctx.save(); ctx.font=fontOf(st); const lines=String(d.text).split('\n'), lh=(st.font||13)+4, w=Math.max(...lines.map(l=>ctx.measureText(l).width))+14, h=lines.length*lh; ctx.restore();
+  const al=st.align||'center'; const off=(ang)=>al==='center'?0:al==='left'?w/2-7:-(w/2-7);
+  if(ty==='hline'||ty==='hray'){ const x=al==='left'?(ty==='hray'?P[0].x+6:8):al==='right'?W-70:(ty==='hray'?(P[0].x+W)/2:W/2); return {x:x+off(),y:P[0].y,a:0,w,h} }
+  if(ty==='vline'){ return {x:P[0].x,y:H/2,a:-Math.PI/2,w,h} }
+  if(P.length>=2){ let a=P[0],b=P[1]; if(b.x<a.x){const t0=a;a=b;b=t0} const ang=Math.atan2(b.y-a.y,b.x-a.x), f=al==='left'?0:al==='right'?1:0.5, o=off(); return {x:a.x+(b.x-a.x)*f+o*Math.cos(ang),y:a.y+(b.y-a.y)*f+o*Math.sin(ang),a:ang,w,h} }
+  return null }
 function drawItemText(ctx,d,P,W,H){
   if(TEXTTYPES.includes(d.type)||d.type==='emoji'||!P.length||d._editing) return;
   const ph=!d.text&&SX.sel===d.id&&BOXT.includes(d.type)&&!SX.creating;
@@ -5780,7 +5813,6 @@ function drawItemText(ctx,d,P,W,H){
   const lines=String(ph?'Add text':d.text).split('\n'), lh=(st.font||13)+4, n=lines.length, gapL=LINET.includes(d.type)||['regr','channel','fibch'].includes(d.type);
   const put=(x,y,ang,align)=>{ ctx.translate(x,y); if(ang) ctx.rotate(ang); ctx.textAlign=align; ctx.textBaseline='middle';
     const y0=va==='top'?-6-(n-1)*lh-lh/2+4:va==='bottom'?6+lh/2-2:-(n-1)*lh/2;
-    if(gapL&&va==='middle'){ const w=Math.max(...lines.map(l=>ctx.measureText(l).width)), bx=align==='center'?-w/2:align==='left'?0:-w; ctx.save(); ctx.globalCompositeOperation='destination-out'; ctx.fillStyle='#000'; ctx.fillRect(bx-7,y0-lh/2,w+14,n*lh); ctx.restore() }
     lines.forEach((l,i)=>ctx.fillText(l,0,y0+i*lh)) };
   const ty=d.type, A=al==='left'?'left':al==='right'?'right':'center';
   if(['hline','hray'].includes(ty)){ const x=al==='left'?(ty==='hray'?P[0].x+6:8):al==='right'?W-70:(ty==='hray'?(P[0].x+W)/2:W/2); put(x,P[0].y,0,A) }
@@ -6466,8 +6498,8 @@ function eqSvg(pts,A,step){
 }
 function bindEq(){ const w=$('#eqw'); if(!w||!window._eq) return; const E=window._eq, line=w.querySelector('.eqline'), dot=w.querySelector('.eqdot'), tip=w.querySelector('.eqtip'); if(!line) return;
   const show=cx=>{ const r=w.getBoundingClientRect(), fx=(cx-r.left)/r.width*E.W; let best=E.pts[0],bd=1e18; E.pts.forEach(p=>{ const d=Math.abs(E.X(p.t)-fx); if(d<bd){bd=d;best=p} });
-    const x=E.X(best.t)/E.W*r.width, y=E.Y(best.v)/E.H*r.height; [line,dot,tip].forEach(e=>e.style.display='block'); line.style.left=x+'px'; dot.style.left=x+'px'; dot.style.top=y+'px';
-    tip.style.left=Math.max(60,Math.min(r.width-60,x))+'px'; tip.innerHTML=`${S.blur?'••••':fmtM(best.v,E.ccy)}<small>${E.step&&E.step<24*H1?fmtDate(best.t,{day:'numeric',month:'short'})+' '+fmtTime(best.t):fmtDate(best.t)}</small>`; if(E._last!==best.t){ if(E._last!=null) haptic('tick'); E._last=best.t } };
+    const k=(w.offsetWidth||r.width)/r.width, x=E.X(best.t)/E.W*r.width*k, y=E.Y(best.v)/E.H*r.height*k; [line,dot,tip].forEach(e=>e.style.display='block'); line.style.left=x+'px'; dot.style.left=x+'px'; dot.style.top=y+'px';
+    tip.style.left=Math.max(60,Math.min(r.width*k-60,x))+'px'; tip.innerHTML=`${S.blur?'••••':fmtM(best.v,E.ccy)}<small>${E.step&&E.step<24*H1?fmtDate(best.t,{day:'numeric',month:'short'})+' '+fmtTime(best.t):fmtDate(best.t)}</small>`; if(E._last!==best.t){ if(E._last!=null) haptic('tick'); E._last=best.t } };
   const hide=()=>[line,dot,tip].forEach(e=>e.style.display='none');
   w.addEventListener('pointermove',e=>show(e.clientX)); w.addEventListener('pointerdown',e=>show(e.clientX)); w.addEventListener('pointerleave',()=>{ hide(); E._last=null }); w.addEventListener('pointerup',e=>{ if(e.pointerType!=='mouse') setTimeout(hide,1400) }) }
 function miniMonth(A){ const now=new Date(), y=now.getFullYear(), mo=now.getMonth(), first=new Date(y,mo,1), nd=new Date(y,mo+1,0).getDate(), lead=(first.getDay()+6)%7;
