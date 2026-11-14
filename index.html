@@ -1583,6 +1583,22 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
   #login .form{padding:0!important}
   #login .card-login{max-width:none;padding:28px 22px calc(28px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:rgba(13,17,25,.92);box-shadow:0 -12px 40px rgba(0,0,0,.5)}
 }
+
+/* v10.3: rustige long/short-pijltjes */
+:where(.jpage,.jx) .trow .ti2.long,.hli .hdir.long,.hli .hdir:not(.short){background:rgba(76,116,255,.12);color:#6f93ff}
+:where(.jpage,.jx) .trow .ti2.short,.hli .hdir.short{background:rgba(242,54,69,.11);color:#ff7a7a}
+body.theme-light :where(.jpage,.jx) .trow .ti2.long,body.theme-light .hli .hdir:not(.short){background:rgba(47,87,230,.09);color:#2f57e6}
+body.theme-light :where(.jpage,.jx) .trow .ti2.short,body.theme-light .hli .hdir.short{background:rgba(214,69,69,.09);color:#d64545}
+:where(.jpage,.jx) .trow .ti2 svg.darr{stroke-width:1.8!important;width:20px!important;height:20px!important}
+.hli .hdir svg.darr{stroke-width:1.8!important}
+.topbar .logo,.side .prof{-webkit-user-select:none;user-select:none}
+
+@media (min-width:901px){
+  body #app{grid-template-rows:calc(64px*var(--uiz,1)) minmax(0,1fr);grid-template-columns:calc(var(--side)*var(--uiz,1)) minmax(0,1fr)}
+  body.side-collapsed #app{grid-template-columns:calc(76px*var(--uiz,1)) minmax(0,1fr)}
+  .side>*,.topbar>*{zoom:var(--uiz,1)}
+  .ov>.modal,#toasts>*{zoom:var(--uiz,1)}
+}
 </style>
 </head>
 <body class="">
@@ -1717,7 +1733,7 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.2', BUILD: '2026-11-17'
+  VERSION: 'v10.3', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2110,7 +2126,7 @@ function symLogo(s){ const u=String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,''
   const a=u.slice(0,3), b=u.slice(3,6); if(u.length>=6&&CCY3.includes(a)&&CCY3.includes(b)) return lgPair(a,b);
   return null }
 /* long = blauw pijltje omhoog, short = rood pijltje omlaag */
-const dirArrow=(long,sz=16)=>`<svg class="i darr" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px;stroke-width:2.6"><path d="${long?'M12 19V5M5.5 11.5L12 5l6.5 6.5':'M12 5v14M5.5 12.5L12 19l6.5-6.5'}"/></svg>`;
+const dirArrow=(long,sz=16)=>`<svg class="i darr" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px;stroke-width:2"><path d="${long?'M12 19V5M5.5 11.5L12 5l6.5 6.5':'M12 5v14M5.5 12.5L12 19l6.5-6.5'}"/></svg>`;
 const symBadge=s=>{ const lg=SYMLOGO[s]||symLogo(s); return lg?`<span class="sym slogo">${lg}</span>`:`<span class="sym" style="background:${(asset(s)||{col:'#556'}).col}">${esc(String(s).slice(0,3))}</span>` };
 
 const SYMTYPE={XAUUSD:'commodity cfd',NQ1:'futures',MNQ:'futures',BTCUSD:'spot crypto'};
@@ -2426,7 +2442,7 @@ const CVARS=['--bg','--bg2','--panel','--panel2','--line','--line2','--ink','--i
 /* v10.2: grootte van de app — 'auto' rekent met de venstergrootte (ontwerp: 1500×920) */
 function uiScalePref(){ try{ return localStorage.getItem('twf_uiscale')||'auto' }catch(e){ return 'auto' } }
 function applyUiScale(){ const v=uiScalePref(); let z=1;
-  if(v==='auto'){ const w=innerWidth, h=innerHeight; if(w>900) z=Math.max(.8,Math.min(1.3,Math.min(w/1500,h/920))); z=Math.round(z*20)/20; if(z>.95&&z<1.06) z=1 }
+  if(v==='auto'){ const w=innerWidth, h=innerHeight; if(w>900) z=Math.max(.7,Math.min(.9,Math.min(w/1760,h/1120))); z=Math.round(z*50)/50 }
   else z=parseFloat(v)||1;
   document.documentElement.style.setProperty('--uiz',z) }
 addEventListener('resize',()=>{ clearTimeout(window._uizT); window._uizT=setTimeout(applyUiScale,120) });
@@ -3181,8 +3197,8 @@ function pageSettings(){
      <div class="srow"><div class="stx"><b>${L('Accentkleur','Accent colour')}</b><small>${L('Kleur van knoppen en highlights.','Colour of buttons and highlights.')}</small></div><div class="accs">${ACCENTS.map(([c,n],i)=>`<button class="accsw ${(pf.accent||ACCENTS[0][0])===c?'on':''}" data-acc="${i===0?'':c}" title="${n}" style="background:${c}"></button>`).join('')}</div></div>
      </div>
      <h3 style="margin:22px 0 10px">${L('Kleuren','Colours')}</h3><div class="box" id="colBox">${colorsHtml()}</div>
-     <h3 style="margin:22px 0 10px">${L('Grootte','Size')}</h3><div class="box"><div class="srow"><div class="stx"><b>${L('Grootte van de app','App size')}</b><small>${L('Automatisch past alles zich aan je venster aan. Per apparaat.','Automatic fits everything to your window. Per device.')}</small></div>
-       <div class="seg">${[['auto',L('Auto','Auto')],['0.85','85%'],['1','100%'],['1.15','115%'],['1.3','130%']].map(([k,l])=>`<button class="${uiScalePref()===k?'on':''}" data-uiz="${k}">${l}</button>`).join('')}</div></div></div><div class="box" style="margin-top:14px">
+     <h3 style="margin:22px 0 10px">${L('Grootte','Size')}</h3><div class="box"><div class="srow"><div class="stx"><b>${L('Grootte van de app','App size')}</b><small>${L('Auto maakt alles compact en past het aan je venster aan. Per apparaat.','Auto keeps everything compact and fits it to your window. Per device.')}</small></div>
+       <div class="seg">${[['auto',L('Auto','Auto')],['0.75','75%'],['0.85','85%'],['1','100%'],['1.15','115%']].map(([k,l])=>`<button class="${uiScalePref()===k?'on':''}" data-uiz="${k}">${l}</button>`).join('')}</div></div></div><div class="box" style="margin-top:14px">
      ${TOG('compact',!!pf.compact,L('Compacte weergave','Compact view'),L('Kleinere marges in lijsten en tabellen.','Tighter spacing in lists and tables.'))}
      ${TOG('anim',pf.anim!==false,L('Animaties','Animations'),L('Vloeiende overgangen in de app.','Smooth transitions in the app.'))}</div>
      <h3 style="margin:22px 0 10px">${L('Valuta','Currency')}</h3><div class="box">
