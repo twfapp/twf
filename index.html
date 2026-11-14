@@ -23,8 +23,8 @@
   --shadow:0 10px 40px rgba(0,0,0,.45); --r:14px; --side:250px;
 }
 body.theme-light{
-  --bg:#f3f5f9; --bg2:#ffffff; --panel:#ffffff; --panel2:#f5f7fb; --line:#e3e7ef; --line2:#d3d9e4;
-  --ink:#121826; --ink2:#3d4757; --ink3:#5f6b7d; --accent:#2f57e6; --accent2:#1d3557; --accentSoft:rgba(47,87,230,.10);
+  --bg:#eef1f6; --bg2:#f7f9fc; --panel:#ffffff; --panel2:#f3f5f9; --line:#dfe4ec; --line2:#cbd3df;
+  --ink:#0d1320; --ink2:#2b3546; --ink3:#4d596c; --accent:#2f57e6; --accent2:#1d3557; --accentSoft:rgba(47,87,230,.10);
   --pos:#1f9d55; --neg:#d64545; --amber:#b8760a; --glow:rgba(47,87,230,.12); --shadow:0 10px 30px rgba(20,30,60,.10);
 }
 *{box-sizing:border-box}
@@ -129,6 +129,8 @@ body.theme-light .phead{background:linear-gradient(180deg,rgba(47,87,230,.08),tr
 .box{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px}
 .box h3{margin:0 0 4px;font-size:15px}
 .box .sub{color:var(--ink3);font-size:13px}
+.hero.ob{grid-template-columns:1fr 1fr}.dash.ob .recent{grid-column:1/-1}
+body.onboarded [data-go="start"]{display:none!important}
 .hero{grid-column:1/-1;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px;align-items:stretch}
 .hero .welcome{background:radial-gradient(600px 260px at 0% 0%,var(--glow),transparent 70%),var(--panel)}
 .hero .welcome h2{margin:0 0 8px;font-size:24px}
@@ -234,7 +236,7 @@ body.theme-light .ov{background:rgba(20,26,40,.35)}
 .ms .dd button:hover{background:var(--panel2)}
 .ms .dd .chk{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);display:grid;place-items:center}
 .ms .dd .chk.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.sym{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff;flex:none}
+.sym{width:26px;height:26px;border-radius:50%;overflow:hidden;display:grid;place-items:center;font-size:10px;font-weight:800;color:#fff;flex:none}
 .ms .dd small{color:var(--ink3);margin-left:auto;font-size:12px}
 .period{border:1px solid var(--line2);border-radius:12px;padding:16px;background:var(--panel2)}
 .rules{display:flex;flex-direction:column;gap:8px}
@@ -449,7 +451,7 @@ body.in-sx #toasts{bottom:112px;left:66px}
 .vb .vt{flex:1;width:100%;display:flex;align-items:flex-end;background:var(--panel2);border-radius:5px;overflow:hidden}.vb i{display:block;width:100%;border-radius:5px 5px 0 0;min-height:1px}
 .vb span{font-size:10.5px;color:var(--ink3);font-weight:600}
 .tbl.mini td,.tbl.mini th{padding:9px 12px;font-size:13px}
-.acal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.acal .wd{text-align:center;font-size:11.5px;color:var(--ink3);font-weight:700}
+.acal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.acal>*{min-width:0}@media (max-width:700px){.acal{gap:3px}}.acal .wd{text-align:center;font-size:11.5px;color:var(--ink3);font-weight:700}
 .m2{display:inline-flex;flex-direction:column;line-height:1.15;vertical-align:top}.m2>span,.m2>small{white-space:nowrap}.m2 small{display:block;font-size:12px;font-weight:600;color:var(--ink3);letter-spacing:0;margin-top:2px}
 .big .m2 small{font-size:14px;margin-top:4px}td .m2,.row .m2,div[style*="text-align:right"] .m2{align-items:flex-end}
 .m2.inl{flex-direction:row;align-items:baseline;gap:6px}.m2.inl small{margin:0;font-size:.85em}.m2.inl small::before{content:'· ';opacity:.7}
@@ -1143,6 +1145,7 @@ button.hcard{cursor:pointer;transition:border-color .15s,transform .15s}button.h
 .hdtx{font-size:14px;color:var(--ink2);line-height:1.4}.hdtx b{font-size:18px;color:var(--ink)}
 .hlist{display:flex;flex-direction:column;gap:4px}
 .hli{display:flex;align-items:center;gap:12px;padding:8px 6px;border-radius:12px;text-align:left;width:100%}.hli:hover{background:var(--panel2)}
+.darr{flex:none}:where(.jpage,.jx) .dpill{display:inline-flex;align-items:center;gap:3px}.pill.dirp{display:inline-flex;align-items:center;gap:4px}
 .hli .hdir{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;flex:none;background:linear-gradient(145deg,#2f6bff,#1d47c9)}.hli .hdir.short{background:linear-gradient(145deg,#ef5350,#b9312e)}
 .hli .hlt{flex:1;min-width:0}.hli .hlt b{display:block;font-size:14px}.hli .hlt small{color:var(--ink3);font-size:12px}
 .hli>b{font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -1161,6 +1164,7 @@ button.hcard{cursor:pointer;transition:border-color .15s,transform .15s}button.h
   .hhead{margin-bottom:14px}.hhead h1{font-size:26px}
   .hgrid{grid-template-columns:minmax(0,1fr);gap:12px}.hlive{grid-column:auto}
   .hbal{font-size:38px}.hspark{height:90px;flex:none}
+  .hrow3{gap:6px}.hrow3>div{padding:9px 9px}.hrow3 b{font-size:14px}
   .hcard{min-height:0}
 }
 /* ＋ lijst */
@@ -1175,7 +1179,8 @@ body.theme-light .tvsheet .plist button{background:rgba(0,0,0,.035);border-color
 .jsub{display:flex;align-items:center;gap:12px;margin:-6px 0 18px;flex-wrap:wrap}
 .jtabs{display:none}
 @media (max-width:900px){
-  .jsub{flex-direction:column;align-items:stretch;gap:10px;margin:-4px 0 14px}
+  .jsub{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin:-4px 0 14px}
+  .jtabs{min-width:0}
   .jsub .acctbtn{max-width:none;width:100%}
   .jtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:0 14px;-webkit-overflow-scrolling:touch}
   .jtabs::-webkit-scrollbar{display:none}
@@ -1481,26 +1486,113 @@ body.theme-light .tvsheet.jx .tvs-foot{border-color:rgba(0,0,0,.06)}
 :where(.jpage,.jx) .addacct b{display:block;font-size:14.5px;color:var(--ink)}
 :where(.jpage,.jx) .addacct small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px}
 :where(.jpage,.jx) .addacct:hover{border-color:var(--accent)}
+
+
+.hq{grid-column:span 2}
+.hcal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.hwd{font-size:10.5px;font-weight:800;color:var(--ink3);text-align:center;height:14px}
+.hcd{aspect-ratio:1.25;border-radius:7px;display:grid;place-items:center;font-size:11.5px;font-weight:700;color:var(--ink3);background:var(--panel2)}
+.hcd.e{background:none}.hcd.p{background:color-mix(in srgb,var(--pos) calc(var(--k)*100%),transparent);color:var(--ink)}.hcd.n{background:color-mix(in srgb,var(--neg) calc(var(--k)*100%),transparent);color:var(--ink)}
+.hcd.td{box-shadow:inset 0 0 0 2px var(--accent);color:var(--ink)}
+.hstats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hstats>div{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.hstats small{display:block;color:var(--ink3);font-size:11.5px;font-weight:700}.hstats b{display:block;font-size:16px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.hq{grid-column:auto}}
+
+.hdots{display:flex;gap:4px;margin-top:auto;padding-top:14px}.hdots i{flex:1;height:8px;border-radius:4px;background:var(--neg);opacity:.85}.hdots i.y{background:var(--pos)}
+.hdl{font-size:11.5px;color:var(--ink3);font-weight:700;margin-top:6px}
+.haccts{display:flex;flex-direction:column;gap:8px}
+.hacc{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);text-align:left;width:100%;color:inherit}
+.hacc .ad{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#2fbf71,#138a4b);flex:none}
+.hacc .hat{flex:1;min-width:0}.hacc .hat b{display:block;font-size:14.5px}.hacc .hat small{display:block;color:var(--ink3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hacc .har{text-align:right}.hacc .har b{display:block;font-variant-numeric:tabular-nums}.hacc .har small{font-size:12px;font-weight:700}
+.hqt{margin-top:auto;padding-top:16px;font-size:15px;line-height:1.5;font-weight:600;font-style:italic;color:var(--ink2)}
+.hq{justify-content:flex-start}
+/* ===== v10.1 ===== */
+body.theme-light .box,body.theme-light .kc,body.theme-light .trow,body.theme-light .drow,body.theme-light .hcard,body.theme-light .ccard{box-shadow:0 1px 2px rgba(16,24,40,.05),0 2px 8px rgba(16,24,40,.05)}
+body.theme-light .side{background:var(--panel)}body.theme-light .topbar{background:var(--panel)}
+body.theme-light .hlive{background:radial-gradient(700px 300px at 0% 0%,var(--accentSoft),transparent 70%),var(--panel)}
+body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
+/* kleuren */
+.srow.col{flex-direction:column;align-items:stretch;gap:12px}
+.cpres{display:flex;gap:10px;flex-wrap:wrap}
+.cpre{width:112px;border-radius:14px;padding:10px;border:2px solid var(--line2);display:flex;flex-direction:column;gap:8px;text-align:left}
+.cpre span{display:flex;align-items:center;gap:6px;height:34px;border-radius:9px;padding:0 9px;font-weight:800;font-size:13px}
+.cpre span i{width:14px;height:14px;border-radius:50%;display:block}
+.cpre small{font-weight:700;font-size:12px}
+.cpre.on,.cpn.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accentSoft)}
+.cpn{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;border:2px solid var(--line2);background:var(--panel2);font-weight:700;font-size:12.5px}
+.cpn span{width:16px;height:16px;border-radius:50%}
+.cpicks{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.cpick{position:relative;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);cursor:pointer}
+.cpick input{position:absolute!important;left:10px;bottom:6px;width:30px!important;height:2px!important;min-height:0!important;opacity:0;border:0;padding:0;pointer-events:none}
+.cpick .cdot{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
+.cpick b{display:block;font-size:13.5px}.cpick small{display:block;color:var(--ink3);font-size:11.5px;font-family:ui-monospace,Menlo,monospace}
+/* groot scherm: alles vullen */
+@media (min-width:1500px){ .hpage,.jpage{max-width:none;padding-left:40px;padding-right:40px} .hgrid{grid-template-columns:repeat(4,minmax(0,1fr))} .hlive{grid-column:span 2;grid-row:span 2} }
+@media (min-width:1900px){ #main>*{zoom:1.12} :root{--side:270px} .side .nav button{font-size:15px} }
+@media (min-width:2300px){ #main>*{zoom:1.25} :root{--side:290px} .side .nav button{font-size:16px} }
+@media (min-width:2900px){ #main>*{zoom:1.45} }
+
+/* ===== v10.1: inlogscherm ===== */
+#login{--panel:#0f131b;--panel2:rgba(255,255,255,.06);--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#eef1f6;--ink2:#c3cad6;--ink3:#8f9aac;color:var(--ink);
+  grid-template-columns:minmax(0,1.25fr) minmax(440px,.9fr);background:radial-gradient(1100px 700px at 18% 20%,rgba(47,87,230,.30),transparent 60%),radial-gradient(900px 600px at 85% 85%,rgba(109,141,255,.16),transparent 60%),#05070b!important}
+.lgbg{position:absolute;inset:0;width:100%;height:100%;opacity:.42;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.35),#000 35%,#000 60%,rgba(0,0,0,.25));mask-image:linear-gradient(90deg,rgba(0,0,0,.35),#000 35%,#000 60%,rgba(0,0,0,.25))}
+.lgbg .lgc>g{animation:lgIn .6s both}@keyframes lgIn{from{opacity:0;transform:translateY(6px)}}
+.lgbg .lgpl{animation:lgPulse 2.4s infinite}@keyframes lgPulse{50%{opacity:.25}}
+#login .art{background:none!important;position:relative;z-index:1;padding:56px 64px}
+#login .art .candles{display:none}
+#login .art .logo .lgtile{width:40px;height:40px}#login .art .logo .mark b{font-size:24px}
+#login .lghero{max-width:620px}
+#login .art h1{font-size:clamp(44px,4.6vw,76px);line-height:1.02;letter-spacing:-.035em;margin:0 0 18px;background:linear-gradient(180deg,#fff,#b9c6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+#login .art p{font-size:clamp(16px,1.25vw,20px);color:#b8c2d3;max-width:520px;line-height:1.5}
+.lgfeat{display:flex;flex-direction:column;gap:12px;margin-top:34px;max-width:480px}
+.lgfeat>div{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.lgfeat .lgfi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:linear-gradient(145deg,var(--lg1,#6d8dff),var(--lg2,#2f57e6));color:#fff}
+.lgfeat b{display:block;font-size:15.5px;color:#fff}.lgfeat small{display:block;color:#9aa6b8;font-size:13.5px;margin-top:2px}
+#login .form{position:relative;z-index:1;padding:40px 56px 40px 24px}
+#login .card-login{max-width:440px;padding:40px 38px;border-radius:26px;background:rgba(13,17,25,.72);border:1px solid rgba(255,255,255,.09);box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05);backdrop-filter:blur(22px) saturate(1.3);-webkit-backdrop-filter:blur(22px) saturate(1.3)}
+#login .card-login h2{font-size:30px;letter-spacing:-.02em}
+#login .inp{height:50px;border-radius:13px;background:rgba(255,255,255,.05);font-size:15px;color:#eef1f6}
+#login .inp:focus{background:rgba(255,255,255,.08)}
+#login .btn-block{height:50px;border-radius:13px;font-size:15.5px}
+#login .btn-p{background:linear-gradient(145deg,#5b80ff,#2f57e6);box-shadow:0 10px 28px rgba(47,87,230,.38)}
+#login select.lang,#login .ib{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:#eef1f6}
+@media (min-width:1900px){#login .card-login{max-width:500px;padding:48px 46px}#login .lghero{max-width:760px}.lgfeat{max-width:560px}}
+@media (max-width:1100px) and (min-width:901px){#login{grid-template-columns:1fr minmax(400px,1fr)}#login .art{padding:44px}}
+@media (max-width:900px){
+  .lgbg{opacity:.3;height:46vh;-webkit-mask-image:linear-gradient(180deg,#000,transparent);mask-image:linear-gradient(180deg,#000,transparent)}
+  #login .art{padding:calc(28px + env(safe-area-inset-top)) 24px 54px!important}
+  #login .art h1{font-size:40px}.lgfeat{display:none}
+  #login .form{padding:0!important}
+  #login .card-login{max-width:none;padding:28px 22px calc(28px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:rgba(13,17,25,.92);box-shadow:0 -12px 40px rgba(0,0,0,.5)}
+}
 </style>
 </head>
 <body class="">
 
 <!-- ================= LOGIN ================= -->
 <div id="login">
+  <svg class="lgbg" id="lgBg" aria-hidden="true"></svg>
   <div class="art">
-    <div class="logo"><span class="lgtile lgcur" data-lgtile></span><div class="mark"><b>TWF</b><i></i></div><span class="sub">Backtest</span></div>
+    <div class="logo"><span class="lgtile lgcur" data-lgtile></span><div class="mark"><b>TWF</b><i></i></div></div>
     <svg class="candles" width="520" height="300" viewBox="0 0 520 300" fill="none"><g id="loginCandles"></g></svg>
-    <div>
-      <h1 data-t="login.title">Learn. Master. Trade.</h1>
-      <p data-t="login.tag">Replay de markt candle voor candle, test je strategie en bouw data op waar je op kunt vertrouwen.</p>
+    <div class="lghero">
+      <h1 data-t="login.title">Log. Test. Groei.</h1>
+      <p data-t="login.tag">Je journal, backtests en dagboek op één plek.</p>
+      <div class="lgfeat">
+        <div><span class="lgfi"><span data-ic="book"></span></span><div><b>Journal</b><small data-t="login.f1">Live trades uit MT5, kalender en statistieken</small></div></div>
+        <div><span class="lgfi"><span data-ic="chart"></span></span><div><b>Backtest</b><small data-t="login.f2">Replay de markt candle voor candle</small></div></div>
+        <div><span class="lgfi"><span data-ic="edit"></span></span><div><b data-t="login.f3t">Dagboek</b><small data-t="login.f3">Je gedachten en lessen, ook uit Notion</small></div></div>
+      </div>
     </div>
   </div>
   <div class="form">
     <div class="card-login">
-      <div class="logo m-logo" style="margin-bottom:34px"><div class="mark"><b>TWF</b><i></i></div><span class="sub">Backtest</span></div>
+      <div class="logo m-logo" style="margin-bottom:34px"><div class="mark"><b>TWF</b><i></i></div></div>
       <div id="lgIn">
         <h2 data-t="login.welcome">Welkom terug</h2>
-        <p class="muted" data-t="login.sub">Log in op je TWF Backtest-account.</p>
+        <p class="muted" data-t="login.sub">Log in op je TWF-account.</p>
         <div class="field"><label data-t="f.login">Inlognaam</label><input class="inp" id="lgName" autocomplete="username"></div>
         <div class="field"><label data-t="f.password">Wachtwoord</label><input class="inp" id="lgPass" type="password" autocomplete="current-password"></div>
         <div class="err" id="lgErr"></div>
@@ -1609,7 +1701,7 @@ body.theme-light .tvsheet.jx .tvs-foot{border-color:rgba(0,0,0,.06)}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.0', BUILD: '2026-11-17'
+  VERSION: 'v10.1', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -1740,9 +1832,9 @@ const ic=(n,s)=>{const t28=n&&n.startsWith('T_');return `<svg class="i${t28?' ti
 /* ---------------- i18n ---------------- */
 const T = {
  nl:{
-  'login.title':'Leren. Beheersen. Traden.','login.tag':'Replay de markt candle voor candle, test je strategie en bouw data op waar je op kunt vertrouwen.',
-  'login.welcome':'Welkom terug','login.sub':'Log in met je TWF Journal-account — één account voor beide apps.','login.btn':'Inloggen','login.noacc':'Nog geen account?','login.make':'Account maken',
-  'reg.title':'Account maken','reg.sub':'Eén account voor al je backtests.','reg.btn':'Account maken','reg.have':'Al een account?',
+  'login.title':'Log. Test. Groei.','login.f1':'Live trades uit MT5, kalender en statistieken','login.f2':'Replay de markt candle voor candle','login.f3t':'Dagboek','login.f3':'Je gedachten en lessen, ook uit Notion','login.tag':'Je journal, backtests en dagboek op één plek. Eén account, al je apparaten.',
+  'login.welcome':'Welkom terug','login.sub':'Log in op je TWF-account.','login.btn':'Inloggen','login.noacc':'Nog geen account?','login.make':'Account maken',
+  'reg.title':'Account maken','reg.sub':'Eén account voor je journal, backtests en dagboek.','reg.btn':'Account maken','reg.have':'Al een account?',
   'f.login':'Inlognaam','f.password':'Wachtwoord','f.username':'Gebruikersnaam (getoond)','f.loginfull':'Inlognaam (volledige naam of e-mail)',
   'nav.home':'Home','nav.journal':'Journal','nav.j.overview':'Overzicht','nav.j.trades':'Trades','nav.j.calendar':'Kalender','nav.j.stats':'Statistieken','nav.j.diary':'Dagboek','nav.j.capital':'Kapitaal','nav.j.discipline':'Discipline','nav.j.mt5':'MT5','nav.j.settings':'Journal-instellingen',
   'nav.start':'Aan de slag','nav.testing':'Backtesten','nav.accounts':'Handelsrekeningen','nav.strategies':'Strategieën','nav.settings':'Accountinstellingen','tag.soon':'Binnenkort',
@@ -1837,9 +1929,9 @@ const T = {
   'h':'u','min':'min','y':'j','mo':'mnd','d':'d'
  },
  en:{
-  'login.title':'Learn. Master. Trade.','login.tag':'Replay the market candle by candle, test your strategy and build data you can trust.',
-  'login.welcome':'Welcome back','login.sub':'Log in with your TWF Journal account — one account for both apps.','login.btn':'Log in','login.noacc':'No account yet?','login.make':'Create account',
-  'reg.title':'Create account','reg.sub':'One account for all your backtests.','reg.btn':'Create account','reg.have':'Already have an account?',
+  'login.title':'Log. Test. Grow.','login.f1':'Live trades from MT5, calendar and statistics','login.f2':'Replay the market candle by candle','login.f3t':'Diary','login.f3':'Your thoughts and lessons, also from Notion','login.tag':'Your journal, backtests and diary in one place. One account, all your devices.',
+  'login.welcome':'Welcome back','login.sub':'Sign in to your TWF account.','login.btn':'Log in','login.noacc':'No account yet?','login.make':'Create account',
+  'reg.title':'Create account','reg.sub':'One account for your journal, backtests and diary.','reg.btn':'Create account','reg.have':'Already have an account?',
   'f.login':'Login name','f.password':'Password','f.username':'Username (shown)','f.loginfull':'Login name (full name or email)',
   'nav.home':'Home','nav.journal':'Journal','nav.j.overview':'Overview','nav.j.trades':'Trades','nav.j.calendar':'Calendar','nav.j.stats':'Statistics','nav.j.diary':'Diary','nav.j.capital':'Capital','nav.j.discipline':'Discipline','nav.j.mt5':'MT5','nav.j.settings':'Journal settings',
   'nav.start':'Get started','nav.testing':'Testing','nav.accounts':'Trading accounts','nav.strategies':'Strategies','nav.settings':'Account settings','tag.soon':'Soon',
@@ -1958,14 +2050,55 @@ const ASSETS = [
   {sym:'BTCUSD',name:'Bitcoin / US Dollar',nameEn:'Bitcoin / US Dollar',cat:'Crypto',min:'2011-09-13',col:'#f2931c'}
 ];
 const asset=s=>ASSETS.find(a=>a.sym===s);
-const SYMLOGO={
-  XAUUSD:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F2B530"/><path d="M7.6 22.6h7.6l-1.5-4.6H9.1zM16.8 22.6h7.6l-1.5-4.6h-4.6zM12.2 16.7h7.6l-1.5-4.6h-4.6z" fill="#fff"/><path d="M7.6 22.6h7.6M16.8 22.6h7.6M12.2 16.7h7.6" stroke="#E29A12" stroke-width=".8"/></svg>',
-  BTCUSD:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F7931A"/><g transform="rotate(14 16 16)"><path fill="#fff" d="M21.4 14.3c.3-2-1.2-3.1-3.3-3.8l.7-2.7-1.6-.4-.7 2.6-1.3-.3.7-2.7-1.6-.4-.7 2.7-1-.2v0l-2.3-.6-.4 1.7s1.2.3 1.2.3c.7.2.8.6.8 1l-.8 3.1.2.1h-.2l-1.1 4.4c-.1.2-.3.5-.8.4 0 0-1.2-.3-1.2-.3l-.8 1.8 2.1.5 1.2.3-.7 2.7 1.6.4.7-2.7 1.3.3-.7 2.7 1.6.4.7-2.7c2.8.5 4.9.3 5.8-2.2.7-2-.1-3.2-1.5-3.9 1.1-.2 1.9-1 2.1-2.4zm-3.7 5.2c-.5 2-3.9.9-5 .6l.9-3.5c1.1.3 4.6.8 4.1 2.9zm.5-5.2c-.5 1.8-3.3.9-4.2.7l.8-3.2c.9.2 3.8.6 3.4 2.5z"/></g></svg>',
-  NQ1:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#1E6FE8"/><text x="16" y="20.2" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="11" fill="#fff">100</text></svg>',
-  MNQ:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#3F51B5"/><text x="16" y="15.4" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="6.5" fill="#fff">MICRO</text><text x="16" y="23" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="9" fill="#fff">100</text></svg>'
+/* v10.1: echte marktlogo's (zoals op TradingView): index-merken, cryptomunten, grondstoffen en valutavlaggen */
+const FLAG={
+  USD:'<rect width="32" height="32" fill="#fff"/><g fill="#B22234"><rect y="0" width="32" height="2.5"/><rect y="5" width="32" height="2.5"/><rect y="10" width="32" height="2.5"/><rect y="15" width="32" height="2.5"/><rect y="20" width="32" height="2.5"/><rect y="25" width="32" height="2.5"/><rect y="30" width="32" height="2.5"/></g><rect width="15" height="17.5" fill="#3C3B6E"/><g fill="#fff"><circle cx="3.5" cy="3.5" r=".9"/><circle cx="7.5" cy="3.5" r=".9"/><circle cx="11.5" cy="3.5" r=".9"/><circle cx="5.5" cy="7" r=".9"/><circle cx="9.5" cy="7" r=".9"/><circle cx="3.5" cy="10.5" r=".9"/><circle cx="7.5" cy="10.5" r=".9"/><circle cx="11.5" cy="10.5" r=".9"/><circle cx="5.5" cy="14" r=".9"/><circle cx="9.5" cy="14" r=".9"/></g>',
+  EUR:'<rect width="32" height="32" fill="#003399"/><g fill="#FFCC00">'+Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return `<circle cx="${(16+8.5*Math.cos(a)).toFixed(2)}" cy="${(16+8.5*Math.sin(a)).toFixed(2)}" r="1.35"/>`}).join('')+'</g>',
+  GBP:'<rect width="32" height="32" fill="#012169"/><path d="M0 0L32 32M32 0L0 32" stroke="#fff" stroke-width="6.5"/><path d="M0 0L32 32M32 0L0 32" stroke="#C8102E" stroke-width="2.2"/><path d="M16 0v32M0 16h32" stroke="#fff" stroke-width="9"/><path d="M16 0v32M0 16h32" stroke="#C8102E" stroke-width="5"/>',
+  JPY:'<rect width="32" height="32" fill="#fff"/><circle cx="16" cy="16" r="7.5" fill="#BC002D"/>',
+  CHF:'<rect width="32" height="32" fill="#DA291C"/><path d="M13.5 7h5v6.5H25v5h-6.5V25h-5v-6.5H7v-5h6.5z" fill="#fff"/>',
+  CAD:'<rect width="32" height="32" fill="#fff"/><rect width="8" height="32" fill="#D52B1E"/><rect x="24" width="8" height="32" fill="#D52B1E"/><path d="M16 8l1.6 3.2 2-.8-.7 4.2 2.6-2.4.6 1.6 2.4-.4-1.2 3 1 .8-5 3.6.5 2.2-3.6-.5V25h-.4v-2.5l-3.6.5.5-2.2-5-3.6 1-.8-1.2-3 2.4.4.6-1.6 2.6 2.4-.7-4.2 2 .8z" fill="#D52B1E"/>',
+  AUD:'<rect width="32" height="32" fill="#00247D"/><g transform="scale(.5)"><path d="M0 0L32 32M32 0L0 32" stroke="#fff" stroke-width="6"/><path d="M0 0L32 32M32 0L0 32" stroke="#CF142B" stroke-width="2"/><path d="M16 0v32M0 16h32" stroke="#fff" stroke-width="9"/><path d="M16 0v32M0 16h32" stroke="#CF142B" stroke-width="5"/></g><g fill="#fff"><circle cx="8" cy="24" r="2.2"/><circle cx="24" cy="9" r="1.3"/><circle cx="20" cy="15" r="1.3"/><circle cx="27" cy="16" r="1.3"/><circle cx="24" cy="25" r="1.5"/></g>',
+  NZD:'<rect width="32" height="32" fill="#00247D"/><g transform="scale(.5)"><path d="M0 0L32 32M32 0L0 32" stroke="#fff" stroke-width="6"/><path d="M0 0L32 32M32 0L0 32" stroke="#CC142B" stroke-width="2"/><path d="M16 0v32M0 16h32" stroke="#fff" stroke-width="9"/><path d="M16 0v32M0 16h32" stroke="#CC142B" stroke-width="5"/></g><g fill="#CC142B" stroke="#fff" stroke-width=".6"><circle cx="24" cy="8" r="1.5"/><circle cx="20" cy="15" r="1.4"/><circle cx="27" cy="14" r="1.4"/><circle cx="24" cy="25" r="1.6"/></g>',
+  DE:'<rect width="32" height="11" fill="#000"/><rect y="10.6" width="32" height="11" fill="#DD0000"/><rect y="21.3" width="32" height="11" fill="#FFCE00"/>'
 };
+const LG_CLIP='<clipPath id="twfLgC" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath>';
+const lgFlag=c=>`<svg viewBox="0 0 32 32"><g clip-path="url(#twfLgC)">${FLAG[c]}</g><defs>${LG_CLIP}</defs></svg>`;
+const lgPair=(a,b)=>`<svg viewBox="0 0 32 32"><defs>${LG_CLIP}</defs><svg x="0" y="0" width="21" height="21" viewBox="0 0 32 32"><g clip-path="url(#twfLgC)">${FLAG[a]}</g></svg><circle cx="21" cy="21" r="11" fill="var(--panel,#0f131b)"/><svg x="11" y="11" width="21" height="21" viewBox="0 0 32 32"><g clip-path="url(#twfLgC)">${FLAG[b]}</g></svg></svg>`;
+const NDQ_N='<path d="M8.6 23.2L11.4 8.8h3.3L11.9 23.2z" fill="#00B5E2"/><path d="M11.4 8.8h3.3l6.9 14.4h-3.3z" fill="#0090BA"/><path d="M18.3 23.2L21.1 8.8h3.3l-2.8 14.4z" fill="#00B5E2"/>';
+const LOGO={
+  nasdaq:`<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0B1B33"/>${NDQ_N}</svg>`,
+  nasdaqMicro:`<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0B1B33"/><g transform="translate(-2 -1.5) scale(.95)">${NDQ_N}</g><circle cx="24.5" cy="24.5" r="6" fill="#fff"/><text x="24.5" y="27.6" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="8.5" fill="#0B1B33">M</text></svg>`,
+  sp:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#D6002A"/><text x="16" y="15.2" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="8" fill="#fff">S&amp;P</text><text x="16" y="23.6" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="8" fill="#fff">500</text></svg>',
+  dow:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0E3A75"/><path d="M8 21l5-5 3.5 3L24 11" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.5 11H24v4.5" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  russell:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#5A2D82"/><text x="16" y="20.5" text-anchor="middle" font-family="-apple-system,Segoe UI,Arial" font-weight="800" font-size="10" fill="#fff">2K</text></svg>',
+  gold:'<svg viewBox="0 0 32 32"><defs><linearGradient id="twfAu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD978"/><stop offset="1" stop-color="#D9971A"/></linearGradient></defs><circle cx="16" cy="16" r="16" fill="url(#twfAu)"/><g fill="#fff" stroke="#B87A0C" stroke-width=".7" stroke-linejoin="round"><path d="M7.4 23h7.6l-1.6-4.8H9z"/><path d="M17 23h7.6L23 18.2h-4.4z"/><path d="M12.2 17h7.6l-1.6-4.8h-4.4z"/></g></svg>',
+  silver:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#A8B2BD"/><g fill="#EEF2F5" stroke="#7D8894" stroke-width=".7" stroke-linejoin="round"><path d="M7.4 23h7.6l-1.6-4.8H9z"/><path d="M17 23h7.6L23 18.2h-4.4z"/><path d="M12.2 17h7.6l-1.6-4.8h-4.4z"/></g></svg>',
+  oil:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#1C1F26"/><path d="M16 7.5c3.6 4.6 6 8 6 10.9a6 6 0 0 1-12 0c0-2.9 2.4-6.3 6-10.9z" fill="#fff"/></svg>',
+  btc:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path fill="#fff" d="M22.6 14.1c.3-2.1-1.3-3.2-3.5-4l.7-2.8-1.7-.4-.7 2.7-1.4-.3.7-2.7-1.7-.4-.7 2.8-1.1-.3-2.4-.6-.4 1.8 1.3.3c.7.2.8.6.8 1l-.8 3.2-1.1 4.5c-.1.2-.3.5-.8.4l-1.3-.3-.8 1.9 2.3.6 1.2.3-.7 2.9 1.7.4.7-2.8 1.4.3-.7 2.8 1.7.4.7-2.9c3 .6 5.2.3 6.1-2.4.8-2.1 0-3.4-1.6-4.2 1.1-.3 2-1.1 2.2-2.7zm-4 5.6c-.5 2.1-4.2 1-5.4.7l1-3.8c1.2.3 5 .9 4.4 3.1zm.6-5.6c-.5 1.9-3.6.9-4.6.7l.9-3.4c1 .2 4.2.7 3.7 2.7z"/></svg>',
+  eth:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#627EEA"/><g fill="#fff"><path fill-opacity=".6" d="M16.5 4v8.9l7.5 3.3z"/><path d="M16.5 4L9 16.2l7.5-3.3z"/><path fill-opacity=".6" d="M16.5 21.9V28l7.5-10.4z"/><path d="M16.5 28v-6.1L9 17.6z"/><path fill-opacity=".2" d="M16.5 20.5l7.5-4.3-7.5-3.3z"/><path fill-opacity=".6" d="M9 16.2l7.5 4.3v-7.6z"/></g></svg>',
+  dax:`<svg viewBox="0 0 32 32"><g clip-path="url(#twfLgC)">${FLAG.DE}</g><defs>${LG_CLIP}</defs></svg>`
+};
+const CCY3=['USD','EUR','GBP','JPY','CHF','CAD','AUD','NZD'];
+function symLogo(s){ const u=String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(/^M?NQ\d*$|^NAS|^NDX|^US100|^USTEC/.test(u)) return u.startsWith('MNQ')?LOGO.nasdaqMicro:LOGO.nasdaq;
+  if(/^M?ES\d*$|^SPX|^SP500|^US500/.test(u)) return LOGO.sp;
+  if(/^M?YM\d*$|^US30|^DJI|^DOW/.test(u)) return LOGO.dow;
+  if(/^M?RTY|^US2000|^RUT/.test(u)) return LOGO.russell;
+  if(/^XAU|^GOLD|^M?GC\d*$/.test(u)) return LOGO.gold;
+  if(/^XAG|^SILVER|^SI\d*$/.test(u)) return LOGO.silver;
+  if(/^(US|UK)?OIL|^WTI|^BRENT|^M?CL\d*$/.test(u)) return LOGO.oil;
+  if(/^BTC|^XBT/.test(u)) return LOGO.btc;
+  if(/^ETH/.test(u)) return LOGO.eth;
+  if(/^(GER|DE)\d|^DAX|^FDAX/.test(u)) return LOGO.dax;
+  const a=u.slice(0,3), b=u.slice(3,6); if(u.length>=6&&CCY3.includes(a)&&CCY3.includes(b)) return lgPair(a,b);
+  return null }
+/* long = blauw pijltje omhoog, short = rood pijltje omlaag */
+const dirArrow=(long,sz=16)=>`<svg class="i darr" viewBox="0 0 24 24" style="width:${sz}px;height:${sz}px;stroke-width:2.6"><path d="${long?'M12 19V5M5.5 11.5L12 5l6.5 6.5':'M12 5v14M5.5 12.5L12 19l6.5-6.5'}"/></svg>`;
+const symBadge=s=>{ const lg=SYMLOGO[s]||symLogo(s); return lg?`<span class="sym slogo">${lg}</span>`:`<span class="sym" style="background:${(asset(s)||{col:'#556'}).col}">${esc(String(s).slice(0,3))}</span>` };
+
 const SYMTYPE={XAUUSD:'commodity cfd',NQ1:'futures',MNQ:'futures',BTCUSD:'spot crypto'};
-const symBadge=s=>SYMLOGO[s]?`<span class="sym slogo">${SYMLOGO[s]}</span>`:`<span class="sym" style="background:${(asset(s)||{col:'#556'}).col}">${esc(s.slice(0,3))}</span>`;
+const SYMLOGO={}; /* eigen logo per markt (beheer) gaat voor */
 const TEMPLATES=[
   {id:'tv-dark',name:'TradingView donker',nameEn:'TradingView dark'},
   {id:'tv-light',name:'TradingView licht',nameEn:'TradingView light'},
@@ -2085,8 +2218,8 @@ const PK={
   async enroll(){ const L=(nl,en)=>LANG==='en'?en:nl;
     if(!this.supported()) throw new Error(L('Deze browser ondersteunt geen passkeys.','This browser does not support passkeys.'));
     const p=profile(), login=(lsGet('twfbt_lastlogin')||p.name||'TWF').slice(0,60);
-    const cred=await navigator.credentials.create({publicKey:{ challenge:crypto.getRandomValues(new Uint8Array(32)), rp:{name:'TWF Backtest',id:location.hostname},
-      user:{id:new TextEncoder().encode('twfbt:'+String(DB.uid||'local')).slice(0,64),name:login+' · Backtest',displayName:(p.name||login)+' · TWF Backtest'},
+    const cred=await navigator.credentials.create({publicKey:{ challenge:crypto.getRandomValues(new Uint8Array(32)), rp:{name:'TWF',id:location.hostname},
+      user:{id:new TextEncoder().encode('twfbt:'+String(DB.uid||'local')).slice(0,64),name:login+' · TWF',displayName:(p.name||login)+' · TWF'},
       pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}], authenticatorSelection:{authenticatorAttachment:'platform',residentKey:'preferred',userVerification:'required'}, timeout:60000, attestation:'none' }});
     if(!cred) throw new Error('cancel');
     const sec=await DB.secret(); if(!sec) throw new Error(L('Geen actieve sessie, log opnieuw in.','No active session, sign in again.'));
@@ -2116,7 +2249,7 @@ const S={page:'testing',tab:'dash',slide:0,notifs:[],q:''};
 const profile=()=>DB.get('profile','me')||{};
 
 /* ---------------- Theme ---------------- */
-function setTheme(th){document.body.classList.toggle('theme-light',th==='light');lsSet('twfbt_theme',th);const n=th==='light'?'moon':'sun';$('#btnTheme').innerHTML=ic(n);$('#lgTheme').innerHTML=ic(n)}
+function setTheme(th){document.body.classList.toggle('theme-light',th==='light');lsSet('twfbt_theme',th);const n=th==='light'?'moon':'sun';$('#btnTheme').innerHTML=ic(n);$('#lgTheme').innerHTML=ic(n);try{applyColors()}catch(e){}}
 const curTheme=()=>document.body.classList.contains('theme-light')?'light':'dark';
 function setLang(l){LANG=l;lsSet('twfbt_lang',l);$('#appLang').value=l;$('#lgLang').value=l;applyStatic();if(!$('#app').classList.contains('hide')) render()}
 
@@ -2150,7 +2283,20 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){const o=[...documen
 /* =========================================================
    LOGIN
    ========================================================= */
-function drawLoginCandles(){
+function drawLoginBg(){ const sv=$('#lgBg'); if(!sv) return; const W=Math.max(innerWidth,360), H=Math.max(innerHeight,500); sv.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  let seed=11; const rnd=()=>{ seed=(seed*16807)%2147483647; return seed/2147483647 };
+  const step=W<700?13:17, n=Math.ceil(W/step)+1, top=H*(W<900?.12:.42), bot=H*(W<900?.42:.96); let p=0; const pts=[];
+  for(let i=0;i<n;i++){ const o=p, c=o+(rnd()-.45)*9+Math.sin(i/9)*2.2; const h=Math.max(o,c)+rnd()*5, l=Math.min(o,c)-rnd()*5; pts.push({o,c,h,l}); p=c }
+  const mn=Math.min(...pts.map(x=>x.l)), mx=Math.max(...pts.map(x=>x.h)), Y=v=>bot-(v-mn)/(mx-mn||1)*(bot-top);
+  let g='', ma='', acc=0; pts.forEach((x,i)=>{ const X=i*step+step/2, up=x.c>=x.o, col=up?'#2fbf71':'#e5534b';
+    g+=`<g style="animation-delay:${(i*14)}ms"><line x1="${X}" y1="${Y(x.h).toFixed(1)}" x2="${X}" y2="${Y(x.l).toFixed(1)}" stroke="${col}" stroke-width="1.2"/><rect x="${X-step*.3}" y="${Y(Math.max(x.o,x.c)).toFixed(1)}" width="${step*.6}" height="${Math.max(1.5,Math.abs(Y(x.o)-Y(x.c))).toFixed(1)}" rx="1.5" fill="${col}"/></g>`;
+    const k=Math.max(0,i-11), w=pts.slice(k,i+1); const av=w.reduce((a,y)=>a+y.c,0)/w.length; ma+=(i?'L':'M')+X.toFixed(1)+' '+Y(av).toFixed(1) });
+  const last=pts[pts.length-1];
+  sv.innerHTML=`<defs><linearGradient id="lgFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c74ff" stop-opacity=".35"/><stop offset="1" stop-color="#4c74ff" stop-opacity="0"/></linearGradient></defs>
+    <path d="${ma} L${W} ${H} L0 ${H}Z" fill="url(#lgFade)" opacity=".5"/><g class="lgc">${g}</g><path d="${ma}" fill="none" stroke="#6d8dff" stroke-width="2" opacity=".9"/>
+    <line class="lgpl" x1="0" x2="${W}" y1="${Y(last.c).toFixed(1)}" y2="${Y(last.c).toFixed(1)}" stroke="#2fbf71" stroke-dasharray="3 5" stroke-width="1"/>` }
+addEventListener('resize',()=>{ clearTimeout(window._lgbgT); window._lgbgT=setTimeout(()=>{ if(!$('#login').classList.contains('hide')) drawLoginBg() },150) });
+function drawLoginCandles(){ try{ drawLoginBg() }catch(e){}
   let g='',x=10,p=180; for(let i=0;i<26;i++){const o=p,c=p+(Math.sin(i*1.3)*22+(i%5===0?-30:6)-4),h=Math.min(o,c)-8-Math.abs(Math.cos(i)*14),l=Math.max(o,c)+8+Math.abs(Math.sin(i*2)*12);const up=c<o;
   g+=`<line x1="${x+6}" y1="${h}" x2="${x+6}" y2="${l}" stroke="${up?'#2fbf71':'#e5534b'}" stroke-width="2"/><rect x="${x}" y="${Math.min(o,c)}" width="12" height="${Math.max(3,Math.abs(c-o))}" rx="2" fill="${up?'#2fbf71':'#e5534b'}"/>`;p=c;x+=20}
   $('#loginCandles').innerHTML=g;
@@ -2180,6 +2326,7 @@ function enterApp(resumed){
   { const sv=$('#sideVer'); if(sv) sv.textContent=`${LANG==='en'?'Version':'Versie'}: ${CFG.VERSION} · TWF` }
   $('#login').classList.add('hide');$('#app').classList.remove('hide');document.body.classList.add('in-app');try{applyLogoTheme();applyAppIcon()}catch(e){}$('#fab').classList.remove('hide');
   $('#lgPass').value='';$('#rgPass').value='';
+  { const pf=profile(); const ob=!!pf.onboarded||DB.list('sessions').length>0; document.body.classList.toggle('onboarded',ob); if(!pf.onboarded&&DB.uid) Promise.resolve().then(()=>DB.put('profile',{...pf,id:'me',onboarded:new Date().toISOString()})).catch(()=>{}) }
   S.page='home';S.tab='dash';render(); journalLoad(true); Promise.all([MD.loadManifest(),MK.load(),checkAdmin()]).then(()=>{ if(!SX&&S.page!=='journal') render() });
   if(!resumed) toast(t('toast.welcome')+', '+(profile().name||''),'', 'ok',2500);
   updatedToast(); startUpdateWatch(); markUpdate(); if(!resumed) pkOffer(); setTimeout(()=>instOffer(),9000);
@@ -2248,12 +2395,51 @@ function money2(v,dp=2,from,sign){ const f=from||primCcy(), list=showCcys(), mai
 const ACCENTS=[['#4c74ff','TWF Blue'],['#2962FF','TradingView'],['#22ab94','Green'],['#9c6bff','Purple'],['#f0b429','Gold'],['#ef5350','Red']];
 function applyAccent(){ const a=(profile().prefs||{}).accent; const b=document.body; if(!a){ ['--accent','--accent2','--accentSoft'].forEach(k=>b.style.removeProperty(k)); return }
   const r=parseInt(a.slice(1,3),16),g=parseInt(a.slice(3,5),16),bl=parseInt(a.slice(5,7),16); b.style.setProperty('--accent',a); b.style.setProperty('--accent2',`rgb(${Math.round(r*.8)},${Math.round(g*.8)},${Math.round(bl*.8)})`); b.style.setProperty('--accentSoft',`rgba(${r},${g},${bl},.14)`) }
+/* v10.1: KLEUREN — eigen kleuren per thema (achtergrond, panelen, tekst, winst, verlies) */
+const CPRE={
+  dark:[['midnight','TWF Midnight',{bg:'#06080c',panel:'#0f131b',ink:'#eef1f6'}],['graphite','Graphite',{bg:'#111214',panel:'#1b1d21',ink:'#ececec'}],['navy','Navy',{bg:'#0a1020',panel:'#121b32',ink:'#e8eefc'}],['oled','OLED zwart',{bg:'#000000',panel:'#0c0c0e',ink:'#f2f2f2'}],['tv','TradingView',{bg:'#131722',panel:'#1e222d',ink:'#d1d4dc'}]],
+  light:[['white','Wit',{bg:'#eef1f6',panel:'#ffffff',ink:'#0d1320'}],['paper','Papier',{bg:'#f3efe6',panel:'#fffdf8',ink:'#1d1a14'}],['cool','Koel grijs',{bg:'#e4e8ef',panel:'#f8fafc',ink:'#0f172a'}],['mint','Mint',{bg:'#eaf3ef',panel:'#ffffff',ink:'#0f1f19'}]]
+};
+const PNPRE=[['std',{nl:'Groen / rood',en:'Green / red'},{pos:'#2fbf71',neg:'#e5534b'}],['tv',{nl:'TradingView',en:'TradingView'},{pos:'#089981',neg:'#f23645'}],['cb',{nl:'Blauw / oranje',en:'Blue / orange'},{pos:'#2f81f7',neg:'#f0883e'}],['neon',{nl:'Neon',en:'Neon'},{pos:'#00e676',neg:'#ff1744'}]];
+const CDEF={dark:{bg:'#06080c',panel:'#0f131b',ink:'#eef1f6',pos:'#2fbf71',neg:'#e5534b'},light:{bg:'#eef1f6',panel:'#ffffff',ink:'#0d1320',pos:'#1f9d55',neg:'#d64545'}};
+const hx=h=>{ h=String(h||'').replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16)||0; return [n>>16&255,n>>8&255,n&255] };
+const cmix=(a,b,t)=>{ const A=hx(a),B=hx(b); return '#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('') };
+const lum=h=>{ const [r,g,b]=hx(h).map(v=>v/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)); return .2126*r+.7152*g+.0722*b };
+function themeColors(th){ th=th||curTheme(); const c=((prefsSafe().colors)||{})[th]||{}; return {...CDEF[th],...c} }
+const CVARS=['--bg','--bg2','--panel','--panel2','--line','--line2','--ink','--ink2','--ink3','--pos','--neg'];
+function applyColors(){ const th=curTheme(), own=((prefsSafe().colors)||{})[th], st=document.body.style;
+  if(!own||!Object.keys(own).length){ CVARS.forEach(k=>st.removeProperty(k)); return }
+  const c=themeColors(th), dark=lum(c.bg)<.35;
+  const v={'--bg':c.bg,'--bg2':cmix(c.bg,c.panel,.5),'--panel':c.panel,'--panel2':cmix(c.panel,c.ink,dark?.045:.035),'--line':cmix(c.panel,c.ink,dark?.1:.11),'--line2':cmix(c.panel,c.ink,dark?.17:.19),
+    '--ink':c.ink,'--ink2':cmix(c.ink,c.panel,dark?.26:.2),'--ink3':cmix(c.ink,c.panel,dark?.44:.36),'--pos':c.pos,'--neg':c.neg};
+  for(const k in v) st.setProperty(k,v[k]) }
+function colorsHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, th=curTheme(), c=themeColors(th), own=((prefsSafe().colors)||{})[th]||{}, pf=prefsSafe();
+  const cur=CPRE[th].find(([,,p])=>p.bg===c.bg&&p.panel===c.panel&&p.ink===c.ink), pn=PNPRE.find(([,,p])=>p.pos===c.pos&&p.neg===c.neg);
+  const sw=(k,lab,val)=>`<label class="cpick"><input type="color" data-col="${k}" value="${val}"><span class="cdot" style="background:${val}"></span><span><b>${lab}</b><small>${val.toUpperCase()}</small></span></label>`;
+  return `<div class="srow col"><div class="stx"><b>${L('Kleurenthema','Colour theme')} · ${th==='dark'?L('donker','dark'):L('licht','light')}</b><small>${L('Kies een basis en pas daarna elke kleur zelf aan. Donker en licht hebben elk hun eigen kleuren.','Pick a base and then fine-tune every colour. Dark and light each have their own colours.')}</small></div>
+     <div class="cpres">${CPRE[th].map(([k,n,p])=>`<button class="cpre ${cur&&cur[0]===k?'on':''}" data-cpre="${k}" style="background:${p.bg}"><span style="background:${p.panel};color:${p.ink}"><i style="background:var(--accent)"></i>Aa</span><small style="color:${p.ink}">${n}</small></button>`).join('')}</div></div>
+   <div class="srow col"><div class="stx"><b>${L('Winst- en verlieskleuren','Profit and loss colours')}</b></div>
+     <div class="cpres">${PNPRE.map(([k,n,p])=>`<button class="cpn ${pn&&pn[0]===k?'on':''}" data-cpn="${k}"><span style="background:${p.pos}"></span><span style="background:${p.neg}"></span><small>${n[LANG]||n.nl}</small></button>`).join('')}</div></div>
+   <div class="srow col"><div class="stx"><b>${L('Zelf kiezen','Custom')}</b><small>${L('Tik op een kleur om hem aan te passen.','Tap a colour to change it.')}</small></div>
+     <div class="cpicks">${sw('bg',L('Achtergrond','Background'),c.bg)}${sw('panel',L('Panelen','Panels'),c.panel)}${sw('ink',L('Tekst','Text'),c.ink)}${sw('accent',L('Accent','Accent'),pf.accent||getComputedStyle(document.body).getPropertyValue('--accent').trim()||'#4c74ff')}${sw('pos',L('Winst','Profit'),c.pos)}${sw('neg',L('Verlies','Loss'),c.neg)}</div>
+     ${Object.keys(own).length||pf.accent?`<button class="btn btn-g" data-creset style="margin-top:12px">${ic('undo',15)} ${L('Standaardkleuren','Default colours')}</button>`:''}</div>` }
+function bindColors(root,rerender){ const th=curTheme();
+  const save=async fn=>{ await savePrefG(np=>{ np.prefs.colors={...(np.prefs.colors||{})}; np.prefs.colors[th]={...(np.prefs.colors[th]||{})}; fn(np.prefs.colors[th],np.prefs) }); applyColors(); applyAccent(); rerender() };
+  root.querySelectorAll('[data-cpre]').forEach(b=>b.onclick=()=>{ const p=CPRE[th].find(x=>x[0]===b.dataset.cpre)[2]; save(c=>Object.assign(c,p)) });
+  root.querySelectorAll('[data-cpn]').forEach(b=>b.onclick=()=>{ const p=PNPRE.find(x=>x[0]===b.dataset.cpn)[2]; save(c=>Object.assign(c,p)) });
+  root.querySelectorAll('[data-col]').forEach(inp=>{ const k=inp.dataset.col;
+    inp.oninput=()=>{ const lab=inp.closest('.cpick'); lab.querySelector('.cdot').style.background=inp.value; lab.querySelector('small').textContent=inp.value.toUpperCase();
+      if(k==='accent'){ document.body.style.setProperty('--accent',inp.value); return } const c={...themeColors(th),[k]:inp.value}; const o=prefsSafe(); o.colors=o.colors||{}; const keep=o.colors[th]; o.colors[th]=c; applyColors(); o.colors[th]=keep };
+    inp.onchange=()=>save((c,p)=>{ if(k==='accent') p.accent=inp.value; else c[k]=inp.value }) });
+  const r=root.querySelector('[data-creset]'); if(r) r.onclick=()=>save((c,p)=>{ Object.keys(c).forEach(x=>delete c[x]); delete p.accent });
+}
+async function savePrefG(fn){ const p=profile(); const np={...p,id:'me',prefs:{...(p.prefs||{})}}; fn(np); await DB.put('profile',np); toast(t('toast.saved'),'','ok',1200) }
 function avatarHtml(cls){ const p=profile(); return `<div class="${cls}" style="${p.photo?`background-image:url(${p.photo})`:''}" title="${esc(p.name||'')}">${p.photo?'':esc((p.name||'?').trim().charAt(0).toUpperCase())}</div>` }
 function pickPhoto(){ return new Promise(res=>{ const i=document.createElement('input'); i.type='file'; i.accept='image/*'; i.onchange=()=>{ const f=i.files[0]; if(!f) return res(null); const im=new Image(); im.onload=()=>{ const S=192, c=document.createElement('canvas'); c.width=c.height=S; const x=c.getContext('2d'), m=Math.min(im.width,im.height); x.drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,S,S); URL.revokeObjectURL(im.src); res(c.toDataURL('image/jpeg',.86)) }; im.onerror=()=>res(null); im.src=URL.createObjectURL(f) }; i.click() }) }
 function greet(){const h=new Date().getHours();return t(h<6?'hello.night':h<12?'hello.morning':h<18?'hello.afternoon':'hello.evening')}
 function renderSide(){
   const p=profile(); $('#profName').textContent=p.name||'—';
-  $('#avatar').firstChild.nodeValue=p.photo?'':(p.name||'?').trim().charAt(0).toUpperCase(); $('#avatar').style.backgroundImage=p.photo?`url(${p.photo})`:''; $('#avatar').classList.toggle('ph',!!p.photo); applyAccent();
+  $('#avatar').firstChild.nodeValue=p.photo?'':(p.name||'?').trim().charAt(0).toUpperCase(); $('#avatar').style.backgroundImage=p.photo?`url(${p.photo})`:''; $('#avatar').classList.toggle('ph',!!p.photo); applyAccent(); applyColors();
   const b=$('#tierBadge'); b.textContent=p.tier==='elite'?'Elite':'Institute'; b.classList.toggle('elite',p.tier==='elite');
   const jp=S.page==='journal'&&JX()?JX().page():null, ar=areaOf(S.page);
   document.querySelectorAll('#app [data-go]').forEach(x=>x.classList.toggle('on',x.dataset.go===S.page&&(!x.dataset.jp||x.dataset.jp===jp)));
@@ -2311,11 +2497,12 @@ function pageHome(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), sm=J&&J.ready()
   const pp=sm&&sm.n?Math.round(sm.planPct):null, R=34, C=2*Math.PI*R;
   const disc=sm?`<button class="box hcard" data-hgo="journal" data-hjp="discipline"><div class="hlab">${ic('target',16)} Discipline<span class="hgo">${ic('next',16)}</span></div>
       <div class="hdisc"><div class="hring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="${R}" fill="none" stroke="var(--panel2)" stroke-width="8"/><circle cx="40" cy="40" r="${R}" fill="none" stroke="${pp==null?'var(--line2)':pp>=80?'#2fbf71':pp>=60?'#e0a33a':'#e5534b'}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C*(pp||0)/100} ${C}" transform="rotate(-90 40 40)"/></svg><b>${pp==null?'—':pp+'%'}</b></div>
-      <div class="hdtx"><div><b>${sm.streak}</b> ${L(sm.streak===1?'dag op rij volgens plan':'dagen op rij volgens plan',sm.streak===1?'day in a row on plan':'days in a row on plan')}</div>${sm.fine?`<div class="chip amber" style="margin-top:8px">${L('Boete','Fine')}: ${sm.fmt(sm.fine,{dp:0})}${sm.goal?' → '+esc(sm.goal):''}</div>`:`<div class="muted" style="margin-top:6px;font-size:13px">${L('Trades volgens je plan','Trades following your plan')}</div>`}</div></div></button>`
+      <div class="hdtx"><div><b>${sm.streak}</b> ${L(sm.streak===1?'dag op rij volgens plan':'dagen op rij volgens plan',sm.streak===1?'day in a row on plan':'days in a row on plan')}</div>${sm.fine?`<div class="chip amber" style="margin-top:8px">${L('Boete','Fine')}: ${sm.fmt(sm.fine,{dp:0})}${sm.goal?' → '+esc(sm.goal):''}</div>`:`<div class="muted" style="margin-top:6px;font-size:13px">${L('Trades volgens je plan','Trades following your plan')}</div>`}</div></div>
+      ${sm.planDots.length?`<div class="hdots" title="${L('Laatste 20 trades: groen = volgens plan','Last 20 trades: green = on plan')}">${sm.planDots.map(v=>`<i class="${v?'y':'n'}"></i>`).join('')}</div><div class="hdl">${L('Laatste 20 trades','Last 20 trades')}</div>`:''}</button>`
     :`<div class="box hcard">${sk}</div>`;
   // laatste trades
   const lt=sm?`<div class="box hcard"><div class="hlab">${ic('list',16)} ${L('Laatste trades','Latest trades')}<button class="hlink" data-hgo="journal" data-hjp="trades">${L('Alles','All')} ${ic('next',14)}</button></div>
-      ${sm.last.length?`<div class="hlist">${sm.last.map(t=>`<button class="hli" data-htr="${esc(t.id)}"><span class="hdir ${t.dir}">${t.dir==='short'?'S':'L'}</span><span class="hlt"><b>${esc(t.pair||'—')}</b><small>${new Date(t.date).toLocaleDateString(locale(),{day:'numeric',month:'short'})} · ${new Date(t.date).toLocaleTimeString(locale(),{hour:'2-digit',minute:'2-digit'})}</small></span><b class="${sgn(t.pnl)}">${sm.fmt(t.pnl,{sign:1})}</b></button>`).join('')}</div>`
+      ${sm.last.length?`<div class="hlist">${sm.last.map(t=>`<button class="hli" data-htr="${esc(t.id)}"><span class="hdir ${t.dir}">${dirArrow(t.dir!=='short',18)}</span><span class="hlt"><b>${esc(t.pair||'—')}</b><small>${new Date(t.date).toLocaleDateString(locale(),{day:'numeric',month:'short'})} · ${new Date(t.date).toLocaleTimeString(locale(),{hour:'2-digit',minute:'2-digit'})}</small></span><b class="${sgn(t.pnl)}">${sm.fmt(t.pnl,{sign:1})}</b></button>`).join('')}</div>`
         :`<div class="muted" style="padding:10px 0">${L('Nog geen trades. Koppel MT5 of voeg er een toe met ＋.','No trades yet. Connect MT5 or add one with ＋.')}</div>`}</div>`
     :`<div class="box hcard">${sk}</div>`;
   // backtest
@@ -2333,13 +2520,32 @@ function pageHome(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), sm=J&&J.ready()
       <div class="hbtb"><button class="btn btn-g" data-hplus="diary">${ic('edit',14)} ${dy&&dy.date===today?L('Nog een notitie','Another entry'):L('Schrijf over vandaag','Write about today')}</button>${dy?'':`<button class="btn btn-g" data-himport>${ic('download',14)} Notion</button>`}</div></div>`
     :`<div class="box hcard">${sk}</div>`;
   const q=sm?sm.quote:null;
+  // maandkalender
+  let cal=`<div class="box hcard">${sk}</div>`;
+  if(sm){ const now=new Date(), y=now.getFullYear(), mo=now.getMonth(), first=new Date(y,mo,1), off=(first.getDay()+6)%7, nd=new Date(y,mo+1,0).getDate(), td=now.getDate();
+    const vals=Object.entries(sm.days).filter(([k])=>k.startsWith(`${y}-${String(mo+1).padStart(2,'0')}`)).map(([,v])=>Math.abs(v)), mx=Math.max(1,...vals);
+    let cells=''; for(let i=0;i<off;i++) cells+='<span class="hcd e"></span>';
+    for(let d=1;d<=nd;d++){ const k=`${y}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`, v=sm.days[k]; const a=v!=null?(.18+.55*Math.abs(v)/mx).toFixed(2):0;
+      cells+=`<span class="hcd${v>0?' p':v<0?' n':''}${d===td?' td':''}" style="${v!=null?`--k:${a}`:''}" title="${v!=null?sm.fmt(v,{sign:1}):''}">${d}</span>` }
+    const mt=Object.entries(sm.days).filter(([k])=>k.startsWith(`${y}-${String(mo+1).padStart(2,'0')}`)).reduce((a,[,v])=>a+v,0);
+    cal=`<button class="box hcard" data-hgo="journal" data-hjp="calendar"><div class="hlab">${ic('calendar',16)} ${now.toLocaleDateString(locale(),{month:'long',year:'numeric'})}<span class="hgo ${sgn(mt)}" style="font-weight:800">${sm.fmt(mt,{sign:1})}</span></div>
+      <div class="hcal">${['M','D','W','D','V','Z','Z'].map(x=>`<span class="hwd">${LANG==='en'?'':x}</span>`).join('')}${cells}</div></button>` }
+  const sts=sm?`<button class="box hcard" data-hgo="journal" data-hjp="stats"><div class="hlab">${ic('bars',16)} ${L('Statistieken','Statistics')}<span class="hgo">${ic('next',16)}</span></div>
+      <div class="hstats"><div><small>Profit factor</small><b>${sm.n?(sm.pf>=99?'∞':sm.pf.toFixed(2)):'—'}</b></div><div><small>${L('Gem. R','Avg R')}</small><b>${sm.avgR!=null?sm.avgR.toFixed(2)+'R':'—'}</b></div>
+      <div><small>${L('Groene dagen','Green days')}</small><b>${sm.n?Math.round(sm.greenDays)+'%':'—'}</b></div><div><small>${L('Winst / verlies','Wins / losses')}</small><b><span class="pos">${sm.wins}</span> / <span class="neg">${sm.losses}</span></b></div>
+      <div><small>${L('Beste trade','Best trade')}</small><b class="pos">${sm.n?sm.fmt(sm.best,{sign:1}):'—'}</b></div><div><small>${L('Max. drawdown','Max drawdown')}</small><b class="neg">${sm.n?sm.fmt(-sm.mdd):'—'}</b></div></div></button>`
+    :`<div class="box hcard">${sk}</div>`;
   return `<div class="hpage"><div class="hhead"><div><h1>${greet()}${nm?', '+esc(nm.split(' ')[0]):''}</h1><p>${dt}</p></div>${sm&&sm.mt5?`<button class="hmt5 ${sm.mt5.k}" data-hgo="journal" data-hjp="mt5"><span class="dot"></span>MT5 · ${esc(sm.mt5.k==='live'?L('verbonden','connected'):sm.mt5.k==='stale'?L('stil','idle'):L('niet gekoppeld','not connected'))}</button>`:''}</div>
-    <div class="hgrid">${live}${disc}${lt}${bt}${diary}${q?`<div class="box hcard hq"><div class="quote">“${esc(q)}”</div></div>`:''}</div></div>` }
+    <div class="hgrid">${live}${disc}${lt}${bt}${diary}${cal}${sts}${sm?`<div class="box hcard hq"><div class="hlab">${ic('wallet',16)} ${L('Live-rekeningen','Live accounts')}<button class="hlink" data-hplus="live">${ic('plus',14)} ${L('Toevoegen','Add')}</button></div>
+      <div class="haccts">${sm.accts.map(a=>`<button class="hacc" data-hacct="${esc(a.key)}"><span class="ad">${ic('plug',16)}</span><span class="hat"><b>${esc(a.name)}</b><small>${esc(a.sub)} · ${a.n} trades</small></span><span class="har"><b>${a.f(a.bal)}</b><small class="${sgn(a.today)}">${L('vandaag','today')} ${a.f(a.today,{sign:1})}</small></span></button>`).join('')}</div>
+      ${q?`<div class="quote hqt">“${esc(q)}”</div>`:''}</div>`:''}</div></div>` }
 function bindHome(m){ const J=JX();
   m.querySelectorAll('[data-hgo]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); go(b.dataset.hgo,b.dataset.hjp) });
   m.querySelectorAll('[data-htr]').forEach(b=>b.onclick=()=>J&&J.openTrade(b.dataset.htr));
   m.querySelectorAll('[data-hdy]').forEach(b=>b.onclick=()=>J&&J.openDiary(b.dataset.hdy));
   m.querySelectorAll('[data-hplus="diary"]').forEach(b=>b.onclick=()=>J&&J.addDiary());
+  m.querySelectorAll('[data-hplus="live"]').forEach(b=>b.onclick=()=>J&&J.addLive());
+  m.querySelectorAll('[data-hacct]').forEach(b=>b.onclick=()=>{ if(!J) return; J.setAcct(b.dataset.hacct); go('journal','overview') });
   m.querySelectorAll('[data-himport]').forEach(b=>b.onclick=()=>J&&J.importNotion());
 }
 
@@ -2398,10 +2604,11 @@ function tabDash(){
   const st=stats(), p=profile();
   const ss=DB.list('sessions').sort((a,b)=>(b.updated||b.created).localeCompare(a.updated||a.created)).slice(0,6);
   const slides=[['wallet','s1'],['compass','s2'],['play','s3'],['book','s4']];
-  return `<div class="dash">
-   <div class="hero">
-     <div class="box welcome"><h2>${greet()}, ${esc((p.name||'').split(' ')[0])}</h2><p>${t('dash.welcome')}</p>
-       <button class="btn btn-p" data-act="newsess">${ic('plus',16)} ${t('new.session')}</button></div>
+  const ob=document.body.classList.contains('onboarded');
+  return `<div class="dash${ob?' ob':''}">
+   <div class="hero${ob?' ob':''}">
+     ${ob?'':`<div class="box welcome"><h2>${greet()}, ${esc((p.name||'').split(' ')[0])}</h2><p>${t('dash.welcome')}</p>
+       <button class="btn btn-p" data-act="newsess">${ic('plus',16)} ${t('new.session')}</button></div>`}
      <button class="choice primary" data-act="newsess"><span class="ci">${ic('plus')}</span><div><b>${t('dash.bt')} ${ic('info',14)}</b><span>${t('dash.btsub')}</span></div></button>
      <button class="choice" data-act="newpf"><span class="ci">${ic('trophy')}</span><div><b>${t('dash.pf')} ${ic('info',14)}</b><span>${t('dash.pfsub')}</span></div></button>
    </div>
@@ -2414,12 +2621,12 @@ function tabDash(){
    <div class="box recent"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div><h3>${t('dash.recent')}</h3><div class="sub">${t('dash.recentsub')}</div></div><button class="btn btn-g" data-tab="sessions">${t('tab.sessions')} ${ic('next',16)}</button></div>
      ${ss.length?ss.map(sessRow).join(''):`<div class="empty"><div class="ei">${ic('layers',24)}</div><h4>${t('dash.nosess')}</h4><div>${t('dash.nosesssub')}</div><button class="btn btn-p" data-act="newsess" style="margin-top:8px">${ic('plus',16)} ${t('new.session')}</button></div>`}
    </div>
-   <div class="box guide"><h3 style="margin-bottom:14px">${t('dash.guide')}</h3>
+   ${ob?'':`<div class="box guide"><h3 style="margin-bottom:14px">${t('dash.guide')}</h3>
      <div class="carousel"><div class="slides" id="slides" style="transform:translateX(-${S.slide*100}%)">
        ${slides.map(([i,k],n)=>`<div class="slide"><div class="ill">${ic(i,46)}</div><b>${n+1}. ${t(k+'.t')}</b><span>${t(k+'.d')}</span></div>`).join('')}
      </div></div>
      <div class="cnav"><button class="ib" data-act="slprev">${ic('back')}</button><div class="dots">${slides.map((_,n)=>`<i class="${n===S.slide?'on':''}" data-sl="${n}"></i>`).join('')}</div><button class="ib" data-act="slnext">${ic('next')}</button></div>
-   </div>
+   </div>`}
   </div>`;
 }
 function sessRow(s){
@@ -2453,7 +2660,7 @@ function tabTrades(){
     <div style="flex:1"></div>${tr.length?`<span class="pill">${tr.length} trades</span><span class="pill">${t('an.wr')} ${Math.round(wins/tr.length*100)}%</span><span class="pill npill ${tot>=0?'pos':'neg'}">${t('an.net')} ${money2(tot,2,pc,true).replace('class="m2"','class="m2 inl"')}</span>`:''}</div>`;
   if(!tr.length) return head+`<table class="tbl"><tbody><tr><td><div class="empty"><div class="ei">${ic('doc',24)}</div><h4>${t('trades.empty')}</h4><div>${t('trades.emptysub')}</div></div></td></tr></tbody></table>`;
   return head+`<table class="tbl trtbl"><thead><tr><th>${t('date')}</th><th>${t('f.session')}</th><th>${t('markets')}</th><th>${t('f.side')}</th><th>${t('tr.qty')}</th><th>Entry</th><th>Exit</th><th>R</th><th>${t('tr.reason')}</th><th style="text-align:right">P&L</th></tr></thead><tbody>
-   ${tr.map(x=>`<tr class="click" data-otr="${x.sess.id}|${x.id}"><td class="c-date">${new Date(x.closeTime*1000).toLocaleString(locale(),{timeZone:'UTC',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td><td class="c-sess">${esc(x.sess.name)}</td><td class="c-sym"><b>${x.sym}</b></td><td class="c-side"><span class="pill ${x.side==='buy'?'acc':'neg'}">${x.side==='buy'?'Long':'Short'}</span></td><td data-l="${t('tr.qty')}">${x.qty}</td><td data-l="Entry">${x.entry.toFixed(SYMCFG[x.sym].dec)}</td><td data-l="Exit">${x.exit.toFixed(SYMCFG[x.sym].dec)}</td><td data-l="R">${x.rr!=null?x.rr+'R':'—'}</td><td data-l="${t('tr.reason')}">${reasonLbl(x.reason)}</td><td class="c-pnl" style="text-align:right"><b class="${x.pnl>=0?'pos':'neg'}">${money2(trIn(x,pc),2,pc,true)}</b></td></tr>`).join('')}</tbody></table>`;
+   ${tr.map(x=>`<tr class="click" data-otr="${x.sess.id}|${x.id}"><td class="c-date">${new Date(x.closeTime*1000).toLocaleString(locale(),{timeZone:'UTC',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td><td class="c-sess">${esc(x.sess.name)}</td><td class="c-sym"><b>${x.sym}</b></td><td class="c-side"><span class="pill dirp ${x.side==='buy'?'acc':'neg'}">${dirArrow(x.side==='buy',13)}${x.side==='buy'?'Long':'Short'}</span></td><td data-l="${t('tr.qty')}">${x.qty}</td><td data-l="Entry">${x.entry.toFixed(SYMCFG[x.sym].dec)}</td><td data-l="Exit">${x.exit.toFixed(SYMCFG[x.sym].dec)}</td><td data-l="R">${x.rr!=null?x.rr+'R':'—'}</td><td data-l="${t('tr.reason')}">${reasonLbl(x.reason)}</td><td class="c-pnl" style="text-align:right"><b class="${x.pnl>=0?'pos':'neg'}">${money2(trIn(x,pc),2,pc,true)}</b></td></tr>`).join('')}</tbody></table>`;
 }
 
 /* ----- Get started ----- */
@@ -2470,10 +2677,10 @@ function pageAccounts(){
   const ac=DB.list('accounts').sort((a,b)=>a.created.localeCompare(b.created)), ss=DB.list('sessions');
   return `<div class="phead"><h1>${t('acc.title')}</h1><div style="color:var(--ink2);margin:-12px 0 24px">${t('acc.sub')}</div></div>
   <div class="pbody"><div class="toolbar"><div style="flex:1"></div><button class="btn btn-p" data-act="newacc">${ic('plus',16)} ${t('acc.new')}</button></div>
-  ${ac.length?`<div class="grid-cards">${ac.map(a=>`<div class="ccard"><div class="top"><div><div class="ttl">${esc(a.name)}</div><div style="color:var(--ink3);font-size:13px;margin-top:4px">${t('acc.used')} ${(n=>n+' '+(n===1?(LANG==='en'?'session':'sessie'):t('acc.sessions')))(ss.filter(s=>s.account===a.id).length)}</div></div><span class="pill acc">1:${a.leverage}</span></div>
+  ${ac.length?`<div class="grid-cards">${ac.map(a=>`<div class="ccard"><div class="top"><div><div class="ttl">${esc(a.name)}</div><div style="color:var(--ink3);font-size:13px;margin-top:4px">${t('acc.used')} ${(n=>n+' '+(n===1?(LANG==='en'?'session':'sessie'):t('acc.sessions')))(ss.filter(s=>s.account===a.id).length)}</div></div><span class="pill acc">${a.leverage?'1:'+a.leverage:'—'}</span></div>
    ${(()=>{ const L=(nl,en)=>LANG==='en'?en:nl, r=accRealized(a.id), pc=a.balance?r/a.balance*100:0, cls=r>0?'pos':r<0?'neg':'', sg=r>0?'+':r<0?'−':'';
      return `<div><div class="bal">${fmtMoney(a.balance+r,a.currency)}</div><div class="bals">${fmtMoney(a.balance,a.currency)} ${L('startkapitaal','starting capital')}</div></div>
-   <div class="meta"><div><small>${L('Gerealiseerd','Realized')}</small><b class="${cls}">${sg}${fmtMoney(Math.abs(r),a.currency)}</b></div><div><small>${L('Gerealiseerd %','Realized %')}</small><b class="${cls}">${sg}${Math.abs(pc).toFixed(2)}%</b></div><div><small>${t('acc.currency')}</small><b>${esc(a.currency)}</b></div><div><small>${t('acc.leverage')}</small><b>1:${a.leverage}</b></div><div><small>${t('acc.mc')}</small><b>${a.mc}%</b></div><div><small>${t('acc.so')}</small><b>${a.so}%</b></div></div>` })()}
+   <div class="meta"><div><small>${L('Gerealiseerd','Realized')}</small><b class="${cls}">${sg}${fmtMoney(Math.abs(r),a.currency)}</b></div><div><small>${L('Gerealiseerd %','Realized %')}</small><b class="${cls}">${sg}${Math.abs(pc).toFixed(2)}%</b></div><div><small>${t('acc.currency')}</small><b>${esc(a.currency)}</b></div><div><small>${t('acc.leverage')}</small><b>${a.leverage?'1:'+a.leverage:'—'}</b></div><div><small>${t('acc.mc')}</small><b>${a.mc!=null?a.mc+'%':'—'}</b></div><div><small>${t('acc.so')}</small><b>${a.so!=null?a.so+'%':'—'}</b></div></div>` })()}
    <div class="acts"><button class="btn btn-g" data-editacc="${a.id}">${ic('edit',14)} ${t('edit')}</button><button class="btn btn-g" data-delacc="${a.id}">${ic('trash',14)}</button></div></div>`).join('')}</div>`
    :`<div class="box empty"><div class="ei">${ic('wallet',24)}</div><h4>${t('acc.empty')}</h4><div>${t('acc.emptysub')}</div><button class="btn btn-p" data-act="newacc" style="margin-top:8px">${ic('plus',16)} ${t('acc.new')}</button></div>`}</div>`;
 }
@@ -2568,7 +2775,7 @@ function sessionModal(type='backtest',editId,opts){
     let c='';
     if(st.sec==='basics') c=`
       <div class="field"><label>${t('ns.name')} <span class="req">*</span></label><input class="inp" id="nName" placeholder="${t('ns.namep')}" value="${esc(st.name)}"></div>
-      <div class="field"><label>${t('ns.account')} <span class="req">*</span></label><select class="inp" id="nAcc">${accs.map(a=>`<option value="${a.id}" ${a.id===st.account?'selected':''}>${esc(a.name)} — ${fmtMoney(a.balance,a.currency)} · 1:${a.leverage}</option>`).join('')}<option value="__new">${t('ns.newacc')}</option></select></div>
+      <div class="field"><label>${t('ns.account')} <span class="req">*</span></label><select class="inp" id="nAcc">${accs.map(a=>`<option value="${a.id}" ${a.id===st.account?'selected':''}>${esc(a.name)} — ${fmtMoney(a.balance,a.currency)} · ${a.leverage?'1:'+a.leverage:'—'}</option>`).join('')}<option value="__new">${t('ns.newacc')}</option></select></div>
       <div class="field"><label>${t('ns.strategy')}</label><select class="inp" id="nStr"><option value="">${t('ns.nostr')}</option>${strs.map(s=>`<option value="${s.id}" ${s.id===st.strategy?'selected':''}>${esc(s.name)}</option>`).join('')}<option value="__new">${t('ns.newstr')}</option></select></div>
       <div class="field"><label>${t('ns.assets')} <span class="req">*</span></label>
         <div class="ms ${st.ddOpen?'open':''}"><div class="box2" id="nAssets"><span class="mschev" title="${st.ddOpen?'Inklappen':'Uitklappen'}"><svg viewBox="0 0 12 12"><path d="M3 4.5l3 3 3-3"/></svg></span>${st.assets.length?st.assets.map(a=>`<span class="tagx">${symBadge(a).replace('class="sym"','class="sym" style="width:18px;height:18px;font-size:7px;background:'+asset(a).col+'"')}${a}<i data-rm="${a}">✕</i></span>`).join(''):`<span class="ph">${t('ns.assetsp')}</span>`}</div>
@@ -2809,7 +3016,7 @@ function mkInfo(sym){ return {...(BUILTIN_INFO[sym]||{}),...(MARKETS[sym]||{})} 
 function pageMarkets(){
   const L=(nl,en)=>LANG==='en'?en:nl, cat=S.mkCat||'all', cats=[...new Set(ASSETS.map(a=>a.cat))];
   const list=ASSETS.filter(a=>cat==='all'||a.cat===cat);
-  return `<div class="phead"><div class="row" style="align-items:flex-end"><div><h1>${L('Markten','Markets')}</h1><div class="psub">${L('Alle markten in TWF Backtest. Wijzigingen zie je meteen overal in de app — voor iedereen.','All markets in TWF Backtest. Changes show up everywhere in the app right away — for everyone.')}</div></div><div class="spacer"></div>
+  return `<div class="phead"><div class="row" style="align-items:flex-end"><div><h1>${L('Markten','Markets')}</h1><div class="psub">${L('Alle markten in Backtest. Wijzigingen zie je meteen overal in de app — voor iedereen.','All markets in Backtest. Changes show up everywhere in the app right away — for everyone.')}</div></div><div class="spacer"></div>
     ${IS_ADMIN?`<button class="btn btn-p" id="mkNew">${ic('plus',15)} ${L('Nieuwe markt','New market')}</button>`:`<span class="mut" style="font-size:13px">${ic('lock',14)} ${L('Alleen admins kunnen markten wijzigen','Only admins can edit markets')}</span>`}</div>
     <div class="sschips" style="padding:16px 0 0">${[['all',L('Alles','All')],...cats.map(c=>[c,(MKCATS.find(x=>x[0]===c)||[c,c])[1]])].map(([k,l])=>`<button data-mkc="${k}" class="${cat===k?'on':''}">${l}</button>`).join('')}</div></div>
    <div class="pbody"><div class="mkgrid">${list.map(a=>{ const x=mkInfo(a.sym), rg=MD.range(a.sym), sp=SPEC[a.sym]||{};
@@ -2913,7 +3120,7 @@ new MutationObserver(ms=>{ for(const mu of ms) for(const n of mu.addedNodes){ if
 document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('input[type=date]').forEach(enhanceDate));
 
 /* ----- Settings ----- */
-const SETTABS=[['profile','user','Profiel','Profile'],['account','lock','Account','Account'],['look','sun','Weergave','Appearance'],['chart','chart','Chart','Chart'],['replay','play','Replay & handelen','Replay & trading'],['data','db','Data & opslag','Data & storage'],['links','link','Koppelingen','Connections'],['about','info','Over TWF Backtest','About TWF Backtest']];
+const SETTABS=[['profile','user','Profiel','Profile'],['account','lock','Account','Account'],['look','sun','Weergave','Appearance'],['chart','chart','Chart','Chart'],['replay','play','Replay & handelen','Replay & trading'],['data','db','Data & opslag','Data & storage'],['links','link','Koppelingen','Connections'],['about','info','Over TWF','About TWF']];
 function pageSettings(){
   const p=profile(), pf=p.prefs||{}, ts=trSet(), L=(nl,en)=>LANG==='en'?en:nl, tz=p.chartTz||'UTC', tab=S.setTab||'profile';
   const TOG=(id,on,title,sub)=>`<div class="srow"><div class="stx"><b>${title}</b>${sub?`<small>${sub}</small>`:''}</div><span class="sw ${on?'on':''}" data-pt="${id}"></span></div>`;
@@ -2948,6 +3155,8 @@ function pageSettings(){
      <div class="srow"><div class="stx"><b>${t('set.theme')}</b></div><div class="seg"><button class="${curTheme()==='dark'?'on':''}" data-th="dark">${t('set.dark')}</button><button class="${curTheme()==='light'?'on':''}" data-th="light">${t('set.light')}</button></div></div>
      <div class="srow"><div class="stx"><b>${t('set.lang')}</b><small>${L('De chart zelf is altijd Engels, net als TradingView.','The chart itself is always English, like TradingView.')}</small></div><div class="seg"><button class="${LANG==='nl'?'on':''}" data-lg="nl">NL</button><button class="${LANG==='en'?'on':''}" data-lg="en">EN</button></div></div>
      <div class="srow"><div class="stx"><b>${L('Accentkleur','Accent colour')}</b><small>${L('Kleur van knoppen en highlights.','Colour of buttons and highlights.')}</small></div><div class="accs">${ACCENTS.map(([c,n],i)=>`<button class="accsw ${(pf.accent||ACCENTS[0][0])===c?'on':''}" data-acc="${i===0?'':c}" title="${n}" style="background:${c}"></button>`).join('')}</div></div>
+     </div>
+     <h3 style="margin:22px 0 10px">${L('Kleuren','Colours')}</h3><div class="box" id="colBox">${colorsHtml()}</div><div class="box" style="margin-top:14px">
      ${TOG('compact',!!pf.compact,L('Compacte weergave','Compact view'),L('Kleinere marges in lijsten en tabellen.','Tighter spacing in lists and tables.'))}
      ${TOG('anim',pf.anim!==false,L('Animaties','Animations'),L('Vloeiende overgangen in de app.','Smooth transitions in the app.'))}</div>
      <h3 style="margin:22px 0 10px">${L('Valuta','Currency')}</h3><div class="box">
@@ -2956,7 +3165,7 @@ function pageSettings(){
      <div class="srow"><div class="stx"><b>${L('Wisselkoers','Exchange rate')}</b><small>${L('ECB-koersen via Frankfurter, elke 6 uur ververst.','ECB rates via Frankfurter, refreshed every 6 hours.')}${FX.date?' · '+FX.date:''}</small></div><span class="pill">1 USD = ${fmtCcy(FX.rate('USD',primCcy()==='USD'?'EUR':primCcy()),primCcy()==='USD'?'EUR':primCcy(),4)}</span></div></div>
      <h3 style="margin:22px 0 10px">Logo</h3><div class="box">
      <div class="srow"><div class="stx"><b>${L('Logo in de app','Logo in the app')}</b><small>${L('Kleur van het TWF-logo bovenin en in meldingen.','Colour of the TWF logo at the top and in notifications.')}</small></div><div class="lgpick">${Object.keys(LOGO_THEMES).map(k=>`<button class="${(pf.logoTheme||'blue')===k?'on':''}" data-lgt="${k}">${markTile(k,38)}<span>${LOGO_THEMES[k][LANG==='en'?'en':'nl']}</span></button>`).join('')}</div></div>
-     <div class="srow"><div class="stx"><b>${L('App-icoon (beginscherm)','App icon (home screen)')}</b><small>${L('Het icoon als je TWF Backtest op je iPhone of iPad op het beginscherm zet.','The icon when you add TWF Backtest to your iPhone or iPad home screen.')}</small></div><div class="lgpick">${Object.keys(LOGO_THEMES).map(k=>`<button class="${(pf.iconTheme||'blue')===k?'on':''}" data-ict="${k}">${markTile(k,38)}<span>${LOGO_THEMES[k][LANG==='en'?'en':'nl']}</span></button>`).join('')}</div></div>
+     <div class="srow"><div class="stx"><b>${L('App-icoon (beginscherm)','App icon (home screen)')}</b><small>${L('Het icoon als je TWF op je iPhone of iPad op het beginscherm zet.','The icon when you add TWF to your iPhone or iPad home screen.')}</small></div><div class="lgpick">${Object.keys(LOGO_THEMES).map(k=>`<button class="${(pf.iconTheme||'blue')===k?'on':''}" data-ict="${k}">${markTile(k,38)}<span>${LOGO_THEMES[k][LANG==='en'?'en':'nl']}</span></button>`).join('')}</div></div>
      <div class="lgprev">${markTile(pf.iconTheme||'blue',60)}<small>${L('<b>Let op:</b> iOS onthoudt het icoon op het moment dat je de app op je beginscherm zet. Heb je hem er al op staan? Houd het icoon ingedrukt → <i>Verwijder app</i>, en zet hem opnieuw op je beginscherm via Safari → Delen → <i>Zet op beginscherm</i>. Je data blijft gewoon bewaard.','<b>Note:</b> iOS keeps the icon from the moment you add the app to your home screen. Already added? Long-press the icon → <i>Remove App</i>, then add it again via Safari → Share → <i>Add to Home Screen</i>. Your data stays safe.')}</small></div></div>`;
   else if(tab==='chart') body=`<h2>Chart</h2><div class="box">
      ${SELR('defaultTemplate',t('set.templates'),t('set.tplhint'),allTplOpts(),p.defaultTemplate||'tv-dark')}
@@ -2983,7 +3192,7 @@ function pageSettings(){
      <div class="box"><h3>${L('Marktdata per markt','Market data per market')}</h3><div id="dMk"></div></div>`;
   else if(tab==='links') body=`<h2>${L('Koppelingen','Connections')}</h2><div class="box" id="lnk"><div class="mut">…</div></div>
      <div class="box"><h3>TWF Journal</h3>${ROW(L('Open TWF Journal','Open TWF Journal'),L('Zelfde account; je backtest-trades worden daar straks zichtbaar onder "Backtest".','Same account; your backtest trades will show up there under "Backtest".'),`<button class="btn btn-g" data-gs="journal">${ic('book',15)} TWF Journal ${ic('extlink',14)}</button>`)}</div>`;
-  else body=`<h2>${L('Over TWF Backtest','About TWF Backtest')}</h2>
+  else body=`<h2>${L('Over TWF','About TWF')}</h2>
      ${updBoxHtml()}
      <div class="box sabout"><div class="logo big"><div class="mark"><b>TWF</b><i></i></div><span>BACKTEST</span></div>
        <div><div class="abv">Versie <b>${CFG.VERSION}</b> · build ${CFG.BUILD}</div><div class="mut">Learn. Master. Trade.</div></div><div id="aHealth" class="ahealth"><span class="dot"></span> ${L('Controleren…','Checking…')}</div></div>
@@ -3053,6 +3262,7 @@ function bindPage(){
   q('[data-tier]').forEach(b=>b.onclick=()=>{tier=b.dataset.tier;q('[data-tier]').forEach(x=>x.classList.toggle('on',x===b))});
   const ps=m.querySelector('#pSave'); if(ps) ps.onclick=async()=>{await DB.put('profile',{...profile(),id:'me',name:m.querySelector('#pName').value.trim()||profile().name,tier,bio:(m.querySelector('#pBio')||{}).value||profile().bio||''});toast(t('toast.saved'),'','ok');render()};
   q('[data-th]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.th);render()});
+  { const cb=m.querySelector('#colBox'); if(cb){ const rr=()=>{ cb.innerHTML=colorsHtml(); bindColors(cb,rr); m.querySelectorAll('[data-acc]').forEach(x=>x.classList.toggle('on',(x.dataset.acc||'')===((profile().prefs||{}).accent||''))) }; bindColors(cb,rr) } }
   q('[data-lg]').forEach(b=>b.onclick=()=>setLang(b.dataset.lg));
   const savePref=async(fn)=>{ const p=profile(); const np={...p,id:'me',prefs:{...(p.prefs||{})},trading:{...trSet()}}; fn(np); await DB.put('profile',np); toast(t('toast.saved'),'','ok',1400) };
   q('[data-ps]').forEach(s=>s.onchange=()=>savePref(np=>{ const k=s.dataset.ps; if(k==='defaultTemplate') np.defaultTemplate=s.value; else if(k==='chartTz') np.chartTz=s.value; else np.prefs[k]=['defSpeed'].includes(k)?+s.value:s.value }));
@@ -3084,7 +3294,7 @@ function bindPage(){
     const pw=m.querySelector('#aPwB'); if(pw) pw.onclick=async()=>{ const a=m.querySelector('#aPw1').value, b=m.querySelector('#aPw2').value, er=m.querySelector('#aPwE'); er.textContent='';
       if(a.length<6){er.textContent=t('err.short');return} if(a!==b){er.textContent=LANG==='en'?'Passwords do not match':'Wachtwoorden zijn niet gelijk';return}
       if(!DB.sb){er.textContent='Local mode';return} const {error}=await DB.sb.auth.updateUser({password:a}); if(error){er.textContent=error.message;return} toast(t('toast.saved'),LANG==='en'?'Password changed — also for TWF Journal':'Wachtwoord gewijzigd — ook voor TWF Journal','ok'); m.querySelector('#aPw1').value=m.querySelector('#aPw2').value='' };
-    const ex=m.querySelector('#aExp'); if(ex) ex.onclick=()=>{ const out={app:'TWF Backtest',version:CFG.VERSION,exported:new Date().toISOString(),data:{}}; ['profile','accounts','strategies','sessions'].forEach(k=>out.data[k]=DB.list(k)); const bl2=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), a=document.createElement('a'); a.href=URL.createObjectURL(bl2); a.download=`twf-backtest-backup-${new Date().toISOString().slice(0,10)}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),2000) };
+    const ex=m.querySelector('#aExp'); if(ex) ex.onclick=()=>{ const out={app:'TWF',version:CFG.VERSION,exported:new Date().toISOString(),data:{}}; ['profile','accounts','strategies','sessions'].forEach(k=>out.data[k]=DB.list(k)); const bl2=new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), a=document.createElement('a'); a.href=URL.createObjectURL(bl2); a.download=`twf-backtest-backup-${new Date().toISOString().slice(0,10)}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),2000) };
     const im=m.querySelector('#aImp'); if(im) im.onclick=()=>{ const i=document.createElement('input'); i.type='file'; i.accept='.json,application/json'; i.onchange=async()=>{ try{ const j=JSON.parse(await i.files[0].text()); let n=0; for(const k of ['accounts','strategies','sessions']) for(const o of (j.data&&j.data[k])||[]){ await DB.put(k,o); n++ } toast(t('toast.saved'),n+' items','ok'); render() }catch(e){ toast('Error',e.message,'err') } }; i.click() };
     const oa=m.querySelector('#aOutAll'); if(oa) oa.onclick=async()=>{ try{ await DB.sb.auth.signOut({scope:'global'}) }catch(e){} logout() };
     q('[data-deltpl]').forEach(b=>b.onclick=async()=>{ const p=profile(); await DB.put('profile',{...p,id:'me',chartTpls:(p.chartTpls||[]).filter((_,i)=>i!==+b.dataset.deltpl)}); render() });
@@ -5986,7 +6196,7 @@ function instSnoozed(){ const v=+(localStorage.getItem(INST.key)||0); return v&&
 function instSnooze(days){ try{ localStorage.setItem(INST.key,String(Date.now()+days*86400000)) }catch(e){} }
 function instPlatform(){ const ua=navigator.userAgent||'', ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   const safari=/Safari/.test(ua)&&!/Chrome|CriOS|Edg|FxiOS|Firefox|OPR/.test(ua); return ios?'ios':(safari&&/Macintosh/.test(ua))?'macsafari':'other' }
-function instOffer(force){ if(instStandalone()) return; if(!force&&instSnoozed()) return; const name='TWF Backtest';
+function instOffer(force){ if(instStandalone()) return; if(!force&&instSnoozed()) return; const name='TWF';
   if(INST.evt){ toast(_IL('Installeer '+name+' als app','Install '+name+' as an app'),_IL('Eigen venster, icoon in je Dock of taakbalk en sneller openen.','Own window, an icon in your Dock or taskbar and faster to open.'),'info',20000,{label:_IL('Installeren','Install'),fn:async()=>{ const e=INST.evt; INST.evt=null; e.prompt(); try{ const r=await e.userChoice; if(r&&r.outcome==='accepted') toast(_IL('Geïnstalleerd','Installed'),name,'ok') }catch(_){} }}); instSnooze(14); return }
   const p=instPlatform();
   if(p==='macsafari'){ toast(_IL('Zet '+name+' in je Dock','Add '+name+' to your Dock'),_IL('Kies in de menubalk Archief → Voeg toe aan Dock. Dan opent hij als eigen app.','In the menu bar choose File → Add to Dock. It then opens as its own app.'),'info',20000); instSnooze(14); return }
@@ -6163,7 +6373,7 @@ function acctListHtml(){ const live={kind:'live'}; const A0=S.acct;
     D.live.map(la=>{ const s0=S.acct; S.acct='live:'+la.id; const A=acct(); S.acct=s0; return row('live:'+la.id,'live',la.name||'Live','MT5'+(la.login?' · '+la.login:'')+' · '+A.trades.length+' trades',S.blur?'••••':fmtM(balanceOf(A),A.ccy,{dp:0})) }).join('')+
     `<button class="addacct" data-addlive>${ic('plus',18)}<span><b>${L('Live-rekening toevoegen','Add live account')}</b><small>${L('Met een eigen API-sleutel voor de EA','With its own API key for the EA')}</small></span></button>`;
   if(D.bt.sessions.length){ h+=`<div class="grp">Backtest</div>`+D.bt.sessions.map(s=>{ const A={kind:'bt',trades:s.trades,payouts:[],adjs:[],capital:s.capital,ccy:s.ccy}; return row('bt:'+s.id,'bt',s.name,(s.type==='propfirm'?'Prop firm':'Backtest')+(s.acctName?' · '+s.acctName:'')+' · '+s.trades.length+' trades',fmtM(balanceOf(A),s.ccy,{dp:0})) }).join('') }
-  else h+=`<div class="grp">Backtest</div><div class="muted" style="padding:6px 4px 2px;font-size:13px">${L('Nog geen backtest-sessies. Maak er een in TWF Backtest.','No backtest sessions yet. Create one in TWF Backtest.')}</div>`;
+  else h+=`<div class="grp">Backtest</div><div class="muted" style="padding:6px 4px 2px;font-size:13px">${L('Nog geen backtest-sessies. Maak er een in Backtest.','No backtest sessions yet. Create one in Backtest.')}</div>`;
   return h+'</div>' }
 function openAcctPicker(anchor){
   const pick=root=>root.querySelectorAll('[data-acct]').forEach(b=>b.onclick=()=>{ S.acct=b.dataset.acct; lsSet('twfj_acct',S.acct); closeAll(); render(); toast(L('Rekening gewisseld','Account switched'),acct().name,'ok',1800) });
@@ -6272,8 +6482,8 @@ function miniMonth(A){ const now=new Date(), y=now.getFullYear(), mo=now.getMont
 function filtered(){ const A=acct(), F=S.tf; const q=F.q.trim().toLowerCase();
   return A.trades.filter(t=>(!F.res||(F.res==='win'?t.pnl>0:F.res==='loss'?t.pnl<0:!t.hadPlan))&&(!F.dir||t.dir===F.dir)&&(!F.pair||t.pair===F.pair)&&(!q||[t.pair,t.setup,t.note].join(' ').toLowerCase().includes(q))).sort((a,b)=>new Date(b.date)-new Date(a.date)) }
 function tRow(t){ const A=acct(); const ph=t.photos&&t.photos[0], selOn=SEL.on&&S.page==='trades';
-  return `<button class="trow${selOn?' selm':''}${selOn&&SEL.ids.has(String(t.id))?' issel':''}" data-tr="${esc(t.id)}">${selOn?`<span class="tck">${ic('check',15)}</span>`:''}<span class="ti2 ${ph?'':t.dir}">${ph?`<img src="${esc(ph)}" alt="" loading="lazy">`:esc((t.pair||'?').slice(0,3))}</span>
-   <span class="tn"><b>${esc(t.pair||'—')} <span class="dpill ${t.dir}">${t.dir==='long'?'LONG':'SHORT'}</span>${t.layers?`<span class="dpill" style="background:rgba(76,116,255,.15);color:#7d9bff">×${t.layers.length}</span>`:''}${!t.hadPlan?`<span class="dpill" style="background:rgba(224,163,58,.15);color:var(--amber)">${L('GEEN PLAN','NO PLAN')}</span>`:''}</b><small>${fmtDate(t.date,{day:'numeric',month:'short'})} · ${fmtTime(t.date)}${t.setup&&!t.mt5?' · '+esc(t.setup):''}${t.mt5?' · MT5':''}</small></span>
+  return `<button class="trow${selOn?' selm':''}${selOn&&SEL.ids.has(String(t.id))?' issel':''}" data-tr="${esc(t.id)}">${selOn?`<span class="tck">${ic('check',15)}</span>`:''}<span class="ti2 ${t.dir}">${dirArrow(t.dir==='long',22)}</span>
+   <span class="tn"><b>${esc(t.pair||'—')} <span class="dpill ${t.dir}">${dirArrow(t.dir==='long',11)}${t.dir==='long'?'LONG':'SHORT'}</span>${t.layers?`<span class="dpill" style="background:rgba(76,116,255,.15);color:#7d9bff">×${t.layers.length}</span>`:''}${!t.hadPlan?`<span class="dpill" style="background:rgba(224,163,58,.15);color:var(--amber)">${L('GEEN PLAN','NO PLAN')}</span>`:''}</b><small>${fmtDate(t.date,{day:'numeric',month:'short'})} · ${fmtTime(t.date)}${t.setup&&!t.mt5?' · '+esc(t.setup):''}${t.mt5?' · MT5':''}</small></span>
    <span class="tm">${t.rr!=null?`<span class="chip">${t.rr.toFixed(2)}R</span>`:''}${t.photos&&t.photos.length?`<span class="chip">${ic('image',13)} ${t.photos.length}</span>`:''}${t.note?`<span class="chip">${ic('edit',13)}</span>`:''}</span>
    <span class="tp mono ${t.pnl>=0?'pos':'neg'}">${fmtM(t.pnl,A.ccy,{sign:1})}<small class="rrm">${t.rr!=null?t.rr.toFixed(2)+'R':''}</small></span></button>` }
 function pgTrades(){
@@ -6310,7 +6520,7 @@ function openTrade(id){ const t=findTrade(id); if(!t) return; const A=acct();
   const meta=[[L('Datum','Date'),fmtDate(t.date)+' '+fmtTime(t.date)],[L('Richting','Direction'),t.dir==='long'?'Long':'Short'],['R:R',t.rr!=null?t.rr.toFixed(2)+'R':'—'],
     [L('Plan','Plan'),t.hadPlan?L('Gevolgd ✓','Followed ✓'):L('Geen plan','No plan')],[t.bt?L('Reden','Reason'):'Setup',esc(t.bt?(t.reason||'—'):(t.mt5?'MT5 auto-sync':t.setup||'—'))],[L('Bron','Source'),t.bt?'Backtest':t.mt5?'MT5':L('Handmatig','Manual')]];
   if(t.lots!=null) meta.push(['Lots',fmtN(t.lots,2)]); if(t.entry!=null) meta.push(['Entry',fmtN(t.entry,2)]); if(t.exitPrice!=null) meta.push(['Exit',fmtN(t.exitPrice,2)]);
-  const body=`<div class="tdet"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="dpill ${t.dir}" style="font-size:12px">${t.dir==='long'?'LONG':'SHORT'}</span><b style="font-size:18px">${esc(t.pair)}</b></div>
+  const body=`<div class="tdet"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="dpill ${t.dir}" style="font-size:12px">${dirArrow(t.dir==='long',13)}${t.dir==='long'?'LONG':'SHORT'}</span><b style="font-size:18px">${esc(t.pair)}</b></div>
     <div class="big mono ${t.pnl>=0?'pos':'neg'}">${fmtM(t.pnl,A.ccy,{sign:1})}</div>
     <div class="mgrid">${meta.map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join('')}</div>
     ${t.layers?`<h4 style="margin:0 0 8px">${t.layers.length} ${L('trades samengevoegd','trades merged')}</h4><div class="tlist" style="margin-bottom:16px">${t.layers.map(tRow).join('')}</div>`:''}
@@ -6345,7 +6555,7 @@ function lightbox(list,i){
 
 /* ---------- Trade toevoegen / bewerken ---------- */
 function openEditor(t){
-  const A=acct(); if(A.kind!=='live'){ toast(L('Backtest-rekening','Backtest account'),L('Backtest-trades komen uit TWF Backtest.','Backtest trades come from TWF Backtest.'),'info'); return }
+  const A=acct(); if(A.kind!=='live'){ toast(L('Backtest-rekening','Backtest account'),L('Backtest-trades komen uit Backtest.','Backtest trades come from Backtest.'),'info'); return }
   const d=t?new Date(t.date):new Date(), p2=n=>String(n).padStart(2,'0');
   const pairs=[...new Set(D.trades.map(x=>x.pair).filter(Boolean).concat(['XAUUSD','NAS100','US30','EURUSD','GBPUSD','BTCUSD']))], setups=[...new Set(D.trades.map(x=>x.setup).filter(s=>s&&s!=='MT5 auto-sync'))];
   const st={dir:t?t.dir:'long', plan:t?t.hadPlan:true, photos:(t&&t.photos||[]).map(u=>({url:u})), busy:false};
@@ -6452,7 +6662,7 @@ function pgStats(){ const A=acct(), tr=A.trades, m=stats(tr,A);
 const ADJ={deposit:[()=>L('Storting','Deposit'),'dep','plus'],upgrade:[()=>'Upgrade','up','arrowup'],credit:[()=>'Credit','cr','coins']};
 function pgCapital(){ const A=acct();
   if(A.kind==='bt'){ const s=A.session; return head(L('Kapitaal','Capital'),esc(A.name),'')+`<div class="jgrid"><div class="c12"><div class="kgrid">${kc(L('Startsaldo','Starting balance'),fmtM(s.capital,A.ccy),'','Backtest','coins')}${kc(L('Saldo nu','Balance now'),fmtM(balanceOf(A),A.ccy),'','','wallet')}${kc(L('Rendement','Return'),fmtPct(retPct(A)),retPct(A)>=0?'pos':'neg','','chart')}</div></div>
-    <div class="box c12"><div style="display:flex;gap:14px;align-items:center"><span class="chip">${ic('info',14)} Backtest</span><span class="muted">${L('Kapitaal van backtest-rekeningen stel je in bij Handelsrekeningen in TWF Backtest.','Capital of backtest accounts is set under Trading accounts in TWF Backtest.')}</span><button class="btn btn-g" data-act="openbt" style="margin-left:auto">${L('Open Backtest','Open Backtest')}</button></div></div></div>` }
+    <div class="box c12"><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><span class="chip">${ic('info',14)} Backtest</span><span class="muted">${L('Kapitaal van backtest-rekeningen stel je in bij Handelsrekeningen in Backtest.','Capital of backtest accounts is set under Trading accounts in Backtest.')}</span><button class="btn btn-g" data-act="openbt" style="margin-left:auto">${L('Open Backtest','Open Backtest')}</button></div></div></div>` }
   const st=capSteps(A), cr=D.adjs.filter(a=>a.kind==='credit').reduce((s,a)=>s+a.amount,0), po=D.payouts.reduce((s,p)=>s+p.amount,0);
   return head(L('Kapitaal','Capital'),L('Startkapitaal, stortingen, upgrades, credits en payouts.','Starting capital, deposits, upgrades, credits and payouts.'),`<button class="btn btn-g" data-act="adj">${ic('plus',16)} ${L('Storting / upgrade','Deposit / upgrade')}</button><button class="btn btn-p" data-act="payout">${ic('plus',16)} Payout</button>`)+
   `<div class="jgrid"><div class="c12"><div class="kgrid">${kc(L('Startkapitaal','Starting capital'),fmtM(A.capital,A.ccy,{dp:0}),'',`<a class="link" data-go="settings" data-stab="profile">${L('Wijzigen','Change')}</a>`,'coins')}${kc(L('Kapitaal nu','Capital now'),fmtM(capNow(A),A.ccy,{dp:0}),'',st.length?`${st.length} ${L('wijziging(en)','change(s)')}`:L('geen wijzigingen','no changes'),'wallet')}${kc(L('Saldo','Balance'),S.blur?'••••':fmtM(balanceOf(A),A.ccy),'',fmtPct(retPct(A))+' '+L('rendement','return'),'chart')}${kc(L('Totaal uitbetaald','Total paid out'),fmtM(po,A.ccy),po?'pos':'',`${D.payouts.length} payout(s)`,'download')}${kc('Credits',fmtM(cr,A.ccy),'',L('telt niet mee in saldo','not counted in balance'),'info')}</div></div>
@@ -6500,7 +6710,7 @@ function mt5Status(){ const A0=acct(); const mt=(A0.raw||[]).filter(t=>t.mt5); i
   return {k:h<24?'live':'stale',title:h<24?L('Verbonden','Connected'):L('Niet recent gesynchroniseerd','Not synced recently'),sub:L('Laatste sync: ','Last sync: ')+relTime(dt),n:mt.length,last:dt} }
 function pgMt5(){ const A=acct(); if(A.kind!=='live'){ S.acct='live'; return pgMt5() } const st=mt5Status(), key=A.apiKey;
   const mock=(title,rows)=>`<div class="mock"><div class="mt"><i></i><i></i><i></i><span style="margin-left:6px">${title}</span></div><div class="mb">${rows}</div></div>`;
-  return head(L('MT5-koppeling','MT5 connection')+` <span class="chip" style="vertical-align:middle">${esc(A.name)}</span>`,L('Je live trades komen automatisch binnen via de TWF Journal EA. Backtest-trades gaan niet via MT5, die komen rechtstreeks uit TWF Backtest.','Your live trades come in automatically via the TWF Journal EA. Backtest trades do not use MT5, they come straight from TWF Backtest.'),`<button class="btn btn-g" data-act="addlive">${ic('plus',16)} ${L('Live-rekening','Live account')}</button>`)+
+  return head(L('MT5-koppeling','MT5 connection')+` <span class="chip" style="vertical-align:middle">${esc(A.name)}</span>`,L('Je live trades komen automatisch binnen via de TWF Journal EA. Backtest-trades gaan niet via MT5, die komen rechtstreeks uit Backtest.','Your live trades come in automatically via the TWF Journal EA. Backtest trades do not use MT5, they come straight from Backtest.'),`<button class="btn btn-g" data-act="addlive">${ic('plus',16)} ${L('Live-rekening','Live account')}</button>`)+
   `<div class="jgrid">
    <div class="box c7"><div class="mt5st"><span class="dotb ${st.k}">${ic(st.k==='none'?'plug':st.k==='live'?'check':'clock',26)}</span><div style="flex:1;min-width:0"><h3>${st.k==='live'?'<span class="pulse"></span> ':''}${st.title}</h3><div class="muted" style="margin-top:4px">${st.sub}</div></div><button class="btn btn-g" data-act="mt5test">${ic('refresh',16)} ${L('Test verbinding','Test connection')}</button></div>
      <div class="mgrid" style="margin-bottom:0"><div><small>${L('Gesynchroniseerd','Synced')}</small><b>${st.n} trades</b></div><div><small>${L('MT5-account','MT5 account')}</small><b>${esc(A.login||'—')}</b></div><div><small>Server</small><b>${esc(A.server||'—')}</b></div></div></div>
@@ -6518,7 +6728,7 @@ function pgMt5(){ const A=acct(); if(A.kind!=='live'){ S.acct='live'; return pgM
      <details class="faq"><summary>${L('Er komen geen trades binnen','No trades are coming in')}</summary><p>${L('Controleer of Algo Trading groen is, het adres bij WebRequest exact klopt (met https://) en de API-sleutel zonder spaties is geplakt. Kijk in MT5 onder Toolbox → Experts voor foutmeldingen.','Check that Algo Trading is green, the WebRequest address is exact (with https://) and the API key was pasted without spaces. Look under Toolbox → Experts in MT5 for errors.')}</p></details>
      <details class="faq"><summary>${L('Moet MT5 altijd open staan?','Does MT5 have to stay open?')}</summary><p>${L('Ja, de EA synchroniseert alleen als MT5 draait. Trades die je sluit terwijl MT5 uit staat, komen binnen zodra je MT5 weer opent.','Yes, the EA only syncs while MT5 runs. Trades closed while MT5 was off come in as soon as you open MT5 again.')}</p></details>
      <details class="faq"><summary>${L('Kan ik ook handmatig trades toevoegen?','Can I add trades manually as well?')}</summary><p>${L('Ja. Op je Live-rekening kun je naast MT5 altijd zelf trades toevoegen met de knop Trade toevoegen. MT5-trades kun je aanvullen met een notitie, setup en screenshots.','Yes. On your Live account you can always add trades yourself next to MT5 with the Add trade button. You can enrich MT5 trades with a note, setup and screenshots.')}</p></details>
-     <details class="faq"><summary>${L('Hoe zit het met mijn backtests?','What about my backtests?')}</summary><p>${L('Backtests gaan niet via MT5. Elke sessie in TWF Backtest verschijnt automatisch als eigen rekening; kies hem bovenin bij de rekening-kiezer.','Backtests do not go through MT5. Every session in TWF Backtest shows up automatically as its own account; pick it at the top in the account picker.')}</p></details>
+     <details class="faq"><summary>${L('Hoe zit het met mijn backtests?','What about my backtests?')}</summary><p>${L('Backtests gaan niet via MT5. Elke sessie in Backtest verschijnt automatisch als eigen rekening; kies hem bovenin bij de rekening-kiezer.','Backtests do not go through MT5. Every session in Backtest shows up automatically as its own account; pick it at the top in the account picker.')}</p></details>
    </div>
   </div>` }
 
@@ -6686,9 +6896,9 @@ function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='l
   const tday=tr.filter(t=>dKey(t.date)===today), tmo=tr.filter(t=>dKey(t.date).slice(0,7)===mo), m=stats(tr,A);
   const pts=equitySeries(A).filter(p=>p.t>=Date.now()-30*86400000);
   return { name:A.name, uname:SETTINGS.name, ccy:A.ccy, balance:balanceOf(A), ret:retPct(A), today:tday.reduce((s,t)=>s+t.pnl,0), todayN:tday.length, month:tmo.reduce((s,t)=>s+t.pnl,0), monthN:tmo.length,
-    planPct:m.planPct, n:m.n, wr:m.wr, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
+    planPct:m.planPct, n:m.n, wr:m.wr, pf:m.pf, planDots:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).reverse().map(t=>t.hadPlan), accts:['live',...D.live.map(la=>'live:'+la.id)].map(k=>{ const s1=S.acct; S.acct=k; const B=acct(); S.acct=s1; const td=B.trades.filter(t=>dKey(t.date)===dKey(new Date())).reduce((a,t)=>a+t.pnl,0); return {key:k,name:B.name,sub:B.sub,bal:balanceOf(B),today:td,n:B.trades.length,f:(v,o)=>fmtM(v,B.ccy,o)} }), avgR:m.avgR, best:m.best, worst:m.worst, wins:m.wins, losses:m.losses, days:m.days, greenDays:m.greenDays, mdd:m.mdd, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
     last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList()[0]||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
-window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
+window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
 
