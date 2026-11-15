@@ -1378,7 +1378,7 @@ body.theme-light :where(.jpage,.jx) .cd.n .dm{color:#b42318}
 :where(.jpage,.jx) .vbars .vt i.n{background:linear-gradient(180deg,#ff7a73,#c8433d)}
 :where(.jpage,.jx) .vbars .vt i.z{background:var(--line2)}
 :where(.jpage,.jx) .vbars .vl{font-size:10.5px;color:var(--ink3);font-weight:700;white-space:nowrap}
-:where(.jpage,.jx) .radar svg{width:100%;max-width:340px;display:block;margin:0 auto}
+:where(.jpage,.jx) .jradar svg{width:100%;max-width:340px;display:block;margin:0 auto}
 :where(.jpage,.jx) .escore{display:flex;align-items:baseline;justify-content:center;gap:6px;margin-top:6px}
 :where(.jpage,.jx) .escore b{font-size:34px}
 :where(.jpage,.jx) .escore span{color:var(--ink3);font-weight:700}
@@ -1606,6 +1606,40 @@ body.theme-light :where(.jpage,.jx) .trow .ti2.short,body.theme-light .hli .hdir
 .uizc b{min-width:92px;text-align:right;font-variant-numeric:tabular-nums}
 .uizc .btn.on{border-color:var(--accent);color:var(--accent);background:var(--accentSoft)}
 @media (min-width:901px){ .hpage,.jpage{max-width:none!important} }
+
+/* v10.5: maandkalender op het overzicht */
+.mmh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}.mmh>b{text-transform:capitalize}.mmh span{font-size:12.5px;font-weight:700}
+.mmg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.mmw{text-align:center;font-size:11px;color:var(--ink3);font-weight:800;padding-bottom:2px}
+.mmc{position:relative;min-height:52px;border-radius:9px;background:var(--panel2);display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;padding:4px 6px 5px;color:var(--ink3);font:inherit;min-width:0;overflow:hidden}
+.mmc .mmd{position:absolute;top:4px;left:6px;font-size:10.5px;font-weight:700}
+.mmc .mma{font-weight:800;font-size:12.5px;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mmc .mmp{font-size:10px;font-weight:700;opacity:.85;white-space:nowrap}
+.mmc.p{background:rgba(47,191,113,var(--k,.2));color:var(--pos)}.mmc.n{background:rgba(229,83,75,var(--k,.18));color:var(--neg)}
+.mmc.p .mmd,.mmc.n .mmd{color:inherit}
+.mmc.td{box-shadow:inset 0 0 0 2px var(--accent)}
+button.mmc:hover{filter:brightness(1.15)}
+body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b42318}
+@media (max-width:900px){.mmc{min-height:44px;padding:3px 3px 4px;align-items:center}.mmc .mma{font-size:10.5px}.mmc .mmp{display:none}.mmg{gap:3px}}
+
+/* v10.5: dagboek-kalender */
+.dclean{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;padding:12px 16px}.dclean span{display:flex;align-items:center;gap:8px;color:var(--ink2);font-size:13.5px}
+.dcal{margin-bottom:6px}
+.dcg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.dwd{font-size:11.5px;font-weight:800;color:var(--ink3);text-align:center;text-transform:uppercase;letter-spacing:.05em;padding-bottom:2px}
+.dcd{position:relative;min-height:104px;border-radius:14px;background:rgba(128,128,128,.05);border:1px solid var(--line);padding:9px 10px;display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:left;font:inherit;color:inherit;min-width:0;overflow:hidden}
+.dcd.out{background:none;border:0}
+.dcd:not(.out):hover{border-color:var(--line2);transform:translateY(-1px)}
+.dcd.has{background:var(--accentSoft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.dcd.td{box-shadow:inset 0 0 0 2px var(--accent)}
+.dcd.fut:not(.has){opacity:.55}
+.dcn{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--ink3)}
+.dcn i{font-style:normal;font-size:10.5px;font-weight:800;padding:1px 6px;border-radius:7px;background:var(--panel2)}
+.dct{font-weight:700;font-size:13px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--ink)}
+.dcs{font-size:11.5px;line-height:1.35;color:var(--ink3);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dcm{position:absolute;right:8px;bottom:6px;font-size:10.5px;font-weight:800;color:var(--accent)}
+.dcadd{margin:auto;color:var(--ink3);opacity:0;transition:opacity .15s}.dcd:hover .dcadd{opacity:.8}
+@media (max-width:900px){ .dcg{gap:4px} .dcd{min-height:62px;padding:5px 4px;border-radius:10px} .dcn{font-size:10.5px;justify-content:center;flex-direction:column;gap:1px} .dcn i{font-size:9px;padding:0 3px} .dct{font-size:10px;-webkit-line-clamp:2;text-align:center} .dcadd{display:none} }
 </style>
 </head>
 <body class="">
@@ -1740,7 +1774,7 @@ body.theme-light :where(.jpage,.jx) .trow .ti2.short,body.theme-light .hli .hdir
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.4', BUILD: '2026-11-17'
+  VERSION: 'v10.5', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -3183,7 +3217,7 @@ function pageSettings(){
        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" id="pSave">${t('save')}</button>${p.photo?`<button class="btn btn-g" id="pPhotoDel">${ic('trash',14)} ${L('Foto verwijderen','Remove photo')}</button>`:''}</div></div></div>
      <div class="box"><h3>${L('Jouw cijfers','Your numbers')}</h3><div class="sstats" id="sStats"></div></div>`;
   else if(tab==='account') body=`<h2>Account</h2>
-     <div class="box">${ROW(L('Inlognaam','Login name'),L('Dezelfde inlog als in TWF Journal.','Same login as TWF Journal.'),`<span class="pill" id="aEmail">…</span>`)}
+     <div class="box">${ROW(L('Inlognaam','Login name'),L('Je inlognaam voor TWF.','Your TWF login name.'),`<span class="pill" id="aEmail">…</span>`)}
        ${ROW(L('Lid sinds','Member since'),'',`<span class="mut">${p.created?new Date(p.created).toLocaleDateString(locale(),{day:'numeric',month:'long',year:'numeric'}):'—'}</span>`)}
        ${ROW(L('Rol','Role'),L('Admins mogen marktdata uploaden.','Admins can upload market data.'),`<span class="pill" id="aRole">…</span>`)}
        ${ROW(L('Gebruikers-ID','User ID'),'',`<code class="mut" id="aUid">${esc((DB.uid||'local').slice(0,8))}…</code><button class="btn btn-g sm" id="aCopy">${ic('copy',14)}</button>`)}</div>
@@ -3240,11 +3274,11 @@ function pageSettings(){
      ${ROW(L('Marktdata beheren','Manage market data'),L('Importeren, bijwerken en verwijderen.','Import, update and delete.'),`<button class="btn btn-g" data-gs="data">${ic('db',15)} ${L('Naar Marktdata','Open Market data')}</button>`)}</div>
      <div class="box"><h3>${L('Marktdata per markt','Market data per market')}</h3><div id="dMk"></div></div>`;
   else if(tab==='links') body=`<h2>${L('Koppelingen','Connections')}</h2><div class="box" id="lnk"><div class="mut">…</div></div>
-     <div class="box"><h3>TWF Journal</h3>${ROW(L('Open TWF Journal','Open TWF Journal'),L('Zelfde account; je backtest-trades worden daar straks zichtbaar onder "Backtest".','Same account; your backtest trades will show up there under "Backtest".'),`<button class="btn btn-g" data-gs="journal">${ic('book',15)} TWF Journal ${ic('extlink',14)}</button>`)}</div>`;
+     <div class="box"><h3>Journal</h3>${ROW(L('Naar je Journal','Go to your Journal'),L('Je backtest-sessies staan in de Journal als eigen rekening in de rekening-kiezer.','Your backtest sessions appear in the Journal as their own account in the account picker.'),`<button class="btn btn-g" data-gs="journal">${ic('book',15)} Journal</button>`)}</div>`;
   else body=`<h2>${L('Over TWF','About TWF')}</h2>
      ${updBoxHtml()}
-     <div class="box sabout"><div class="logo big"><div class="mark"><b>TWF</b><i></i></div><span>BACKTEST</span></div>
-       <div><div class="abv">Versie <b>${CFG.VERSION}</b> · build ${CFG.BUILD}</div><div class="mut">Learn. Master. Trade.</div></div><div id="aHealth" class="ahealth"><span class="dot"></span> ${L('Controleren…','Checking…')}</div></div>
+     <div class="box sabout"><div class="logo big"><div class="mark"><b>TWF</b><i></i></div></div>
+       <div><div class="abv">Versie <b>${CFG.VERSION}</b> · build ${CFG.BUILD}</div><div class="mut">${L('Log. Test. Groei.','Log. Test. Grow.')}</div></div><div id="aHealth" class="ahealth"><span class="dot"></span> ${L('Controleren…','Checking…')}</div></div>
      <div class="box"><h3>${L('Systeemstatus','System status')}</h3><div id="aChecks"><div class="mut">…</div></div></div>
      <div class="box"><h3>${L('Technisch','Technical')}</h3>
        ${ROW(L('Versie in je browser','Version in your browser'),'',`<code>${CFG.VERSION}</code>`)}
@@ -3277,7 +3311,7 @@ async function settingsLive(m){
     add(L('Inloggen (Supabase Auth)','Sign-in (Supabase Auth)'),email?email.replace('@twfjournal.local',''):'—',DB.sb?!!email:null);
     add(L('Marktdata-opslag','Market data storage'),'Supabase Storage · market-data',DB.sb?stOk:null);
     const real=ASSETS.filter(a=>MD.range(a.sym)); add(L('Marktdata','Market data'),real.length?real.map(a=>a.sym).join(', '):L('Nog geen echte data','No real data yet'),real.length?true:null);
-    add('TWF Journal',jn?L('Gekoppeld als ','Linked as ')+jn:L('Nog geen Journal-profiel op dit account — log één keer in op TWF Journal','No Journal profile on this account yet — log in to TWF Journal once'),DB.sb&&jn?true:null);
+    add('Journal',jn?L('Gekoppeld als ','Linked as ')+jn:L('Nog geen Journal-profiel op dit account — log één keer in op TWF Journal','No Journal profile on this account yet — log in to TWF Journal once'),DB.sb&&jn?true:null);
     add('Chart engine','Lightweight Charts 4.2.3',window.LightweightCharts?true:null);
     const html=checks.map(c=>`<div class="srow"><div class="stx"><b>${c.name}</b><small>${esc(c.sub)}</small></div>${ok(c.state,c.state===true?L('Werkt','Working'):c.state===null?L('Niet actief','Not active'):L('Probleem','Problem'))}</div>`).join('');
     const box=m.querySelector(tab==='links'?'#lnk':'#aChecks'); if(box) box.innerHTML=html;
@@ -6528,12 +6562,14 @@ function bindEq(){ const w=$('#eqw'); if(!w||!window._eq) return; const E=window
     tip.style.left=Math.max(60,Math.min(r.width*k-60,x))+'px'; tip.innerHTML=`${S.blur?'••••':fmtM(best.v,E.ccy)}<small>${E.step&&E.step<24*H1?fmtDate(best.t,{day:'numeric',month:'short'})+' '+fmtTime(best.t):fmtDate(best.t)}</small>`; if(E._last!==best.t){ if(E._last!=null) haptic('tick'); E._last=best.t } };
   const hide=()=>[line,dot,tip].forEach(e=>e.style.display='none');
   w.addEventListener('pointermove',e=>show(e.clientX)); w.addEventListener('pointerdown',e=>show(e.clientX)); w.addEventListener('pointerleave',()=>{ hide(); E._last=null }); w.addEventListener('pointerup',e=>{ if(e.pointerType!=='mouse') setTimeout(hide,1400) }) }
-function miniMonth(A){ const now=new Date(), y=now.getFullYear(), mo=now.getMonth(), first=new Date(y,mo,1), nd=new Date(y,mo+1,0).getDate(), lead=(first.getDay()+6)%7;
-  const days={}; A.trades.forEach(t=>{ const d=new Date(t.date); if(d.getFullYear()===y&&d.getMonth()===mo){ const k=d.getDate(); days[k]=(days[k]||0)+t.pnl } });
-  const tot=Object.values(days).reduce((a,b)=>a+b,0), wd=LANG==='en'?['M','T','W','T','F','S','S']:['M','D','W','D','V','Z','Z'];
-  let h=`<div style="display:flex;justify-content:space-between;margin-bottom:10px"><b style="text-transform:capitalize">${first.toLocaleDateString(locale(),{month:'long',year:'numeric'})}</b><b class="${tot>=0?'pos':'neg'}">${fmtM(tot,A.ccy,{sign:1})}</b></div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px">`+wd.map(x=>`<div style="text-align:center;font-size:11px;color:var(--ink3);font-weight:800">${x}</div>`).join('');
+function miniMonth(A){ const now=new Date(), y=now.getFullYear(), mo=now.getMonth(), first=new Date(y,mo,1), nd=new Date(y,mo+1,0).getDate(), lead=(first.getDay()+6)%7, steps=capSteps(A);
+  const days={}; A.trades.forEach(t=>{ const d=new Date(t.date); if(d.getFullYear()===y&&d.getMonth()===mo){ const k=d.getDate(); (days[k]=days[k]||{v:0,n:0,cap:capAt(A,new Date(y,mo,k).getTime(),steps)}); days[k].v+=t.pnl; days[k].n++ } });
+  const tot=Object.values(days).reduce((a,b)=>a+b.v,0), mCap=capAt(A,first.getTime(),steps), wd=LANG==='en'?['M','T','W','T','F','S','S']:['M','D','W','D','V','Z','Z'];
+  const mx=Math.max(1,...Object.values(days).map(d=>Math.abs(d.v))), amt=v=>(v>0?'+':v<0?'−':'')+(Math.abs(v)>=1000?shortN(Math.abs(v)).replace(/^[+−]/,''):Math.round(Math.abs(v)));
+  let h=`<div class="mmh"><b>${first.toLocaleDateString(locale(),{month:'long',year:'numeric'})}</b><span class="${tot>=0?'pos':'neg'}"><b>${fmtM(tot,A.ccy,{sign:1})}</b>${mCap?` · ${fmtPct(tot/mCap*100,2)}`:''}</span></div><div class="mmg">`+wd.map(x=>`<div class="mmw">${x}</div>`).join('');
   for(let i=0;i<lead;i++) h+='<div></div>';
-  for(let d=1;d<=nd;d++){ const v=days[d]; h+=`<div title="${v!=null?fmtM(v,A.ccy):''}" style="aspect-ratio:1;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:700;${v>0?'background:rgba(47,191,113,.18);color:var(--pos)':v<0?'background:rgba(229,83,75,.16);color:var(--neg)':'background:var(--panel2);color:var(--ink3)'}${d===now.getDate()?';box-shadow:inset 0 0 0 2px var(--accent)':''}">${d}</div>` }
+  for(let d=1;d<=nd;d++){ const v=days[d], k=v?Math.min(1,Math.abs(v.v)/mx):0, td=d===now.getDate();
+    h+=`<button class="mmc ${v?(v.v>0?'p':v.v<0?'n':''):''}${td?' td':''}" data-mday="${d}" ${v?`style="--k:${(0.12+k*0.32).toFixed(3)}"`:''} title="${v?fmtM(v.v,A.ccy,{sign:1})+' · '+v.n+' trades':''}"><span class="mmd">${d}</span>${v?`<span class="mma">${amt(v.v)}</span><span class="mmp">${fmtPct(v.cap?v.v/v.cap*100:0,1)}</span>`:''}</button>` }
   return h+'</div>' }
 
 /* ---------- Trades ---------- */
@@ -6707,7 +6743,7 @@ function pgStats(){ const A=acct(), tr=A.trades, m=stats(tr,A);
   `<div class="jgrid">
    <div class="c12"><div class="kgrid">${kc(L('Netto P&L','Net P&L'),fmtM(m.net,A.ccy,{sign:1}),m.net>=0?'pos':'neg',`${fmtM(m.exp,A.ccy,{sign:1})} / trade`,'chart')}${kc(L('Winratio','Win rate'),Math.round(m.wr)+'%','',`${m.wins}W · ${m.losses}L`,'target',m.wr)}${kc(L('Winstfactor','Profit factor'),m.pf>=99?'∞':m.pf.toFixed(2),m.pf>=1?'pos':'neg',`${fmtM(m.gp,A.ccy,{dp:0})} / ${fmtM(m.gl,A.ccy,{dp:0})}`,'bars')}${kc(L('Gem. winst / verlies','Avg win / loss'),m.al?(m.aw/m.al).toFixed(2):'—','',`${fmtM(m.aw,A.ccy,{dp:0})} / ${fmtM(m.al,A.ccy,{dp:0})}`,'coins')}${kc('Max drawdown',fmtM(-m.mdd,A.ccy,{dp:0}),'neg',m.ddPct.toFixed(1)+'%','arrowdown')}</div></div>
    <div class="box c8"><div class="boxh"><h3>${L('Resultaat laatste 30 dagen','Result last 30 days')}</h3></div>${vbars(last30,A.ccy)}</div>
-   <div class="box c4 radar"><div class="boxh"><h3>Edge score</h3></div>${radarSvg(eg.ax)}<div class="escore"><b>${eg.score}</b><span>/ 100</span></div></div>
+   <div class="box c4 jradar"><div class="boxh"><h3>Edge score</h3></div>${radarSvg(eg.ax)}<div class="escore"><b>${eg.score}</b><span>/ 100</span></div></div>
    <div class="box c6"><div class="boxh"><h3>${L('Per weekdag','By weekday')}</h3></div>${hbars(byDay.filter(x=>x.n),A.ccy)}</div>
    <div class="box c6"><div class="boxh"><h3>${L('Per uur van de dag','By hour of day')}</h3></div>${vbars(byHour,A.ccy)}</div>
    <div class="box c6"><div class="boxh"><h3>${L('Per markt','By market')}</h3></div><div class="tscroll">${tbl(grp(t=>t.pair),L('Markt','Market'))}</div></div>
@@ -6798,6 +6834,7 @@ function bindPage(m){
   m.querySelectorAll('[data-tf]').forEach(el=>{ const k=el.dataset.tf; el[el.tagName==='INPUT'?'oninput':'onchange']=()=>{ S.tf[k]=el.value; const pos=el.selectionStart; render(); if(el.tagName==='INPUT'){ const n=$('#main [data-tf="q"]'); if(n){ n.focus(); try{n.setSelectionRange(pos,pos)}catch(e){} } } } });
   m.querySelectorAll('[data-cal]').forEach(b=>b.onclick=()=>{ S.cal=new Date(S.cal.getFullYear(),S.cal.getMonth()+(+b.dataset.cal),1); render() });
   m.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>openDay(+b.dataset.day));
+  m.querySelectorAll('[data-mday]').forEach(b=>b.onclick=()=>{ S.cal=new Date(); openDay(+b.dataset.mday) });
   m.querySelectorAll('[data-stab]').forEach(b=>{ if(!b.dataset.go) b.onclick=()=>{ S.setTab=b.dataset.stab; render() } });
   m.querySelectorAll('[data-po]').forEach(b=>b.onclick=()=>openMoney('payout',D.payouts.find(x=>String(x.id)===b.dataset.po)));
   m.querySelectorAll('[data-adj]').forEach(b=>b.onclick=()=>openMoney('adj',D.adjs.find(x=>String(x.id)===b.dataset.adj)));
@@ -6883,13 +6920,37 @@ const diaryList=()=>{ try{ return DB.list('diary').slice().sort((a,b)=>String(b.
 const MOODS=[['great','🤩'],['good','🙂'],['ok','😐'],['bad','😕'],['awful','😣']];
 function snippet(t,n=160){ t=String(t||'').replace(/[#*_>`\[\]]/g,'').replace(/\s+/g,' ').trim(); return t.length>n?t.slice(0,n)+'…':t }
 function mdLite(t){ return esc(t||'').replace(/^### (.*)$/gm,'<h5>$1</h5>').replace(/^## (.*)$/gm,'<h4>$1</h4>').replace(/^# (.*)$/gm,'<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^\s*[-*] (.*)$/gm,'• $1').replace(/\n/g,'<br>') }
-function pgDiary(){ const list=diaryList(), q=(S.dq||'').toLowerCase(), fl=q?list.filter(d=>(d.title+' '+d.body).toLowerCase().includes(q)):list;
-  let h='', lastM=''; fl.forEach(d=>{ const mk=String(d.date).slice(0,7); if(mk!==lastM){ h+=`${lastM?'</div>':''}<div class="dayh"><span>${new Date(d.date+'T12:00:00').toLocaleDateString(locale(),{month:'long',year:'numeric'})}</span><span>${fl.filter(x=>String(x.date).slice(0,7)===mk).length}</span></div><div class="dlist">`; lastM=mk }
-    const mo=MOODS.find(m=>m[0]===d.mood); h+=`<button class="drow" data-dy="${esc(d.id)}"><span class="dd"><b>${new Date(d.date+'T12:00:00').getDate()}</b><small>${new Date(d.date+'T12:00:00').toLocaleDateString(locale(),{weekday:'short'})}</small></span><span class="dt"><b>${mo?mo[1]+' ':''}${esc(d.title||L('Zonder titel','Untitled'))}${d.source==='notion'?' <span class="chip" style="padding:1px 7px;font-size:10.5px">Notion</span>':''}</b><small>${esc(snippet(d.body))}</small></span></button>` }); if(lastM) h+='</div>';
-  return head(L('Dagboek','Diary'),L('Je gedachten, lessen en mindset per dag. Importeer je bestaande dagboek uit Notion.','Your thoughts, lessons and mindset per day. Import your existing diary from Notion.'),`<button class="btn btn-g" data-act="dimport">${ic('download',16)} ${L('Importeer uit Notion','Import from Notion')}</button><button class="btn btn-p" data-act="dnew">${ic('plus',16)} ${L('Nieuwe notitie','New entry')}</button>`)+
-   (list.length?`<div class="tfilters"><input class="inp search" data-dq placeholder="${L('Zoek in je dagboek','Search your diary')}" value="${esc(S.dq||'')}" type="search"></div>`+(fl.length?h:`<div class="box empty"><h4>${L('Niets gevonden','Nothing found')}</h4></div>`)
-   :`<div class="box empty"><div class="ei">${ic('book',24)}</div><h4>${L('Nog geen dagboek','No diary yet')}</h4><div style="max-width:440px">${L('Schrijf je eerste notitie of importeer je dagboek uit Notion: in Notion ··· → Exporteren → Markdown & CSV, en kies hier het .zip-bestand.','Write your first entry or import your diary from Notion: in Notion ··· → Export → Markdown & CSV, then pick the .zip file here.')}</div><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;justify-content:center"><button class="btn btn-p" data-act="dnew">${ic('plus',16)} ${L('Nieuwe notitie','New entry')}</button><button class="btn btn-g" data-act="dimport">${ic('download',16)} ${L('Importeer uit Notion','Import from Notion')}</button></div></div>`) }
+/* v10.5: dagboek als maandkalender; lege Notion-pagina's tellen niet mee */
+const PROPLINE=/^\**\s*[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 _-]{0,30}\s*:\**\s*(.*)$/;
+function realBody(t){ return String(t||'').split('\n').filter(l=>{ const m=l.match(PROPLINE); if(!m) return l.trim()!==''; const v=m[1].replace(/\*/g,'').trim(); return v!==''&&!parseDate(v)&&!/^(yes|no|ja|nee|true|false|☐|☑|\[ ?\]|\[x\])$/i.test(v) }).join('\n').trim() }
+const dateOnlyTitle=t=>!t||!!parseDate(t)&&String(t).replace(/[0-9]/g,'').replace(/\b(dag|day|ma|di|wo|do|vr|za|zo|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday|jan\w*|feb\w*|ma\w*|apr\w*|mei|may|jun\w*|jul\w*|aug\w*|sep\w*|o[ck]t\w*|nov\w*|dec\w*)\b/gi,'').replace(/[\s,./-]/g,'')==='';
+const isEmptyEntry=d=>!realBody(d.body)&&dateOnlyTitle(d.title)&&!d.mood;
+function pgDiary(){ const all=diaryList(), list=all.filter(d=>!isEmptyEntry(d)), empties=all.length-list.length, q=(S.dq||'').toLowerCase().trim();
+  const c=S.dcal||(S.dcal=new Date()), y=c.getFullYear(), mo=c.getMonth(), first=new Date(y,mo,1), nd=new Date(y,mo+1,0).getDate(), lead=(first.getDay()+6)%7, mk=`${y}-${String(mo+1).padStart(2,'0')}`, tdy=dKey(new Date()), ph=isPhone();
+  const byDay={}; list.filter(d=>String(d.date).startsWith(mk)).forEach(d=>(byDay[d.date]=byDay[d.date]||[]).push(d));
+  const pnl={}; acct().trades.forEach(t=>{ const k=dKey(t.date); if(k.startsWith(mk)) pnl[k]=(pnl[k]||0)+t.pnl });
+  const wd=LANG==='en'?(ph?['M','T','W','T','F','S','S']:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']):(ph?['M','D','W','D','V','Z','Z']:['Ma','Di','Wo','Do','Vr','Za','Zo']);
+  let g=wd.map(x=>`<div class="dwd">${x}</div>`).join(''); for(let i=0;i<lead;i++) g+='<div class="dcd out"></div>';
+  for(let d=1;d<=nd;d++){ const k=`${mk}-${String(d).padStart(2,'0')}`, es=byDay[k]||[], e=es[0], mo2=e&&MOODS.find(m=>m[0]===e.mood), pv=pnl[k];
+    g+=`<button class="dcd${es.length?' has':''}${k===tdy?' td':''}${k>tdy?' fut':''}" data-dday="${k}"><span class="dcn">${d}${pv!=null?`<i class="${pv>=0?'pos':'neg'}">${pv>=0?'+':'−'}${Math.abs(pv)>=1000?shortN(Math.abs(pv)).replace(/^[+−]/,''):Math.round(Math.abs(pv))}</i>`:''}</span>
+      ${e?`<span class="dct">${mo2?mo2[1]+' ':''}${esc(e.title&&!dateOnlyTitle(e.title)?e.title:snippet(realBody(e.body)||e.title,60))}</span>${!ph&&realBody(e.body)&&e.title&&!dateOnlyTitle(e.title)?`<span class="dcs">${esc(snippet(realBody(e.body),90))}</span>`:''}${es.length>1?`<span class="dcm">+${es.length-1}</span>`:''}`:`<span class="dcadd">${ic('plus',14)}</span>`}</button>` }
+  const monthList=list.filter(d=>String(d.date).startsWith(mk)).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const rowH=d=>{ const mo2=MOODS.find(m=>m[0]===d.mood); return `<button class="drow" data-dy="${esc(d.id)}"><span class="dd"><b>${new Date(d.date+'T12:00:00').getDate()}</b><small>${new Date(d.date+'T12:00:00').toLocaleDateString(locale(),{month:'short'})}</small></span><span class="dt"><b>${mo2?mo2[1]+' ':''}${esc(d.title||L('Zonder titel','Untitled'))}${d.source==='notion'?' <span class="chip" style="padding:1px 7px;font-size:10.5px">Notion</span>':''}</b><small>${esc(snippet(realBody(d.body)))}</small></span></button>` };
+  const found=q?list.filter(d=>(d.title+' '+d.body).toLowerCase().includes(q)):null;
+  return head(L('Dagboek','Diary'),L('Je gedachten, lessen en mindset per dag. Tik op een dag om iets te schrijven.','Your thoughts, lessons and mindset per day. Tap a day to write.'),`<button class="btn btn-g" data-act="dimport">${ic('download',16)} ${L('Importeer uit Notion','Import from Notion')}</button><button class="btn btn-p" data-act="dnew">${ic('plus',16)} ${L('Nieuwe notitie','New entry')}</button>`)+
+   (empties?`<div class="box dclean"><span>${ic('info',16)} ${empties} ${L('lege Notion-pagina\'s (alleen een datum, geen tekst) worden verborgen.','empty Notion pages (just a date, no text) are hidden.')}</span><button class="btn btn-g" data-act="dclean">${ic('trash',15)} ${L('Opruimen','Clean up')}</button></div>`:'')+
+   `<div class="tfilters"><input class="inp search" data-dq placeholder="${L('Zoek in je dagboek','Search your diary')}" value="${esc(S.dq||'')}" type="search"></div>`+
+   (found?(found.length?`<div class="dlist">${found.map(rowH).join('')}</div>`:`<div class="box empty"><h4>${L('Niets gevonden','Nothing found')}</h4></div>`)
+   :`<div class="box dcal"><div class="calh2"><button class="ib" data-dcal="-1">${ic('back')}</button><div class="calt"><b>${first.toLocaleDateString(locale(),{month:'long',year:'numeric'})}</b><span class="muted">${monthList.length} ${L(monthList.length===1?'notitie':'notities',monthList.length===1?'entry':'entries')}</span></div><button class="ib" data-dcal="1">${ic('next')}</button></div><div class="dcg">${g}</div></div>
+     ${monthList.length?`<div class="dayh"><span>${L('Notities deze maand','Entries this month')}</span><span>${monthList.length}</span></div><div class="dlist">${monthList.map(rowH).join('')}</div>`:''}`) }
 function bindDiary(m){ m.querySelectorAll('[data-dy]').forEach(b=>b.onclick=()=>openDiary(DB.get('diary',b.dataset.dy)));
+  m.querySelectorAll('[data-dcal]').forEach(b=>b.onclick=()=>{ const c=S.dcal||new Date(); S.dcal=new Date(c.getFullYear(),c.getMonth()+(+b.dataset.dcal),1); render() });
+  m.querySelectorAll('[data-dday]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dday, es=diaryList().filter(d=>d.date===k&&!isEmptyEntry(d)); if(!es.length) return editDiary(null,k); if(es.length===1) return openDiary(es[0]);
+    const p=panel(new Date(k+'T12:00:00').toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long'}),`<div class="dlist">${es.map(d=>`<button class="drow" data-dy2="${esc(d.id)}"><span class="dt"><b>${esc(d.title||L('Zonder titel','Untitled'))}</b><small>${esc(snippet(realBody(d.body)))}</small></span></button>`).join('')}</div>`,`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-add>${ic('plus',16)} ${L('Notitie toevoegen','Add entry')}</button>`);
+    p.querySelector('[data-x2]').onclick=()=>p.close(); p.querySelector('[data-add]').onclick=()=>{ p.close(); setTimeout(()=>editDiary(null,k),isPhone()?240:0) };
+    p.querySelectorAll('[data-dy2]').forEach(x=>x.onclick=()=>{ p.close(); setTimeout(()=>openDiary(DB.get('diary',x.dataset.dy2)),isPhone()?240:0) }) });
+  m.querySelectorAll('[data-act="dclean"]').forEach(b=>b.onclick=async()=>{ const em=diaryList().filter(isEmptyEntry); if(!(await askConfirm(L(`${em.length} lege notities verwijderen? Notities met tekst blijven staan.`,`Delete ${em.length} empty entries? Entries with text stay.`),L('Opruimen','Clean up'),true))) return;
+    await dbDelMany('diary',em.map(d=>d.id)); render(); toast(L('Opgeruimd','Cleaned up'),em.length+' '+L('lege notities verwijderd','empty entries deleted'),'ok',3000) });
   m.querySelectorAll('[data-act="dnew"]').forEach(b=>b.onclick=()=>editDiary());
   m.querySelectorAll('[data-act="dimport"]').forEach(b=>b.onclick=()=>importNotion());
   m.querySelectorAll('[data-act="twfset"]').forEach(b=>b.onclick=()=>window.TWF.go('settings'));
@@ -6901,8 +6962,8 @@ function openDiary(d){ if(!d) return; const mo=MOODS.find(m=>m[0]===d.mood);
     `<button class="btn btn-danger" data-del>${ic('trash',16)}</button><button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-ed>${ic('edit',16)} ${L('Bewerken','Edit')}</button>`);
   p.querySelector('[data-x2]').onclick=()=>p.close(); p.querySelector('[data-ed]').onclick=()=>{ p.close(); setTimeout(()=>editDiary(d),isPhone()?240:0) };
   p.querySelector('[data-del]').onclick=async()=>{ if(!(await askConfirm(L('Deze notitie verwijderen?','Delete this entry?')))) return; await DB.del('diary',d.id); p.close(); render(); toast(L('Verwijderd','Deleted'),'','ok',1500) } }
-function editDiary(d){ const st={mood:d?d.mood:''};
-  const p=panel(d?L('Notitie bewerken','Edit entry'):L('Nieuwe notitie','New entry'),`<div class="field"><label>${L('Datum','Date')}</label><input class="inp" id="dyD" type="date" value="${d?d.date:dKey(new Date())}"></div>
+function editDiary(d,dateKey){ const st={mood:d?d.mood:''};
+  const p=panel(d?L('Notitie bewerken','Edit entry'):L('Nieuwe notitie','New entry'),`<div class="field"><label>${L('Datum','Date')}</label><input class="inp" id="dyD" type="date" value="${d?d.date:dateKey?dateKey:dKey(new Date())}"></div>
     <div class="field"><label>${L('Titel','Title')}</label><input class="inp" id="dyT" value="${esc(d?d.title:'')}" placeholder="${L('bijv. Rustige dag, geduld beloond','e.g. Calm day, patience paid off')}"></div>
     <div class="field"><label>${L('Gevoel','Mood')}</label><div class="moods">${MOODS.map(([k,e])=>`<button data-mood="${k}" class="${st.mood===k?'on':''}">${e}</button>`).join('')}</div></div>
     <div class="field"><label>${L('Notitie','Entry')}</label><textarea class="inp" id="dyB" style="min-height:200px" placeholder="${L('Hoe ging het vandaag? Wat heb je geleerd? Wat doe je morgen anders?','How did today go? What did you learn? What will you do differently tomorrow?')}">${esc(d?d.body:'')}</textarea></div>`,
@@ -6929,9 +6990,15 @@ function parseMd(name,txt){ const lines=txt.replace(/\r/g,'').split('\n'); let t
   props.forEach(l=>{ const [k,...v]=l.split(':'); if(/date|datum|dag|created|aangemaakt/i.test(k)&&!date) date=parseDate(v.join(':')) });
   if(!date) date=parseDate(title)||parseDate(name);
   return { title, date, body:lines.slice(i).join('\n').trim() } }
+/* veel notities in één keer opslaan (sneller dan één voor één) */
+async function dbPutMany(kind,objs){ if(!objs.length) return; if(DB.cache&&DB.sb&&DB.uid){ DB.cache[kind]=DB.cache[kind]||{}; objs.forEach(o=>DB.cache[kind][o.id]=o);
+    for(let i=0;i<objs.length;i+=200){ const {error}=await DB.sb.from('bt_items').upsert(objs.slice(i,i+200).map(o=>({user_id:DB.uid,kind,id:o.id,data:o,updated_at:new Date().toISOString()})),{onConflict:'user_id,kind,id'}); if(error) throw error } }
+  else for(const o of objs) await DB.put(kind,o) }
+async function dbDelMany(kind,ids){ if(!ids.length) return; if(DB.cache&&DB.sb&&DB.uid){ ids.forEach(id=>{ if(DB.cache[kind]) delete DB.cache[kind][id] }); for(let i=0;i<ids.length;i+=200) await DB.sb.from('bt_items').delete().eq('user_id',DB.uid).eq('kind',kind).in('id',ids.slice(i,i+200)) }
+  else for(const id of ids) await DB.del(kind,id) }
 function parseCsv(txt){ const rows=[]; let row=[], cur='', q=false; for(let i=0;i<txt.length;i++){ const c=txt[i]; if(q){ if(c==='"'){ if(txt[i+1]==='"'){cur+='"';i++} else q=false } else cur+=c } else if(c==='"') q=true; else if(c===','){ row.push(cur); cur='' } else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur='' } else if(c!=='\r') cur+=c } if(cur||row.length){ row.push(cur); rows.push(row) }
   const hd=(rows.shift()||[]).map(h=>h.replace(/^﻿/,'').trim()); const ti=hd.findIndex(h=>/^(name|naam|title|titel)$/i.test(h)), di=hd.findIndex(h=>/date|datum|created/i.test(h));
-  return rows.filter(r=>r.some(Boolean)).map(r=>({ title:ti>=0?r[ti]:r[0], date:di>=0?parseDate(r[di]):null, body:hd.map((h,k)=>k===ti||k===di||!r[k]?'':`**${h}:** ${r[k]}`).filter(Boolean).join('\n') })) }
+  return rows.filter(r=>r.some(Boolean)).map(r=>({ title:ti>=0?r[ti]:r[0], date:di>=0?parseDate(r[di]):hd.map((h,k)=>parseDate(r[k])).find(Boolean)||null, body:hd.map((h,k)=>k===ti||k===di||!r[k]||parseDate(r[k])||/^(created|last edited|aangemaakt|laatst bewerkt)/i.test(h)?'':`**${h}:** ${r[k]}`).filter(Boolean).join('\n') })) }
 function importNotion(){ const inp=document.createElement('input'); inp.type='file'; inp.multiple=true; inp.accept='.zip,.md,.markdown,.txt,.csv,application/zip,text/markdown,text/csv,text/plain';
   inp.onchange=async()=>{ const files=[...inp.files]; if(!files.length) return; toast(L('Importeren…','Importing…'),files.length+' '+L('bestand(en)','file(s)'),'info',2500);
     try{ const items=[]; const handle=async(name,txt)=>{ if(/\.csv$/i.test(name)){ const md=items.length; parseCsv(txt).forEach(x=>items.push({...x,_csv:true})); return } if(/\.(md|markdown|txt)$/i.test(name)) items.push(parseMd(name,txt)) };
@@ -6940,10 +7007,12 @@ function importNotion(){ const inp=document.createElement('input'); inp.type='fi
         else await handle(f.name,await f.text()) }
       // markdown-pagina's winnen van csv-rijen met dezelfde titel
       const mdTitles=new Set(items.filter(x=>!x._csv).map(x=>x.title)); const all=items.filter(x=>!x._csv||!mdTitles.has(x.title));
-      const have=new Set(diaryList().map(d=>d.date+'|'+d.title)); let n=0, skip=0;
+      const have=new Set(diaryList().map(d=>d.date+'|'+d.title)); let n=0, skip=0, empty=0; const out=[];
       for(const x of all){ const date=x.date||dKey(new Date()); if(have.has(date+'|'+x.title)){ skip++; continue }
-        await DB.put('diary',{id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date,title:x.title||'',body:x.body||'',mood:'',source:'notion',created:new Date().toISOString()}); have.add(date+'|'+x.title); n++ }
-      S.page='diary'; window.TWF.go('journal'); toast(L('Import klaar','Import done'),`${n} ${L('notities geïmporteerd','entries imported')}${skip?` · ${skip} ${L('al aanwezig','already present')}`:''}`,'ok',6000) }
+        const o={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)+n,date,title:x.title||'',body:x.body||'',mood:'',source:'notion',created:new Date().toISOString()};
+        if(isEmptyEntry(o)){ empty++; continue } out.push(o); have.add(date+'|'+x.title); n++ }
+      await dbPutMany('diary',out); const lastD=out.map(o=>o.date).sort().pop(); if(lastD) S.dcal=new Date(lastD+'T12:00:00');
+      S.page='diary'; window.TWF.go('journal'); toast(L('Import klaar','Import done'),`${n} ${L('notities geïmporteerd','entries imported')}${skip?` · ${skip} ${L('al aanwezig','already present')}`:''}${empty?` · ${empty} ${L('lege pagina\'s overgeslagen','empty pages skipped')}`:''}`,'ok',6000) }
     catch(e){ toast(L('Import mislukt','Import failed'),e.message||String(e),'bad',6000) } };
   inp.click() }
 
@@ -6955,7 +7024,7 @@ function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='l
   const pts=equitySeries(A).filter(p=>p.t>=Date.now()-30*86400000);
   return { name:A.name, uname:SETTINGS.name, ccy:A.ccy, balance:balanceOf(A), ret:retPct(A), today:tday.reduce((s,t)=>s+t.pnl,0), todayN:tday.length, month:tmo.reduce((s,t)=>s+t.pnl,0), monthN:tmo.length,
     planPct:m.planPct, n:m.n, wr:m.wr, pf:m.pf, planDots:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).reverse().map(t=>t.hadPlan), accts:['live',...D.live.map(la=>'live:'+la.id)].map(k=>{ const s1=S.acct; S.acct=k; const B=acct(); S.acct=s1; const td=B.trades.filter(t=>dKey(t.date)===dKey(new Date())).reduce((a,t)=>a+t.pnl,0); return {key:k,name:B.name,sub:B.sub,bal:balanceOf(B),today:td,n:B.trades.length,f:(v,o)=>fmtM(v,B.ccy,o)} }), avgR:m.avgR, best:m.best, worst:m.worst, wins:m.wins, losses:m.losses, days:m.days, greenDays:m.greenDays, mdd:m.mdd, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
-    last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList()[0]||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
+    last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList().find(d=>!isEmptyEntry(d))||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
 window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
