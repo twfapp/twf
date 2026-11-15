@@ -1755,6 +1755,20 @@ html.updating #updScr.hide{display:grid!important}
 .mkkind{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);padding:8px 10px;border-radius:10px;background:var(--accentSoft)}
 
 .pfgroup{margin-bottom:18px}.pfgh{display:flex;align-items:center;gap:12px;margin:0 0 10px}.pfgh b{display:block;font-size:16px}.pfgh small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px}
+
+/* v11.4: hele smalle telefoons (iPhone SE e.d.) */
+@media (max-width:400px){
+  .vbars{gap:2px!important}.vbars .vb,.vbars .vt{min-width:0!important}.vbars .vl{font-size:8.5px!important}
+  .pfgrid{grid-template-columns:minmax(0,1fr)!important}.pfgrid>*{min-width:0}
+  .setwrap{grid-template-columns:minmax(0,1fr)!important}.setwrap>*{min-width:0}
+  .setnav{overflow-x:auto;scrollbar-width:none;max-width:100%}.setnav::-webkit-scrollbar{display:none}
+  .tvsheet .tvs-foot{gap:6px!important}.tvsheet .tvs-foot .btn{flex:1 1 0;min-width:0;padding:0 8px;font-size:14px}
+  .phead h1{font-size:23px!important}
+  .seg.ccyx{flex-wrap:wrap}.srow{flex-wrap:wrap}
+}
+
+:where(.jpage,.jx) .calt{height:auto!important;flex:none!important;background:none!important}
+@media (max-width:480px){ .finebar{flex-wrap:wrap}.finebar>div{flex:1 1 100%!important;order:3}.finebar .btn{margin-left:auto} }
 </style>
 </head>
 <body class="">
@@ -1897,7 +1911,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v11.3', BUILD: '2026-11-17'
+  VERSION: 'v11.4', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2385,6 +2399,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v11.4':{nl:['iPad en telefoon nagelopen: kleine schermen netjes, tekst op iPad niet meer te klein'],en:['iPad and phone checked: small screens tidy, text on iPad no longer too small']},
   'v11.3':{nl:['Prop firm-sessie: je rekening komt uit de firm (programma + grootte), geen losse handelsrekening meer','Markten volgen de firm: futures-firms alleen futures, CFD-firms geen futures','Prop firms-pagina: je rekeningen per firm'],en:['Prop firm session: your account comes from the firm (program + size), no separate trading account','Markets follow the firm: futures firms futures only, CFD firms no futures','Prop firms page: your accounts per firm']},
   'v11.2':{nl:['iPhone: vensters schermvullend en normaal scrollen','Backtest-overzicht netjes op de telefoon'],en:['iPhone: full-screen dialogs with normal scrolling','Backtest overview tidy on phone']},
   'v11.1':{nl:['Nieuw update-scherm: bijwerken zonder uit te loggen, je komt terug waar je was','Instelling "Automatisch updaten"'],en:['New update screen: update without signing out, you return where you were','New setting "Automatic updates"']},
@@ -2656,7 +2671,7 @@ const CVARS=['--bg','--bg2','--panel','--panel2','--line','--line2','--ink','--i
 /* v10.2: grootte van de app — 'auto' rekent met de venstergrootte (ontwerp: 1500×920) */
 function uiScalePref(){ try{ return localStorage.getItem('twf_uiscale')||'auto' }catch(e){ return 'auto' } }
 function applyUiScale(){ const v=uiScalePref(); let z=1;
-  if(v==='auto'){ const w=innerWidth, h=innerHeight; if(w>900) z=Math.max(.84,Math.min(1.05,Math.min(w/1560,h/940))); z=Math.round(z*50)/50 }
+  if(v==='auto'){ const w=innerWidth, h=innerHeight, touch=matchMedia('(pointer:coarse)').matches&&!matchMedia('(pointer:fine)').matches; if(w>900&&!touch) z=Math.max(.84,Math.min(1.05,Math.min(w/1560,h/940))); z=Math.round(z*50)/50 }
   else z=Math.max(.5,Math.min(2,parseFloat(v)||1));
   document.documentElement.style.setProperty('--uiz',z) }
 addEventListener('resize',()=>{ clearTimeout(window._uizT); window._uizT=setTimeout(applyUiScale,120) });
@@ -6971,7 +6986,7 @@ function pgOverview(){
   const last=tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,6);
   const fine=SETTINGS.boeteEnabled&&A.kind==='live'?(tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0)):0;
   return head(`${greet()}, ${esc((SETTINGS.name||'Trader').split(' ')[0])}`,`<span style="font-style:italic">${esc(quote())}</span>`,addBtn())+
-  (fine>0?`<div class="box" style="display:flex;align-items:center;gap:14px;margin-bottom:18px;border-color:rgba(224,163,58,.4)"><span class="chip amber">${ic('target',14)} ${L('Boete','Fine')}</span><div style="flex:1">${fmtM(fine,A.ccy)} ${L('open','open')}${SETTINGS.goedDoel?` ${L('voor','for')} <b>${esc(SETTINGS.goedDoel)}</b>`:''} · ${tr.filter(t=>!t.hadPlan).length} ${L('trade(s) zonder plan','trade(s) without a plan')}</div><button class="btn btn-g" data-go="discipline">${L('Bekijk','View')}</button></div>`:'')+
+  (fine>0?`<div class="box finebar" style="display:flex;align-items:center;gap:14px;margin-bottom:18px;border-color:rgba(224,163,58,.4)"><span class="chip amber">${ic('target',14)} ${L('Boete','Fine')}</span><div style="flex:1">${fmtM(fine,A.ccy)} ${L('open','open')}${SETTINGS.goedDoel?` ${L('voor','for')} <b>${esc(SETTINGS.goedDoel)}</b>`:''} · ${tr.filter(t=>!t.hadPlan).length} ${L('trade(s) zonder plan','trade(s) without a plan')}</div><button class="btn btn-g" data-go="discipline">${L('Bekijk','View')}</button></div>`:'')+
   `<div class="jgrid">
     <div class="box hero2 c12"><div class="hl"><div><div class="lab">${A.kind==='live'?ic('plug',15):ic('chart',15)} ${esc(A.name)} · ${L('Saldo','Balance')} <button class="ib" data-act="blur" style="width:28px;height:28px" title="${L('Verbergen','Hide')}">${ic(S.blur?'eyeoff':'eye',15)}</button></div>
       <div class="bal mono ${S.blur?'blur':''}">${fmtM(bal,A.ccy)}</div>
