@@ -1524,10 +1524,10 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
 .cpn{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;border:2px solid var(--line2);background:var(--panel2);font-weight:700;font-size:12.5px}
 .cpn span{width:16px;height:16px;border-radius:50%}
 .cpicks{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
-.cpick{position:relative;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);cursor:pointer}
-.cpick input{position:absolute!important;left:10px;bottom:6px;width:30px!important;height:2px!important;min-height:0!important;opacity:0;border:0;padding:0;pointer-events:none}
-.cpick .cdot{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
-.cpick b{display:block;font-size:13.5px}.cpick small{display:block;color:var(--ink3);font-size:11.5px;font-family:ui-monospace,Menlo,monospace}
+.ucpick{position:relative;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);cursor:pointer}
+.ucpick input{position:absolute!important;left:10px;bottom:6px;width:30px!important;height:2px!important;min-height:0!important;opacity:0;border:0;padding:0;pointer-events:none}
+.ucpick .cdot{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:inset 0 0 0 1px rgba(128,128,128,.35)}
+.ucpick b{display:block;font-size:13.5px}.ucpick small{display:block;color:var(--ink3);font-size:11.5px;font-family:ui-monospace,Menlo,monospace}
 /* groot scherm: alles vullen */
 @media (min-width:1500px){ .hpage,.jpage{max-width:none;padding-left:40px;padding-right:40px} .hgrid{grid-template-columns:repeat(4,minmax(0,1fr))} .hlive{grid-column:span 2;grid-row:span 2} }
 /* v10.2: app past zich zelf aan het venster aan (zie applyUiScale) */
@@ -1777,7 +1777,7 @@ body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.7', BUILD: '2026-11-17'
+  VERSION: 'v10.8', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2183,6 +2183,11 @@ const TEMPLATES=[
   {id:'light',name:'Licht',nameEn:'Light'},
   {id:'classic',name:'Klassiek (TradingView)',nameEn:'Classic (TradingView)'}
 ];
+/* v10.8: standaardtemplates kun je archiveren (en terugzetten); laatst gekozen template wordt onthouden */
+const tplArch=()=>{ try{ return profile().tplArchive||[] }catch(e){ return [] } };
+const visTemplates=()=>TEMPLATES.filter(x=>!tplArch().includes(x.id)||(typeof SX!=='undefined'&&SX&&SX.tplId===x.id));
+async function tplArchive(id,on){ const p=profile(); const a=new Set(p.tplArchive||[]); on?a.add(id):a.delete(id); if(on&&TEMPLATES.every(x=>a.has(x.id))){ toast(LANG==='en'?'Keep at least one':'Houd er minstens één','', 'bad'); return } await DB.put('profile',{...p,id:'me',tplArchive:[...a]}) }
+function tplRemember(id){ try{ if(SX&&SX.s) SX.s.tplPicked=true; const p=profile(); if(p.lastTemplate!==id) DB.put('profile',{...p,id:'me',lastTemplate:id}) }catch(e){} }
 
 /* =========================================================
    STORAGE — Local (testmodus) of Supabase
@@ -2499,7 +2504,7 @@ function applyColors(){ const th=curTheme(), own=((prefsSafe().colors)||{})[th],
   for(const k in v) st.setProperty(k,v[k]) }
 function colorsHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, th=curTheme(), c=themeColors(th), own=((prefsSafe().colors)||{})[th]||{}, pf=prefsSafe();
   const cur=CPRE[th].find(([,,p])=>p.bg===c.bg&&p.panel===c.panel&&p.ink===c.ink), pn=PNPRE.find(([,,p])=>p.pos===c.pos&&p.neg===c.neg);
-  const sw=(k,lab,val)=>`<label class="cpick"><input type="color" data-col="${k}" value="${val}"><span class="cdot" style="background:${val}"></span><span><b>${lab}</b><small>${val.toUpperCase()}</small></span></label>`;
+  const sw=(k,lab,val)=>`<label class="ucpick"><input type="color" data-col="${k}" value="${val}"><span class="cdot" style="background:${val}"></span><span><b>${lab}</b><small>${val.toUpperCase()}</small></span></label>`;
   return `<div class="srow col"><div class="stx"><b>${L('Kleurenthema','Colour theme')} · ${th==='dark'?L('donker','dark'):L('licht','light')}</b><small>${L('Kies een basis en pas daarna elke kleur zelf aan. Donker en licht hebben elk hun eigen kleuren.','Pick a base and then fine-tune every colour. Dark and light each have their own colours.')}</small></div>
      <div class="cpres">${CPRE[th].map(([k,n,p])=>`<button class="cpre ${cur&&cur[0]===k?'on':''}" data-cpre="${k}" style="background:${p.bg}"><span style="background:${p.panel};color:${p.ink}"><i style="background:var(--accent)"></i>Aa</span><small style="color:${p.ink}">${n}</small></button>`).join('')}</div></div>
    <div class="srow col"><div class="stx"><b>${L('Winst- en verlieskleuren','Profit and loss colours')}</b></div>
@@ -2512,7 +2517,7 @@ function bindColors(root,rerender){ const th=curTheme();
   root.querySelectorAll('[data-cpre]').forEach(b=>b.onclick=()=>{ const p=CPRE[th].find(x=>x[0]===b.dataset.cpre)[2]; save(c=>Object.assign(c,p)) });
   root.querySelectorAll('[data-cpn]').forEach(b=>b.onclick=()=>{ const p=PNPRE.find(x=>x[0]===b.dataset.cpn)[2]; save(c=>Object.assign(c,p)) });
   root.querySelectorAll('[data-col]').forEach(inp=>{ const k=inp.dataset.col;
-    inp.oninput=()=>{ const lab=inp.closest('.cpick'); lab.querySelector('.cdot').style.background=inp.value; lab.querySelector('small').textContent=inp.value.toUpperCase();
+    inp.oninput=()=>{ const lab=inp.closest('.ucpick'); lab.querySelector('.cdot').style.background=inp.value; lab.querySelector('small').textContent=inp.value.toUpperCase();
       if(k==='accent'){ document.body.style.setProperty('--accent',inp.value); return } const c={...themeColors(th),[k]:inp.value}; const o=prefsSafe(); o.colors=o.colors||{}; const keep=o.colors[th]; o.colors[th]=c; applyColors(); o.colors[th]=keep };
     inp.onchange=()=>save((c,p)=>{ if(k==='accent') p.accent=inp.value; else c[k]=inp.value }) });
   const r=root.querySelector('[data-creset]'); if(r) r.onclick=()=>save((c,p)=>{ Object.keys(c).forEach(x=>delete c[x]); delete p.accent });
@@ -2840,7 +2845,7 @@ function sessionModal(type='backtest',editId,opts){
   const ed=editId?DB.get('sessions',editId):null;
   const p=profile();
   const st={type:ed?ed.type:type,sec:'basics',name:ed?ed.name:'',account:ed?ed.account:(DB.list('accounts')[0]||{}).id||'',strategy:ed?ed.strategy||'':'',assets:ed?[...ed.assets]:[],
-    start:ed?ed.start:'',endMode:ed?ed.endMode:'auto',end:ed?ed.end||'':'',template:ed?ed.template:(p.defaultTemplate||'tv-dark'),smooth:ed?!!ed.smooth:false,
+    start:ed?ed.start:'',endMode:ed?ed.endMode:'auto',end:ed?ed.end||'':'',template:ed?ed.template:(p.lastTemplate||p.defaultTemplate||'tv-dark'),smooth:ed?!!ed.smooth:false,
     spreadMode:ed?ed.spreadMode:'real',spread:ed?ed.spread:0.3,comm:ed?ed.comm:7,slip:ed?ed.slip:0,hedge:ed?ed.hedge:true,
     target:ed?ed.target:10,daily:ed?ed.daily:5,maxloss:ed?ed.maxloss:10,mindays:ed?ed.mindays:4,ddOpen:false,
     firm:ed?ed.firm||'':'',phase:ed?ed.phase||0:0,ddType:ed?ed.ddType||'static':'static',consistency:ed?ed.consistency||0:0,maxLots:ed?ed.maxLots||0:0,minHold:ed?ed.minHold||0:0,
@@ -2869,7 +2874,7 @@ function sessionModal(type='backtest',editId,opts){
         <div class="field"><label>${t('ns.end')}</label>${st.endMode==='auto'?`<input class="inp" disabled value="${t('ns.auto')}">`:`<input class="inp" type="date" id="nEnd" min="${st.start||minDate()}" max="${today}" value="${st.end}">`}</div></div>
         <div class="hint" style="margin:0 0 12px">${st.endMode==='auto'?t('ns.autohint')+' ':''}${t('ns.datahint2',{min:fmtDate(minDate()),max:fmtDate(maxDate())})} · <b class="${realAll()?'pos':''}" style="${realAll()?'':'color:var(--amber)'}">${realAll()?t('md.real'):t('md.test')}</b></div>
         <div class="seg"><button class="${st.endMode==='auto'?'on':''}" data-em="auto">${t('ns.auto')}</button><button class="${st.endMode==='custom'?'on':''}" data-em="custom">${t('ns.customd')}</button></div></div></div>`:''}
-      <div class="two"><div class="field"><label>${t('ns.template')}</label><select class="inp" id="nTpl">${allTplOpts().map(([v,l])=>`<option value="${esc(v)}" ${v===(st.template||profile().defaultTemplate)?'selected':''}>${esc(l)}</option>`).join('')}</select></div>
+      <div class="two"><div class="field"><label>${t('ns.template')}</label><select class="inp" id="nTpl">${allTplOpts().map(([v,l])=>`<option value="${esc(v)}" ${v===(st.template||profile().lastTemplate||profile().defaultTemplate)?'selected':''}>${esc(l)}</option>`).join('')}</select></div>
         <div class="field"><label>&nbsp;</label><div class="tog"><span>${t('ns.smooth')}</span><span class="sw ${st.smooth?'on':''}" id="nSmooth"></span></div></div></div>`;
     if(st.sec==='more') c=`
       <div class="field"><label>${t('ns.spread')}</label><div class="seg"><button class="${st.spreadMode==='real'?'on':''}" data-sm="real">${t('ns.spreadreal')}</button><button class="${st.spreadMode==='fixed'?'on':''}" data-sm="fixed">${t('ns.spreadfix')}</button></div></div>
@@ -3488,6 +3493,7 @@ class Replay{
     const f=this.f,k=this.tf,bars=[],vols=[]; let cb=null,b=null;
     // begin bij een index die genoeg bars oplevert
     let startI=0; const mins=tfMinutes(k); const want=limit*mins*60; const s0=f.t[this.idx]-want; if(s0>f.t[0]) startI=Math.max(0,f.idxAtOrBefore(s0));
+    if(f.real){ try{ const hb=histBars(f,k,bucketOf(f.t[startI],k)); for(const x of hb) bars.push(x) }catch(e){} }
     for(let i=startI;i<this.idx;i++){
       const bt=bucketOf(f.t[i],k);
       if(bt!==cb){ if(b){bars.push(b)} cb=bt; b={time:bt,open:f.o[i],high:f.h[i],low:f.l[i],close:f.c[i],volume:f.v[i]} }
@@ -3506,13 +3512,14 @@ class Replay{
   // één stap vooruit (sub-tick of M1). return: {newBar:boolean, finished:bar|null}
   tick(){
     const f=this.f; this.frac=0;
-    if(this.smooth&&this.sub<3){this.sub++;return {newBar:false,pts:[this.pathOf(this.idx)[this.sub]]}}
+    if(this.smooth&&this.sub<3&&tfMinutes(this.tf)<60){this.sub++;return {newBar:false,pts:[this.pathOf(this.idx)[this.sub]]}}
+    this.sub=3;
     if(this.idx>=f.n-1) return {end:true};
     // huidige M1 is af → opnemen in base
     const done=this.current();
     const ni=this.idx+1, nb=bucketOf(f.t[ni],this.tf);
-    this.idx=ni; this.sub=this.smooth?0:3;
-    const pts=this.smooth?[f.o[ni]]:this.pathOf(ni);
+    const sm=this.smooth&&tfMinutes(this.tf)<60; this.idx=ni; this.sub=sm?0:3;
+    const pts=sm?[f.o[ni]]:this.pathOf(ni);
     if(nb!==this.curBucket){ this.curBucket=nb; this.base=null; return {newBar:true,finished:done,pts} }
     this.base={time:done.time,open:done.open,high:done.high,low:done.low,close:done.close,volume:done.volume};
     return {newBar:false,pts};
@@ -3537,7 +3544,7 @@ async function openSession(id){
   const sym=s.symbol&&s.assets.includes(s.symbol)?s.symbol:s.assets[0];
   const pf=p.prefs||{};
   SX={favBarOff:!!lsGet('twfbt_favoff'),s,acc,sym,tf:s.tf||pf.defTf||'60',type:s.chartType||pf.defType||'candles',speed:s.speed||pf.defSpeed||10,mode:s.mode||pf.defMode||'smooth',stepAnim:s.stepAnim??1,
-      playing:false,feeds:{},vol:s.showVol!=null?s.showVol!==false:pf.showVol!==false,scale:'normal',auto:true,panel:null,tplId:(s.template&&s.template!=='twf-dark'?s.template:null)||p.defaultTemplate||'tv-dark'};
+      playing:false,feeds:{},vol:s.showVol!=null?s.showVol!==false:pf.showVol!==false,scale:'normal',auto:true,panel:null,tplId:(s.template&&(s.template!=='twf-dark'||s.tplPicked)?s.template:null)||p.lastTemplate||p.defaultTemplate||'tv-dark'};
   if(s.balance==null) s.balance=acc.balance; if(s.startBalance==null) s.startBalance=s.balance;
   SX.pos=s.positions||[]; SX.orders=s.orders||[];
   buildSessionDom();
@@ -3684,7 +3691,22 @@ async function loadSymbol(sym,first){
   SX.chart.applyOptions({localization:{locale:'en-US',priceFormatter:x=>fmtPx(x),timeFormatter:crossTimeFmt}});
   makeSeries(); fullRender(true); updateTopbar(); if(SX.panel==='watch') renderPanel();
 }
+/* v10.8: lange geschiedenis voor H4/D/W/M uit kleine, gecachte maand-samenvattingen (geen bevriezing) */
+async function aggMonth(sym,ym){ const key='agg1:'+sym+':'+ym; let a=await MD.get(key); if(a) return a;
+  const txt=await MD.getMonthText(sym,ym); if(!txt) return {h4:[],d:[]}; const m=MD.parseMonth(txt); const out={h4:[],d:[]};
+  const roll=(arr,sec)=>{ let cur=null; for(let i=0;i<m.n;i++){ const bt=Math.floor(m.t[i]/sec)*sec; if(!cur||cur[0]!==bt){ cur=[bt,m.o[i],m.h[i],m.l[i],m.c[i],m.v[i]]; arr.push(cur) } else { if(m.h[i]>cur[2])cur[2]=m.h[i]; if(m.l[i]<cur[3])cur[3]=m.l[i]; cur[4]=m.c[i]; cur[5]+=m.v[i] } } };
+  roll(out.h4,14400); roll(out.d,86400); const cur=new Date().toISOString().slice(0,7); if(ym<cur) await MD.put(key,out); return out }
+async function loadHist(sym){ if(!SX||!SX.feeds[sym]) return; const f=SX.feeds[sym]; if(!f.real||!f.loaded.length) return;
+  SX.hist=SX.hist||{}; const H=SX.hist[sym]=SX.hist[sym]||{h4:[],d:[],months:new Set(),busy:false}; if(H.busy) return; H.busy=true;
+  try{ const first=f.loaded.slice().sort()[0], all=MD.months(sym).filter(ym=>ym<first).sort().reverse(), tfm=tfMinutes(SX.tf), want=tfm>=10080?120:tfm>=1440?48:18;
+    let k=0; for(const ym of all.slice(0,want)){ if(!SX||!SX.feeds[sym]) return; if(H.months.has(ym)) continue; const a=await aggMonth(sym,ym); H.months.add(ym);
+      H.h4=a.h4.concat(H.h4); H.d=a.d.concat(H.d); if(++k%6===0&&SX&&SX.sym===sym&&tfMinutes(SX.tf)>=240) fullRender(false); await new Promise(r=>setTimeout(r,0)) }
+    if(k&&SX&&SX.sym===sym&&tfMinutes(SX.tf)>=240) fullRender(false) }finally{ H.busy=false } }
+function histBars(f,k,firstBucket){ const H=SX&&SX.hist&&SX.hist[f.sym]; if(!H) return []; const tfm=tfMinutes(k); if(tfm<240) return []; const src=tfm>=1440?H.d:H.h4; const out=[]; let b=null;
+  for(const r of src){ const bt=bucketOf(r[0],k); if(bt>=firstBucket) break; if(!b||b.time!==bt){ if(b) out.push(b); b={time:bt,open:r[1],high:r[2],low:r[3],close:r[4],volume:r[5]} } else { if(r[2]>b.high)b.high=r[2]; if(r[3]<b.low)b.low=r[3]; b.close=r[4]; b.volume+=r[5] } }
+  if(b) out.push(b); return out }
 function fullRender(fit){
+  if(tfMinutes(SX.tf)>=240&&SX.rp.f.real&&!(SX.hist&&SX.hist[SX.sym]&&SX.hist[SX.sym].busy)) setTimeout(()=>loadHist(SX.sym),50);
   const bars=SX.rp.rebuild(); SX.blist=bars.map(b=>({...b}));
   SX.series.setData(bars.map(toSeries)); if(SX.volS) SX.volS.setData(bars.map(toVol));
   if(!SX.indS) buildIndicators(); else { indSetData(); layoutScales(); }
@@ -3725,7 +3747,7 @@ function stepForward(){
   // doel: eind van huidige candle als die nog niet af is, anders eind van de volgende
   const startBucket=rp.curBucket, finishCurrent=!rp.bucketComplete();
   const done=()=>finishCurrent?rp.bucketComplete():(rp.curBucket!==startBucket&&rp.bucketComplete());
-  if(true){ rp.frac=0; let g=0; while(!done()&&g++<200000){const r=rp.tick();if(r.end)break;applyTick(r)} pushBar(rp.current()); legend(null);hud();afterTicks(); return; }
+  if(true){ rp.frac=0; SX.stepping=true; (async()=>{ try{ let g=0; while(!done()&&g++<400000){ const r=rp.tick(); if(r.end){ if(f.real&&f.hasMore()){ if(f.loading) await f.loading; else await f.loadMonth(f.nextYm()); continue } break } applyTick(r) } }finally{ if(SX){ SX.stepping=false; pushBar(rp.current()); legend(null);hud();afterTicks() } } })(); return; }
   // geanimeerd (~280 ms)
   let total=0; { const save={idx:rp.idx,sub:rp.sub}; } // schatting via minuten
   const est=Math.max(4,tfMinutes(SX.tf)*(SX.mode==='smooth'?4:1));
@@ -3746,10 +3768,10 @@ function startPlay(){
   let last=performance.now(), acc=0;
   const loop=now=>{ if(!SX||!SX.playing) return;
     const dt=Math.min(250,now-last); last=now;
-    const tps=SX.speed*(SX.mode==='smooth'?4:1); acc+=dt/1000*tps;
-    let n=Math.floor(acc); acc-=n; if(n>5000) n=5000; const smooth=SX.mode==='smooth';
+    const tfm=tfMinutes(SX.tf), tfx=Math.max(1,tfm/15), tps=SX.speed*(SX.mode==='smooth'&&tfm<60?4:1)*tfx; acc+=dt/1000*tps;
+    let n=Math.floor(acc); acc-=n; if(n>20000) n=20000; const smooth=SX.mode==='smooth'&&tfm<60;
     const rp=SX.rp, f=rp.f;
-    if(rp.idx>=f.n-2000) f.extendTo(f.t[f.n-1]+30*86400);
+    if(rp.idx>=f.n-Math.max(2000,tfx*1500)) f.extendTo(f.t[f.n-1]+30*86400);
     if(SX.s.endMode==='custom'&&SX.s.end){ const endSec=new Date(SX.s.end+'T23:59:00Z').getTime()/1000; if(f.t[rp.idx]>=endSec){stopPlay();toast(t('sx.ended'),'', 'info');return} }
     if(n>0){ for(let k=0;k<n;k++){const r=rp.tick();if(r.end){ if(f.real&&(f.loading||f.hasMore())){f.extendTo();break} stopPlay(); toast(t('md.enddata'),'','info'); break }applyTick(r)} pushBar(rp.current()); afterTicks(); if(!SX) return; if(!SX.playing||now-(SX.uiAt||0)>80){ SX.uiAt=now; legend(null); hud(); } }
     if(smooth&&SX&&SX.playing&&rp.sub<3){ rp.frac=acc; pushBar(rp.current()); }
@@ -3865,7 +3887,7 @@ function renderPanel(){
   } else if(SX.panel==='settings'){
     const c=tplColors(), p=profile();
     h=head(t('sx.chartset'))+`<div class="pnbody">
-      <div class="field"><label>${t('ns.template')}</label><select class="inp" id="csTpl">${TEMPLATES.map(x=>`<option value="${x.id}" ${x.id===SX.tplId?'selected':''}>${LANG==='en'?x.nameEn:x.name}</option>`).join('')}${p.chartCustom?`<option value="custom" ${SX.tplId==='custom'?'selected':''}>${t('sx.mytpl')}</option>`:''}</select></div>
+      <div class="field"><label>${t('ns.template')}</label><select class="inp" id="csTpl">${allTplOpts().map(([v,l])=>`<option value="${esc(v)}" ${v===SX.tplId?'selected':''}>${esc(l)}</option>`).join('')}</select></div>
       <div class="cgrid">
         ${[['bg','sx.c.bg'],['grid','sx.c.grid'],['up','sx.c.up'],['down','sx.c.down'],['text','sx.c.text'],['border','sx.c.border']].map(([k,l])=>`<button class="cpick" data-col="${k}">${sw(c[k],1)}<span>${t(l)}</span></button>`).join('')}
       </div>
@@ -3894,7 +3916,7 @@ function renderPanel(){
   pn.querySelectorAll('[data-wl]').forEach(b=>b.onclick=()=>loadSymbol(b.dataset.wl));
   pn.querySelectorAll('[data-jt]').forEach(b=>b.onclick=()=>{SX.jtab=b.dataset.jt;renderPanel()});
   const jn=$('#jNotes'); if(jn) jn.oninput=()=>{SX.s.notes=jn.value;clearTimeout(SX.nt);SX.nt=setTimeout(saveSession,600)};
-  const ct=$('#csTpl'); if(ct) ct.onchange=()=>{SX.tplId=ct.value;applyChartLook();renderPanel();saveSession()};
+  const ct=$('#csTpl'); if(ct) ct.onchange=()=>{SX.tplId=ct.value;tplRemember(ct.value);applyChartLook();renderPanel();saveSession()};
   pn.querySelectorAll('[data-col]').forEach(b=>bindSwatch(b,()=>[tplColors()[b.dataset.col],1],(h)=>{ const p=profile(); const nc={...tplColors(),[b.dataset.col]:h}; p.chartCustom=nc; SX.tplId='custom'; DB.put('profile',{...p,id:'me'}); applyChartLook(); const ct=$('#csTpl'); if(ct&&![...ct.options].some(o=>o.value==='custom')) ct.insertAdjacentHTML('beforeend',`<option value="custom">${t('sx.mytpl')}</option>`); if(ct) ct.value='custom' },{alpha:false}));
   const cg=$('#csGrid'); if(cg) cg.onclick=()=>{SX.s.grid=SX.s.grid===false;applyChartLook();renderPanel()};
   const cvl=$('#csVol'); if(cvl) cvl.onclick=()=>{SX.vol=!SX.vol;applyChartLook();renderPanel()};
@@ -6143,14 +6165,20 @@ function symSearch(first){
 }
 /* ----- v7.4: chart-template opslaan ----- */
 async function saveChartTpl(){ const nm=await askText('Save chart template','Template name','My template'); if(!nm) return; const p=profile(); const list=[...(p.chartTpls||[]).filter(x=>x.name!==nm),{name:nm,cfg:{...tplColors()}}];
-  await DB.put('profile',{...p,id:'me',chartTpls:list}); SX.tplId='u:'+nm; saveSession(); toast('Template saved',nm,'ok') }
-const allTplOpts=()=>{ const p=profile(); return [...TEMPLATES.map(x=>[x.id,LANG==='en'?x.nameEn:x.name]),...(p.chartCustom?[['custom',t('sx.mytpl')]]:[]),...(p.chartTpls||[]).map(x=>['u:'+x.name,x.name])] };
+  await DB.put('profile',{...p,id:'me',chartTpls:list}); SX.tplId='u:'+nm; tplRemember(SX.tplId); saveSession(); toast('Template saved',nm,'ok') }
+const allTplOpts=()=>{ const p=profile(); return [...visTemplates().map(x=>[x.id,LANG==='en'?x.nameEn:x.name]),...(p.chartCustom?[['custom',t('sx.mytpl')]]:[]),...(p.chartTpls||[]).map(x=>['u:'+x.name,x.name])] };
 
 /* ----- v7.3: chart-templates (submenu) ----- */
+function tplArchMenu(anchor){ const a=tplArch(); if(!a.length) return chartTplMenu(anchor);
+  popMenu(anchor,`<div class="mh2">Archive</div>`+a.map(id=>{ const x=TEMPLATES.find(t0=>t0.id===id); return x?`<button data-v="${id}">${ic('undo',14)} ${esc(x.nameEn||x.name)}</button>`:'' }).join(''),
+    async v=>{ await tplArchive(v,false); toast('Template restored','','ok',1500); setTimeout(()=>chartTplMenu(anchor),0) },'small side') }
 function chartTplMenu(anchor){
   const p=profile(), u=p.chartTpls||[];
-  const m=popMenu(anchor,`<button data-v="__save">${ic('copy',15)} Save chart template as…</button><div class="msep"></div>`+TEMPLATES.map(x=>`<button data-v="${x.id}" class="${SX.tplId===x.id?'on':''}">${x.nameEn||x.name}</button>`).join('')+(p.chartCustom?`<button data-v="custom" class="${SX.tplId==='custom'?'on':''}">My template</button>`:'')+(u.length?'<div class="msep"></div>'+u.map((x,i)=>`<button data-v="u:${esc(x.name)}" class="${SX.tplId==='u:'+x.name?'on':''}"><span style="flex:1">${esc(x.name)}</span><span class="tplx" data-ux="${i}">✕</span></button>`).join(''):''),
-    v=>{ if(v==='__save') return saveChartTpl(); SX.tplId=v; applyChartLook(); saveSession() },'small side');
+  const m=popMenu(anchor,`<button data-v="__save">${ic('copy',15)} Save chart template as…</button><div class="msep"></div>`+visTemplates().map(x=>`<button data-v="${x.id}" class="tplrow ${SX.tplId===x.id?'on':''}"><span style="flex:1">${x.nameEn||x.name}</span><span data-ax="${x.id}" title="Archive"></span></button>`).join('')+(p.chartCustom?`<button data-v="custom" class="${SX.tplId==='custom'?'on':''}">My template</button>`:'')+(u.length?'<div class="msep"></div>'+u.map((x,i)=>`<button data-v="u:${esc(x.name)}" class="${SX.tplId==='u:'+x.name?'on':''}"><span style="flex:1">${esc(x.name)}</span><span class="tplx" data-ux="${i}">✕</span></button>`).join(''):'')
++(tplArch().length?`<div class="msep"></div><button data-v="__arch">${ic('layers',15)} Archive (${tplArch().length})</button>`:''),
+    v=>{ if(v==='__save') return saveChartTpl(); if(v==='__arch') return setTimeout(()=>tplArchMenu(anchor),0); SX.tplId=v; tplRemember(v); applyChartLook(); saveSession() },'small side');
+  m.querySelectorAll('[data-ax]').forEach(x=>{ x.innerHTML=ic('trash',14); x.onpointerdown=ev=>ev.stopPropagation(); x.onmousedown=ev=>ev.stopPropagation();
+    x.onclick=async ev=>{ ev.stopPropagation(); await tplArchive(x.dataset.ax,true); toast('Template archived',(TEMPLATES.find(t0=>t0.id===x.dataset.ax)||{}).nameEn||'','ok',1800); chartTplMenu(anchor) } });
   m.querySelectorAll('[data-ux]').forEach(x=>{ x.innerHTML=ic('trash',14); x.title='Delete'; x.closest('button').classList.add('tplrow'); x.onpointerdown=ev=>ev.stopPropagation(); x.onmousedown=ev=>ev.stopPropagation();
     x.onclick=async ev=>{ ev.stopPropagation(); const p=profile(), i=+x.dataset.ux, nm=(p.chartTpls||[])[i]?.name; await DB.put('profile',{...p,id:'me',chartTpls:(p.chartTpls||[]).filter((_,j)=>j!==i)}); if(SX.tplId==='u:'+nm){SX.tplId='tv-dark'; applyChartLook(); saveSession()} chartTplMenu(anchor) } });
 }
@@ -6199,7 +6227,7 @@ function chartSettings(startTab){
   ov.addEventListener('mousedown',e=>{ if(e.target===ov){ e.stopImmediatePropagation(); cancel() } },true);
   let pickedTpl=null, pickedCfg=null;
   const tplMenu=anchor=>{ const u=profile().chartTpls||[];
-    const m=popMenu(anchor,`<button data-v="__save">${ic('copy',15)} Save as…</button><button data-v="__def">Apply defaults</button><div class="msep"></div>`+TEMPLATES.map(x=>`<button data-v="b:${x.id}" class="tplrow"><span class="tplck">${pickedTpl===x.id?'✓':''}</span><span style="flex:1">${esc(x.nameEn||x.name)}</span></button>`).join('')
+    const m=popMenu(anchor,`<button data-v="__save">${ic('copy',15)} Save as…</button><button data-v="__def">Apply defaults</button><div class="msep"></div>`+visTemplates().map(x=>`<button data-v="b:${x.id}" class="tplrow"><span class="tplck">${pickedTpl===x.id?'✓':''}</span><span style="flex:1">${esc(x.nameEn||x.name)}</span></button>`).join('')
       +(u.length?'<div class="msep"></div><div class="mh2">My templates</div>'+u.map((x,i)=>`<button data-v="u:${i}" class="tplrow"><span class="tplck">${pickedTpl==='u:'+x.name?'✓':''}</span><span style="flex:1">${esc(x.name)}</span><span class="tplx" data-ux="${i}" title="Delete">${ic('trash',14)}</span></button>`).join(''):''),
       async v=>{
         if(v==='__save'){ const nm=((await askText('Save chart template','Template name','My template'))||'').trim(); if(!nm) return; const p=profile(); const list=[...(p.chartTpls||[]).filter(x=>x.name!==nm),{name:nm,cfg:{...C}}];
@@ -6211,7 +6239,7 @@ function chartSettings(startTab){
         await DB.put('profile',{...p,id:'me',chartTpls:(p.chartTpls||[]).filter((_,j)=>j!==i)}); if(pickedTpl==='u:'+nm){pickedTpl=null} if(SX.tplId==='u:'+nm){SX.tplId='custom'; saveSession()} toast('Template deleted',nm||'','ok'); tplMenu(anchor) };
       x.onclick=del; x.onpointerdown=ev=>ev.stopPropagation(); x.onmousedown=ev=>ev.stopPropagation() }) };
   ov.querySelector('#csTplB').onclick=e=>tplMenu(e.currentTarget);
-  ov.querySelector('#csOk').onclick=async()=>{ const p=profile(); SX.ccLive=null; SX.tzLive=null; SX.tplId=(pickedTpl&&JSON.stringify(C)===pickedCfg)?pickedTpl:'custom'; SX.s.grid=true;
+  ov.querySelector('#csOk').onclick=async()=>{ const p=profile(); SX.ccLive=null; SX.tzLive=null; SX.tplId=(pickedTpl&&JSON.stringify(C)===pickedCfg)?pickedTpl:'custom'; tplRemember(SX.tplId); SX.s.grid=true;
     await DB.put('profile',{...p,id:'me',...(SX.tplId==='custom'?{chartCustom:{...C}}:{}),chartTz:tz,trading:ts}); syncQty(ts.qty); applyChartLook(); legend(); hud(); saveSession(); window.removeEventListener('keydown',escK,true); ov.remove() };
   draw();
 }
