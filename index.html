@@ -1640,6 +1640,9 @@ body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b
 .dcm{position:absolute;right:8px;bottom:6px;font-size:10.5px;font-weight:800;color:var(--accent)}
 .dcadd{margin:auto;color:var(--ink3);opacity:0;transition:opacity .15s}.dcd:hover .dcadd{opacity:.8}
 @media (max-width:900px){ .dcg{gap:4px} .dcd{min-height:62px;padding:5px 4px;border-radius:10px} .dcn{font-size:10.5px;justify-content:center;flex-direction:column;gap:1px} .dcn i{font-size:9px;padding:0 3px} .dct{font-size:10px;-webkit-line-clamp:2;text-align:center} .dcadd{display:none} }
+
+.drow2{display:flex;gap:8px;align-items:stretch}.drow2 .drow{flex:1;min-width:0}.drow2>.btn{height:auto;padding:0 14px}
+:where(.jx) .dbody{max-height:none}
 </style>
 </head>
 <body class="">
@@ -1774,7 +1777,7 @@ body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.5', BUILD: '2026-11-17'
+  VERSION: 'v10.6', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -6922,9 +6925,11 @@ function snippet(t,n=160){ t=String(t||'').replace(/[#*_>`\[\]]/g,'').replace(/\
 function mdLite(t){ return esc(t||'').replace(/^### (.*)$/gm,'<h5>$1</h5>').replace(/^## (.*)$/gm,'<h4>$1</h4>').replace(/^# (.*)$/gm,'<h3>$1</h3>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^\s*[-*] (.*)$/gm,'• $1').replace(/\n/g,'<br>') }
 /* v10.5: dagboek als maandkalender; lege Notion-pagina's tellen niet mee */
 const PROPLINE=/^\**\s*[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 _-]{0,30}\s*:\**\s*(.*)$/;
-function realBody(t){ return String(t||'').split('\n').filter(l=>{ const m=l.match(PROPLINE); if(!m) return l.trim()!==''; const v=m[1].replace(/\*/g,'').trim(); return v!==''&&!parseDate(v)&&!/^(yes|no|ja|nee|true|false|☐|☑|\[ ?\]|\[x\])$/i.test(v) }).join('\n').trim() }
+const LINKLINE=/^\s*([-*]\s*)?(\[[^\]]*\]\([^)]*\)\s*)+$|^\s*\|.*\|\s*$|^\s*!?\[[^\]]*\]\([^)]*\)\s*$|^\s*(https?:\/\/|www\.)\S+\s*$|^\s*[-|: ]{3,}\s*$/;
+function realBody(t){ return String(t||'').split('\n').filter(l=>{ if(LINKLINE.test(l)) return false; const m=l.match(PROPLINE); if(!m) return l.trim()!==''; const v=m[1].replace(/\*/g,'').trim(); return v!==''&&!parseDate(v)&&!/^(yes|no|ja|nee|true|false|☐|☑|\[ ?\]|\[x\])$/i.test(v) }).join('\n').trim() }
 const dateOnlyTitle=t=>!t||!!parseDate(t)&&String(t).replace(/[0-9]/g,'').replace(/\b(dag|day|ma|di|wo|do|vr|za|zo|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday|jan\w*|feb\w*|ma\w*|apr\w*|mei|may|jun\w*|jul\w*|aug\w*|sep\w*|o[ck]t\w*|nov\w*|dec\w*)\b/gi,'').replace(/[\s,./-]/g,'')==='';
-const isEmptyEntry=d=>!realBody(d.body)&&dateOnlyTitle(d.title)&&!d.mood;
+const noProps=t=>String(t||'').split('\n').filter(l=>!LINKLINE.test(l)&&!PROPLINE.test(l)&&l.trim()).join('\n').trim();
+const isEmptyEntry=d=>!d.mood&&(d.source==='notion'?!noProps(d.body):!realBody(d.body)&&dateOnlyTitle(d.title));
 function pgDiary(){ const all=diaryList(), list=all.filter(d=>!isEmptyEntry(d)), empties=all.length-list.length, q=(S.dq||'').toLowerCase().trim();
   const c=S.dcal||(S.dcal=new Date()), y=c.getFullYear(), mo=c.getMonth(), first=new Date(y,mo,1), nd=new Date(y,mo+1,0).getDate(), lead=(first.getDay()+6)%7, mk=`${y}-${String(mo+1).padStart(2,'0')}`, tdy=dKey(new Date()), ph=isPhone();
   const byDay={}; list.filter(d=>String(d.date).startsWith(mk)).forEach(d=>(byDay[d.date]=byDay[d.date]||[]).push(d));
@@ -6946,9 +6951,10 @@ function pgDiary(){ const all=diaryList(), list=all.filter(d=>!isEmptyEntry(d)),
 function bindDiary(m){ m.querySelectorAll('[data-dy]').forEach(b=>b.onclick=()=>openDiary(DB.get('diary',b.dataset.dy)));
   m.querySelectorAll('[data-dcal]').forEach(b=>b.onclick=()=>{ const c=S.dcal||new Date(); S.dcal=new Date(c.getFullYear(),c.getMonth()+(+b.dataset.dcal),1); render() });
   m.querySelectorAll('[data-dday]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dday, es=diaryList().filter(d=>d.date===k&&!isEmptyEntry(d)); if(!es.length) return editDiary(null,k); if(es.length===1) return openDiary(es[0]);
-    const p=panel(new Date(k+'T12:00:00').toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long'}),`<div class="dlist">${es.map(d=>`<button class="drow" data-dy2="${esc(d.id)}"><span class="dt"><b>${esc(d.title||L('Zonder titel','Untitled'))}</b><small>${esc(snippet(realBody(d.body)))}</small></span></button>`).join('')}</div>`,`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-add>${ic('plus',16)} ${L('Notitie toevoegen','Add entry')}</button>`);
+    const p=panel(new Date(k+'T12:00:00').toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long'}),`<div class="dlist">${es.map(d=>`<div class="drow2"><button class="drow" data-dy2="${esc(d.id)}"><span class="dt"><b>${esc(d.title||L('Zonder titel','Untitled'))}</b><small>${esc(snippet(realBody(d.body)))}</small></span></button><button class="btn btn-danger" data-dyx="${esc(d.id)}" aria-label="${L('Verwijderen','Delete')}">${ic('trash',16)}</button></div>`).join('')}</div>`,`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-add>${ic('plus',16)} ${L('Notitie toevoegen','Add entry')}</button>`);
     p.querySelector('[data-x2]').onclick=()=>p.close(); p.querySelector('[data-add]').onclick=()=>{ p.close(); setTimeout(()=>editDiary(null,k),isPhone()?240:0) };
-    p.querySelectorAll('[data-dy2]').forEach(x=>x.onclick=()=>{ p.close(); setTimeout(()=>openDiary(DB.get('diary',x.dataset.dy2)),isPhone()?240:0) }) });
+    p.querySelectorAll('[data-dy2]').forEach(x=>x.onclick=()=>{ p.close(); setTimeout(()=>openDiary(DB.get('diary',x.dataset.dy2)),isPhone()?240:0) });
+    p.querySelectorAll('[data-dyx]').forEach(x=>x.onclick=async()=>{ await DB.del('diary',x.dataset.dyx); x.closest('.drow2').remove(); render(); toast(L('Verwijderd','Deleted'),'','ok',1500); if(!p.querySelector('.drow2')) p.close() }) });
   m.querySelectorAll('[data-act="dclean"]').forEach(b=>b.onclick=async()=>{ const em=diaryList().filter(isEmptyEntry); if(!(await askConfirm(L(`${em.length} lege notities verwijderen? Notities met tekst blijven staan.`,`Delete ${em.length} empty entries? Entries with text stay.`),L('Opruimen','Clean up'),true))) return;
     await dbDelMany('diary',em.map(d=>d.id)); render(); toast(L('Opgeruimd','Cleaned up'),em.length+' '+L('lege notities verwijderd','empty entries deleted'),'ok',3000) });
   m.querySelectorAll('[data-act="dnew"]').forEach(b=>b.onclick=()=>editDiary());
@@ -7008,11 +7014,12 @@ function importNotion(){ const inp=document.createElement('input'); inp.type='fi
       // markdown-pagina's winnen van csv-rijen met dezelfde titel
       const mdTitles=new Set(items.filter(x=>!x._csv).map(x=>x.title)); const all=items.filter(x=>!x._csv||!mdTitles.has(x.title));
       const have=new Set(diaryList().map(d=>d.date+'|'+d.title)); let n=0, skip=0, empty=0; const out=[];
-      for(const x of all){ const date=x.date||dKey(new Date()); if(have.has(date+'|'+x.title)){ skip++; continue }
+      let nodate=0;
+      for(const x of all){ if(!x.date){ nodate++; continue } const date=x.date; if(have.has(date+'|'+x.title)){ skip++; continue }
         const o={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)+n,date,title:x.title||'',body:x.body||'',mood:'',source:'notion',created:new Date().toISOString()};
         if(isEmptyEntry(o)){ empty++; continue } out.push(o); have.add(date+'|'+x.title); n++ }
       await dbPutMany('diary',out); const lastD=out.map(o=>o.date).sort().pop(); if(lastD) S.dcal=new Date(lastD+'T12:00:00');
-      S.page='diary'; window.TWF.go('journal'); toast(L('Import klaar','Import done'),`${n} ${L('notities geïmporteerd','entries imported')}${skip?` · ${skip} ${L('al aanwezig','already present')}`:''}${empty?` · ${empty} ${L('lege pagina\'s overgeslagen','empty pages skipped')}`:''}`,'ok',6000) }
+      S.page='diary'; window.TWF.go('journal'); toast(L('Import klaar','Import done'),`${n} ${L('notities geïmporteerd','entries imported')}${skip?` · ${skip} ${L('al aanwezig','already present')}`:''}${empty?` · ${empty} ${L('lege pagina\'s overgeslagen','empty pages skipped')}`:''}${nodate?` · ${nodate} ${L('pagina\'s zonder datum overgeslagen','pages without a date skipped')}`:''}`,'ok',7000) }
     catch(e){ toast(L('Import mislukt','Import failed'),e.message||String(e),'bad',6000) } };
   inp.click() }
 
