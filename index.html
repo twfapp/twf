@@ -1710,6 +1710,44 @@ html.updating #updScr.hide{display:grid!important}
 .uca{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 @media (max-width:900px){ .updcard{left:12px;right:12px;width:auto;bottom:calc(84px + env(safe-area-inset-bottom))} }
 .wnl{margin:0;padding-left:18px;line-height:1.7}
+
+/* v11.2: telefoon — vensters schermvullend, één scrollgebied, compacte tabs en kaarten */
+@media (max-width:700px){
+  .ov{padding:0!important;align-items:stretch!important}
+  .ov>.modal:not(.sm){max-width:none!important;width:100%!important;height:100dvh;max-height:100dvh!important;border-radius:0;border:0}
+  .ov>.modal:not(.sm) .mh{padding:calc(10px + env(safe-area-inset-top)) 14px 10px!important;flex-wrap:nowrap}
+  .ov>.modal:not(.sm) .mh h3{font-size:18px;white-space:nowrap}
+  .ov>.modal:not(.sm) .mh .seg{flex:none}.ov>.modal:not(.sm) .mh .seg button{padding:0 10px;height:32px;font-size:13px;white-space:nowrap}
+  .ov>.modal:not(.sm) .mh h3{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .ov>.modal:not(.sm) .mbody{display:flex!important;flex-direction:column;min-height:0;flex:1}
+  .ov>.modal:not(.sm) .mnav{flex:none;flex-direction:row!important;gap:6px;padding:8px 12px!important;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
+  .ov>.modal:not(.sm) .mnav::-webkit-scrollbar{display:none}
+  .ov>.modal:not(.sm) .mnav button{flex:none;padding:7px 14px!important;border-radius:999px;border:1px solid var(--line2);background:var(--panel2);white-space:nowrap}
+  .ov>.modal:not(.sm) .mnav button b{font-size:13px;margin:0}
+  .ov>.modal:not(.sm) .mnav button span{display:none}
+  .ov>.modal:not(.sm) .mnav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ov>.modal:not(.sm) .mcont{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:14px 14px 20px!important}
+  .ov>.modal:not(.sm) .mf{padding:10px 14px calc(10px + env(safe-area-inset-bottom))!important;flex-wrap:nowrap}
+  .ov>.modal:not(.sm) .mf #nPresetSave{display:none}
+  .ov>.modal:not(.sm) .mf .btn{flex:1;height:46px}
+  /* lijsten niet apart laten scrollen */
+  .mkgrid,.pfpick{max-height:none!important;overflow:visible!important}
+  .mkgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .mkp{padding:7px 8px;gap:7px}.mkp .sym{width:20px;height:20px}.mkp b{font-size:12.5px}.mkp small{font-size:10.5px}
+  .pfpick{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.pfpick button{padding:7px 8px;font-size:12px;gap:8px}
+  .pfpick .flogo2{width:24px!important;height:24px!important}
+  .pfkind button{font-size:12.5px;padding:0 6px}
+  .pfchips button{padding:5px 10px;font-size:12px;min-height:30px}
+  .pfsum{padding:10px}.pftbl{font-size:11px;display:block;overflow-x:auto}.pftbl th,.pftbl td{padding:5px 4px;white-space:nowrap}
+  .pfcost,.pfevg{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .field{margin-bottom:12px}
+  /* backtest-overzicht: kaarten als nette rijen */
+  .hero.ob{grid-template-columns:minmax(0,1fr)!important;gap:10px}
+  .hero .choice{min-height:0!important;padding:14px!important;display:flex;align-items:center;gap:14px}
+  .hero .choice .ci{flex:none}
+  .hero .choice b{font-size:15.5px}.hero .choice span{font-size:13px}
+  .kpis{gap:10px!important}
+}
 </style>
 </head>
 <body class="">
@@ -1852,7 +1890,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v11.1', BUILD: '2026-11-17'
+  VERSION: 'v11.2', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2340,6 +2378,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v11.2':{nl:['iPhone: vensters schermvullend en normaal scrollen','Backtest-overzicht netjes op de telefoon'],en:['iPhone: full-screen dialogs with normal scrolling','Backtest overview tidy on phone']},
   'v11.1':{nl:['Nieuw update-scherm: bijwerken zonder uit te loggen, je komt terug waar je was','Instelling "Automatisch updaten"'],en:['New update screen: update without signing out, you return where you were','New setting "Automatic updates"']},
   'v11.0':{nl:['Prop firms: 31 firms met programma\'s, regels per fase, kosten en slagingskans','Alle markten kiesbaar + data aanvragen','Daily/weekly loopt niet meer vast','Templates onthouden + archief'],en:['Prop firms: 31 firms with programs, rules per phase, costs and pass rate','Every market selectable + request data','Daily/weekly no longer freezes','Templates remembered + archive']}
 };
