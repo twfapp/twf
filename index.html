@@ -1660,6 +1660,31 @@ body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b
 .mknodata{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border-radius:12px;background:rgba(224,163,58,.1);border:1px solid rgba(224,163,58,.3);font-size:13px}.mknodata span{flex:1;min-width:200px}
 
 .drlist{display:flex;flex-direction:column;gap:8px}.drrow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}.drrow small{display:block;color:var(--ink3);font-size:12px}
+
+/* v11: prop firms */
+.flogo2{position:relative;display:inline-grid;place-items:center;border-radius:10px;overflow:hidden;flex:none;font-weight:800}
+.flogo2 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:12%}
+.pfkind{display:flex}.pfkind button{flex:1}
+.pfpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;max-height:250px;overflow-y:auto;padding:2px}
+.pfpick button{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);text-align:left;font-weight:700;font-size:13px;color:inherit;min-width:0}
+.pfpick button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pfpick button.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accentSoft)}
+.pfsec{margin-top:14px}.pfsec>label{display:block;font-size:12.5px;font-weight:700;color:var(--ink3);margin-bottom:6px}
+.pfchips{display:flex;flex-wrap:wrap;gap:6px}
+.pfchips button{display:flex;flex-direction:column;align-items:center;gap:1px;min-height:34px;padding:6px 12px;border-radius:10px;border:1px solid var(--line2);background:var(--panel2);font-weight:700;font-size:13px;color:inherit}
+.pfchips button small{font-size:10.5px;color:var(--ink3);font-weight:600}.pfchips button.on{background:var(--accent);border-color:var(--accent);color:#fff}.pfchips button.on small{color:rgba(255,255,255,.8)}
+.pfphin{display:flex;gap:8px;flex-wrap:wrap}.pfphin>div{width:110px}.pfphin small{display:block;font-size:11.5px;color:var(--ink3);margin-bottom:4px}
+.pfsum{margin-top:16px;border:1px solid var(--line2);border-radius:14px;padding:14px;background:var(--panel2)}
+.pfsumh{display:flex;align-items:center;gap:12px;margin-bottom:12px}.pfsumh b{display:block}.pfsumh small{display:block;color:var(--ink3);font-size:11.5px;margin-top:2px}
+.pftbl{width:100%;border-collapse:collapse;font-size:12.5px}.pftbl th{text-align:left;color:var(--ink3);font-weight:700;padding:5px 6px;border-bottom:1px solid var(--line)}.pftbl td{padding:7px 6px;border-bottom:1px solid var(--line)}.pftbl td small{color:var(--ink3)}.pftbl tr.on td{background:var(--accentSoft)}
+.pfcost{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:12px}.pfcost>div,.pfevg>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.pfcost small,.pfevg small{display:block;color:var(--ink3);font-size:11px;font-weight:700}.pfcost b,.pfevg b{display:block;font-size:14px;margin-top:2px}
+.pfev{margin-top:12px}.pfevh{display:flex;align-items:center;gap:8px;font-weight:800;margin-bottom:8px;flex-wrap:wrap}.pfevh small{font-weight:600;color:var(--ink3);font-size:11.5px}
+.pfevg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.pfevg b{font-size:17px}
+.pfverdict{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600}.pfverdict.ok{background:rgba(47,191,113,.12);color:var(--pos)}.pfverdict.bad{background:rgba(229,83,75,.12);color:var(--neg)}
+details.pfadv{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}details.pfadv summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--ink2);margin-bottom:10px}
+
+/* v11: menubalk verbergen zolang er een venster open is (telefoon) */
+@media (max-width:900px){ body:has(.ov) .tabbar,body:has(.ov) #fab{display:none!important} }
 </style>
 </head>
 <body class="">
@@ -1794,7 +1819,7 @@ body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.9', BUILD: '2026-11-17'
+  VERSION: 'v11.0', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2906,15 +2931,16 @@ function sessionModal(type='backtest',editId,opts){
       <div class="field"><label>${t('ns.slip')}</label><input class="inp" type="number" step="0.1" min="0" id="nSlip" value="${st.slip}"></div></div>
       <div class="field"><div class="tog"><span>${t('ns.hedge')}</span><span class="sw ${st.hedge?'on':''}" id="nHedge"></span></div></div>`;
     if(st.sec==='rules'){ const F=allFirms(), f=F.find(x=>x.id===st.firm), L=(nl,en)=>LANG==='en'?en:nl;
-      c=`<div class="two"><div class="field"><label>Prop firm</label><select class="inp" id="nFirm"><option value="">${L('Eigen regels','Custom rules')}</option>${F.map(x=>`<option value="${x.id}" ${x.id===st.firm?'selected':''}>${esc(x.name)}${x.desc?' — '+esc(x.desc):''}</option>`).join('')}</select></div>
-        <div class="field"><label>${L('Fase','Phase')}</label><select class="inp" id="nPhase" ${f?'':'disabled'}>${(f?f.phases:[{name:L('Eén fase','Single phase')}]).map((p,i)=>`<option value="${i}" ${i===+st.phase?'selected':''}>${esc(p.name)}${p.target?` · ${p.target}%`:''}</option>`).join('')}</select></div></div>
+      const cust=(st.pfKind||((F.find(x=>x.id===st.firm)||{}).kind)||'CFD')==='custom';
+      c=pfRulesHtml(st)+`<details class="pfadv" ${cust?'open':''}><summary>${cust?L('Regels','Rules'):L('Regels aanpassen (optioneel)','Adjust rules (optional)')}</summary><div style="display:none">
+        </div>
       <div class="field"><label>${L('Strengheid payout-check','Payout check strictness')}</label><div class="seg">${[['','Standaard','Default'],['soft','Soepel','Relaxed'],['normal','Normaal','Normal'],['strict','Streng','Strict']].map(([k,nl,en])=>`<button class="${st.strict===k?'on':''}" data-strict="${k}">${L(nl,en)}</button>`).join('')}</div><div class="hint">${STRICT_HINT(st.strict||(profile().prefs||{}).propStrict||'normal')}</div></div>
       <div class="two"><div class="field"><label>${t('ns.target')}</label><input class="inp" type="number" step="0.5" id="nTarget" value="${st.target}"></div><div class="field"><label>${t('ns.daily')}</label><input class="inp" type="number" step="0.5" id="nDaily" value="${st.daily}"></div></div>
       <div class="two"><div class="field"><label>${t('ns.maxloss')}</label><input class="inp" type="number" step="0.5" id="nMaxloss" value="${st.maxloss}"></div><div class="field"><label>${L('Soort drawdown','Drawdown type')}</label><select class="inp" id="nDd">${DDTYPES.map(([v,nl,en])=>`<option value="${v}" ${st.ddType===v?'selected':''}>${L(nl,en)}</option>`).join('')}</select></div></div>
       <div class="two"><div class="field"><label>${t('ns.mindays')}</label><input class="inp" type="number" id="nMindays" value="${st.mindays}"></div><div class="field"><label>${L('Consistentie (max % winst op 1 dag, 0 = uit)','Consistency (max % profit in 1 day, 0 = off)')}</label><input class="inp" type="number" id="nCons" value="${st.consistency}"></div></div>
       <div class="two"><div class="field"><label>${L('Max lots/contracts per trade (0 = uit)','Max lots/contracts per trade (0 = off)')}</label><input class="inp" type="number" step="0.01" id="nMaxLots" value="${st.maxLots}"></div><div class="field"><label>${L('Min. duur per trade in minuten (0 = uit)','Min. trade duration in minutes (0 = off)')}</label><input class="inp" type="number" id="nMinHold" value="${st.minHold}"></div></div>
       <div class="two"><div class="field"><label>${L('Max risico per trade % (0 = uit)','Max risk per trade % (0 = off)')}</label><input class="inp" type="number" step="0.1" id="nMaxRisk" value="${st.maxRisk}"></div><div class="field"><label>${L('Winstdeling %','Profit split %')}</label><input class="inp" type="number" id="nSplit" value="${st.split}"></div></div>
-      <div class="two"><div class="field"><div class="tog"><span>${L('Stop loss verplicht','Stop loss required')}</span><span class="sw ${st.slReq?'on':''}" id="nSlReq"></span></div></div><div class="field"><div class="tog"><span>${L('Weekend aanhouden toegestaan','Weekend holding allowed')}</span><span class="sw ${st.weekend?'on':''}" id="nWknd"></span></div></div></div>` }
+      <div class="two"><div class="field"><div class="tog"><span>${L('Stop loss verplicht','Stop loss required')}</span><span class="sw ${st.slReq?'on':''}" id="nSlReq"></span></div></div><div class="field"><div class="tog"><span>${L('Weekend aanhouden toegestaan','Weekend holding allowed')}</span><span class="sw ${st.weekend?'on':''}" id="nWknd"></span></div></div></div></details>` }
     M.innerHTML=`<div class="mh"><h3>${editId?t('edit'):t('ns.title')}</h3>
       <div class="seg"><button class="${st.type==='backtest'?'on':''}" data-ty="backtest">${t('backtest')}</button><button class="${st.type==='propfirm'?'on':''}" data-ty="propfirm">${t('propfirm')}</button></div>
       <div class="spacer"></div>
@@ -2955,8 +2981,7 @@ function sessionModal(type='backtest',editId,opts){
       q('[data-mkc]').forEach(b=>b.onclick=()=>{ st.mcat=b.dataset.mkc; st.mq=''; if(qi) qi.value=''; q('[data-mkc]').forEach(x=>x.classList.toggle('on',x===b)); fill() });
       const rq=M.querySelector('[data-mkreq]'); if(rq) rq.onclick=async()=>{ rq.disabled=true; for(const a of st.assets.filter(x=>!mkHasData(x))) await requestData(a) } }
     const sm=M.querySelector('#nSmooth'); if(sm) sm.onclick=()=>{st.smooth=!st.smooth;sm.classList.toggle('on',st.smooth)};
-    const nf=M.querySelector('#nFirm'); if(nf) nf.onchange=()=>{read(); st.firm=nf.value; const f=allFirms().find(x=>x.id===st.firm); if(f) applyFirm(st,f,0); draw()};
-    const np=M.querySelector('#nPhase'); if(np) np.onchange=()=>{read(); const f=allFirms().find(x=>x.id===st.firm); if(f) applyFirm(st,f,+np.value); draw()};
+    if(st.sec==='rules') pfRulesBind(M,st,read,draw);
     q('[data-strict]').forEach(b=>b.onclick=()=>{read();st.strict=b.dataset.strict;draw()});
     const sl2=M.querySelector('#nSlReq'); if(sl2) sl2.onclick=()=>{st.slReq=!st.slReq;sl2.classList.toggle('on',st.slReq)};
     const wk=M.querySelector('#nWknd'); if(wk) wk.onclick=()=>{st.weekend=!st.weekend;wk.classList.toggle('on',st.weekend)};
@@ -2971,7 +2996,8 @@ function sessionModal(type='backtest',editId,opts){
       if(!st.start){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.date');return}
       const acc=DB.get('accounts',st.account);
       const {sec,ddOpen,...data}=st;
-      const obj={...(ed||{}),...data,name:st.name.trim(),id:ed?ed.id:uid(),balance:ed?ed.balance:acc.balance,cursor:ed?ed.cursor:st.start+'T00:00:00Z',
+      const pfSize=st.type==='propfirm'&&st.firm&&st.size?+st.size:0; if(pfSize&&!ed) data.startBalance=pfSize;
+      const obj={...(ed||{}),...data,name:st.name.trim(),id:ed?ed.id:uid(),balance:ed?ed.balance:(pfSize||acc.balance),cursor:ed?ed.cursor:st.start+'T00:00:00Z',
         trades:ed?ed.trades||[]:[],timeSpent:ed?ed.timeSpent||0:0,created:ed?ed.created:new Date().toISOString(),updated:new Date().toISOString(),
         activity:[...new Set([...(ed&&ed.activity||[]),new Date().toISOString().slice(0,10)])]};
       await DB.put('sessions',obj); ov.remove(); toast(editId?t('toast.saved'):t('toast.sesscreated'),obj.name+' · '+obj.assets.join(', '),'ok');
@@ -2990,15 +3016,185 @@ IC.extlink='<path d="M7 17L17 7M8 7h9v9"/>';
 IC.globe=IC.globe||'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.4 3 14.6 0 18M12 3c-3 3.4-3 14.6 0 18"/>';
 IC.spark=IC.spark||'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>';
 const DDTYPES=[['static','Statisch (vanaf startsaldo)','Static (from start balance)'],['trailing','Trailing (meeschuivend met hoogste equity)','Trailing (follows highest equity)'],['eod','End-of-day trailing','End-of-day trailing']];
-const PROP_FIRMS=[
-  {id:'ftmo',name:'FTMO',col:'#2962FF',kind:'CFD',desc:'2-Step Challenge',phases:[{name:'Challenge',target:10},{name:'Verification',target:5},{name:'FTMO Account',target:0}],daily:5,maxloss:10,ddType:'static',mindays:4,consistency:0,maxLots:0,minHold:0,maxRisk:0,slReq:false,weekend:true,split:80},
-  {id:'fundingpips',name:'FundingPips',col:'#22ab94',kind:'CFD',desc:'2-Step',phases:[{name:'Phase 1',target:8},{name:'Phase 2',target:5},{name:'Funded',target:0}],daily:5,maxloss:10,ddType:'static',mindays:3,consistency:0,maxLots:0,minHold:0,maxRisk:0,slReq:false,weekend:true,split:80},
-  {id:'the5ers',name:'The5ers',col:'#f0b429',kind:'CFD',desc:'High Stakes',phases:[{name:'Step 1',target:8},{name:'Step 2',target:5},{name:'Funded',target:0}],daily:5,maxloss:10,ddType:'static',mindays:3,consistency:0,maxLots:0,minHold:0,maxRisk:0,slReq:false,weekend:true,split:80},
-  {id:'topstep',name:'Topstep',col:'#ef5350',kind:'Futures',desc:'Trading Combine 50K',phases:[{name:'Trading Combine',target:6},{name:'Express Funded',target:0}],daily:2,maxloss:4,ddType:'eod',mindays:2,consistency:50,maxLots:5,minHold:0,maxRisk:0,slReq:false,weekend:false,split:90},
-  {id:'apex',name:'Apex Trader Funding',col:'#9c6bff',kind:'Futures',desc:'Evaluation 50K',phases:[{name:'Evaluation',target:6},{name:'PA (Funded)',target:0}],daily:0,maxloss:5,ddType:'trailing',mindays:1,consistency:30,maxLots:10,minHold:0,maxRisk:0,slReq:false,weekend:false,split:100}
-];
-const allFirms=()=>[...PROP_FIRMS,...DB.list('propfirms').sort((a,b)=>(a.name||'').localeCompare(b.name||''))];
-function applyFirm(st,f,ph){ const p=f.phases[ph]||f.phases[0]; Object.assign(st,{firm:f.id,phase:ph,target:p.target,daily:f.daily,maxloss:f.maxloss,ddType:f.ddType||'static',mindays:f.mindays||0,consistency:f.consistency||0,maxLots:f.maxLots||0,minHold:f.minHold||0,maxRisk:f.maxRisk||0,slReq:!!f.slReq,weekend:f.weekend!==false,split:f.split||80}) }
+/* v11: prop firms — CFD & futures, programma's, groottes, regels per fase en kosten.
+   Indicatie (stand: nov 2026): regels en prijzen veranderen vaak, controleer altijd bij de firm. */
+const PF_CHECKED='2026-11';
+const PROP_FIRMS=(()=>{ const F=[];
+  const ph2=(a,b)=>[{name:'Phase 1',target:a},{name:'Phase 2',target:b},{name:'Funded',target:0}], ph1=a=>[{name:'Challenge',target:a},{name:'Funded',target:0}], ph3=(a,b,c)=>[{name:'Phase 1',target:a},{name:'Phase 2',target:b},{name:'Phase 3',target:c},{name:'Funded',target:0}], inst=()=>[{name:'Funded',target:0}];
+  const sz=(arr,ccy='$')=>arr.map(([s,f])=>({size:s*1000,fee:f,ccy}));
+  const firm=(id,name,kind,domain,col,programs)=>F.push({id,name,kind,domain,col,checked:PF_CHECKED,programs,desc:programs.map(p=>p.name).join(' · ')});
+  const prog=(id,name,o)=>({id,name,daily:5,maxloss:10,ddType:'static',mindays:0,consistency:0,maxLots:0,minHold:0,maxRisk:0,slReq:false,weekend:true,news:true,split:80,act:0,monthly:false,refund:true,...o});
+  // ---------- CFD & forex ----------
+  firm('ftmo','FTMO','CFD','ftmo.com','#1d2b4f',[
+    prog('2step','2-Step',{phases:[{name:'Challenge',target:10},{name:'Verification',target:5},{name:'FTMO Account',target:0}],daily:5,maxloss:10,mindays:4,split:80,sizes:sz([[10,155],[25,250],[50,345],[100,540],[200,1080]],'€')}),
+    prog('1step','1-Step',{phases:ph1(10),daily:3,maxloss:6,ddType:'eod',consistency:50,split:80,sizes:sz([[10,119],[25,229],[50,349],[100,549],[200,1099]],'€')})]);
+  firm('fundingpips','FundingPips','CFD','fundingpips.com','#1a1f6e',[
+    prog('2step','2-Step',{phases:ph2(8,5),daily:5,maxloss:10,mindays:3,sizes:sz([[5,36],[10,66],[25,156],[50,289],[100,529]])}),
+    prog('2steppro','2-Step Pro',{phases:ph2(6,6),daily:3,maxloss:6,mindays:3,sizes:sz([[5,29],[10,49],[25,99],[50,199],[100,399]])}),
+    prog('1step','1-Step',{phases:ph1(10),daily:3,maxloss:6,mindays:3,sizes:sz([[5,59],[10,99],[25,199],[50,339],[100,555]])}),
+    prog('zero','Zero (instant)',{phases:inst(),daily:3,maxloss:5,consistency:15,split:95,refund:false,sizes:sz([[5,69],[10,119],[25,279],[50,499],[100,899]])})]);
+  firm('the5ers','The5ers','CFD','the5ers.com','#0d1b2a',[
+    prog('hs','High Stakes (2-Step)',{phases:ph2(8,5),daily:5,maxloss:10,mindays:3,sizes:sz([[5,39],[20,165],[60,329],[100,545]])}),
+    prog('hg','Hyper Growth (1-Step)',{phases:ph1(10),daily:3,maxloss:6,sizes:sz([[5,260],[10,450],[20,850]])}),
+    prog('bc','Bootcamp (3-Step)',{phases:ph3(6,6,6),daily:0,maxloss:5,sizes:sz([[20,95],[100,225],[250,450]])})]);
+  firm('alphacapital','Alpha Capital','CFD','alphacapitalgroup.uk','#111827',[
+    prog('pro','Alpha Pro (2-Step)',{phases:ph2(8,5),daily:4,maxloss:8,mindays:3,sizes:sz([[5,50],[10,97],[25,197],[50,297],[100,497],[200,997]])}),
+    prog('one','Alpha One (1-Step)',{phases:ph1(10),daily:4,maxloss:6,ddType:'trailing',mindays:3,sizes:sz([[5,50],[10,97],[25,197],[50,297],[100,497],[200,997]])}),
+    prog('swing','Alpha Swing (2-Step)',{phases:ph2(10,5),daily:5,maxloss:10,mindays:3,sizes:sz([[25,247],[50,347],[100,547],[200,1047]])})]);
+  firm('fundednext','FundedNext','CFD','fundednext.com','#0b1e3f',[
+    prog('stellar2','Stellar 2-Step',{phases:ph2(8,5),daily:5,maxloss:10,mindays:5,split:80,sizes:sz([[6,59.99],[15,119.99],[25,199.99],[50,299.99],[100,549.99],[200,999.99]])}),
+    prog('stellar1','Stellar 1-Step',{phases:ph1(10),daily:3,maxloss:6,mindays:2,sizes:sz([[6,49.99],[15,109.99],[25,199.99],[50,274.99],[100,519.99],[200,999.99]])}),
+    prog('lite','Stellar Lite',{phases:ph2(8,4),daily:4,maxloss:8,mindays:5,sizes:sz([[5,32.99],[10,57.99],[25,129.99],[50,239.99],[100,419.99],[200,799.99]])}),
+    prog('instant','Stellar Instant',{phases:inst(),daily:0,maxloss:6,ddType:'trailing',consistency:40,split:70,refund:false,sizes:sz([[2,59],[5,139],[10,249],[20,479]])})]);
+  firm('e8','E8 Markets','CFD','e8markets.com','#0c0c0f',[
+    prog('classic','E8 Classic (2-Step)',{phases:ph2(8,4),daily:5,maxloss:8,sizes:sz([[5,58],[10,108],[25,228],[50,338],[100,588],[200,1068]])}),
+    prog('one','E8 One (1-Step)',{phases:ph1(9),daily:4,maxloss:6,ddType:'trailing',sizes:sz([[5,69],[10,118],[25,238],[50,348],[100,598]])})]);
+  firm('fxify','FXIFY','CFD','fxify.com','#11131a',[
+    prog('2phase','2-Phase',{phases:ph2(10,5),daily:4,maxloss:10,sizes:sz([[5,59],[15,99],[25,179],[50,299],[100,499],[200,999]])}),
+    prog('1phase','1-Phase',{phases:ph1(10),daily:4,maxloss:6,ddType:'trailing',sizes:sz([[5,69],[15,119],[25,199],[50,329],[100,549]])}),
+    prog('3phase','3-Phase',{phases:ph3(5,5,5),daily:4,maxloss:10,sizes:sz([[15,69],[25,129],[50,229],[100,399]])}),
+    prog('instant','Instant Funding',{phases:inst(),daily:3,maxloss:6,ddType:'trailing',refund:false,split:75,sizes:sz([[5,159],[10,299],[25,699]])})]);
+  firm('blueguardian','Blue Guardian','CFD','blueguardian.com','#0a1a33',[
+    prog('unl','Unlimited (2-Step)',{phases:ph2(8,4),daily:4,maxloss:8,sizes:sz([[10,97],[25,197],[50,297],[100,547],[200,997]])}),
+    prog('elite','Elite (1-Step)',{phases:ph1(10),daily:3,maxloss:6,ddType:'trailing',sizes:sz([[10,87],[25,187],[50,287],[100,497]])}),
+    prog('instant','Instant',{phases:inst(),daily:3,maxloss:6,ddType:'trailing',refund:false,sizes:sz([[5,95],[10,175],[25,395]])})]);
+  firm('maven','Maven','CFD','maventrading.com','#1b1030',[
+    prog('2step','2-Step',{phases:ph2(8,5),daily:4,maxloss:8,sizes:sz([[2,19],[5,39],[10,69],[20,109],[50,239],[100,419]])}),
+    prog('1step','1-Step',{phases:ph1(8),daily:3,maxloss:5,ddType:'trailing',sizes:sz([[2,25],[5,45],[10,79],[20,139],[50,279],[100,499]])}),
+    prog('3step','3-Step',{phases:ph3(3,3,3),daily:2,maxloss:3,sizes:sz([[5,22],[10,39],[20,69],[50,149],[100,259]])})]);
+  firm('brightfunded','BrightFunded','CFD','brightfunded.com','#0f1d3a',[
+    prog('2step','2-Step',{phases:ph2(8,5),daily:5,maxloss:10,sizes:sz([[5,55],[10,95],[25,195],[50,295],[100,495],[200,975]],'€')})]);
+  firm('goatfunded','Goat Funded Trader','CFD','goatfundedtrader.com','#121212',[
+    prog('2step','2-Step',{phases:ph2(8,5),daily:4,maxloss:10,sizes:sz([[5,49],[10,89],[25,179],[50,289],[100,469]])}),
+    prog('instant','Instant',{phases:inst(),daily:3,maxloss:6,ddType:'trailing',refund:false,sizes:sz([[5,99],[10,179],[25,399]])})]);
+  // ---------- Futures (percentages t.o.v. accountgrootte; kosten = per maand tenzij anders) ----------
+  const fut=(o)=>({weekend:false,split:90,...o});
+  firm('topstep','Topstep','Futures','topstep.com','#0f0f10',[
+    prog('combine','Trading Combine',fut({phases:[{name:'Trading Combine',target:6},{name:'Express Funded',target:0}],daily:2,maxloss:4,ddType:'eod',mindays:2,consistency:50,maxLots:5,monthly:true,act:149,refund:false,sizes:sz([[50,49],[100,99],[150,149]])}))]);
+  firm('apex','Apex Trader Funding','Futures','apextraderfunding.com','#1a1240',[
+    prog('eval','Evaluation',fut({phases:[{name:'Evaluation',target:6},{name:'PA (Funded)',target:0}],daily:0,maxloss:5,ddType:'trailing',mindays:1,consistency:30,maxLots:10,split:100,monthly:true,act:140,refund:false,sizes:sz([[25,147],[50,167],[100,207],[150,297],[250,517],[300,657]])}))]);
+  firm('tradeify','Tradeify','Futures','tradeify.co','#0e1a12',[
+    prog('growth','Growth',fut({phases:ph1(6),daily:2.5,maxloss:4,ddType:'eod',consistency:40,refund:false,sizes:sz([[50,109],[100,199],[150,269]])})),
+    prog('select','Select',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:40,refund:false,sizes:sz([[50,159],[100,259],[150,359]])})),
+    prog('lightning','Lightning (instant)',fut({phases:inst(),daily:2,maxloss:4,ddType:'eod',consistency:20,refund:false,sizes:sz([[50,349],[100,529],[150,729]])}))]);
+  firm('takeprofittrader','Take Profit Trader','Futures','takeprofittrader.com','#121619',[
+    prog('test','Test',fut({phases:[{name:'Test',target:6},{name:'PRO',target:0}],daily:2.2,maxloss:4,ddType:'eod',consistency:50,monthly:true,act:130,refund:false,sizes:sz([[25,150],[50,170],[75,245],[100,330],[150,360]])}))]);
+  firm('mff','MyFundedFutures','Futures','myfundedfutures.com','#14102a',[
+    prog('core','Core',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:50,monthly:true,refund:false,sizes:sz([[50,77]])})),
+    prog('rapid','Rapid',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'trailing',monthly:true,refund:false,sizes:sz([[50,129],[100,219],[150,299]])})),
+    prog('pro','Pro',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',monthly:true,refund:false,sizes:sz([[50,227],[100,343],[150,477]])}))]);
+  firm('lucid','Lucid Trading','Futures','lucidtrading.com','#0d0d0d',[
+    prog('flex','LucidFlex',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:50,refund:false,sizes:sz([[25,90],[50,130],[100,225],[150,315]])})),
+    prog('pro','LucidPro',fut({phases:ph1(6),daily:2,maxloss:4,ddType:'eod',refund:false,sizes:sz([[25,115],[50,160],[100,265],[150,365]])}))]);
+  firm('alphafutures','Alpha Futures','Futures','alpha-futures.com','#111111',[
+    prog('std','Standard',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:50,monthly:true,refund:false,sizes:sz([[50,99],[100,199],[150,299]])})),
+    prog('adv','Advanced',fut({phases:ph1(8),daily:0,maxloss:3.5,ddType:'eod',consistency:40,monthly:true,refund:false,sizes:sz([[50,149],[100,249],[150,349]])}))]);
+  firm('earn2trade','Earn2Trade','Futures','earn2trade.com','#1d1d2e',[
+    prog('gauntlet','Gauntlet Mini',fut({phases:[{name:'Gauntlet Mini',target:6},{name:'LiveSim',target:0}],daily:2.2,maxloss:4,ddType:'eod',mindays:10,consistency:30,monthly:true,act:139,refund:false,sizes:sz([[50,170],[100,315],[150,350],[200,550]])})),
+    prog('tcp','Trader Career Path',fut({phases:[{name:'Level 1',target:6},{name:'Funded',target:0}],daily:2,maxloss:6,ddType:'eod',mindays:10,monthly:true,act:139,refund:false,sizes:sz([[25,150]])}))]);
+  firm('bulenox','Bulenox','Futures','bulenox.com','#0f1424',[
+    prog('trailing','Option 1 (trailing)',fut({phases:ph1(6),daily:0,maxloss:5,ddType:'trailing',refund:false,act:148,sizes:sz([[25,145],[50,175],[100,215],[150,325],[250,535]])})),
+    prog('eod','Option 2 (EOD)',fut({phases:ph1(6),daily:2.2,maxloss:5,ddType:'eod',refund:false,act:148,sizes:sz([[25,145],[50,175],[100,215],[150,325],[250,535]])}))]);
+  firm('elitetrader','Elite Trader Funding','Futures','elitetraderfunding.com','#0f1a14',[
+    prog('1step','1-Step',fut({phases:ph1(6),daily:2.2,maxloss:4,ddType:'trailing',monthly:true,act:80,refund:false,sizes:sz([[25,165],[50,175],[100,205],[150,255],[250,355]])})),
+    prog('eod','End of Day',fut({phases:ph1(6),daily:2.2,maxloss:4,ddType:'eod',monthly:true,act:80,refund:false,sizes:sz([[50,195],[100,255],[150,355]])}))]);
+  firm('fundednextfut','FundedNext Futures','Futures','fundednext.com','#0b1e3f',[
+    prog('rapid','Rapid',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:40,refund:false,sizes:sz([[25,119],[50,199],[100,299]])})),
+    prog('legacy','Legacy',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:40,refund:false,sizes:sz([[25,99],[50,169],[100,259]])}))]);
+  firm('tradeday','TradeDay','Futures','tradeday.com','#101010',[
+    prog('eod','Intraday/EOD',fut({phases:ph1(5),daily:0,maxloss:4,ddType:'eod',mindays:5,consistency:30,monthly:true,refund:false,sizes:sz([[50,150],[100,225],[150,300]])}))]);
+  firm('phidias','Phidias Prop Firm','Futures','phidiaspropfirm.com','#16121f',[
+    prog('static','Static',fut({phases:ph1(5),daily:0,maxloss:2,ddType:'static',refund:false,sizes:sz([[25,99]])})),
+    prog('fundamental','Fundamental (EOD)',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',refund:false,sizes:sz([[50,129],[100,199],[150,299]])}))]);
+  firm('ffn','Funded Futures Network','Futures','fundedfuturesnetwork.com','#121212',[
+    prog('express','Express',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',monthly:true,refund:false,sizes:sz([[50,145],[100,225],[150,285]])}))]);
+  firm('takeprofit5ers','The5ers Futures','Futures','the5ers.com','#0d1b2a',[
+    prog('eval','Evaluation',fut({phases:ph1(6),daily:2,maxloss:4,ddType:'eod',refund:false,sizes:sz([[25,99],[50,169],[100,279]])}))]);
+  firm('blueguardianfut','Blue Guardian Futures','Futures','blueguardian.com','#0a1a33',[
+    prog('eval','Evaluation',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',consistency:40,refund:false,sizes:sz([[50,129],[100,219],[150,299]])}))]);
+  firm('topone','Top One Futures','Futures','toponefutures.com','#0e0e14',[
+    prog('eval','Evaluation',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',monthly:true,refund:false,sizes:sz([[25,99],[50,139],[100,199],[150,269]])}))]);
+  firm('legends','Legends Trading','Futures','legendstrading.com','#141414',[
+    prog('eval','Evaluation',fut({phases:ph1(6),daily:0,maxloss:4,ddType:'eod',monthly:true,refund:false,sizes:sz([[50,135],[100,225],[150,305]])}))]);
+  firm('daytraders','DayTraders.com','Futures','daytraders.com','#1a0d0d',[
+    prog('s2f','Straight to Funded',fut({phases:inst(),daily:0,maxloss:4,ddType:'eod',refund:false,sizes:sz([[50,299],[100,449],[150,599]])}))]);
+  firm('oneup','OneUp Trader','Futures','oneuptrader.com','#1d0d24',[
+    prog('eval','Evaluation',fut({phases:ph1(6),daily:2,maxloss:5,ddType:'trailing',mindays:15,monthly:true,refund:false,sizes:sz([[25,125],[50,150],[100,255]])}))]);
+  return F })();
+
+/* ---- v11: firms normaliseren (oude/eigen firms → 1 programma), logo's, regels toepassen ---- */
+function normFirm(f){ if(!f) return f; if(f.programs&&f.programs.length){ const p0=f.programs[0]; return {...p0,...f,phases:f.phases||p0.phases} }
+  const p={id:'std',name:f.desc||'Standaard',phases:f.phases||[{name:'Funded',target:0}],daily:f.daily||0,maxloss:f.maxloss||10,ddType:f.ddType||'static',mindays:f.mindays||0,consistency:f.consistency||0,maxLots:f.maxLots||0,minHold:f.minHold||0,maxRisk:f.maxRisk||0,slReq:!!f.slReq,weekend:f.weekend!==false,news:true,split:f.split||80,act:f.act||0,monthly:!!f.monthly,refund:f.refund!==false,sizes:f.sizes||[{size:100000,fee:f.fee||0,ccy:'$'}]};
+  return {...f,kind:f.kind||'CFD',programs:[p]} }
+const allFirms=()=>[...PROP_FIRMS,...DB.list('propfirms').sort((a,b)=>(a.name||'').localeCompare(b.name||''))].map(normFirm);
+const firmProg=(f,pid)=>(f&&f.programs&&(f.programs.find(p=>p.id===pid)||f.programs[0]))||null;
+function firmLogo(f,sz=36){ if(!f) return `<span class="flogo2" style="width:${sz}px;height:${sz}px">${ic('trophy',sz*.5)}</span>`; const ini=esc((f.name||'?').replace(/[^A-Za-z0-9 ]/g,'').split(' ').filter(Boolean).map(w=>w[0]).join('').slice(0,2).toUpperCase());
+  const src=f.logo||(f.domain?`https://www.google.com/s2/favicons?domain=${encodeURIComponent(f.domain)}&sz=128`:'');
+  return `<span class="flogo2" style="width:${sz}px;height:${sz}px;background:${f.col||'#4c74ff'};color:${inkOn(f.col||'#4c74ff')}"><b style="font-size:${Math.round(sz*.36)}px">${ini}</b>${src?`<img src="${src}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:''}</span>` }
+function applyFirm(st,f,ph,pid,size){ f=normFirm(f); const p=firmProg(f,pid||st.prog); if(!p) return; ph=Math.max(0,Math.min(+ph||0,p.phases.length-1)); const P=p.phases[ph];
+  const sizes=p.sizes||[]; let sz=size||st.size; if(!sizes.some(x=>x.size===sz)) sz=(sizes.find(x=>x.size===100000)||sizes[Math.floor((sizes.length-1)/2)]||{}).size||100000; const so=sizes.find(x=>x.size===sz)||{fee:0,ccy:'$'};
+  const isF=!(P.target>0), fr=(isF&&p.funded)||{};
+  Object.assign(st,{firm:f.id,prog:p.id,progName:p.name,size:sz,fee:so.fee,feeCcy:so.ccy,phase:ph,target:P.target||0,daily:fr.daily??P.daily??p.daily??0,maxloss:fr.maxloss??P.maxloss??p.maxloss??10,ddType:fr.ddType||P.ddType||p.ddType||'static',mindays:P.mindays??p.mindays??0,consistency:fr.consistency??P.consistency??p.consistency??0,maxLots:p.maxLots||0,minHold:p.minHold||0,maxRisk:p.maxRisk||0,slReq:!!p.slReq,weekend:p.weekend!==false,split:p.split||80}) }
+/* ---- v11: slagingskans & verwachte opbrengst o.b.v. je eigen backtest-trades (Monte Carlo) ---- */
+function pfDayBlocks(){ const blocks=[]; DB.list('sessions').forEach(s=>{ const acc=DB.get('accounts',s.account)||{}, start=+(s.startBalance??acc.balance)||0; if(!start) return; const by={};
+    (s.trades||[]).forEach(x=>{ if(x.pnl==null||!x.closeTime) return; const d=new Date(x.closeTime*1000).toISOString().slice(0,10); (by[d]=by[d]||[]).push({t:x.closeTime,r:(+x.pnl||0)/start}) });
+    Object.values(by).forEach(a=>blocks.push(a.sort((p,q)=>p.t-q.t).map(z=>z.r))) }); return blocks }
+function pfSim(p,size,N=500){ const blocks=pfDayBlocks(), nTr=blocks.reduce((a,b)=>a+b.length,0); if(nTr<15||blocks.length<5) return {need:Math.max(0,15-nTr)};
+  const evalPh=p.phases.filter(x=>x.target>0), maxDays=120, fundedDays=21; let all=0, daysSum=0, payoutSum=0, pPh=evalPh.map(()=>0), payouts=0;
+  const runPhase=(ph,isFunded)=>{ const tgt=(ph?ph.target:0)/100*size, dl=(ph&&ph.daily!=null?ph.daily:p.daily)/100*size, mlP=(ph&&ph.maxloss!=null?ph.maxloss:p.maxloss)/100*size, dd=(ph&&ph.ddType)||p.ddType, minD=isFunded?0:(ph&&ph.mindays!=null?ph.mindays:p.mindays)||0, cons=((isFunded&&p.funded&&p.funded.consistency!=null)?p.funded.consistency:p.consistency)||0;
+    let bal=size, peak=size, eodPeak=size, best=0, days=0; const lim=isFunded?fundedDays:maxDays;
+    while(days<lim){ const b=blocks[(Math.random()*blocks.length)|0], ds=bal; days++;
+      for(const r of b){ bal+=r*size; if(bal>peak) peak=bal; const ref=dd==='trailing'?Math.min(peak,size+mlP):dd==='eod'?Math.min(eodPeak,size+mlP):size;
+        if(dl>0&&ds-bal>=dl) return {ok:false,days}; if(ref-bal>=mlP) return {ok:false,days} }
+      const dp=bal-ds; if(dp>best) best=dp; if(bal>eodPeak) eodPeak=bal;
+      if(!isFunded&&bal-size>=tgt&&days>=minD&&(!cons||best<=(bal-size)*cons/100)) return {ok:true,days} }
+    return isFunded?{ok:true,days,profit:bal-size,best}:{ok:false,days} };
+  for(let n=0;n<N;n++){ let d=0, ok=true; for(let i=0;i<evalPh.length;i++){ const r=runPhase(evalPh[i],false); d+=r.days; if(!r.ok){ ok=false; break } pPh[i]++ }
+    if(!ok) continue; all++; daysSum+=d; const f=runPhase(null,true); if(f.ok&&f.profit>0){ const c=((p.funded&&p.funded.consistency)||p.consistency||0); if(!c||f.best<=f.profit*c/100){ payoutSum+=f.profit*(p.split||80)/100; payouts++ } } }
+  const pAll=all/N, avgDays=all?daysSum/all:0, avgPayout=all?payoutSum/all:0;
+  return {n:N,trades:nTr,pPh:pPh.map((c,i)=>c/N/(i?pPh[i-1]/N||1:1)),pAll,avgDays,avgPayout,pPayout:all?payouts/all:0} }
+function pfEV(p,so,sim){ if(!sim||sim.need!=null) return null; const fee=+so.fee||0, months=p.monthly?Math.max(1,Math.ceil((sim.avgDays||20)/20)):1, cost=fee*months+(sim.pAll*(p.act||0));
+  const gain=sim.pAll*(sim.avgPayout+(p.refund?fee:0)); return {cost,gain,ev:gain-cost,months} }
+/* ---- v11: kiesscherm prop firm in 'Sessie aanmaken' ---- */
+function pfMoney(v,ccy){ return (ccy||'$')+(Math.round(v*100)/100).toLocaleString(locale(),{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}) }
+function pfRulesHtml(st){ const L=(nl,en)=>LANG==='en'?en:nl, F=allFirms(), kind=st.pfKind||((F.find(x=>x.id===st.firm)||{}).kind)||'CFD', f=F.find(x=>x.id===st.firm), p=f&&firmProg(f,st.prog);
+  const dd={static:L('statisch','static'),trailing:'trailing',eod:'EOD trailing'};
+  let h=`<div class="seg pfkind">${[['CFD',L('CFD & forex','CFD & forex')],['Futures','Futures'],['custom',L('Zelf instellen','Custom')]].map(([k,l])=>`<button data-pfk="${k}" class="${kind===k?'on':''}">${l}</button>`).join('')}</div>`;
+  if(kind!=='custom'){ const list=F.filter(x=>x.kind===kind&&(!st.pfq||x.name.toLowerCase().includes(st.pfq.toLowerCase())));
+    h+=`<input class="inp" id="pfQ" placeholder="${L('Zoek een prop firm','Search a prop firm')}" value="${esc(st.pfq||'')}" style="margin:10px 0">
+      <div class="pfpick">${list.map(x=>`<button data-pff="${x.id}" class="${x.id===st.firm?'on':''}">${firmLogo(x,28)}<span>${esc(x.name)}</span></button>`).join('')||`<div class="muted">${L('Geen firms gevonden','No firms found')}</div>`}</div>`;
+    if(f&&p){ h+=`<div class="pfsec"><label>${L('Programma','Program')}</label><div class="pfchips">${f.programs.map(x=>`<button data-pfp="${x.id}" class="${x.id===p.id?'on':''}">${esc(x.name)}</button>`).join('')}</div></div>
+      <div class="pfsec"><label>${L('Accountgrootte','Account size')}</label><div class="pfchips">${(p.sizes||[]).map(x=>`<button data-pfs="${x.size}" class="${x.size===st.size?'on':''}">${x.size>=1000?x.size/1000+'K':x.size}<small>${pfMoney(x.fee,x.ccy)}${p.monthly?L('/mnd','/mo'):''}</small></button>`).join('')}</div></div>
+      <div class="pfsec"><label>${L('Start in fase','Start in phase')}</label><div class="pfchips">${p.phases.map((x,i)=>`<button data-pfph="${i}" class="${i===+st.phase?'on':''}">${esc(x.name)}${x.target?` · ${x.target}%`:''}</button>`).join('')}</div></div>`;
+      const so=(p.sizes||[]).find(x=>x.size===st.size)||{fee:0,ccy:'$'};
+      h+=`<div class="pfsum"><div class="pfsumh">${firmLogo(f,34)}<div><b>${esc(f.name)} · ${esc(p.name)} · ${st.size/1000}K</b><small>${L('Indicatie','Indication')} (${f.checked||'—'}) — ${L('controleer de actuele regels bij de firm','check current rules with the firm')}</small></div></div>
+        <table class="pftbl"><thead><tr><th>${L('Fase','Phase')}</th><th>${L('Doel','Target')}</th><th>${L('Dagverlies','Daily')}</th><th>Max DD</th><th>${L('Min. dagen','Min. days')}</th><th>${L('Consist.','Consist.')}</th></tr></thead><tbody>
+        ${p.phases.map(x=>{ const fu=!(x.target>0), fr=(fu&&p.funded)||{}; return `<tr class="${p.phases.indexOf(x)===+st.phase?'on':''}"><td>${esc(x.name)}</td><td>${x.target?x.target+'%':'—'}</td><td>${(fr.daily??p.daily)?(fr.daily??p.daily)+'%':'—'}</td><td>${fr.maxloss??p.maxloss}% <small>${dd[fr.ddType||p.ddType]||''}</small></td><td>${fu?'—':(x.mindays??p.mindays)||'—'}</td><td>${(fr.consistency??p.consistency)?(fr.consistency??p.consistency)+'%':'—'}</td></tr>` }).join('')}</tbody></table>
+        <div class="pfcost"><div><small>${L('Kosten','Cost')}</small><b>${pfMoney(so.fee,so.ccy)}${p.monthly?L(' / maand',' / month'):''}</b></div>${p.act?`<div><small>${L('Activatie (funded)','Activation (funded)')}</small><b>${pfMoney(p.act,so.ccy)}</b></div>`:''}<div><small>${L('Winstdeling','Profit split')}</small><b>${p.split}%</b></div><div><small>${L('Fee terug','Fee refund')}</small><b>${p.refund?L('Ja, bij 1e payout','Yes, on 1st payout'):L('Nee','No')}</b></div></div>
+        <div class="pfev" id="pfEv"><div class="muted">${L('Slagingskans berekenen…','Calculating pass rate…')}</div></div></div>` } }
+  else { const cp=st.cphases||[8,5]; h+=`<div class="pfsec" style="margin-top:12px"><label>${L('Aantal fases','Number of phases')}</label><div class="pfchips">${[[0,'Instant'],[1,'1-Step'],[2,'2-Step'],[3,'3-Step']].map(([n,l])=>`<button data-pfcn="${n}" class="${cp.length===n?'on':''}">${l}</button>`).join('')}</div></div>
+      ${cp.length?`<div class="pfsec"><label>${L('Winstdoel per fase (%)','Profit target per phase (%)')}</label><div class="pfphin">${cp.map((v,i)=>`<div><small>${L('Fase','Phase')} ${i+1}</small><input class="inp" type="number" step="0.5" data-pfct="${i}" value="${v}"></div>`).join('')}</div></div>`:''}` }
+  return h }
+function pfRulesBind(M,st,read,draw){ const q=s=>M.querySelectorAll(s), F=allFirms();
+  q('[data-pfk]').forEach(b=>b.onclick=()=>{ read(); st.pfKind=b.dataset.pfk; if(st.pfKind==='custom'){ st.firm=''; st.cphases=st.cphases||[8,5]; st.phase=0; st.target=st.cphases[0]||0 } else if(!(F.find(x=>x.id===st.firm)||{}).kind||F.find(x=>x.id===st.firm).kind!==st.pfKind) st.firm=''; draw() });
+  const qi=M.querySelector('#pfQ'); if(qi) qi.oninput=()=>{ st.pfq=qi.value; const pos=qi.selectionStart; draw(); const n=M.querySelector('#pfQ'); if(n){ n.focus(); try{ n.setSelectionRange(pos,pos) }catch(e){} } };
+  q('[data-pff]').forEach(b=>b.onclick=()=>{ read(); const f=F.find(x=>x.id===b.dataset.pff); st.prog=''; applyFirm(st,f,0); draw() });
+  q('[data-pfp]').forEach(b=>b.onclick=()=>{ read(); applyFirm(st,F.find(x=>x.id===st.firm),0,b.dataset.pfp); draw() });
+  q('[data-pfs]').forEach(b=>b.onclick=()=>{ read(); applyFirm(st,F.find(x=>x.id===st.firm),st.phase,st.prog,+b.dataset.pfs); draw() });
+  q('[data-pfph]').forEach(b=>b.onclick=()=>{ read(); applyFirm(st,F.find(x=>x.id===st.firm),+b.dataset.pfph,st.prog,st.size); draw() });
+  q('[data-pfcn]').forEach(b=>b.onclick=()=>{ read(); const n=+b.dataset.pfcn, d=[8,5,5]; st.cphases=Array.from({length:n},(_,i)=>(st.cphases||[])[i]??d[i]); st.phase=0; st.target=st.cphases[0]||0; draw() });
+  q('[data-pfct]').forEach(inp=>inp.oninput=()=>{ st.cphases[+inp.dataset.pfct]=+inp.value||0; if(+inp.dataset.pfct===+st.phase){ st.target=+inp.value||0; const t0=M.querySelector('#nTarget'); if(t0) t0.value=st.target } });
+  const ev=M.querySelector('#pfEv'); if(ev){ const f=F.find(x=>x.id===st.firm), p=firmProg(f,st.prog), so=(p.sizes||[]).find(x=>x.size===st.size)||{fee:0,ccy:'$'};
+    setTimeout(()=>{ if(!ev.isConnected) return; const L=(nl,en)=>LANG==='en'?en:nl, sim=pfSim(p,st.size), e=pfEV(p,so,sim);
+      if(!sim||sim.need!=null){ ev.innerHTML=`<div class="pfevh">${ic('chart',16)} ${L('Is het de moeite waard?','Is it worth it?')}</div><div class="muted">${L(`Doe eerst nog ${sim?sim.need:15}+ backtest-trades, dan rekent TWF je slagingskans uit met je eigen resultaten.`,`Do ${sim?sim.need:15}+ more backtest trades first; TWF then calculates your pass rate from your own results.`)}</div>`; return }
+      const pc=v=>Math.round(v*100)+'%';
+      ev.innerHTML=`<div class="pfevh">${ic('chart',16)} ${L('Is het de moeite waard?','Is it worth it?')} <small>${L(`o.b.v. ${sim.trades} backtest-trades, ${sim.n} simulaties`,`based on ${sim.trades} backtest trades, ${sim.n} simulations`)}</small></div>
+        <div class="pfevg"><div><small>${L('Slagingskans','Pass rate')}</small><b class="${sim.pAll>=.5?'pos':sim.pAll>=.25?'':'neg'}">${pc(sim.pAll)}</b>${sim.pPh.length>1?`<small>${sim.pPh.map((v,i)=>L('F','P')+(i+1)+' '+pc(v)).join(' · ')}</small>`:''}</div>
+        <div><small>${L('Tijd tot funded','Time to funded')}</small><b>${sim.pAll?Math.round(sim.avgDays)+' '+L('handelsdagen','trading days'):'—'}</b></div>
+        <div><small>${L('Verwachte 1e payout','Expected 1st payout')}</small><b>${sim.pAll?pfMoney(sim.avgPayout,so.ccy):'—'}</b></div>
+        <div><small>${L('Verwacht resultaat per poging','Expected result per attempt')}</small><b class="${e.ev>=0?'pos':'neg'}">${e.ev>=0?'+':'−'}${pfMoney(Math.abs(e.ev),so.ccy)}</b><small>${L('kosten','cost')} ${pfMoney(e.cost,so.ccy)}${e.months>1?` (${e.months} ${L('mnd','mo')})`:''}</small></div></div>
+        <div class="pfverdict ${e.ev>=0?'ok':'bad'}">${e.ev>=0?L('Met je huidige resultaten lijkt deze challenge de moeite waard.','With your current results this challenge looks worth it.'):L('Met je huidige resultaten kost deze challenge je naar verwachting geld. Kijk naar een ander programma of verbeter eerst je strategie.','With your current results this challenge is expected to cost you money. Try another program or improve your strategy first.')}</div>` },30) }
+}
 const STRICT_HINT=k=>{ const L=(nl,en)=>LANG==='en'?en:nl; return {soft:L('Soepel: alleen winstdoel, dagverlies en max drawdown.','Relaxed: only profit target, daily loss and max drawdown.'),normal:L('Normaal: + minimaal aantal handelsdagen, consistentie en max lots.','Normal: + minimum trading days, consistency and max lots.'),strict:L('Streng: + minimale tradeduur, stop loss verplicht, max risico per trade en weekendregel.','Strict: + minimum trade duration, stop loss required, max risk per trade and weekend rule.')}[k]||'' };
 const propDayOf=sec=>new Date((sec-nyOff(sec)*3600+7*3600)*1000).toISOString().slice(0,10);
 function propEval(s){
@@ -3033,7 +3229,6 @@ const PFSTAT=st=>{ const L=(nl,en)=>LANG==='en'?en:nl; return {failed:[L('Gezakt
 function pageProp(){
   const L=(nl,en)=>LANG==='en'?en:nl, pf=(profile().prefs||{}).propStrict||'normal', ss=DB.list('sessions').filter(s=>s.type==='propfirm').sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
   const bar=(v,max,neg)=>`<div class="pbar ${neg?'neg':''}"><i style="width:${Math.max(0,Math.min(100,max?v/max*100:0))}%"></i></div>`;
-  const firmLogo=f=>`<span class="flogo" style="background:${f.col||'#4c74ff'};color:${inkOn(f.col||'#4c74ff')}">${f.logo?`<img src="${f.logo}" alt="">`:esc((f.name||'?').slice(0,2).toUpperCase())}</span>`;
   return `<div class="phead"><div class="row" style="align-items:flex-end"><div><h1>Prop firms</h1><div class="psub">${L('Oefen een challenge alsof het echt is — met dezelfde regels als de prop firm.','Practise a challenge like it is real — with the same rules as the prop firm.')}</div></div><div class="spacer"></div>
      <button class="btn btn-g" disabled title="${L('Binnenkort','Coming soon')}">${ic('spark',15)} ${L('AI-assistent','AI assistant')} <span class="soon">${L('binnenkort','soon')}</span></button>
      <button class="btn btn-g" id="pfNewFirm">${ic('plus',15)} ${L('Eigen prop firm','Custom prop firm')}</button><button class="btn btn-p" id="pfNew">${ic('plus',15)} ${L('Prop firm-sessie','Prop firm session')}</button></div></div>
