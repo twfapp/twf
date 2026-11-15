@@ -1777,7 +1777,7 @@ body.theme-light .mmc.p .mma{color:#137a43}body.theme-light .mmc.n .mma{color:#b
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v10.6', BUILD: '2026-11-17'
+  VERSION: 'v10.7', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -6928,8 +6928,16 @@ const PROPLINE=/^\**\s*[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 _-]{0,30}\s*:\**\s*(.*)$/;
 const LINKLINE=/^\s*([-*]\s*)?(\[[^\]]*\]\([^)]*\)\s*)+$|^\s*\|.*\|\s*$|^\s*!?\[[^\]]*\]\([^)]*\)\s*$|^\s*(https?:\/\/|www\.)\S+\s*$|^\s*[-|: ]{3,}\s*$/;
 function realBody(t){ return String(t||'').split('\n').filter(l=>{ if(LINKLINE.test(l)) return false; const m=l.match(PROPLINE); if(!m) return l.trim()!==''; const v=m[1].replace(/\*/g,'').trim(); return v!==''&&!parseDate(v)&&!/^(yes|no|ja|nee|true|false|☐|☑|\[ ?\]|\[x\])$/i.test(v) }).join('\n').trim() }
 const dateOnlyTitle=t=>!t||!!parseDate(t)&&String(t).replace(/[0-9]/g,'').replace(/\b(dag|day|ma|di|wo|do|vr|za|zo|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag|zondag|mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday|jan\w*|feb\w*|ma\w*|apr\w*|mei|may|jun\w*|jul\w*|aug\w*|sep\w*|o[ck]t\w*|nov\w*|dec\w*)\b/gi,'').replace(/[\s,./-]/g,'')==='';
-const noProps=t=>String(t||'').split('\n').filter(l=>!LINKLINE.test(l)&&!PROPLINE.test(l)&&l.trim()).join('\n').trim();
-const isEmptyEntry=d=>!d.mood&&(d.source==='notion'?!noProps(d.body):!realBody(d.body)&&dateOnlyTitle(d.title));
+/* leeg = geen echte tekst: alleen datums, links/tabellen of lege kolommen (kolommen met tekst, zoals 'Journal', tellen WEL) */
+const isEmptyEntry=d=>!d.mood&&!realBody(d.body)&&(dateOnlyTitle(d.title)||d.source==='notion');
+/* leesbare tekst: 'Journal: tekst' → 'tekst' */
+const plainBody=t=>realBody(t).split('\n').map(l=>{ const m=l.match(PROPLINE); return m?m[1].replace(/\*/g,'').trim():l }).join('\n');
+/* eenmalige reparatie: kopieën die door de eerste import op de importdatum kwamen */
+async function repairDiary(){ try{ const all=DB.list('diary'); if(!all.length) return; const key=d=>(d.title||'')+'|'+(d.body||''); const del=[], mv=[];
+  const real=new Set(all.filter(d=>{ const pd=parseDate(d.title); return !pd||pd===d.date }).map(d=>d.date+'|'+key(d)));
+  for(const d of all){ if(d.source!=='notion') continue; const pd=parseDate(d.title); if(!pd||pd===d.date) continue;
+    if(real.has(pd+'|'+key(d))) del.push(d.id); else { mv.push({...d,date:pd}); real.add(pd+'|'+key(d)) } }
+  if(del.length) await dbDelMany('diary',del); if(mv.length) await dbPutMany('diary',mv); return del.length+mv.length }catch(e){ console.warn('repairDiary',e) } }
 function pgDiary(){ const all=diaryList(), list=all.filter(d=>!isEmptyEntry(d)), empties=all.length-list.length, q=(S.dq||'').toLowerCase().trim();
   const c=S.dcal||(S.dcal=new Date()), y=c.getFullYear(), mo=c.getMonth(), first=new Date(y,mo,1), nd=new Date(y,mo+1,0).getDate(), lead=(first.getDay()+6)%7, mk=`${y}-${String(mo+1).padStart(2,'0')}`, tdy=dKey(new Date()), ph=isPhone();
   const byDay={}; list.filter(d=>String(d.date).startsWith(mk)).forEach(d=>(byDay[d.date]=byDay[d.date]||[]).push(d));
@@ -6938,9 +6946,9 @@ function pgDiary(){ const all=diaryList(), list=all.filter(d=>!isEmptyEntry(d)),
   let g=wd.map(x=>`<div class="dwd">${x}</div>`).join(''); for(let i=0;i<lead;i++) g+='<div class="dcd out"></div>';
   for(let d=1;d<=nd;d++){ const k=`${mk}-${String(d).padStart(2,'0')}`, es=byDay[k]||[], e=es[0], mo2=e&&MOODS.find(m=>m[0]===e.mood), pv=pnl[k];
     g+=`<button class="dcd${es.length?' has':''}${k===tdy?' td':''}${k>tdy?' fut':''}" data-dday="${k}"><span class="dcn">${d}${pv!=null?`<i class="${pv>=0?'pos':'neg'}">${pv>=0?'+':'−'}${Math.abs(pv)>=1000?shortN(Math.abs(pv)).replace(/^[+−]/,''):Math.round(Math.abs(pv))}</i>`:''}</span>
-      ${e?`<span class="dct">${mo2?mo2[1]+' ':''}${esc(e.title&&!dateOnlyTitle(e.title)?e.title:snippet(realBody(e.body)||e.title,60))}</span>${!ph&&realBody(e.body)&&e.title&&!dateOnlyTitle(e.title)?`<span class="dcs">${esc(snippet(realBody(e.body),90))}</span>`:''}${es.length>1?`<span class="dcm">+${es.length-1}</span>`:''}`:`<span class="dcadd">${ic('plus',14)}</span>`}</button>` }
+      ${e?`<span class="dct">${mo2?mo2[1]+' ':''}${esc(e.title&&!dateOnlyTitle(e.title)?e.title:snippet(plainBody(e.body)||e.title,60))}</span>${!ph&&realBody(e.body)&&e.title&&!dateOnlyTitle(e.title)?`<span class="dcs">${esc(snippet(plainBody(e.body),90))}</span>`:''}${es.length>1?`<span class="dcm">+${es.length-1}</span>`:''}`:`<span class="dcadd">${ic('plus',14)}</span>`}</button>` }
   const monthList=list.filter(d=>String(d.date).startsWith(mk)).sort((a,b)=>String(a.date).localeCompare(String(b.date)));
-  const rowH=d=>{ const mo2=MOODS.find(m=>m[0]===d.mood); return `<button class="drow" data-dy="${esc(d.id)}"><span class="dd"><b>${new Date(d.date+'T12:00:00').getDate()}</b><small>${new Date(d.date+'T12:00:00').toLocaleDateString(locale(),{month:'short'})}</small></span><span class="dt"><b>${mo2?mo2[1]+' ':''}${esc(d.title||L('Zonder titel','Untitled'))}${d.source==='notion'?' <span class="chip" style="padding:1px 7px;font-size:10.5px">Notion</span>':''}</b><small>${esc(snippet(realBody(d.body)))}</small></span></button>` };
+  const rowH=d=>{ const mo2=MOODS.find(m=>m[0]===d.mood); return `<button class="drow" data-dy="${esc(d.id)}"><span class="dd"><b>${new Date(d.date+'T12:00:00').getDate()}</b><small>${new Date(d.date+'T12:00:00').toLocaleDateString(locale(),{month:'short'})}</small></span><span class="dt"><b>${mo2?mo2[1]+' ':''}${esc(d.title||L('Zonder titel','Untitled'))}${d.source==='notion'?' <span class="chip" style="padding:1px 7px;font-size:10.5px">Notion</span>':''}</b><small>${esc(snippet(plainBody(d.body)))}</small></span></button>` };
   const found=q?list.filter(d=>(d.title+' '+d.body).toLowerCase().includes(q)):null;
   return head(L('Dagboek','Diary'),L('Je gedachten, lessen en mindset per dag. Tik op een dag om iets te schrijven.','Your thoughts, lessons and mindset per day. Tap a day to write.'),`<button class="btn btn-g" data-act="dimport">${ic('download',16)} ${L('Importeer uit Notion','Import from Notion')}</button><button class="btn btn-p" data-act="dnew">${ic('plus',16)} ${L('Nieuwe notitie','New entry')}</button>`)+
    (empties?`<div class="box dclean"><span>${ic('info',16)} ${empties} ${L('lege Notion-pagina\'s (alleen een datum, geen tekst) worden verborgen.','empty Notion pages (just a date, no text) are hidden.')}</span><button class="btn btn-g" data-act="dclean">${ic('trash',15)} ${L('Opruimen','Clean up')}</button></div>`:'')+
@@ -6951,7 +6959,7 @@ function pgDiary(){ const all=diaryList(), list=all.filter(d=>!isEmptyEntry(d)),
 function bindDiary(m){ m.querySelectorAll('[data-dy]').forEach(b=>b.onclick=()=>openDiary(DB.get('diary',b.dataset.dy)));
   m.querySelectorAll('[data-dcal]').forEach(b=>b.onclick=()=>{ const c=S.dcal||new Date(); S.dcal=new Date(c.getFullYear(),c.getMonth()+(+b.dataset.dcal),1); render() });
   m.querySelectorAll('[data-dday]').forEach(b=>b.onclick=()=>{ const k=b.dataset.dday, es=diaryList().filter(d=>d.date===k&&!isEmptyEntry(d)); if(!es.length) return editDiary(null,k); if(es.length===1) return openDiary(es[0]);
-    const p=panel(new Date(k+'T12:00:00').toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long'}),`<div class="dlist">${es.map(d=>`<div class="drow2"><button class="drow" data-dy2="${esc(d.id)}"><span class="dt"><b>${esc(d.title||L('Zonder titel','Untitled'))}</b><small>${esc(snippet(realBody(d.body)))}</small></span></button><button class="btn btn-danger" data-dyx="${esc(d.id)}" aria-label="${L('Verwijderen','Delete')}">${ic('trash',16)}</button></div>`).join('')}</div>`,`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-add>${ic('plus',16)} ${L('Notitie toevoegen','Add entry')}</button>`);
+    const p=panel(new Date(k+'T12:00:00').toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long'}),`<div class="dlist">${es.map(d=>`<div class="drow2"><button class="drow" data-dy2="${esc(d.id)}"><span class="dt"><b>${esc(d.title||L('Zonder titel','Untitled'))}</b><small>${esc(snippet(plainBody(d.body)))}</small></span></button><button class="btn btn-danger" data-dyx="${esc(d.id)}" aria-label="${L('Verwijderen','Delete')}">${ic('trash',16)}</button></div>`).join('')}</div>`,`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-add>${ic('plus',16)} ${L('Notitie toevoegen','Add entry')}</button>`);
     p.querySelector('[data-x2]').onclick=()=>p.close(); p.querySelector('[data-add]').onclick=()=>{ p.close(); setTimeout(()=>editDiary(null,k),isPhone()?240:0) };
     p.querySelectorAll('[data-dy2]').forEach(x=>x.onclick=()=>{ p.close(); setTimeout(()=>openDiary(DB.get('diary',x.dataset.dy2)),isPhone()?240:0) });
     p.querySelectorAll('[data-dyx]').forEach(x=>x.onclick=async()=>{ await DB.del('diary',x.dataset.dyx); x.closest('.drow2').remove(); render(); toast(L('Verwijderd','Deleted'),'','ok',1500); if(!p.querySelector('.drow2')) p.close() }) });
@@ -7003,7 +7011,7 @@ async function dbPutMany(kind,objs){ if(!objs.length) return; if(DB.cache&&DB.sb
 async function dbDelMany(kind,ids){ if(!ids.length) return; if(DB.cache&&DB.sb&&DB.uid){ ids.forEach(id=>{ if(DB.cache[kind]) delete DB.cache[kind][id] }); for(let i=0;i<ids.length;i+=200) await DB.sb.from('bt_items').delete().eq('user_id',DB.uid).eq('kind',kind).in('id',ids.slice(i,i+200)) }
   else for(const id of ids) await DB.del(kind,id) }
 function parseCsv(txt){ const rows=[]; let row=[], cur='', q=false; for(let i=0;i<txt.length;i++){ const c=txt[i]; if(q){ if(c==='"'){ if(txt[i+1]==='"'){cur+='"';i++} else q=false } else cur+=c } else if(c==='"') q=true; else if(c===','){ row.push(cur); cur='' } else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur='' } else if(c!=='\r') cur+=c } if(cur||row.length){ row.push(cur); rows.push(row) }
-  const hd=(rows.shift()||[]).map(h=>h.replace(/^﻿/,'').trim()); const ti=hd.findIndex(h=>/^(name|naam|title|titel)$/i.test(h)), di=hd.findIndex(h=>/date|datum|created/i.test(h));
+  const hd=(rows.shift()||[]).map(h=>h.replace(/^﻿/,'').trim()); const ti=hd.findIndex(h=>/^(name|naam|title|titel)$/i.test(h)), di=hd.findIndex(h=>/^(dag|day)$|date|datum/i.test(h));
   return rows.filter(r=>r.some(Boolean)).map(r=>({ title:ti>=0?r[ti]:r[0], date:di>=0?parseDate(r[di]):hd.map((h,k)=>parseDate(r[k])).find(Boolean)||null, body:hd.map((h,k)=>k===ti||k===di||!r[k]||parseDate(r[k])||/^(created|last edited|aangemaakt|laatst bewerkt)/i.test(h)?'':`**${h}:** ${r[k]}`).filter(Boolean).join('\n') })) }
 function importNotion(){ const inp=document.createElement('input'); inp.type='file'; inp.multiple=true; inp.accept='.zip,.md,.markdown,.txt,.csv,application/zip,text/markdown,text/csv,text/plain';
   inp.onchange=async()=>{ const files=[...inp.files]; if(!files.length) return; toast(L('Importeren…','Importing…'),files.length+' '+L('bestand(en)','file(s)'),'info',2500);
@@ -7024,7 +7032,7 @@ function importNotion(){ const inp=document.createElement('input'); inp.type='fi
   inp.click() }
 
 /* ================= API voor TWF (Home, + knop) ================= */
-async function jLoad(){ if(!DB.sb||!DB.uid){ ME=null; return false } sb=DB.sb; ME={id:DB.uid}; await loadAll(); return true }
+async function jLoad(){ if(!DB.sb||!DB.uid){ ME=null; return false } sb=DB.sb; ME={id:DB.uid}; await loadAll(); await repairDiary(); return true }
 function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0;
   const today=dKey(new Date()), mo=today.slice(0,7), tr=A.trades;
   const tday=tr.filter(t=>dKey(t.date)===today), tmo=tr.filter(t=>dKey(t.date).slice(0,7)===mo), m=stats(tr,A);
