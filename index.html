@@ -1748,6 +1748,13 @@ html.updating #updScr.hide{display:grid!important}
   .hero .choice b{font-size:15.5px}.hero .choice span{font-size:13px}
   .kpis{gap:10px!important}
 }
+
+.pfaccrow{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);text-align:left;color:inherit}
+.pfaccrow>span:not(.flogo2){flex:1;min-width:0}.pfaccrow .flogo2{flex:none}.pfaccrow b{display:block;font-size:14px}.pfaccrow small{display:block;color:var(--ink3);font-size:12px;margin-top:2px}.pfaccrow em{font-style:normal;color:var(--accent);font-weight:700;font-size:13px}
+.pfaccrow.empty{border-style:dashed;color:var(--ink2)}
+.mkkind{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);padding:8px 10px;border-radius:10px;background:var(--accentSoft)}
+
+.pfgroup{margin-bottom:18px}.pfgh{display:flex;align-items:center;gap:12px;margin:0 0 10px}.pfgh b{display:block;font-size:16px}.pfgh small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px}
 </style>
 </head>
 <body class="">
@@ -1890,7 +1897,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v11.2', BUILD: '2026-11-17'
+  VERSION: 'v11.3', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2049,7 +2056,7 @@ const T = {
   'acc.name':'Naam rekening','acc.balance':'Startsaldo','acc.currency':'Valuta','acc.leverage':'Hefboom','acc.custom':'Eigen','acc.mc':'Margin call (%)','acc.so':'Stop out (%)','acc.used':'Gebruikt in','acc.sessions':'sessies',
   'str.title':'Strategieën','str.sub':'Jouw strategieën en regels. Kies er één bij een nieuwe sessie.','str.new':'Nieuwe strategie','str.empty':'Nog geen strategieën','str.emptysub':'Leg je setup en regels vast, zodat je ze bij elke sessie kunt kiezen.',
   'str.name':'Naam strategie','str.desc':'Omschrijving','str.rules':'Regels (checklist)','str.addrule':'Regel toevoegen','str.color':'Kleur','str.rule':'Regel',
-  'ns.title':'Sessie aanmaken','ns.basics':'Basis','ns.basicsub':'Naam, rekening, markten, template en datums','ns.more':'Meer opties','ns.moresub':'Spread & commissie, hedging en slippage','ns.rules':'Prop-firm-regels','ns.rulessub':'Winstdoel, dagelijks en totaal verlies',
+  'ns.title':'Sessie aanmaken','ns.basics':'Basis','ns.basicsub':'Naam, rekening, markten, template en datums','ns.more':'Meer opties','ns.moresub':'Spread & commissie, hedging en slippage','ns.rules':'Prop firm & rekening','ns.rulessub':'Firm, programma, accountgrootte en regels',
   'ns.name':'Sessienaam','ns.namep':'Geef je sessie een naam','ns.account':'Handelsrekening','ns.newacc':'+ Nieuwe rekening','ns.strategy':'Strategie','ns.nostr':'Geen strategie','ns.newstr':'+ Nieuwe strategie',
   'ns.assets':'Markten','ns.assetsp':'Kies markten…','ns.period':'Sessieperiode','ns.start':'Startdatum','ns.end':'Einddatum','ns.auto':'Automatisch','ns.customd':'Eigen',
   'ns.autohint':'De sessie loopt vanzelf door terwijl je replayt.','ns.template':'Chart-template','ns.smooth':'Vloeiende candles',
@@ -2146,7 +2153,7 @@ const T = {
   'acc.name':'Account name','acc.balance':'Starting balance','acc.currency':'Currency','acc.leverage':'Leverage','acc.custom':'Custom','acc.mc':'Margin call (%)','acc.so':'Stop out (%)','acc.used':'Used in','acc.sessions':'sessions',
   'str.title':'Strategies','str.sub':'Your strategies and rules. Pick one when creating a session.','str.new':'New strategy','str.empty':'No strategies yet','str.emptysub':'Write down your setup and rules so you can pick them for every session.',
   'str.name':'Strategy name','str.desc':'Description','str.rules':'Rules (checklist)','str.addrule':'Add rule','str.color':'Color','str.rule':'Rule',
-  'ns.title':'Create a session','ns.basics':'Basics','ns.basicsub':'Name, account, assets, template & dates','ns.more':'More options','ns.moresub':'Spreads & commission, hedging & slippage','ns.rules':'Prop firm rules','ns.rulessub':'Profit target, daily and max loss',
+  'ns.title':'Create a session','ns.basics':'Basics','ns.basicsub':'Name, account, assets, template & dates','ns.more':'More options','ns.moresub':'Spreads & commission, hedging & slippage','ns.rules':'Prop firm & account','ns.rulessub':'Firm, program, account size and rules',
   'ns.name':'Session name','ns.namep':'Name your session','ns.account':'Trading account','ns.newacc':'+ New account','ns.strategy':'Strategy','ns.nostr':'No strategy','ns.newstr':'+ New strategy',
   'ns.assets':'Assets','ns.assetsp':'Select assets…','ns.period':'Session period','ns.start':'Initial date','ns.end':'End date','ns.auto':'Automatic','ns.customd':'Custom',
   'ns.autohint':'The session keeps extending on its own as you replay.','ns.template':'Chart template','ns.smooth':'Smooth candles',
@@ -2378,6 +2385,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v11.3':{nl:['Prop firm-sessie: je rekening komt uit de firm (programma + grootte), geen losse handelsrekening meer','Markten volgen de firm: futures-firms alleen futures, CFD-firms geen futures','Prop firms-pagina: je rekeningen per firm'],en:['Prop firm session: your account comes from the firm (program + size), no separate trading account','Markets follow the firm: futures firms futures only, CFD firms no futures','Prop firms page: your accounts per firm']},
   'v11.2':{nl:['iPhone: vensters schermvullend en normaal scrollen','Backtest-overzicht netjes op de telefoon'],en:['iPhone: full-screen dialogs with normal scrolling','Backtest overview tidy on phone']},
   'v11.1':{nl:['Nieuw update-scherm: bijwerken zonder uit te loggen, je komt terug waar je was','Instelling "Automatisch updaten"'],en:['New update screen: update without signing out, you return where you were','New setting "Automatic updates"']},
   'v11.0':{nl:['Prop firms: 31 firms met programma\'s, regels per fase, kosten en slagingskans','Alle markten kiesbaar + data aanvragen','Daily/weekly loopt niet meer vast','Templates onthouden + archief'],en:['Prop firms: 31 firms with programs, rules per phase, costs and pass rate','Every market selectable + request data','Daily/weekly no longer freezes','Templates remembered + archive']}
@@ -2920,7 +2928,7 @@ function pageStart(){
 /* ----- Accounts ----- */
 function accRealized(id){ let r=0; DB.list('sessions').filter(s=>s.account===id).forEach(s=>(s.trades||[]).forEach(x=>{ const v=+x.pnl; if(isFinite(v)) r+=v })); return +r.toFixed(2) }
 function pageAccounts(){
-  const ac=DB.list('accounts').sort((a,b)=>a.created.localeCompare(b.created)), ss=DB.list('sessions');
+  const ac=DB.list('accounts').filter(a=>!a.prop).sort((a,b)=>String(a.created||'').localeCompare(String(b.created||''))), ss=DB.list('sessions');
   return `<div class="phead"><h1>${t('acc.title')}</h1><div style="color:var(--ink2);margin:-12px 0 24px">${t('acc.sub')}</div></div>
   <div class="pbody"><div class="toolbar"><div style="flex:1"></div><button class="btn btn-p" data-act="newacc">${ic('plus',16)} ${t('acc.new')}</button></div>
   ${ac.length?`<div class="grid-cards">${ac.map(a=>`<div class="ccard"><div class="top"><div><div class="ttl">${esc(a.name)}</div><div style="color:var(--ink3);font-size:13px;margin-top:4px">${t('acc.used')} ${(n=>n+' '+(n===1?(LANG==='en'?'session':'sessie'):t('acc.sessions')))(ss.filter(s=>s.account===a.id).length)}</div></div><span class="pill acc">${a.leverage?'1:'+a.leverage:'—'}</span></div>
@@ -3006,28 +3014,31 @@ function sessionModal(type='backtest',editId,opts){
     spreadMode:ed?ed.spreadMode:'real',spread:ed?ed.spread:0.3,comm:ed?ed.comm:7,slip:ed?ed.slip:0,hedge:ed?ed.hedge:true,
     target:ed?ed.target:10,daily:ed?ed.daily:5,maxloss:ed?ed.maxloss:10,mindays:ed?ed.mindays:4,ddOpen:false,
     firm:ed?ed.firm||'':'',phase:ed?ed.phase||0:0,ddType:ed?ed.ddType||'static':'static',consistency:ed?ed.consistency||0:0,maxLots:ed?ed.maxLots||0:0,minHold:ed?ed.minHold||0:0,
-    maxRisk:ed?ed.maxRisk||0:0,slReq:ed?!!ed.slReq:false,weekend:ed?ed.weekend!==false:true,split:ed?ed.split||80:80,strict:ed?ed.strict||'':''};
+    maxRisk:ed?ed.maxRisk||0:0,slReq:ed?!!ed.slReq:false,weekend:ed?ed.weekend!==false:true,split:ed?ed.split||80:80,strict:ed?ed.strict||'':'',prog:ed?ed.prog||'':'',size:ed?ed.size||0:0,fee:ed?ed.fee:0,feeCcy:ed?ed.feeCcy||'$':'$',progName:ed?ed.progName||'':'',pfKind:ed?ed.pfKind||'':'',pfCustomKind:ed?ed.pfCustomKind||'CFD':'CFD',cphases:ed&&ed.cphases?[...ed.cphases]:null};
+  if(!ed&&st.type==='propfirm') st.sec='rules';
   if(!ed&&opts&&opts.firm){ const f=allFirms().find(x=>x.id===opts.firm); if(f){ applyFirm(st,f,opts.phase||0); st.type='propfirm'; st.sec='rules' } }
   const ov=modal('', '');
   const M=ov.querySelector('.modal');
   const presets=DB.list('presets');
+  const mcatOf=()=>{ const cats=[...new Set(ASSETS.filter(a=>pfAllowed(st,a.sym)).map(a=>a.cat))]; return cats.includes(st.mcat)?st.mcat:(cats.includes('Forex')?'Forex':cats[0]) };
   const minDate=()=>st.assets.length?st.assets.map(a=>(MD.range(a)||{from:asset(a).min}).from).sort().pop():'2003-05-05';
   const maxDate=()=>{const r=st.assets.map(a=>MD.range(a)).filter(Boolean);return r.length?r.map(x=>x.to).sort()[0]:today};
   const realAll=()=>st.assets.length&&st.assets.every(a=>MD.range(a));
   const today=new Date().toISOString().slice(0,10);
   function draw(){
-    const accs=DB.list('accounts'), strs=DB.list('strategies');
-    const secs=[['basics','ns.basics','ns.basicsub'],['more','ns.more','ns.moresub']]; if(st.type==='propfirm') secs.push(['rules','ns.rules','ns.rulessub']);
+    const accs=DB.list('accounts').filter(a=>!a.prop), strs=DB.list('strategies');
+    const secs=st.type==='propfirm'?[['rules','ns.rules','ns.rulessub'],['basics','ns.basics','ns.basicsub'],['more','ns.more','ns.moresub']]:[['basics','ns.basics','ns.basicsub'],['more','ns.more','ns.moresub']];
     let c='';
     if(st.sec==='basics') c=`
       <div class="field"><label>${t('ns.name')} <span class="req">*</span></label><input class="inp" id="nName" placeholder="${t('ns.namep')}" value="${esc(st.name)}"></div>
-      <div class="field"><label>${t('ns.account')} <span class="req">*</span></label><select class="inp" id="nAcc">${accs.map(a=>`<option value="${a.id}" ${a.id===st.account?'selected':''}>${esc(a.name)} — ${fmtMoney(a.balance,a.currency)} · ${a.leverage?'1:'+a.leverage:'—'}</option>`).join('')}<option value="__new">${t('ns.newacc')}</option></select></div>
+      ${st.type==='propfirm'?pfAccRow(st):`      <div class="field"><label>${t('ns.account')} <span class="req">*</span></label><select class="inp" id="nAcc">${accs.map(a=>`<option value="${a.id}" ${a.id===st.account?'selected':''}>${esc(a.name)} — ${fmtMoney(a.balance,a.currency)} · ${a.leverage?'1:'+a.leverage:'—'}</option>`).join('')}<option value="__new">${t('ns.newacc')}</option></select></div>`}
       <div class="field"><label>${t('ns.strategy')}</label><select class="inp" id="nStr"><option value="">${t('ns.nostr')}</option>${strs.map(s=>`<option value="${s.id}" ${s.id===st.strategy?'selected':''}>${esc(s.name)}</option>`).join('')}<option value="__new">${t('ns.newstr')}</option></select></div>
       <div class="field"><label>${t('ns.assets')} <span class="req">*</span></label>
         <div class="mkpick">
           ${st.assets.length?`<div class="mksel">${st.assets.map(a=>`<span class="tagx">${symBadge(a)}${a}${mkHasData(a)?'':`<em title="${LANG==='en'?'No chart data yet':'Nog geen chartdata'}">!</em>`}<i data-rm="${a}">✕</i></span>`).join('')}</div>`:''}
           <input class="inp" id="mkQ" placeholder="${LANG==='en'?'Search a market, e.g. EURUSD, gold, NQ1, BTC':'Zoek een markt, bijv. EURUSD, goud, NQ1, BTC'}" value="${esc(st.mq||'')}" autocomplete="off">
-          <div class="mktabs">${[...new Set(ASSETS.map(a=>a.cat))].sort((x,y)=>['Forex','Metals','Indices','Energy','Futures','Crypto','Stocks'].indexOf(x)-['Forex','Metals','Indices','Energy','Futures','Crypto','Stocks'].indexOf(y)).map(c=>`<button data-mkc="${c}" class="${(st.mcat||'Forex')===c?'on':''}">${LANG==='en'?c:(MKCAT_NL[c]||c)}</button>`).join('')}</div>
+          ${pfKindOf(st)?`<div class="mkkind">${ic('info',14)} ${pfKindOf(st)==='Futures'?(LANG==='en'?'This prop firm only allows futures.':'Deze prop firm staat alleen futures toe.'):(LANG==='en'?'This prop firm offers CFDs: forex, metals, indices, energy, crypto and stocks (no futures).':'Deze prop firm biedt CFD\'s: forex, metalen, indices, energie, crypto en aandelen (geen futures).')}</div>`:''}
+          <div class="mktabs">${[...new Set(ASSETS.filter(a=>pfAllowed(st,a.sym)).map(a=>a.cat))].sort((x,y)=>['Forex','Metals','Indices','Energy','Futures','Crypto','Stocks'].indexOf(x)-['Forex','Metals','Indices','Energy','Futures','Crypto','Stocks'].indexOf(y)).map(c=>`<button data-mkc="${c}" class="${mcatOf()===c?'on':''}">${LANG==='en'?c:(MKCAT_NL[c]||c)}</button>`).join('')}</div>
           <div class="mkgrid" id="mkGrid"></div>
           <div class="mkhint">${LANG==='en'?'Pick several markets to test them together. <i class="dotk ok"></i> chart data available · <i class="dotk"></i> no data yet (request it from the admin).':'Kies meerdere markten om ze samen te testen. <i class="dotk ok"></i> chartdata beschikbaar · <i class="dotk"></i> nog geen data (vraag het aan bij de admin).'}</div>
           ${st.assets.filter(a=>!mkHasData(a)).length?`<div class="mknodata">${ic('info',16)}<span>${LANG==='en'?'No chart data yet for':'Nog geen chartdata voor'} <b>${st.assets.filter(a=>!mkHasData(a)).join(', ')}</b>. ${LANG==='en'?'You will test on simulated data until the admin publishes it.':'Je test op gesimuleerde data tot de admin het publiceert.'}</span><button class="btn btn-g" data-mkreq>${LANG==='en'?'Request data':'Vraag data aan'}</button></div>`:''}
@@ -3080,7 +3091,7 @@ function sessionModal(type='backtest',editId,opts){
   function bind(){
     const q=s=>M.querySelectorAll(s);
     q('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
-    q('[data-ty]').forEach(b=>b.onclick=()=>{read();st.type=b.dataset.ty;if(st.sec==='rules'&&st.type!=='propfirm')st.sec='basics';draw()});
+    q('[data-ty]').forEach(b=>b.onclick=()=>{read();st.type=b.dataset.ty;if(st.sec==='rules'&&st.type!=='propfirm')st.sec='basics'; if(st.type==='propfirm'){ st.sec='rules'; st.assets=st.assets.filter(a=>pfAllowed(st,a)) } else if(DB.get('accounts',st.account)&&DB.get('accounts',st.account).prop) st.account=(DB.list('accounts').find(a=>!a.prop)||{}).id||''; draw()});
     q('[data-sec]').forEach(b=>b.onclick=()=>{read();st.sec=b.dataset.sec;st.ddOpen=false;draw()});
     q('[data-em]').forEach(b=>b.onclick=()=>{read();st.endMode=b.dataset.em;draw()});
     q('[data-sm]').forEach(b=>b.onclick=()=>{read();st.spreadMode=b.dataset.sm;draw()});
@@ -3088,8 +3099,8 @@ function sessionModal(type='backtest',editId,opts){
     const sr=M.querySelector('#nStr'); if(sr) sr.onchange=()=>{read();if(sr.value==='__new'){strategyModal(null,o=>{st.strategy=o.id;draw()});sr.value=st.strategy}else st.strategy=sr.value};
     q('[data-rm]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); read(); st.assets=st.assets.filter(a=>a!==b.dataset.rm); draw() });
     { const grid=M.querySelector('#mkGrid'), qi=M.querySelector('#mkQ');
-      const fill=()=>{ if(!grid) return; const qq=(st.mq||'').trim().toLowerCase(), cat=st.mcat||'Forex';
-        const list=ASSETS.filter(a=>qq?(a.sym+' '+a.name+' '+a.nameEn).toLowerCase().includes(qq)||(MKCAT_NL[a.cat]||a.cat).toLowerCase().includes(qq):a.cat===cat);
+      const fill=()=>{ if(!grid) return; const qq=(st.mq||'').trim().toLowerCase(), cat=mcatOf();
+        const list=ASSETS.filter(a=>pfAllowed(st,a.sym)).filter(a=>qq?(a.sym+' '+a.name+' '+a.nameEn).toLowerCase().includes(qq)||(MKCAT_NL[a.cat]||a.cat).toLowerCase().includes(qq):a.cat===cat);
         grid.innerHTML=list.length?list.map(a=>`<button data-as="${a.sym}" class="mkp ${st.assets.includes(a.sym)?'on':''}">${symBadge(a.sym)}<span class="mkt"><b>${a.sym}</b><small>${esc(LANG==='en'?a.nameEn:a.name)}</small></span><i class="dotk ${mkHasData(a.sym)?'ok':''}"></i></button>`).join(''):`<div class="muted" style="padding:10px">${LANG==='en'?'No markets found.':'Geen markten gevonden.'}</div>`;
         grid.querySelectorAll('[data-as]').forEach(b=>b.onclick=()=>{ read(); const s=b.dataset.as; st.assets=st.assets.includes(s)?st.assets.filter(a=>a!==s):[...st.assets,s]; if(st.start&&st.start<minDate()) st.start=minDate(); draw() }) };
       fill(); if(qi){ qi.oninput=()=>{ st.mq=qi.value; fill() } }
@@ -3105,7 +3116,13 @@ function sessionModal(type='backtest',editId,opts){
     M.querySelector('#nPresetSave').onclick=async()=>{read();const nm=await askText(t('ns.savepreset'),t('name'),st.name||'Preset');if(!nm)return;const {name,sec,ddOpen,...data}=st;await DB.put('presets',{id:uid(),name:nm,data});presets.splice(0,presets.length,...DB.list('presets'));toast(t('toast.preset'),nm,'ok');draw()};
     M.querySelector('#nCreate').onclick=async()=>{
       read(); const err=M.querySelector('#nErr'); err.textContent='';
-      if(!st.name.trim()){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.name');return}
+      if(!st.name.trim()&&st.type!=='propfirm'){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.name');return}
+      if(st.type==='propfirm'){ if(!st.firm&&st.pfKind!=='custom'){ st.sec='rules'; draw(); M.querySelector('#nErr').textContent=LANG==='en'?'Pick a prop firm, program and account size first.':'Kies eerst een prop firm, programma en accountgrootte.'; return }
+        if(st.assets.some(a=>!pfAllowed(st,a))){ st.assets=st.assets.filter(a=>pfAllowed(st,a)) }
+        if(!ed||!(DB.get('accounts',st.account)||{}).prop||(DB.get('accounts',st.account)||{}).size!==(st.size||100000)){ const f=allFirms().find(x=>x.id===st.firm), sz=st.size||100000, ccy=(st.feeCcy==='€'?'EUR':st.feeCcy==='£'?'GBP':'USD');
+          const pa={id:'pf-'+uid(),name:f?`${f.name} ${sz/1000}K · ${st.progName||''}`:`${LANG==='en'?'Custom':'Eigen'} ${sz/1000}K`,balance:sz,currency:ccy,leverage:pfKindOf(st)==='Futures'?null:100,mc:pfKindOf(st)==='Futures'?null:50,so:pfKindOf(st)==='Futures'?null:30,prop:true,firm:st.firm||'',prog:st.prog||'',size:sz,created:new Date().toISOString()};
+          await DB.put('accounts',pa); st.account=pa.id }
+        if(!st.name.trim()){ const f=allFirms().find(x=>x.id===st.firm); st.name=f?`${f.name} ${(st.size||100000)/1000}K · ${st.progName||''}`.trim():`${LANG==='en'?'Prop challenge':'Prop-challenge'} ${(st.size||100000)/1000}K` } }
       if(!st.account){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.acc');return}
       if(!st.assets.length){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.assets');return}
       if(!st.start){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.date');return}
@@ -3270,6 +3287,14 @@ function pfSim(p,size,N=500){ const blocks=pfDayBlocks(), nTr=blocks.reduce((a,b
   return {n:N,trades:nTr,pPh:pPh.map((c,i)=>c/N/(i?pPh[i-1]/N||1:1)),pAll,avgDays,avgPayout,pPayout:all?payouts/all:0} }
 function pfEV(p,so,sim){ if(!sim||sim.need!=null) return null; const fee=+so.fee||0, months=p.monthly?Math.max(1,Math.ceil((sim.avgDays||20)/20)):1, cost=fee*months+(sim.pAll*(p.act||0));
   const gain=sim.pAll*(sim.avgPayout+(p.refund?fee:0)); return {cost,gain,ev:gain-cost,months} }
+
+/* v11.3: prop-rekening = firm + programma + grootte; markten volgen de soort firm */
+const pfKindOf=st=>{ if(st.type!=='propfirm') return null; if((st.pfKind||'')==='custom'||(!st.firm&&st.pfKind==='custom')) return st.pfCustomKind||'CFD'; const f=allFirms().find(x=>x.id===st.firm); return f?f.kind:(st.pfKind&&st.pfKind!=='custom'?st.pfKind:null) };
+function pfAllowed(st,sym){ const k=pfKindOf(st); if(!k) return true; const a=asset(sym); if(!a) return true; return k==='Futures'?a.cat==='Futures':a.cat!=='Futures' }
+function pfAccRow(st){ const L=(nl,en)=>LANG==='en'?en:nl, f=allFirms().find(x=>x.id===st.firm);
+  if(!f&&st.pfKind!=='custom') return `<div class="field"><label>${L('Prop-rekening','Prop account')} <span class="req">*</span></label><button class="pfaccrow empty" data-sec="rules">${ic('trophy',18)}<span>${L('Kies eerst je prop firm, programma en accountgrootte','First pick your prop firm, program and account size')}</span>${ic('next',16)}</button></div>`;
+  const nm=f?`${f.name} · ${st.progName||''} · ${(st.size||0)/1000}K`:`${L('Eigen regels','Custom rules')} · ${(st.size||100000)/1000}K`;
+  return `<div class="field"><label>${L('Prop-rekening','Prop account')}</label><button class="pfaccrow" data-sec="rules">${f?firmLogo(f,30):`<span class="flogo2" style="width:30px;height:30px">${ic('trophy',15)}</span>`}<span><b>${esc(nm)}</b><small>${L('Startsaldo','Starting balance')} ${pfMoney(st.size||100000,st.feeCcy||'$')} · ${pfKindOf(st)==='Futures'?L('alleen futures','futures only'):L('CFD, forex, crypto, aandelen','CFD, forex, crypto, stocks')}</small></span><em>${L('Wijzig','Change')}</em></button></div>` }
 /* ---- v11: kiesscherm prop firm in 'Sessie aanmaken' ---- */
 function pfMoney(v,ccy){ return (ccy||'$')+(Math.round(v*100)/100).toLocaleString(locale(),{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}) }
 function pfRulesHtml(st){ const L=(nl,en)=>LANG==='en'?en:nl, F=allFirms(), kind=st.pfKind||((F.find(x=>x.id===st.firm)||{}).kind)||'CFD', f=F.find(x=>x.id===st.firm), p=f&&firmProg(f,st.prog);
@@ -3287,16 +3312,20 @@ function pfRulesHtml(st){ const L=(nl,en)=>LANG==='en'?en:nl, F=allFirms(), kind
         ${p.phases.map(x=>{ const fu=!(x.target>0), fr=(fu&&p.funded)||{}; return `<tr class="${p.phases.indexOf(x)===+st.phase?'on':''}"><td>${esc(x.name)}</td><td>${x.target?x.target+'%':'—'}</td><td>${(fr.daily??p.daily)?(fr.daily??p.daily)+'%':'—'}</td><td>${fr.maxloss??p.maxloss}% <small>${dd[fr.ddType||p.ddType]||''}</small></td><td>${fu?'—':(x.mindays??p.mindays)||'—'}</td><td>${(fr.consistency??p.consistency)?(fr.consistency??p.consistency)+'%':'—'}</td></tr>` }).join('')}</tbody></table>
         <div class="pfcost"><div><small>${L('Kosten','Cost')}</small><b>${pfMoney(so.fee,so.ccy)}${p.monthly?L(' / maand',' / month'):''}</b></div>${p.act?`<div><small>${L('Activatie (funded)','Activation (funded)')}</small><b>${pfMoney(p.act,so.ccy)}</b></div>`:''}<div><small>${L('Winstdeling','Profit split')}</small><b>${p.split}%</b></div><div><small>${L('Fee terug','Fee refund')}</small><b>${p.refund?L('Ja, bij 1e payout','Yes, on 1st payout'):L('Nee','No')}</b></div></div>
         <div class="pfev" id="pfEv"><div class="muted">${L('Slagingskans berekenen…','Calculating pass rate…')}</div></div></div>` } }
-  else { const cp=st.cphases||[8,5]; h+=`<div class="pfsec" style="margin-top:12px"><label>${L('Aantal fases','Number of phases')}</label><div class="pfchips">${[[0,'Instant'],[1,'1-Step'],[2,'2-Step'],[3,'3-Step']].map(([n,l])=>`<button data-pfcn="${n}" class="${cp.length===n?'on':''}">${l}</button>`).join('')}</div></div>
+  else { const cp=st.cphases||[8,5]; h+=`<div class="pfsec" style="margin-top:12px"><label>${L('Soort prop firm','Type of prop firm')}</label><div class="pfchips">${[['CFD',L('CFD & forex','CFD & forex')],['Futures','Futures']].map(([k,l])=>`<button data-pfck="${k}" class="${(st.pfCustomKind||'CFD')===k?'on':''}">${l}</button>`).join('')}</div></div>
+      <div class="pfsec"><label>${L('Accountgrootte','Account size')}</label><div class="pfchips">${[5,10,25,50,100,150,200].map(k=>`<button data-pfcs="${k*1000}" class="${(st.size||100000)===k*1000?'on':''}">${k}K</button>`).join('')}</div></div>
+      <div class="pfsec"><label>${L('Aantal fases','Number of phases')}</label><div class="pfchips">${[[0,'Instant'],[1,'1-Step'],[2,'2-Step'],[3,'3-Step']].map(([n,l])=>`<button data-pfcn="${n}" class="${cp.length===n?'on':''}">${l}</button>`).join('')}</div></div>
       ${cp.length?`<div class="pfsec"><label>${L('Winstdoel per fase (%)','Profit target per phase (%)')}</label><div class="pfphin">${cp.map((v,i)=>`<div><small>${L('Fase','Phase')} ${i+1}</small><input class="inp" type="number" step="0.5" data-pfct="${i}" value="${v}"></div>`).join('')}</div></div>`:''}` }
   return h }
 function pfRulesBind(M,st,read,draw){ const q=s=>M.querySelectorAll(s), F=allFirms();
-  q('[data-pfk]').forEach(b=>b.onclick=()=>{ read(); st.pfKind=b.dataset.pfk; if(st.pfKind==='custom'){ st.firm=''; st.cphases=st.cphases||[8,5]; st.phase=0; st.target=st.cphases[0]||0 } else if(!(F.find(x=>x.id===st.firm)||{}).kind||F.find(x=>x.id===st.firm).kind!==st.pfKind) st.firm=''; draw() });
+  q('[data-pfk]').forEach(b=>b.onclick=()=>{ read(); st.pfKind=b.dataset.pfk; if(st.pfKind==='custom'){ st.firm=''; st.prog=''; st.progName=''; st.size=st.size||100000; st.feeCcy='$'; st.cphases=st.cphases||[8,5]; st.phase=0; st.target=st.cphases[0]||0 } else if(!(F.find(x=>x.id===st.firm)||{}).kind||F.find(x=>x.id===st.firm).kind!==st.pfKind) st.firm=''; draw() });
   const qi=M.querySelector('#pfQ'); if(qi) qi.oninput=()=>{ st.pfq=qi.value; const pos=qi.selectionStart; draw(); const n=M.querySelector('#pfQ'); if(n){ n.focus(); try{ n.setSelectionRange(pos,pos) }catch(e){} } };
-  q('[data-pff]').forEach(b=>b.onclick=()=>{ read(); const f=F.find(x=>x.id===b.dataset.pff); st.prog=''; applyFirm(st,f,0); draw() });
+  q('[data-pff]').forEach(b=>b.onclick=()=>{ read(); const f=F.find(x=>x.id===b.dataset.pff); st.prog=''; applyFirm(st,f,0); const before=st.assets.length; st.assets=st.assets.filter(a=>pfAllowed(st,a)); if(before!==st.assets.length) toast(LANG==='en'?'Markets adjusted':'Markten aangepast',LANG==='en'?`${f.name} only allows ${f.kind==='Futures'?'futures':'CFD markets'}.`:`${f.name} staat alleen ${f.kind==='Futures'?'futures':'CFD-markten'} toe.`,'info',3500); draw() });
   q('[data-pfp]').forEach(b=>b.onclick=()=>{ read(); applyFirm(st,F.find(x=>x.id===st.firm),0,b.dataset.pfp); draw() });
   q('[data-pfs]').forEach(b=>b.onclick=()=>{ read(); applyFirm(st,F.find(x=>x.id===st.firm),st.phase,st.prog,+b.dataset.pfs); draw() });
   q('[data-pfph]').forEach(b=>b.onclick=()=>{ read(); applyFirm(st,F.find(x=>x.id===st.firm),+b.dataset.pfph,st.prog,st.size); draw() });
+  q('[data-pfck]').forEach(b=>b.onclick=()=>{ read(); st.pfCustomKind=b.dataset.pfck; st.assets=st.assets.filter(a=>pfAllowed(st,a)); draw() });
+  q('[data-pfcs]').forEach(b=>b.onclick=()=>{ read(); st.size=+b.dataset.pfcs; draw() });
   q('[data-pfcn]').forEach(b=>b.onclick=()=>{ read(); const n=+b.dataset.pfcn, d=[8,5,5]; st.cphases=Array.from({length:n},(_,i)=>(st.cphases||[])[i]??d[i]); st.phase=0; st.target=st.cphases[0]||0; draw() });
   q('[data-pfct]').forEach(inp=>inp.oninput=()=>{ st.cphases[+inp.dataset.pfct]=+inp.value||0; if(+inp.dataset.pfct===+st.phase){ st.target=+inp.value||0; const t0=M.querySelector('#nTarget'); if(t0) t0.value=st.target } });
   const ev=M.querySelector('#pfEv'); if(ev){ const f=F.find(x=>x.id===st.firm), p=firmProg(f,st.prog), so=(p.sizes||[]).find(x=>x.size===st.size)||{fee:0,ccy:'$'};
@@ -3351,15 +3380,17 @@ function pageProp(){
     <div class="pfhow">${[[ic('trophy',20),L('1. Kies een prop firm','1. Pick a prop firm'),L('Neem een bekende firm of maak je eigen regels.','Use a known firm or create your own rules.')],[ic('play',20),L('2. Trade de challenge','2. Trade the challenge'),L('Dagverlies en drawdown worden live bewaakt; bij overschrijden ben je gezakt.','Daily loss and drawdown are watched live; breach them and you fail.')],[ic('check',20),L('3. Regelcheck & payout','3. Rule check & payout'),L('Elke trade wordt gecontroleerd. Bij een funded fase zie je of je payout zou worden goedgekeurd.','Every trade is checked. In a funded phase you see if your payout would be approved.')]].map(([i,a,b])=>`<div class="box"><span class="ci">${i}</span><b>${a}</b><small>${b}</small></div>`).join('')}</div>
     <div class="box pfstrict"><div><b>${L('Strengheid van de payout-check','Payout check strictness')}</b><small>${STRICT_HINT(pf)}</small></div>
       <div class="seg">${[['soft','Soepel','Relaxed'],['normal','Normaal','Normal'],['strict','Streng','Strict']].map(([k,nl,en])=>`<button class="${pf===k?'on':''}" data-pstrict="${k}">${L(nl,en)}</button>`).join('')}</div></div>
-    <h3 class="sech">${L('Jouw challenges','Your challenges')}</h3>
-    ${ss.length?`<div class="pfgrid">${ss.map(s=>{ const e=propEval(s), f=allFirms().find(x=>x.id===s.firm), ph=f&&f.phases[s.phase||0], [stl,stc]=PFSTAT(e.status), nIss=Object.keys(e.issues).length;
-      return `<div class="box pfcard"><div class="pfh">${f?firmLogo(f):`<span class="flogo">${ic('trophy',16)}</span>`}<div style="min-width:0"><b>${esc(s.name)}</b><small>${f?esc(f.name)+(ph?' · '+esc(ph.name):''):L('Eigen regels','Custom rules')}</small></div><span class="stype ${stc}">${stl}</span></div>
+    <h3 class="sech">${L('Jouw prop-rekeningen','Your prop accounts')}</h3>
+    ${ss.length?Object.entries(ss.reduce((g,x)=>{ (g[x.firm||'_custom']=g[x.firm||'_custom']||[]).push(x); return g },{})).map(([fid,list])=>{ const F0=allFirms().find(x=>x.id===fid);
+      return `<div class="pfgroup"><div class="pfgh">${F0?firmLogo(F0,34):`<span class="flogo2" style="width:34px;height:34px">${ic('trophy',16)}</span>`}<div style="flex:1;min-width:0"><b>${F0?esc(F0.name):L('Eigen regels','Custom rules')}</b><small>${F0?esc(F0.kind==='Futures'?'Futures':'CFD & forex'):''} · ${list.length} ${L(list.length===1?'rekening':'rekeningen',list.length===1?'account':'accounts')} · ${L('totaal','total')} ${money(list.reduce((a,x)=>a+propEval(x).profit,0))}</small></div>${F0?`<button class="btn btn-g sm" data-pstart="${F0.id}">${ic('plus',14)} ${L('Nieuwe rekening','New account')}</button>`:''}</div>
+      <div class="pfgrid">${list.map(s=>{ const e=propEval(s), f=allFirms().find(x=>x.id===s.firm), ph=f&&f.phases[s.phase||0], [stl,stc]=PFSTAT(e.status), nIss=Object.keys(e.issues).length;
+      return `<div class="box pfcard"><div class="pfh">${f?firmLogo(f):`<span class="flogo">${ic('trophy',16)}</span>`}<div style="min-width:0"><b>${esc(s.name)}</b><small>${[s.progName,(e.start?Math.round(e.start/1000)+'K':''),ph?ph.name:(s.target>0?L('Challenge','Challenge'):'Funded')].filter(Boolean).map(esc).join(' · ')}</small></div><span class="stype ${stc}">${stl}</span></div>
         ${+s.target>0?`<div class="pfm"><span>${L('Winstdoel','Profit target')}</span><b class="${e.profit>=0?'pos':'neg'}">${money(e.profit)}</b><em>/ ${money(e.start*s.target/100)}</em></div>${bar(e.profit,e.start*s.target/100)}`:`<div class="pfm"><span>${L('Winst (funded)','Profit (funded)')}</span><b class="${e.profit>=0?'pos':'neg'}">${money(e.profit)}</b><em>${L('jouw deel','your share')} ${money(Math.max(0,e.profit)*e.split/100)}</em></div>`}
         ${+s.daily>0?`<div class="pfm"><span>${L('Slechtste dag','Worst day')}</span><b>${money(Math.min(0,e.worstDay))}</b><em>/ −${money(e.start*s.daily/100)}</em></div>${bar(-Math.min(0,e.worstDay),e.start*s.daily/100,1)}`:''}
         <div class="pfm"><span>${L('Max drawdown','Max drawdown')}</span><b>${money(-e.maxDD)}</b><em>/ −${money(e.start*(s.maxloss||10)/100)}</em></div>${bar(e.maxDD,e.start*(s.maxloss||10)/100,1)}
         ${+s.mindays>0?`<div class="pfm"><span>${L('Handelsdagen','Trading days')}</span><b>${e.nDays}</b><em>/ ${s.mindays}</em></div>${bar(e.nDays,+s.mindays)}`:''}
         <div class="pff">${e.funded?`<span class="stype ${e.payout?'pos':'neg'}">${e.payout?L('Payout goedgekeurd','Payout approved'):L('Payout nog niet goedgekeurd','Payout not approved yet')}</span>`:''}${nIss?`<span class="stype neg">${nIss} ${L('trade(s) niet prop-waardig','trade(s) not prop-worthy')}</span>`:`<span class="stype pos">${L('Alle trades prop-waardig','All trades prop-worthy')}</span>`}</div>
-        <div class="pfb"><button class="btn btn-p sm" data-popen="${s.id}">${ic('play',14)} ${t('open')}</button><button class="btn btn-g sm" data-pcheck="${s.id}">${ic('check',14)} ${L('Regelcheck','Rule check')}</button></div></div>` }).join('')}</div>`
+        <div class="pfb"><button class="btn btn-p sm" data-popen="${s.id}">${ic('play',14)} ${t('open')}</button><button class="btn btn-g sm" data-pcheck="${s.id}">${ic('check',14)} ${L('Regelcheck','Rule check')}</button></div></div>` }).join('')}</div></div>` }).join('')
       :`<div class="box empty-pf"><span class="ci">${ic('trophy',22)}</span><b>${L('Nog geen prop firm-sessies','No prop firm sessions yet')}</b><small>${L('Start hieronder een challenge bij een van de prop firms.','Start a challenge below with one of the prop firms.')}</small></div>`}
     <h3 class="sech">Prop firms <small>${L('Voorbeeldregels — controleer altijd de actuele regels op de site van de prop firm.','Example rules — always check the current rules on the prop firm’s website.')}</small></h3>
     <div class="pfgrid">${allFirms().map(f=>{ const own=!PROP_FIRMS.some(x=>x.id===f.id);
