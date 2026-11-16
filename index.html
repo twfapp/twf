@@ -1844,6 +1844,7 @@ body.ai-on .ov{z-index:220}
 .sxlegend.lglight .lgt{opacity:1}.sxlegend.lglight .lgv{opacity:1}
 .updfail{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);width:min(420px,calc(100% - 40px));text-align:center;color:#fff;z-index:3}.updfail p{margin:0 0 12px;line-height:1.5;opacity:.9}.updfail div{display:flex;gap:8px;justify-content:center}
 .sxmenu .mhd{padding:6px 12px 2px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+[data-calfit]{font-style:normal;letter-spacing:-.02em}[data-calfit] small{font-size:.74em;opacity:.85;letter-spacing:-.03em}
 </style>
 </head>
 <body class="">
@@ -1986,7 +1987,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.9', BUILD: '2026-11-17'
+  VERSION: 'v12.1.10', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2474,6 +2475,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.10':{nl:['Break-even klopt: TP/SL-labels tonen nu je netto resultaat inclusief commissie, BE = €0,00','Journal-kalender toont bedragen met centen'],en:['Break-even fixed: TP/SL labels now show your net result including commission, BE = €0.00','Journal calendar shows amounts with cents']},
   'v12.1.9':{nl:['Backtest: zon/maan-knop met keuze — alles licht, alles donker, of chart en balken apart','Koersen en prijs-as altijd leesbaar, ook met grijze kleuren op een lichte chart','Bijwerken robuuster (vooral op de Mac): oude cache wordt gewist en het controleert of de nieuwe versie er echt is'],en:['Backtest: sun/moon button with choice — all light, all dark, or chart and bars separately','Prices and price axis always readable, even with grey colours on a light chart','More robust updating (especially on Mac): old cache is cleared and it checks the new version really loaded']},
   'v12.1.8':{nl:['Lichte chart: marktnaam en koersen nu goed leesbaar','Positie-tool: winst altijd blauw, verlies altijd rood','Tik op je saldo voor je rekening: equity, marge, vrije marge, marge-niveau, hefboom, positiegrootte en risico'],en:['Light chart: symbol name and prices now readable','Position tool: profit always blue, loss always red','Tap your balance for your account: equity, margin, free margin, margin level, leverage, position size and risk']},
   'v12.1.7':{nl:['Instellingen → TWF AI: uitleg, welke AI, wat er met je data gebeurt en disclaimer','Melden en Info onder AI-antwoorden als rustige icoontjes'],en:['Settings → TWF AI: explanation, which AI, what happens to your data and disclaimer','Report and Info under AI answers as quiet icons']},
@@ -4947,7 +4949,7 @@ function fillOrder(o,px){
 function cancelOrder(id){SX.orders=SX.orders.filter(o=>o.id!==id);toast(t('tr.ocancel'),'','info');drawOverlay();persistTrading();renderTradePanels()}
 function closePos(p,exitQ,reason){
   SX.pos=SX.pos.filter(x=>x.id!==p.id);
-  const d=dirOf(p), sp=SPEC[p.sym], gross=(exitQ-p.entry)*d*p.qty*ccs(p.sym), comm=(+SX.s.comm||0)*p.qty, pnl=gross-comm;
+  const d=dirOf(p), sp=SPEC[p.sym], gross=(exitQ-p.entry)*d*p.qty*ccs(p.sym), comm=(+SX.s.comm||0)*p.qty, pnl=Math.abs(gross-comm)<0.005?0:gross-comm;
   const risk=p.initSl!=null?Math.abs(p.entry-p.initSl):0;
   const tr={id:uid(),sym:p.sym,side:p.side,qty:p.qty,entry:p.entry,exit:rnd(exitQ,p.sym),openTime:p.openTime,closeTime:nowSec(),sl:p.initSl,tp:p.tp,
     gross:+gross.toFixed(2),comm:+comm.toFixed(2),pnl:+pnl.toFixed(2),ccy:cur(),fx:+FX.rate(qccy(p.sym),cur()).toFixed(6),pnlUsd:+FX.conv(pnl,cur(),'USD').toFixed(2),rr:risk?+(((exitQ-p.entry)*d)/risk).toFixed(2):null,reason,
@@ -5036,7 +5038,7 @@ function placeOverlay(force){
   // waarden
   vis.forEach(v=>{ const it=SX.ovItems[v.i], el=v.el, val=el.querySelector('[data-v]'); if(!val) return; let n=null;
     if(it.k==='pos') n=pnlAt(it.p,closeQuote(it.p));
-    else if(it.k==='tp'||it.k==='sl') n=pnlAt(it.p,it.price);
+    else if(it.k==='tp'||it.k==='sl') n=pnlAt(it.p,it.price)-(+SX.s.comm||0)*it.p.qty; // netto, incl. commissie
     else if(it.k==='otp'||it.k==='osl') n=(it.price-it.o.price)*(it.o.side==='buy'?1:-1)*it.o.qty*ccs(it.o.sym);
     const tx=n!=null?fmtUsd(n):(it.o.type==='limit'?'LMT ':'STP ')+it.price.toFixed(SYMCFG[SX.sym].dec); if(val.textContent!==tx) val.textContent=tx });
   // v10.2: elk label precies op zijn eigen prijslijn; raken labels elkaar, dan komen ze NAAST elkaar (geen draden/beugels meer)
@@ -5054,7 +5056,7 @@ function ovLoop(){ if(!SX) return; placeOverlay();
   const sg=drawSig(); if(SX.drawDirty||SX.creating||sg!==SX._dsig){ SX._dsig=sg; SX.drawDirty=false; renderDrawings() }
   SX.ovRaf=requestAnimationFrame(ovLoop) }
 ['pointermove','pointerdown','pointerup','wheel','keydown','keyup','touchmove','resize'].forEach(ev=>(ev==='resize'?window:document).addEventListener(ev,()=>{ if(SX) SX.drawDirty=true },{passive:true}));
-function breakEven(p){ const sp=SPEC[p.sym], d=dirOf(p), cur=closeQuote(p), be=rnd(p.entry+d*((+SX.s.comm||0)/ccs(p.sym)),p.sym);
+function breakEven(p){ const sp=SPEC[p.sym], d=dirOf(p), cur=closeQuote(p), be=+(p.entry+d*((+SX.s.comm||0)/ccs(p.sym))).toFixed(8); // exact: netto precies 0 (incl. commissie), geen tick-afronding
   if((d>0&&cur<=be)||(d<0&&cur>=be)){toast(t('tr.benot'),t('tr.benot2'),'bad');return}
   p.sl=be; if(p.initSl==null) p.initSl=be; toast(t('tr.updated'),t('tr.bedone',{p:be.toFixed(SYMCFG[p.sym].dec)}),'ok'); drawOverlay();persistTrading();renderTradePanels() }
 function closePart(p,frac){ const sp=SPEC[p.sym]; let q=Math.round(p.qty*frac/sp.step)*sp.step; q=+q.toFixed(2);
@@ -5458,6 +5460,13 @@ function ensureCanvas(){
 }
 function textCol(){const c=tplColors();return (c.bg||'#000').toLowerCase()>'#888888'?'#121826':'#eef1f6'}
 function colLum(c){ try{ let r,g,b; if(/^rgb/i.test(c)){ [r,g,b]=c.match(/[\d.]+/g).map(Number) } else { const h=String(c).replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h.slice(0,6),16); r=n>>16&255; g=n>>8&255; b=n&255 } return (0.2126*r+0.7152*g+0.0722*b)/255 }catch(e){ return 0 } }
+/* kalender: centen tonen waar ze passen, anders afgerond */
+function calFit(){ const els=[...document.querySelectorAll('[data-calfit]:not([data-fitted])')]; if(!els.length) return;
+  const over=els.some(el=>{ const p=el.parentElement; return p&&p.scrollWidth>p.clientWidth+1 });
+  els.forEach(el=>{ el.dataset.fitted=1; if(over) el.textContent=el.dataset.calfit }) }
+new MutationObserver(()=>{ if(document.querySelector('[data-calfit]:not([data-fitted])')) requestAnimationFrame(calFit) }).observe(document.documentElement,{childList:true,subtree:true});
+addEventListener('resize',()=>{ document.querySelectorAll('[data-calfit][data-fitted]').forEach(el=>{ delete el.dataset.fitted }); });
+try{ document.fonts&&document.fonts.ready.then(()=>{ const els=[...document.querySelectorAll('[data-calfit]')]; if(els.some(el=>{ const p=el.parentElement; return p&&p.scrollWidth>p.clientWidth+1 })) els.forEach(el=>el.textContent=el.dataset.calfit) }) }catch(e){}
 function colContrast(a,b){ const la=colLum(a), lb=colLum(b); return (Math.max(la,lb)+.05)/(Math.min(la,lb)+.05) }
 function ccText(c){ const t=c.text||'#8a8a8a', bg=c.bg||'#000'; return colContrast(t,bg)>=3?t:(colLum(bg)>.5?'#434651':'#b2b5be') }
 function colSat(c){ try{ const h=String(c).replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h.slice(0,6),16); const r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255, mx=Math.max(r,g,b), mn=Math.min(r,g,b); return mx===0?0:(mx-mn)/mx }catch(e){ return 1 } }
@@ -7676,7 +7685,7 @@ function pgCalendar(){ const A=acct(), c=S.cal, y=c.getFullYear(), mo=c.getMonth
   const days={}; A.trades.forEach(t=>{ const d=new Date(t.date); if(d.getFullYear()===y&&d.getMonth()===mo){ const k=d.getDate(); (days[k]=days[k]||{v:0,n:0,w:0,cap:capAt(A,new Date(y,mo,k).getTime(),steps)}); days[k].v+=t.pnl; days[k].n++; if(t.pnl>0) days[k].w++ } });
   const pct=(v,cap)=>cap?v/cap*100:0, mx=Math.max(1,...Object.values(days).map(d=>Math.abs(d.v)));
   const mt=A.trades.filter(t=>{const d=new Date(t.date);return d.getFullYear()===y&&d.getMonth()===mo}), ms=stats(mt,A), mCap=capAt(A,first.getTime(),steps), tdy=new Date();
-  const money=v=>ph?(v<0?'−':'+')+(fmtM(Math.abs(v),A.ccy,{dp:0}).replace(/\s/g,'').length>6?shortN(Math.abs(v)).replace(/^[+−]/,'')+'':fmtM(Math.abs(v),A.ccy,{dp:0}).replace(/\s/g,'')):fmtM(v,A.ccy,{dp:0,sign:1});
+  const money=v=>{ if(!ph) return fmtM(v,A.ccy,{dp:2,sign:1}); const av=Math.abs(v), sg=v<0?'−':'+'; if(av>=1000) return sg+shortN(av).replace(/^[+−]/,''); if(av>=100&&innerWidth<=480) return sg+Math.round(av); const fx=av.toLocaleString(locale(),{minimumFractionDigits:2,maximumFractionDigits:2}), k=fx.length-3; return `<i data-calfit="${sg+Math.round(av)}">${sg}${fx.slice(0,k)}<small>${fx.slice(k)}</small></i>` };
   const wd=LANG==='en'?(ph?['M','T','W','T','F','S','S']:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']):(ph?['M','D','W','D','V','Z','Z']:['Ma','Di','Wo','Do','Vr','Za','Zo']);
   let cells=wd.map(x=>`<div class="wd">${x}</div>`).join('')+`<div class="wd wkh">${L('Week','Week')}</div>`;
   const rows=Math.ceil((lead+nd)/7); let dnum=1-lead;
@@ -7684,7 +7693,7 @@ function pgCalendar(){ const A=acct(), c=S.cal, y=c.getFullYear(), mo=c.getMonth
     for(let c2=0;c2<7;c2++,dnum++){ if(dnum<1||dnum>nd){ cells+='<div class="cd out"></div>'; continue } const v=days[dnum]; if(v){wv+=v.v;wn+=v.n;wcap=wcap||v.cap}
       const today=y===tdy.getFullYear()&&mo===tdy.getMonth()&&dnum===tdy.getDate(), k=v?Math.min(1,Math.abs(v.v)/mx):0;
       cells+=`<button class="cd ${v?(v.v>0?'p':v.v<0?'n':'z'):'e'} ${today?'today':''}" data-day="${dnum}" ${v?`style="--k:${(0.10+k*0.34).toFixed(3)}"`:''}><span class="dn">${dnum}${v&&!ph?`<i>${v.n}</i>`:''}</span>${v?`<span class="dm mono">${money(v.v)}</span><span class="dp mono">${fmtPct(pct(v.v,v.cap),ph?1:2)}</span>`:''}</button>` }
-    cells+=`<div class="cd wk ${wn?(wv>=0?'p':'n'):''}"><span class="dn">${L('Week','Week')} ${r+1}</span>${wn?`<span class="dm mono">${fmtM(wv,A.ccy,{dp:0,sign:1})}</span><span class="dp mono">${fmtPct(pct(wv,wcap),2)} · ${wn} trades</span>`:`<span class="dp">—</span>`}</div>` }
+    cells+=`<div class="cd wk ${wn?(wv>=0?'p':'n'):''}"><span class="dn">${L('Week','Week')} ${r+1}</span>${wn?`<span class="dm mono">${fmtM(wv,A.ccy,{dp:2,sign:1})}</span><span class="dp mono">${fmtPct(pct(wv,wcap),2)} · ${wn} trades</span>`:`<span class="dp">—</span>`}</div>` }
   const dv=Object.values(days);
   return head(L('Kalender','Calendar'),L('Je resultaat per dag in geld en procent van je kapitaal. Tik op een dag voor de trades.','Your result per day in money and percent of your capital. Tap a day to see its trades.'),'')+
    `<div class="jgrid"><div class="box c12 calbox"><div class="calh2"><button class="ib" data-cal="-1">${ic('back')}</button><div class="calt"><b>${first.toLocaleDateString(locale(),{month:'long',year:'numeric'})}</b><span class="${ms.net>=0?'pos':'neg'} mono">${fmtM(ms.net,A.ccy,{sign:1})} · ${fmtPct(pct(ms.net,mCap),2)}</span></div><button class="ib" data-cal="1">${ic('next')}</button></div><div class="jcalg">${cells}</div></div>
