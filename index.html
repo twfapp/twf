@@ -1842,6 +1842,8 @@ body.ai-on .ov{z-index:220}
 .wgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.wrow{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}.wrow span{color:var(--ink3);font-size:11.5px;font-weight:700}.wrow b{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wrow b.warn{color:var(--amber)}.wrow small{font-size:11px}
 .wfoot{margin-top:10px;color:var(--ink3);font-size:12px}
 .sxlegend.lglight .lgt{opacity:1}.sxlegend.lglight .lgv{opacity:1}
+.updfail{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);width:min(420px,calc(100% - 40px));text-align:center;color:#fff;z-index:3}.updfail p{margin:0 0 12px;line-height:1.5;opacity:.9}.updfail div{display:flex;gap:8px;justify-content:center}
+.sxmenu .mhd{padding:6px 12px 2px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
 </style>
 </head>
 <body class="">
@@ -1984,7 +1986,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.8', BUILD: '2026-11-17'
+  VERSION: 'v12.1.9', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2472,6 +2474,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.9':{nl:['Backtest: zon/maan-knop met keuze — alles licht, alles donker, of chart en balken apart','Koersen en prijs-as altijd leesbaar, ook met grijze kleuren op een lichte chart','Bijwerken robuuster (vooral op de Mac): oude cache wordt gewist en het controleert of de nieuwe versie er echt is'],en:['Backtest: sun/moon button with choice — all light, all dark, or chart and bars separately','Prices and price axis always readable, even with grey colours on a light chart','More robust updating (especially on Mac): old cache is cleared and it checks the new version really loaded']},
   'v12.1.8':{nl:['Lichte chart: marktnaam en koersen nu goed leesbaar','Positie-tool: winst altijd blauw, verlies altijd rood','Tik op je saldo voor je rekening: equity, marge, vrije marge, marge-niveau, hefboom, positiegrootte en risico'],en:['Light chart: symbol name and prices now readable','Position tool: profit always blue, loss always red','Tap your balance for your account: equity, margin, free margin, margin level, leverage, position size and risk']},
   'v12.1.7':{nl:['Instellingen → TWF AI: uitleg, welke AI, wat er met je data gebeurt en disclaimer','Melden en Info onder AI-antwoorden als rustige icoontjes'],en:['Settings → TWF AI: explanation, which AI, what happens to your data and disclaimer','Report and Info under AI answers as quiet icons']},
   'v12.1.6':{nl:['AI: Melden (naar de beheerder) en Info (welk model antwoordde) in plaats van duimpjes','Nieuwe TWF-denkanimatie met bewegende candles','Beheerder ziet AI-meldingen onder Marktdata'],en:['AI: Report (to the admin) and Info (which model answered) instead of thumbs','New TWF thinking animation with moving candles','Admin sees AI reports under Market data']},
@@ -2496,12 +2499,20 @@ function showUpdScreen(from,to,resuming){ const sc=$('#updScr'); if(!sc) return;
   $('#updV').textContent=to?(from?`${from} → ${to}`:to):'';
   try{ const sv=$('#updBg'); if(sv){ const keep=$('#lgBg'); sv.innerHTML=''; if(keep){ const W=innerWidth,H=innerHeight; sv.setAttribute('viewBox',`0 0 ${W} ${H}`); drawLoginBg(); sv.innerHTML=keep.innerHTML } } }catch(e){} }
 function hideUpdScreen(){ const sc=$('#updScr'); if(!sc) return; sc.classList.add('out'); setTimeout(()=>{ sc.classList.add('hide'); sc.classList.remove('out'); document.documentElement.classList.remove('updating') },450) }
+async function updClearCaches(hard){ try{ if(window.caches){ const ks=await caches.keys(); await Promise.all(ks.map(k=>caches.delete(k))) } }catch(e){}
+  try{ if(navigator.serviceWorker){ const rs=await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(r=>hard?r.unregister():r.update().catch(()=>{}))) } }catch(e){} }
+function updStuck(to){ const L=(nl,en)=>LANG==='en'?en:nl, sc=$('#updScr'); if(!sc||sc.classList.contains('hide')||sc.querySelector('.updfail')) return;
+  const d=document.createElement('div'); d.className='updfail';
+  d.innerHTML=`<p>${L('Het bijwerken lukt niet automatisch. Sluit de app helemaal af (op de Mac met ⌘Q) en open hem opnieuw.','Updating did not finish automatically. Fully quit the app (⌘Q on Mac) and open it again.')}</p><div><button class="btn btn-p" data-ur>${L('Opnieuw proberen','Try again')}</button><button class="btn btn-g" data-uc>${L('Sluiten','Close')}</button></div>`;
+  sc.appendChild(d); d.querySelector('[data-ur]').onclick=async()=>{ await updClearCaches(true); location.replace(location.pathname+'?v='+Date.now()) }; d.querySelector('[data-uc]').onclick=()=>{ d.remove(); window._updBusy=false; hideUpdScreen() } }
 async function reloadForUpdate(){
+  setTimeout(()=>updStuck(UPD.latest),20000);
   if(window._updBusy) return; window._updBusy=true; const L=(nl,en)=>LANG==='en'?en:nl, to=UPD.latest;
   document.querySelectorAll('.ov,.tvsheet,.tvsheet-bg,.updcard').forEach(x=>x.remove());
   showUpdScreen(CFG.VERSION,to,false); updSteps(1,.12);
   // 1. nieuwe versie alvast ophalen (zodat het herladen meteen gaat)
-  try{ await Promise.race([fetch(location.pathname+'?v='+Date.now(),{cache:'reload'}),new Promise(r=>setTimeout(r,6000))]) }catch(e){}
+  try{ await Promise.race([fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}),new Promise(r=>setTimeout(r,6000))]) }catch(e){}
+  await updClearCaches();
   updSteps(2,.55);
   // 2. sessie en plek bewaren
   let sess=null; try{ if(SX){ sess=SX.s.id; saveSession() } }catch(e){}
@@ -2529,10 +2540,13 @@ function updatedToast(){ const last=lsGet('twfbt_lastver'); if(last&&verCmp(CFG.
 function startUpdateWatch(){ if(UPD.timer) return; setTimeout(()=>checkUpdate(),2500); UPD.timer=setInterval(()=>checkUpdate(),5*60*1000);
   document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') checkUpdate() }) }
 async function tryResume(){
-  let r=null; try{ r=JSON.parse(sessionStorage.getItem('twfbt_resume')||'null') }catch(e){} sessionStorage.removeItem('twfbt_resume');
+  let r=null; try{ const raw=sessionStorage.getItem('twfbt_resume'); r=JSON.parse(raw||'null'); if(raw) sessionStorage.setItem('twfbt_resume_bak',raw) }catch(e){} sessionStorage.removeItem('twfbt_resume');
   if(location.search.includes('v=')) try{ history.replaceState(null,'',location.pathname) }catch(e){}
   let u=null; try{ u=JSON.parse(sessionStorage.getItem('twf_upd')||'null') }catch(e){} sessionStorage.removeItem('twf_upd');
-  if(u&&Date.now()-u.at<5*60*1000){ showUpdScreen(u.from,u.to||CFG.VERSION,true); updSteps(3,.92) }
+  if(u&&Date.now()-u.at<5*60*1000){ showUpdScreen(u.from,u.to||CFG.VERSION,true); updSteps(3,.92);
+    if(u.to&&verCmp(CFG.VERSION,u.to)<0){ // nog de oude versie geladen (cache) → één keer hard opnieuw
+      if(!u.retry){ try{ sessionStorage.setItem('twf_upd',JSON.stringify({...u,retry:1,at:Date.now()})); const rr=sessionStorage.getItem('twfbt_resume_bak'); if(rr) sessionStorage.setItem('twfbt_resume',rr) }catch(e){} await updClearCaches(true); location.replace(location.pathname+'?v='+Date.now()+'&h=1'); return false }
+      setTimeout(()=>updStuck(u.to),400) } }
   const done=ok=>{ if(u){ updSteps(4,1); setTimeout(hideUpdScreen,ok?350:150) } return ok };
   if(!r||!r.sec||Date.now()-r.at>5*60*1000) return done(false);
   try{ await DB.resume(r.sec); enterApp(true);
@@ -4494,7 +4508,7 @@ const _prProv=(orig)=>SX&&SX.pr?{priceRange:{minValue:SX.pr.min,maxValue:SX.pr.m
 function setupChart(){
   const box=$('#sxChart'); const c=tplColors();
   SX.chart=LightweightCharts.createChart(box,{autoSize:true,
-    layout:{background:{type:'solid',color:c.bg},textColor:c.text,fontFamily:"-apple-system,BlinkMacSystemFont,'Trebuchet MS',Roboto,Ubuntu,sans-serif",fontSize:12},
+    layout:{background:{type:'solid',color:c.bg},textColor:ccText(c),fontFamily:"-apple-system,BlinkMacSystemFont,'Trebuchet MS',Roboto,Ubuntu,sans-serif",fontSize:12},
     grid:{vertLines:{color:c.grid,visible:SX.s.grid!==false},horzLines:{color:c.grid,visible:SX.s.grid!==false}},
     rightPriceScale:{borderColor:c.border,scaleMargins:{top:0.08,bottom:SX.vol?0.2:0.06}},
     timeScale:{borderColor:c.border,timeVisible:true,secondsVisible:false,rightOffset:12,barSpacing:9},
@@ -4560,7 +4574,7 @@ function legend(d){ if(!SX) return;
   const o=b.open??b.value, cl=b.close??b.value, ch=cl-o, pc=o?ch/o*100:0, col=ch>=0?'var(--pos)':'var(--neg)';
   const f=x=>x==null?'—':fmtPx(x), c=tplColors(), a=asset(SX.sym)||{};
   let vc=ch>=0?(c.bodyUp||c.up):(c.bodyDown||c.down); const bgL=colLum(c.bg||'#000'), light=bgL>.5;
-  if(Math.abs(colLum(vc)-bgL)<.28) vc=ch>=0?(light?'#0b7a5c':'#26a69a'):(light?'#c62828':'#ef5350');
+  if(colContrast(vc,c.bg||'#000')<3) vc=ch>=0?(light?'#0b7a5c':'#26a69a'):(light?'#c62828':'#ef5350');
   { const el=$('#sxLegend'); if(el){ el.style.color=light?'#131722':''; el.classList.toggle('lglight',light) } }
   const html=`${c.slSymbol!==false?`<span class="lgt">${symBadge(SX.sym)}<span>${esc(a.nameEn||SX.sym)} · ${tvTf(SX.tf)} · TWF</span></span>`:''}
    ${c.slOHLC!==false?`<span class="lgv" style="--vc:${vc}">O<i>${f(b.open??b.value)}</i> H<i>${f(b.high??b.value)}</i> L<i>${f(b.low??b.value)}</i> C<i>${f(cl)}</i></span>`:''}
@@ -4656,7 +4670,7 @@ function setScale(k){
 function applyChartLook(){
   const c=tplColors();
   const ls={solid:0,dotted:1,dashed:2}[c.crossStyle]??2, lblBg=c.bg&&parseInt(c.bg.slice(1,3),16)>128?'#131722':'#363A45';
-  SX.chart.applyOptions({layout:{background:{type:'solid',color:c.bg},textColor:c.text,fontSize:+c.fontSize||12},grid:{vertLines:{color:c.gridVColor||c.grid,visible:c.gridV!==false&&SX.s.grid!==false},horzLines:{color:c.gridHColor||c.grid,visible:c.gridH!==false&&SX.s.grid!==false}},
+  SX.chart.applyOptions({layout:{background:{type:'solid',color:c.bg},textColor:ccText(c),fontSize:+c.fontSize||12},grid:{vertLines:{color:c.gridVColor||c.grid,visible:c.gridV!==false&&SX.s.grid!==false},horzLines:{color:c.gridHColor||c.grid,visible:c.gridH!==false&&SX.s.grid!==false}},
     crosshair:{vertLine:{color:c.cross||'#9598A1',style:ls,labelBackgroundColor:lblBg},horzLine:{color:c.cross||'#9598A1',style:ls,labelBackgroundColor:lblBg}},
     localization:{locale:'en-US',priceFormatter:x=>fmtPx(x),timeFormatter:crossTimeFmt},
     rightPriceScale:{borderColor:c.border,scaleMargins:{top:0.08,bottom:SX.vol?0.2:0.06}},timeScale:{borderColor:c.border,tickMarkFormatter:tickFmt}});
@@ -4782,7 +4796,7 @@ function bindSession(){
   document.querySelectorAll('[data-scale]').forEach(b=>b.onclick=()=>setScale(b.dataset.scale));
   $('#sxGoto').onclick=gotoMenu; const tb2=$('#sxTplB'); if(tb2) tb2.onclick=e=>chartTplMenu(e.currentTarget); $('#sxShot').onclick=screenshot; $('#sxKeys').onclick=keysHelp;
   $('#sxFull').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else $('#session').requestFullscreen&&$('#session').requestFullscreen()};
-  $('#sxThemeC').onclick=()=>{ SX.tplId=SX.tplId==='tv-light'?'tv-dark':'tv-light'; $('#sxThemeC').innerHTML=ic(SX.tplId==='tv-light'?'sun':'moon'); applyChartLook(); if(SX.panel==='settings')renderPanel() };
+  $('#sxThemeC').onclick=e=>sxThemeMenu(e.currentTarget);
   bindTradeWidgets();
   $('#sxInd').onclick=()=>indModal(); $('#sxAna').onclick=()=>sessionAnalytics();
   document.querySelectorAll('.sxrail [data-panel]').forEach(b=>b.onclick=()=>{SX.panel=SX.panel===b.dataset.panel?null:b.dataset.panel;renderPanel()});
@@ -5444,7 +5458,18 @@ function ensureCanvas(){
 }
 function textCol(){const c=tplColors();return (c.bg||'#000').toLowerCase()>'#888888'?'#121826':'#eef1f6'}
 function colLum(c){ try{ let r,g,b; if(/^rgb/i.test(c)){ [r,g,b]=c.match(/[\d.]+/g).map(Number) } else { const h=String(c).replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h.slice(0,6),16); r=n>>16&255; g=n>>8&255; b=n&255 } return (0.2126*r+0.7152*g+0.0722*b)/255 }catch(e){ return 0 } }
+function colContrast(a,b){ const la=colLum(a), lb=colLum(b); return (Math.max(la,lb)+.05)/(Math.min(la,lb)+.05) }
+function ccText(c){ const t=c.text||'#8a8a8a', bg=c.bg||'#000'; return colContrast(t,bg)>=3?t:(colLum(bg)>.5?'#434651':'#b2b5be') }
 function colSat(c){ try{ const h=String(c).replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h.slice(0,6),16); const r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255, mx=Math.max(r,g,b), mn=Math.min(r,g,b); return mx===0?0:(mx-mn)/mx }catch(e){ return 1 } }
+function sxThemeMenu(anchor){ const L=(nl,en)=>LANG==='en'?en:nl, uiLight=document.body.classList.contains('theme-light'), chLight=colLum(tplColors().bg||'#000')>.5;
+  const setChart=light=>{ if(light===chLight) return; SX.tplId=light?'tv-light':(uiLight?'tv-dark':'twf-dark'); try{ tplRemember(SX.tplId) }catch(e){} applyChartLook(); saveSession(); if(SX.panel==='settings') renderPanel() };
+  const setUi=light=>{ if(light!==uiLight) setTheme(light?'light':'dark'); setTimeout(()=>{ try{ applyChartLook(); legend(null); drawOverlay() }catch(e){} },30) };
+  const it=(v,icn,lbl,on)=>`<button data-v="${v}" class="${on?'on':''}">${ic(icn,15)} <span style="flex:1">${lbl}</span>${on?ic('check',14):''}</button>`;
+  popMenu(anchor,`<div class="mhd">${L('Alles','Everything')}</div>${it('allL','sun',L('Alles licht','All light'),uiLight&&chLight)}${it('allD','moon',L('Alles donker','All dark'),!uiLight&&!chLight)}
+    <div class="msep"></div><div class="mhd">Chart</div>${it('chL','sun',L('Licht','Light'),chLight)}${it('chD','moon',L('Donker','Dark'),!chLight)}
+    <div class="msep"></div><div class="mhd">${L('Balken en panelen','Bars and panels')}</div>${it('uiL','sun',L('Licht','Light'),uiLight)}${it('uiD','moon',L('Donker','Dark'),!uiLight)}`,
+    v=>{ if(v==='allL'){ setUi(true); setChart(true) } else if(v==='allD'){ setUi(false); setChart(false) } else if(v==='chL') setChart(true); else if(v==='chD') setChart(false); else if(v==='uiL') setUi(true); else if(v==='uiD') setUi(false);
+      const b=$('#sxThemeC'); if(b) b.innerHTML=ic(colLum(tplColors().bg||'#000')>.5?'sun':'moon') },'small') }
 function hexA(hex,a){ if(!hex) hex='#2962FF'; if(/^rgb/i.test(hex)){const m=hex.match(/[\d.]+/g);return `rgba(${m[0]},${m[1]},${m[2]},${a})`} const h=hex.replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h,16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})` }
 function renderDrawings(){
   const cv=ensureCanvas(); if(!cv) return; const ctx=cv.getContext('2d'), dpr=cv._d;
