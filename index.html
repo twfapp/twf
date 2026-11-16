@@ -1824,6 +1824,15 @@ html.updating #updScr.hide{display:grid!important}
 .hai{display:none;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;color:#fff;font-weight:700;font-size:13.5px;background:linear-gradient(145deg,#8b6dff,#4c74ff);box-shadow:0 6px 18px rgba(92,104,255,.35)}
 @media (max-width:700px){ .hai{display:inline-flex} .hhead{align-items:center} }
 @media (max-width:900px){ .ai-in textarea{font-size:16px} }
+.ai-fb button{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--ink3);opacity:1!important;padding:4px 8px;border-radius:8px}.ai-fb button:hover,.ai-fb button.on{color:var(--ink);background:var(--panel)}.ai-fb button:disabled{cursor:default}
+.ai-inf{margin-top:6px;padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-size:12.5px;color:var(--ink2);line-height:1.5}.ai-inf small{color:var(--ink3)}.ai-inf code{font-size:11.5px}
+.ai-think{align-self:flex-start;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}.ai-think.in{padding:6px 0 0;background:none;border:0}
+.tw-c{display:inline-flex;align-items:flex-end;gap:3px;height:18px}.tw-c i{width:4px;border-radius:1.5px;background:var(--pos);animation:twc 1.1s ease-in-out infinite;height:6px}.tw-c i:nth-child(2),.tw-c i:nth-child(4){background:var(--neg)}
+@keyframes twc{0%,100%{height:5px;opacity:.55}50%{height:18px;opacity:1}}
+.tw-t{font-size:13.5px;font-weight:700;background:linear-gradient(90deg,var(--ink3) 0%,var(--ink) 45%,var(--ink3) 90%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:twshine 1.8s linear infinite}
+@keyframes twshine{to{background-position:-200% 0}}
+.airep{display:flex;flex-direction:column;gap:8px}.airep-r{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--panel2)}.airep-h{display:flex;align-items:center;gap:8px}.airep-h b{font-size:13.5px}.airep-h small{flex:1;color:var(--ink3);font-size:12px}.airep-q{font-weight:600;font-size:13px;margin:6px 0 4px}.airep-a{font-size:12.5px;color:var(--ink3);white-space:pre-wrap;max-height:120px;overflow:auto}
+body.ai-on .ov{z-index:220}
 </style>
 </head>
 <body class="">
@@ -1966,7 +1975,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.5', BUILD: '2026-11-17'
+  VERSION: 'v12.1.6', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2454,6 +2463,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.6':{nl:['AI: Melden (naar de beheerder) en Info (welk model antwoordde) in plaats van duimpjes','Nieuwe TWF-denkanimatie met bewegende candles','Beheerder ziet AI-meldingen onder Marktdata'],en:['AI: Report (to the admin) and Info (which model answered) instead of thumbs','New TWF thinking animation with moving candles','Admin sees AI reports under Market data']},
   'v12.1.5':{nl:['AI: antwoord verschijnt woord voor woord, meerdere gratis modellen tegelijk (snelste wint), optioneel supersnelle gratis Groq-sleutel'],en:['AI: answer appears word by word, several free models at once (fastest wins), optional super-fast free Groq key']},
   'v12.1.4':{nl:['AI: stopknop, nooit meer vastlopen, kiest automatisch een gratis model dat niet overbelast is, geen inzoomen meer op de iPhone'],en:['AI: stop button, never stuck, automatically picks a free model that is not overloaded, no more zoom on iPhone']},
   'v12.1.3':{nl:['AI loopt niet meer vast: tijdslimiet, sneller model als reserve en snellere antwoorden'],en:['AI no longer hangs: time limit, faster fallback model and quicker answers']},
@@ -3741,7 +3751,7 @@ function aiChips(){ const L=(nl,en)=>LANG==='en'?en:nl, c=[[L('Coach mijn tradin
 function aiRender(){ const p=aiPanel(), m=p.querySelector('#aiMsgs'), L=(nl,en)=>LANG==='en'?en:nl;
   if(!AI.msgs.length){ m.innerHTML=`<div class="ai-hello"><span class="ai-logo big">${ic('spark',26)}</span><b>${L('Hoi','Hi')}${profile().name?' '+esc(profile().name.split(' ')[0]):''}!</b><small>${L('Ik ken je journal, backtests en prop-challenges. Vraag me alles — ik geef geen koop/verkoopsignalen, wel eerlijke coaching op je eigen data.','I know your journal, backtests and prop challenges. Ask me anything — no buy/sell signals, but honest coaching on your own data.')}</small></div>` }
   else m.innerHTML=AI.msgs.map((x,i)=>{ if(x.role==='user') return `<div class="ai-u">${esc(x.content)}</div>`; const r=aiMd(x.content);
-      if(x.setup) return `<div class="ai-a">${r.html}${aiKeyCard()}</div>`; return `<div class="ai-a">${r.html.replace(/<!--ACT(\d+)-->/g,(mm,k)=>{ const a=r.acts[+k]; return a?`<button class="btn btn-g ai-act" data-act="${i}:${k}">${ic('play',14)} ${esc(aiActLabel(a))}</button>`:'' })}${x.err||x.streaming?'':`<div class="ai-fb"><button data-fb="${i}:1" class="${x.fb===1?'on':''}">👍</button><button data-fb="${i}:-1" class="${x.fb===-1?'on':''}">👎</button></div>`}</div>` }).join('')+(AI.busy&&!(AI.msgs.length&&AI.msgs[AI.msgs.length-1].streaming)?`<div class="ai-a ai-typing"><i></i><i></i><i></i></div>`:'');
+      if(x.setup) return `<div class="ai-a">${r.html}${aiKeyCard()}</div>`; return `<div class="ai-a">${r.html.replace(/<!--ACT(\d+)-->/g,(mm,k)=>{ const a=r.acts[+k]; return a?`<button class="btn btn-g ai-act" data-act="${i}:${k}">${ic('play',14)} ${esc(aiActLabel(a))}</button>`:'' })}${x.streaming?aiThink(true):''}${x.err||x.streaming?'':`<div class="ai-fb"><button data-rep="${i}" class="${x.rep?'on':''}" ${x.rep?'disabled':''}>${ic('flag',13)} ${x.rep?L('Gemeld','Reported'):L('Melden','Report')}</button><button data-inf="${i}" class="${x.inf?'on':''}">${ic('info',13)} Info</button></div>${x.inf?`<div class="ai-inf">${aiModelInfo(x.model)}</div>`:''}`}</div>` }).join('')+(AI.busy&&!(AI.msgs.length&&AI.msgs[AI.msgs.length-1].streaming)?aiThink(false):'');
   m.scrollTop=m.scrollHeight;
   const sb=p.querySelector('#aiSend'); if(sb){ sb.innerHTML=AI.busy?ic('x',18):ic('next',18); sb.title=AI.busy?(L('Stoppen','Stop')):(L('Versturen','Send')); sb.classList.toggle('btn-g',AI.busy); sb.classList.toggle('btn-p',!AI.busy) }
   m.querySelectorAll('[data-aikeysave]').forEach(b=>b.onclick=()=>aiSaveKey(b.parentElement.querySelector('[data-aikey]').value));
@@ -3749,7 +3759,29 @@ function aiRender(){ const p=aiPanel(), m=p.querySelector('#aiMsgs'), L=(nl,en)=
   const ch=p.querySelector('#aiChips'); ch.innerHTML=AI.msgs.length?'':aiChips().map(([l],i)=>`<button data-chip="${i}">${esc(l)}</button>`).join('');
   ch.querySelectorAll('[data-chip]').forEach(b=>b.onclick=()=>{ const c=aiChips()[+b.dataset.chip]; if(c[1]==='__dr') return aiDataRequests(); if(c[1]==='__rules') return aiRulesPicker(); aiSend(c[1],c[2]||{}) });
   m.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ const [i,k]=b.dataset.act.split(':').map(Number); aiDoAction(aiMd(AI.msgs[i].content).acts[k]) });
-  m.querySelectorAll('[data-fb]').forEach(b=>b.onclick=async()=>{ const [i,r]=b.dataset.fb.split(':').map(Number); AI.msgs[i].fb=r; aiRender(); try{ if(DB.sb) await DB.sb.from('ai_feedback').insert({user_id:DB.uid,rating:r,q:(AI.msgs[i-1]||{}).content||'',a:AI.msgs[i].content.slice(0,4000)}) }catch(e){} }) }
+  m.querySelectorAll('[data-inf]').forEach(b=>b.onclick=()=>{ const x=AI.msgs[+b.dataset.inf]; x.inf=!x.inf; const st=m.scrollTop; aiRender(); m.scrollTop=st });
+  m.querySelectorAll('[data-rep]').forEach(b=>b.onclick=()=>aiReport(+b.dataset.rep));
+  aiThinkTick() }
+function aiModelInfo(model){ const L=(nl,en)=>LANG==='en'?en:nl; model=model||'';
+  const g=model.startsWith('groq:'), name=g?model.slice(5):model;
+  const prov=g?'Groq':model?'Google Gemini':L('onbekend','unknown');
+  return `${ic('spark',13)} ${L('Beantwoord door','Answered by')} <b>${esc(prov)}</b>${name?` · <code>${esc(name)}</code>`:''} · ${L('gratis','free')}<br><small>${L('TWF kiest automatisch het snelste gratis model dat op dat moment beschikbaar is. AI kan fouten maken — controleer belangrijke dingen zelf.','TWF automatically picks the fastest free model available at that moment. AI can make mistakes — double-check important things.')}</small>` }
+function aiReport(i){ const L=(nl,en)=>LANG==='en'?en:nl, x=AI.msgs[i]; if(!x||x.rep) return;
+  const ov=modal(`<div class="mh"><h3>${L('Antwoord melden','Report answer')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
+    <p class="muted" style="margin:0 0 10px">${L('Wat klopt er niet? Je melding gaat naar de beheerder, samen met je vraag en dit antwoord.','What is wrong? Your report goes to the admin, together with your question and this answer.')}</p>
+    <div class="seg" id="repWhy" style="flex-wrap:wrap;margin-bottom:10px">${[['fout',L('Klopt niet','Incorrect')],['raar',L('Rare reactie','Odd reply')],['traag',L('Te traag','Too slow')],['anders',L('Anders','Other')]].map(([k,l],j)=>`<button data-k="${k}" class="${j?'':'on'}">${l}</button>`).join('')}</div>
+    <textarea class="inp" id="repTxt" rows="3" placeholder="${L('Toelichting (optioneel)','Details (optional)')}" style="width:100%;resize:vertical"></textarea></div></div>
+    <div class="mf"><button class="btn btn-g" data-x>${L('Annuleren','Cancel')}</button><button class="btn btn-p" id="repGo">${ic('flag',15)} ${L('Melden','Report')}</button></div>`);
+  ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
+  ov.querySelectorAll('#repWhy button').forEach(b=>b.onclick=()=>{ ov.querySelectorAll('#repWhy button').forEach(z=>z.classList.toggle('on',z===b)) });
+  ov.querySelector('#repGo').onclick=async()=>{ const why=ov.querySelector('#repWhy .on').textContent, tx=ov.querySelector('#repTxt').value.trim();
+    try{ if(DB.sb){ const {error}=await DB.sb.from('ai_feedback').insert({user_id:DB.uid,rating:-1,q:(AI.msgs[i-1]||{}).content||'',a:x.content.slice(0,4000),reason:why+(tx?': '+tx:''),model:x.model||null}); if(error) throw error } x.rep=true; ov.remove(); aiRender(); toast(L('Gemeld','Reported'),L('Bedankt! De beheerder kijkt ernaar.','Thanks! The admin will look at it.'),'ok') }
+    catch(e){ toast(L('Melden','Report'),String(e.message||e),'bad') } } }
+const AI_THINK_NL=['TWF analyseert je data','Trades doorlezen','Patronen zoeken','Cijfers narekenen','Antwoord schrijven'], AI_THINK_EN=['TWF is analysing your data','Reading your trades','Looking for patterns','Checking the numbers','Writing the answer'];
+function aiThink(inline){ const W=LANG==='en'?AI_THINK_EN:AI_THINK_NL, k=Math.floor((Date.now()-(AI.t0||Date.now()))/2600)%W.length;
+  const candles=`<span class="tw-c">${[0,1,2,3].map(j=>`<i style="animation-delay:${j*.15}s"></i>`).join('')}</span>`;
+  return inline?`<div class="ai-think in">${candles}</div>`:`<div class="ai-think">${candles}<span class="tw-t" data-thinkt>${W[k]}…</span></div>` }
+function aiThinkTick(){ clearInterval(AI._tt); if(!AI.busy) return; AI._tt=setInterval(()=>{ const el=document.querySelector('[data-thinkt]'); if(!AI.busy||!el){ clearInterval(AI._tt); return } const W=LANG==='en'?AI_THINK_EN:AI_THINK_NL; el.textContent=W[Math.floor((Date.now()-(AI.t0||Date.now()))/2600)%W.length]+'…' },400) }
 function aiActLabel(a){ const L=(nl,en)=>LANG==='en'?en:nl; if(a.type==='create_session') return L(`Sessie aanmaken${a.name?': '+a.name:''}`,`Create session${a.name?': '+a.name:''}`); if(a.type==='open_page') return L(`Open ${a.page}`,`Open ${a.page}`); return a.type }
 function aiDoAction(a){ if(!a) return; if(a.type==='open_page'){ aiClose(); go(a.page==='testing'?'testing':a.page,a.jp); return }
   if(a.type==='create_session'){ aiClose(); const ty=a.session_type==='propfirm'?'propfirm':'backtest'; sessionModal(ty,null,{firm:a.firm,phase:0,ai:a}) } }
@@ -3763,23 +3795,24 @@ function aiStop(){ if(!AI.busy) return; AI.req=(AI.req||0)+1; try{ AI.ctl&&AI.ct
 async function aiStream(body,onText,ctl){ const L=(nl,en)=>LANG==='en'?en:nl; if(!DB.sb) throw new Error(L('De AI werkt alleen online.','The AI only works online.'));
   const {data:ss}=await DB.sb.auth.getSession(); const tok=ss&&ss.session&&ss.session.access_token; if(!tok) throw new Error(L('Log opnieuw in om de AI te gebruiken.','Please sign in again to use the AI.'));
   let firstTimer=setTimeout(()=>ctl.abort(),70000);
-  let r; try{ r=await fetch(CFG.SUPABASE_URL+'/functions/v1/twf-ai',{method:'POST',signal:ctl.signal,headers:{'Authorization':'Bearer '+tok,'apikey':CFG.SUPABASE_ANON_KEY,'content-type':'application/json'},body:JSON.stringify(body)}) }
+  let r; try{ r=await fetch(CFG.SUPABASE_URL+'/functions/v1/twf-ai',{method:'POST',signal:ctl.signal,headers:{'Authorization':'Bearer '+tok,'apikey':CFG.SUPABASE_ANON_KEY,'content-type':'application/json'},body:JSON.stringify({...body,onMeta:undefined})}) }
   catch(e){ clearTimeout(firstTimer); throw new Error(ctl.signal.aborted?L('De gratis AI reageert nu niet op tijd. Probeer het zo nog een keer.','The free AI is not responding in time. Please try again shortly.'):L('Geen verbinding met de AI. Check je internet en probeer opnieuw.','No connection to the AI. Check your internet and try again.')) }
   clearTimeout(firstTimer);
   if(!r.ok||/json/.test(r.headers.get('content-type')||'')){ let j={}; try{ j=await r.json() }catch(e){} if(j.error==='no_key'||j.error==='bad_key'){ const er=new Error(j.error==='bad_key'?L('De AI-sleutel klopt niet.','The AI key is not valid.'):L('De AI is nog niet ingesteld.','The AI is not set up yet.')); er.setup=true; throw er }
     if(j.text){ onText(j.text); return } throw new Error(j.message||j.error||('HTTP '+r.status)) }
+  if(body.onMeta) body.onMeta(r.headers.get('x-twf-model')||'');
   const rd=r.body.getReader(), dec=new TextDecoder(); let idle;
   const arm=()=>{ clearTimeout(idle); idle=setTimeout(()=>ctl.abort(),45000) }; arm();
   try{ while(true){ const {value,done}=await rd.read(); if(done) break; arm(); onText(dec.decode(value,{stream:true})) } } finally{ clearTimeout(idle) } }
 async function aiSend(text,opts={}){ const p=aiPanel(), q=p.querySelector('#aiQ'); text=(text||q.value||'').trim(); if(!text) return; if(AI.busy) aiStop(); q.value=''; q.style.height='auto';
   const id=AI.req=(AI.req||0)+1, ctl=AI.ctl=new AbortController();
-  AI.msgs.push({role:'user',content:text}); AI.busy=true; aiRender();
+  AI.msgs.push({role:'user',content:text}); AI.busy=true; AI.t0=Date.now(); aiRender();
   await new Promise(r=>setTimeout(r,40)); // eerst het scherm tekenen
   const msgs=AI.msgs.filter(m=>!m.err).map(m=>({role:m.role,content:m.content}));
   const out={role:'assistant',content:'',streaming:true}; let pend=0;
   const flush=()=>{ pend=0; if(id===AI.req) aiRender() };
   try{ const ctx=aiContext({...AI.opts,...opts,q:text});
-    await aiStream({mode:'chat',messages:msgs,context:ctx},t=>{ if(id!==AI.req) return; if(!out.content) AI.msgs.push(out); out.content+=t; if(!pend) pend=setTimeout(flush,80) },ctl);
+    await aiStream({mode:'chat',messages:msgs,context:ctx,onMeta:m=>{ out.model=m }},t=>{ if(id!==AI.req) return; if(!out.content) AI.msgs.push(out); out.content+=t; if(!pend) pend=setTimeout(flush,80) },ctl);
     if(id!==AI.req) return; out.streaming=false; if(!out.content){ out.content='…'; AI.msgs.push(out) } }
   catch(e){ if(id!==AI.req) return; out.streaming=false; const partial=out.content; if(!partial) AI.msgs.push({role:'assistant',content:'⚠️ '+(e.message||e),err:true,setup:!!e.setup}); else out.content+='\n\n⚠️ '+(LANG==='en'?'Connection interrupted.':'Verbinding onderbroken.') }
   clearTimeout(pend); AI.busy=false; aiRender() }
@@ -5965,6 +5998,7 @@ function pageData(){
   return `<div class="phead"><h1>${t('md.title')}</h1><div style="color:var(--ink2);margin:-12px 0 24px">${t('md.sub')}</div></div>
   <div class="pbody"><div class="dash">
    ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="newsBox"><h3 style="margin-bottom:10px">${LANG==='en'?'News calendar (ForexFactory)':'Nieuws-kalender (ForexFactory)'}</h3><div class="muted" style="margin-bottom:10px">${LANG==='en'?'This week syncs automatically from ForexFactory and is kept from then on. For older backtests, import a historical calendar as CSV (columns: datetime UTC, currency, impact, title).':'Deze week wordt automatisch van ForexFactory gehaald en vanaf dan bewaard. Voor oudere backtests importeer je een historische kalender als CSV (kolommen: datum-tijd UTC, valuta, impact, titel).'}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-g" id="newsSync">${ic('refresh',15)} ${LANG==='en'?'Sync now':'Nu synchroniseren'}</button><button class="btn btn-g" id="newsCsv">${ic('upload',15)} ${LANG==='en'?'Import CSV':'CSV importeren'}</button><span class="pill" id="newsCount">…</span></div></div>`:''}
+   ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="aiRepBox"><h3 style="margin-bottom:10px">${LANG==='en'?'AI reports':'AI-meldingen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
    ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="drBox"><h3 style="margin-bottom:10px">${LANG==='en'?'Data requests':'Data-aanvragen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
    <div class="box" style="grid-column:span 7"><h3 style="margin-bottom:14px">${t('md.markets')}</h3><table class="tbl"><thead><tr><th></th><th>${t('markets')}</th><th>${t('md.source')}</th><th>${t('period')}</th><th>${t('md.months')}</th><th></th></tr></thead><tbody>${rows}</tbody></table>
      <div class="hint" style="margin-top:12px">${MD.cloud()?t('md.cloudon'):t('md.cloudoff')}</div></div>
@@ -5976,6 +6010,12 @@ function pageData(){
    <div class="box" style="grid-column:1/-1"><h3 style="margin-bottom:10px">${t('md.how')}</h3><div class="howto">${t('md.howtxt')}</div></div>
   </div></div>`;
 }
+async function loadAiReports(){ const box=$('#aiRepBox'); if(!box||!DB.sb) return; const L=(nl,en)=>LANG==='en'?en:nl;
+  const {data,error}=await DB.sb.from('ai_feedback').select('*').eq('rating',-1).order('created_at',{ascending:false}).limit(50);
+  if(error){ box.innerHTML=`<h3>${L('AI-meldingen','AI reports')}</h3><div class="muted">${esc(error.message)}</div>`; return }
+  const rows=data||[];
+  box.innerHTML=`<h3 style="margin-bottom:10px">${L('AI-meldingen','AI reports')} ${rows.length?`<span class="pill">${rows.length}</span>`:''}</h3>`+(rows.length?`<div class="airep">${rows.map(r=>`<div class="airep-r"><div class="airep-h"><b>${esc(r.reason||L('Gemeld','Reported'))}</b><small>${new Date(r.created_at).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}${r.model?' · '+esc(r.model):''}</small><button class="ib" data-airdel="${r.id}" title="${L('Afgehandeld','Done')}">${ic('check',15)}</button></div><div class="airep-q">${esc((r.q||'').slice(0,300))}</div><div class="airep-a">${esc((r.a||'').slice(0,600))}</div></div>`).join('')}</div>`:`<div class="muted">${L('Geen meldingen. 👍','No reports. 👍')}</div>`);
+  box.querySelectorAll('[data-airdel]').forEach(b=>b.onclick=async()=>{ b.disabled=true; await DB.sb.from('ai_feedback').delete().eq('id',b.dataset.airdel); loadAiReports() }) }
 async function loadDataRequests(){ const box=$('#drBox'); if(!box||!DB.sb) return; const L=(nl,en)=>LANG==='en'?en:nl;
   const {data,error}=await DB.sb.from('data_requests').select('*').eq('status','open').order('created_at',{ascending:false});
   if(error){ box.innerHTML=`<h3>${L('Data-aanvragen','Data requests')}</h3><div class="muted">${esc(error.message)}</div>`; return }
@@ -5985,6 +6025,7 @@ async function loadDataRequests(){ const box=$('#drBox'); if(!box||!DB.sb) retur
   box.querySelectorAll('[data-drdone]').forEach(b=>b.onclick=async()=>{ b.disabled=true; await DB.sb.from('data_requests').update({status:'done'}).eq('sym',b.dataset.drdone).eq('status','open'); loadDataRequests() }) }
 function bindData(m){
   try{ loadDataRequests() }catch(e){}
+  try{ loadAiReports() }catch(e){}
   try{ const nc=m.querySelector('#newsCount'); if(nc&&DB.sb) DB.sb.from('news_events').select('id',{count:'exact',head:true}).then(r=>{ nc.textContent=(r.count||0)+(LANG==='en'?' events':' events') });
     const ns=m.querySelector('#newsSync'); if(ns) ns.onclick=async()=>{ ns.disabled=true; try{ const {data,error}=await DB.sb.functions.invoke('twf-news?force=1',{body:{}}); if(error) throw error; toast(LANG==='en'?'Synced':'Gesynchroniseerd',(data&&data.n!=null?data.n:0)+' events','ok') }catch(e){ toast('Sync',String(e.message||e),'bad') } ns.disabled=false; render() };
     const nv=m.querySelector('#newsCsv'); if(nv) nv.onclick=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='.csv,text/csv'; inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const txt=await f.text(); const rows=[];
