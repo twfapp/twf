@@ -1987,7 +1987,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.10', BUILD: '2026-11-17'
+  VERSION: 'v12.1.11', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2475,6 +2475,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.11':{nl:['TWF AI slimmer: krijgt kant-en-klare analyses van al je trades (per dag, uur, markt, setup, na een verlies, drukke dagen), gebruikt betere modellen en herhaalt zichzelf niet'],en:['TWF AI smarter: gets ready-made analyses of all your trades (per day, hour, market, setup, after a loss, busy days), uses better models and does not repeat itself']},
   'v12.1.10':{nl:['Break-even klopt: TP/SL-labels tonen nu je netto resultaat inclusief commissie, BE = €0,00','Journal-kalender toont bedragen met centen'],en:['Break-even fixed: TP/SL labels now show your net result including commission, BE = €0.00','Journal calendar shows amounts with cents']},
   'v12.1.9':{nl:['Backtest: zon/maan-knop met keuze — alles licht, alles donker, of chart en balken apart','Koersen en prijs-as altijd leesbaar, ook met grijze kleuren op een lichte chart','Bijwerken robuuster (vooral op de Mac): oude cache wordt gewist en het controleert of de nieuwe versie er echt is'],en:['Backtest: sun/moon button with choice — all light, all dark, or chart and bars separately','Prices and price axis always readable, even with grey colours on a light chart','More robust updating (especially on Mac): old cache is cleared and it checks the new version really loaded']},
   'v12.1.8':{nl:['Lichte chart: marktnaam en koersen nu goed leesbaar','Positie-tool: winst altijd blauw, verlies altijd rood','Tik op je saldo voor je rekening: equity, marge, vrije marge, marge-niveau, hefboom, positiegrootte en risico'],en:['Light chart: symbol name and prices now readable','Position tool: profit always blue, loss always red','Tap your balance for your account: equity, margin, free margin, margin level, leverage, position size and risk']},
@@ -3731,15 +3732,41 @@ async function ruleCheckModal(s){
    ========================================================= */
 const AI={open:false,msgs:[],busy:false,opts:{}};
 const aiDiaryOn=()=>{ try{ return localStorage.getItem('twf_ai_diary')==='1' }catch(e){ return false } };
+/* AI: kant-en-klare analyses zodat de AI met feiten werkt i.p.v. ruwe lijsten */
+function aiInsights(tr){ if(!tr||tr.length<3) return null;
+  const R=x=>+x.toFixed(2), sum=a=>a.reduce((s,x)=>s+x.pnl,0);
+  const grp=(key)=>{ const m={}; tr.forEach(t=>{ const k=key(t); if(k==null||k==='') return; (m[k]=m[k]||[]).push(t) }); return Object.entries(m).map(([k,a])=>({k,n:a.length,net:R(sum(a)),wr:Math.round(a.filter(x=>x.pnl>0).length/a.length*100),avgR:a.some(x=>x.rr!=null)?R(a.filter(x=>x.rr!=null).reduce((s,x)=>s+x.rr,0)/Math.max(1,a.filter(x=>x.rr!=null).length)):null})).sort((a,b)=>b.net-a.net) };
+  const dt=t=>new Date(t.date||t.closeTime*1000), hasTime=tr.some(t=>{ const d=dt(t); return d.getHours()||d.getMinutes() });
+  const wins=tr.filter(t=>t.pnl>0), losses=tr.filter(t=>t.pnl<0), avgW=wins.length?sum(wins)/wins.length:0, avgL=losses.length?sum(losses)/losses.length:0;
+  const sorted=tr.slice().sort((a,b)=>dt(a)-dt(b));
+  // na een verlies: hoe gaat de volgende trade? (revenge / tilt)
+  const afterLoss=[]; for(let i=1;i<sorted.length;i++) if(sorted[i-1].pnl<0) afterLoss.push(sorted[i]);
+  // streaks
+  let ws=0,ls=0,cw=0,cl=0; sorted.forEach(t=>{ if(t.pnl>0){cw++;cl=0}else if(t.pnl<0){cl++;cw=0} ws=Math.max(ws,cw); ls=Math.max(ls,cl) });
+  // trades per dag → overtrading
+  const byDay={}; sorted.forEach(t=>{ const k=dt(t).toISOString().slice(0,10); (byDay[k]=byDay[k]||[]).push(t) }); const days=Object.values(byDay);
+  const busy=days.filter(d=>d.length>=3), calm=days.filter(d=>d.length<3);
+  // recent vs eerder
+  const cut=Date.now()-14*864e5, rec=tr.filter(t=>dt(t)>=cut), old=tr.filter(t=>dt(t)<cut);
+  const big=losses.slice().sort((a,b)=>a.pnl-b.pnl).slice(0,3).map(t=>({date:String(t.date).slice(0,10),pair:t.pair,pnl:R(t.pnl),rr:t.rr}));
+  const st=a=>a.length?{n:a.length,net:R(sum(a)),wr:Math.round(a.filter(x=>x.pnl>0).length/a.length*100)}:null;
+  return { trades:tr.length, net:R(sum(tr)), winrate:Math.round(wins.length/tr.length*100), avgWin:R(avgW), avgLoss:R(avgL), payoff:avgL?R(avgW/-avgL):null,
+    expectancyPerTrade:R(sum(tr)/tr.length), longestWinStreak:ws, longestLossStreak:ls,
+    byWeekday:grp(t=>['zo','ma','di','wo','do','vr','za'][dt(t).getDay()]), byHour:hasTime?grp(t=>String(dt(t).getHours()).padStart(2,'0')+'u'):null,
+    byMarket:grp(t=>t.pair||t.sym), byDirection:grp(t=>t.dir||t.side), bySetup:grp(t=>t.setup||t.strategy), withPlan:st(tr.filter(t=>t.plan)), withoutPlan:st(tr.filter(t=>t.plan===false)),
+    tradeAfterLoss:st(afterLoss), daysWith3PlusTrades:st(busy.flat()), daysWithFewerTrades:st(calm.flat()),
+    last14days:st(rec), before:st(old), biggestLosses:big } }
 function aiContext(opts={}){ const L=(nl,en)=>LANG==='en'?en:nl, ctx={app:'TWF',version:CFG.VERSION,lang:LANG,now:new Date().toISOString(),page:S.page,user:{name:profile().name||''}};
   try{ const J=window.TWFJ; if(J&&J.ready()){ const sm=J.summary(); ctx.journal={account:sm.name,ccy:sm.ccy,balance:Math.round(sm.balance),returnPct:+(sm.ret||0).toFixed(2),todayPnl:sm.today,monthPnl:sm.month,trades:sm.n,winrate:Math.round(sm.wr||0),planPct:Math.round(sm.planPct||0),profitFactor:+(sm.pf||0).toFixed(2),avgR:sm.avgR,greenDaysPct:Math.round(sm.greenDays||0),maxDD:Math.round(sm.mdd||0),fineOpen:sm.fine,mt5:sm.mt5&&sm.mt5.k};
-      if(J.recentTrades) ctx.journal.recentTrades=J.recentTrades(60) } }catch(e){}
+      if(J.recentTrades) ctx.journal.recentTrades=J.recentTrades(40); if(J.allTrades) ctx.journal.insights=aiInsights(J.allTrades()) } }catch(e){}
   try{ const ss=DB.list('sessions').slice().sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||''))).slice(0,12);
     ctx.backtest=ss.map(s=>{ const tr=s.trades||[], acc=DB.get('accounts',s.account)||{}, start=+(s.startBalance??acc.balance)||0, net=tr.reduce((a,x)=>a+(+x.pnl||0),0), w=tr.filter(x=>x.pnl>0).length;
       const o={name:s.name,type:s.type,assets:s.assets,start:s.start,ccy:acc.currency,startBalance:start,trades:tr.length,net:Math.round(net),winrate:tr.length?Math.round(w/tr.length*100):null};
       if(s.type==='propfirm'){ const e=propEval(s); o.prop={firm:s.firm,program:s.progName,phase:s.phase,status:e.status,failedBy:s.pfFail||null,checks:e.checks.map(c=>({rule:c.label,ok:c.ok,sev:c.sev,val:c.val,lim:c.lim}))} }
       if(opts.sessionId===s.id) o.tradeList=tr.slice(-80).map(x=>({sym:x.sym,side:x.side,qty:x.qty,entry:x.entry,exit:x.exit,sl:x.sl,tp:x.tp,pnl:+(+x.pnl).toFixed(2),rr:x.rr,open:new Date(x.openTime*1000).toISOString(),close:new Date(x.closeTime*1000).toISOString(),reason:x.reason}));
-      return o }) }catch(e){}
+      return o });
+    const all=DB.list('sessions').flatMap(s=>(s.trades||[]).map(x=>({date:new Date((x.closeTime||x.openTime||0)*1000).toISOString(),pair:x.sym,dir:x.side,pnl:+x.pnl||0,rr:x.rr!=null?+x.rr:null,setup:s.strategy||'',plan:true})));
+    ctx.backtestInsights=aiInsights(all) }catch(e){}
   try{ if(SX){ const s=SX.s; ctx.liveSession={name:s.name,sym:SX.sym,tf:SX.tf,time:new Date(nowSec()*1000).toISOString(),equity:Math.round(equity()),positions:SX.pos.map(p=>({sym:p.sym,side:p.side,qty:p.qty,entry:p.entry,sl:p.sl,tp:p.tp})),recentBars:(SX.blist||[]).slice(-40).map(b=>[b.time,+b.open.toFixed(5),+b.high.toFixed(5),+b.low.toFixed(5),+b.close.toFixed(5)])} } }catch(e){}
   if(opts.prop||/prop|challenge|firm|ftmo|apex|topstep|funded/i.test(opts.q||'')){ try{ const out=[]; allFirms().forEach(f=>f.programs.forEach(p=>{ const so=(p.sizes||[]).find(x=>x.size===100000)||(p.sizes||[])[Math.floor(((p.sizes||[]).length-1)/2)]; if(!so) return; const sim=pfSim(p,so.size,250), ev=pfEV(p,so,sim);
         if(sim&&sim.need==null) out.push({firm:f.name,kind:f.kind,program:p.name,size:so.size,fee:so.fee,ccy:so.ccy,monthly:!!p.monthly,passRate:Math.round(sim.pAll*100),daysToFunded:Math.round(sim.avgDays),expPayout:Math.round(sim.avgPayout),evPerAttempt:ev?Math.round(ev.ev):null,rules:{daily:p.daily,maxloss:p.maxloss,dd:p.ddType,cons:p.consistency,phases:p.phases.map(x=>x.target)}}) }));
@@ -8017,7 +8044,7 @@ function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='l
   return { name:A.name, uname:SETTINGS.name, ccy:A.ccy, balance:balanceOf(A), ret:retPct(A), today:tday.reduce((s,t)=>s+t.pnl,0), todayN:tday.length, month:tmo.reduce((s,t)=>s+t.pnl,0), monthN:tmo.length,
     planPct:m.planPct, n:m.n, wr:m.wr, pf:m.pf, planDots:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).reverse().map(t=>t.hadPlan), accts:['live',...D.live.map(la=>'live:'+la.id)].map(k=>{ const s1=S.acct; S.acct=k; const B=acct(); S.acct=s1; const td=B.trades.filter(t=>dKey(t.date)===dKey(new Date())).reduce((a,t)=>a+t.pnl,0); return {key:k,name:B.name,sub:B.sub,bal:balanceOf(B),today:td,n:B.trades.length,f:(v,o)=>fmtM(v,B.ccy,o)} }), avgR:m.avgR, best:m.best, worst:m.worst, wins:m.wins, losses:m.losses, days:m.days, greenDays:m.greenDays, mdd:m.mdd, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
     last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList().find(d=>!isEmptyEntry(d))||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
-window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
+window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, allTrades:()=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,setup:t.setup||'',plan:!!t.hadPlan})) }, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
 
