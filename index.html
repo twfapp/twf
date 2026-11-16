@@ -1823,6 +1823,7 @@ html.updating #updScr.hide{display:grid!important}
 .ai-krow{display:flex;gap:8px;margin-top:10px}.ai-krow input{flex:1;min-width:0;height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink);font:inherit;font-size:16px}
 .hai{display:none;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;color:#fff;font-weight:700;font-size:13.5px;background:linear-gradient(145deg,#8b6dff,#4c74ff);box-shadow:0 6px 18px rgba(92,104,255,.35)}
 @media (max-width:700px){ .hai{display:inline-flex} .hhead{align-items:center} }
+@media (max-width:900px){ .ai-in textarea{font-size:16px} }
 </style>
 </head>
 <body class="">
@@ -1965,7 +1966,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.3', BUILD: '2026-11-17'
+  VERSION: 'v12.1.4', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2453,6 +2454,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.4':{nl:['AI: stopknop, nooit meer vastlopen, kiest automatisch een gratis model dat niet overbelast is, geen inzoomen meer op de iPhone'],en:['AI: stop button, never stuck, automatically picks a free model that is not overloaded, no more zoom on iPhone']},
   'v12.1.3':{nl:['AI loopt niet meer vast: tijdslimiet, sneller model als reserve en snellere antwoorden'],en:['AI no longer hangs: time limit, faster fallback model and quicker answers']},
   'v12.1.2':{nl:['TWF AI nu ook op de telefoon: knop op Home en bovenaan in het ＋-menu'],en:['TWF AI now also on phones: button on Home and at the top of the ＋ menu']},
   'v12.1':{nl:['De AI-assistent is nu gratis (Google Gemini) — de beheerder plakt eenmalig een gratis sleutel in het AI-scherm'],en:['The AI assistant is now free (Google Gemini) — the admin pastes a free key once in the AI panel']},
@@ -3727,7 +3729,7 @@ function aiPanel(){ let p=$('#aiPanel'); if(p) return p; const L=(nl,en)=>LANG==
   const ks=p.querySelector('[data-aikeyset]'); if(ks) ks.onclick=()=>{ p.querySelector('.ai-set').classList.add('hide'); AI.msgs=AI.msgs.filter(m=>!m.setup); AI.msgs.push({role:'assistant',content:LANG==='en'?'Paste a new Gemini key here.':'Plak hier een (nieuwe) Gemini-sleutel.',err:true,setup:true}); aiRender() };
   p.querySelector('[data-aidiary]').onclick=e=>{ const on=!e.currentTarget.classList.contains('on'); e.currentTarget.classList.toggle('on',on); try{ localStorage.setItem('twf_ai_diary',on?'1':'0') }catch(x){} };
   const q=p.querySelector('#aiQ'); q.oninput=()=>{ q.style.height='auto'; q.style.height=Math.min(140,q.scrollHeight)+'px' }; q.onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); aiSend() } };
-  p.querySelector('#aiSend').onclick=()=>aiSend(); p.addEventListener('pointerdown',e=>e.stopPropagation());
+  p.querySelector('#aiSend').onclick=()=>AI.busy&&!p.querySelector('#aiQ').value.trim()?aiStop():aiSend(); p.addEventListener('pointerdown',e=>e.stopPropagation());
   return p }
 function aiChips(){ const L=(nl,en)=>LANG==='en'?en:nl, c=[[L('Coach mijn trading','Coach my trading'),L('Analyseer mijn trading: wat gaat goed, wat gaat fout en wat zijn de 3 belangrijkste verbeterpunten?','Analyse my trading: what goes well, what goes wrong and what are the 3 most important improvements?')],
   [L('Welke prop firm past bij mij?','Which prop firm suits me?'),L('Welke prop-firm-challenge past het best bij mijn resultaten en waarom? Vergelijk de beste opties.','Which prop firm challenge fits my results best and why? Compare the best options.'),{prop:true}],
@@ -3740,6 +3742,7 @@ function aiRender(){ const p=aiPanel(), m=p.querySelector('#aiMsgs'), L=(nl,en)=
   else m.innerHTML=AI.msgs.map((x,i)=>{ if(x.role==='user') return `<div class="ai-u">${esc(x.content)}</div>`; const r=aiMd(x.content);
       if(x.setup) return `<div class="ai-a">${r.html}${aiKeyCard()}</div>`; return `<div class="ai-a">${r.html.replace(/<!--ACT(\d+)-->/g,(mm,k)=>{ const a=r.acts[+k]; return a?`<button class="btn btn-g ai-act" data-act="${i}:${k}">${ic('play',14)} ${esc(aiActLabel(a))}</button>`:'' })}${x.err?'':`<div class="ai-fb"><button data-fb="${i}:1" class="${x.fb===1?'on':''}">👍</button><button data-fb="${i}:-1" class="${x.fb===-1?'on':''}">👎</button></div>`}</div>` }).join('')+(AI.busy?`<div class="ai-a ai-typing"><i></i><i></i><i></i></div>`:'');
   m.scrollTop=m.scrollHeight;
+  const sb=p.querySelector('#aiSend'); if(sb){ sb.innerHTML=AI.busy?ic('x',18):ic('next',18); sb.title=AI.busy?(L('Stoppen','Stop')):(L('Versturen','Send')); sb.classList.toggle('btn-g',AI.busy); sb.classList.toggle('btn-p',!AI.busy) }
   m.querySelectorAll('[data-aikeysave]').forEach(b=>b.onclick=()=>aiSaveKey(b.parentElement.querySelector('[data-aikey]').value));
   m.querySelectorAll('[data-aikey]').forEach(i=>i.onkeydown=e=>{ if(e.key==='Enter') aiSaveKey(i.value) });
   const ch=p.querySelector('#aiChips'); ch.innerHTML=AI.msgs.length?'':aiChips().map(([l],i)=>`<button data-chip="${i}">${esc(l)}</button>`).join('');
@@ -3752,22 +3755,27 @@ function aiDoAction(a){ if(!a) return; if(a.type==='open_page'){ aiClose(); go(a
 function aiOpen(q,opts){ AI.open=true; const p=aiPanel(); aiRender(); requestAnimationFrame(()=>p.classList.add('on')); document.body.classList.add('ai-on'); if(q) aiSend(q,opts||{}); else setTimeout(()=>p.querySelector('#aiQ').focus(),200) }
 function aiClose(){ AI.open=false; const p=$('#aiPanel'); if(p) p.classList.remove('on'); document.body.classList.remove('ai-on') }
 async function aiCall(body){ const L=(nl,en)=>LANG==='en'?en:nl; if(!DB.sb||!DB.sb.functions) throw new Error(L('De AI werkt alleen online.','The AI only works online.'));
-  const {data,error}=await Promise.race([DB.sb.functions.invoke('twf-ai',{body}),new Promise((_,rj)=>setTimeout(()=>rj(new Error(L('De AI reageert niet op tijd. Probeer het zo nog een keer.','The AI did not respond in time. Please try again shortly.'))),120000))]);
+  const {data,error}=await Promise.race([DB.sb.functions.invoke('twf-ai',{body}),new Promise((_,rj)=>setTimeout(()=>rj(new Error(L('De AI reageert niet op tijd. Probeer het zo nog een keer.','The AI did not respond in time. Please try again shortly.'))),95000))]);
   if(error){ let msg=error.message; try{ const j=await error.context.json(); msg=j.message||j.error||msg; if(j.error==='no_key'||j.error==='bad_key'){ const er=new Error(j.error==='bad_key'?L('De Gemini-sleutel klopt niet.','The Gemini key is not valid.'):L('De AI is nog niet ingesteld.','The AI is not set up yet.')); er.setup=true; throw er } }catch(e){ if(e&&e.setup) throw e } throw new Error(msg) }
   return data }
-async function aiSend(text,opts={}){ const p=aiPanel(), q=p.querySelector('#aiQ'); text=(text||q.value||'').trim(); if(!text||AI.busy) return; q.value=''; q.style.height='auto';
+function aiStop(){ if(!AI.busy) return; AI.req=(AI.req||0)+1; AI.busy=false; AI.msgs.push({role:'assistant',content:LANG==='en'?'⏹ Stopped.':'⏹ Gestopt.',err:true}); aiRender() }
+async function aiSend(text,opts={}){ const p=aiPanel(), q=p.querySelector('#aiQ'); text=(text||q.value||'').trim(); if(!text) return; if(AI.busy) aiStop(); q.value=''; q.style.height='auto';
+  const id=AI.req=(AI.req||0)+1;
   AI.msgs.push({role:'user',content:text}); AI.busy=true; aiRender();
-  try{ const d=await aiCall({mode:'chat',messages:AI.msgs.filter(m=>!m.err).map(m=>({role:m.role,content:m.content})),context:aiContext({...AI.opts,...opts,q:text})}); AI.msgs.push({role:'assistant',content:d.text||''}) }
-  catch(e){ AI.msgs.push({role:'assistant',content:'⚠️ '+(e.message||e),err:true,setup:!!e.setup}) }
-  AI.busy=false; aiRender() }
+  await new Promise(r=>setTimeout(r,40)); // eerst het scherm tekenen
+  let res;
+  try{ const ctx=aiContext({...AI.opts,...opts,q:text}); const d=await aiCall({mode:'chat',messages:AI.msgs.filter(m=>!m.err).map(m=>({role:m.role,content:m.content})),context:ctx}); res={role:'assistant',content:d.text||'…'} }
+  catch(e){ res={role:'assistant',content:'⚠️ '+(e.message||e),err:true,setup:!!e.setup} }
+  if(id!==AI.req) return; // intussen gestopt of nieuwe vraag
+  AI.msgs.push(res); AI.busy=false; aiRender() }
 function aiKeyCard(){ const L=(nl,en)=>LANG==='en'?en:nl;
   if(!IS_ADMIN) return `<div class="ai-key"><small>${L('De beheerder moet de AI nog aanzetten.','The admin still needs to switch the AI on.')}</small></div>`;
   return `<div class="ai-key"><b>${L('Zet de gratis AI aan (eenmalig, 2 minuten)','Switch on the free AI (once, 2 minutes)')}</b>
     <ol><li>${L('Open','Open')} <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> ${L('en log in met je Google-account.','and sign in with your Google account.')}</li>
-    <li>${L('Klik op <b>Create API key</b> en kopieer de sleutel (begint met <code>AIza</code>).','Click <b>Create API key</b> and copy the key (starts with <code>AIza</code>).')}</li>
+    <li>${L('Klik op <b>Create API key</b> en kopieer de sleutel.','Click <b>Create API key</b> and copy the key.')}</li>
     <li>${L('Plak hem hieronder en klik op Opslaan.','Paste it below and click Save.')}</li></ol>
     <small>${L('Gratis en zonder creditcard. Koppel géén betaalaccount in Google, dan blijft het altijd gratis. De sleutel wordt veilig op de server bewaard en is voor niemand zichtbaar.','Free, no credit card. Do not link a billing account in Google and it stays free. The key is stored safely on the server and visible to no one.')}</small>
-    <div class="ai-krow"><input type="password" autocomplete="off" spellcheck="false" placeholder="AIza…" data-aikey><button class="btn btn-p" data-aikeysave>${L('Opslaan','Save')}</button></div></div>` }
+    <div class="ai-krow"><input type="password" autocomplete="off" spellcheck="false" placeholder="API key…" data-aikey><button class="btn btn-p" data-aikeysave>${L('Opslaan','Save')}</button></div></div>` }
 async function aiSaveKey(v){ const L=(nl,en)=>LANG==='en'?en:nl; v=(v||'').trim(); if(!v) return;
   try{ const {error}=await DB.sb.rpc('set_ai_key',{p_key:v}); if(error) throw error; toast(L('AI aangezet','AI switched on'),L('De sleutel is opgeslagen.','The key has been saved.'),'ok');
     const lastQ=[...AI.msgs].reverse().find(m=>m.role==='user'); AI.msgs=AI.msgs.filter(m=>!m.err); if(lastQ){ AI.msgs=AI.msgs.filter(m=>m!==lastQ); aiRender(); aiSend(lastQ.content) } else aiRender() }
