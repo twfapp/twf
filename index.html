@@ -1965,7 +1965,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.2', BUILD: '2026-11-17'
+  VERSION: 'v12.1.3', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2453,6 +2453,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.3':{nl:['AI loopt niet meer vast: tijdslimiet, sneller model als reserve en snellere antwoorden'],en:['AI no longer hangs: time limit, faster fallback model and quicker answers']},
   'v12.1.2':{nl:['TWF AI nu ook op de telefoon: knop op Home en bovenaan in het ＋-menu'],en:['TWF AI now also on phones: button on Home and at the top of the ＋ menu']},
   'v12.1':{nl:['De AI-assistent is nu gratis (Google Gemini) — de beheerder plakt eenmalig een gratis sleutel in het AI-scherm'],en:['The AI assistant is now free (Google Gemini) — the admin pastes a free key once in the AI panel']},
   'v12.0':{nl:['TWF AI-assistent: coach, trade-review, prop-adviseur, backtest-hulp en app-hulp','Strenge prop-regels zoals de firm: equity, dagreset per firm, nieuws, gokken, martingale, futures plat om 16:10 CT, payout-regels','Prop-paneel op de chart met gevarenlijnen, pre-trade-check en nieuwsvlaggen','Rapport met tijdlijn en wat-als, regel melden, TWF Pro (5 challenges of 5 payouts)'],en:['TWF AI assistant: coach, trade review, prop advisor, backtest help and app help','Strict prop rules like the firm: equity, daily reset per firm, news, gambling, martingale, futures flat at 16:10 CT, payout rules','Prop panel on the chart with danger lines, pre-trade check and news flags','Report with timeline and what-if, report a rule, TWF Pro (5 challenges or 5 payouts)']},
@@ -3751,7 +3752,7 @@ function aiDoAction(a){ if(!a) return; if(a.type==='open_page'){ aiClose(); go(a
 function aiOpen(q,opts){ AI.open=true; const p=aiPanel(); aiRender(); requestAnimationFrame(()=>p.classList.add('on')); document.body.classList.add('ai-on'); if(q) aiSend(q,opts||{}); else setTimeout(()=>p.querySelector('#aiQ').focus(),200) }
 function aiClose(){ AI.open=false; const p=$('#aiPanel'); if(p) p.classList.remove('on'); document.body.classList.remove('ai-on') }
 async function aiCall(body){ const L=(nl,en)=>LANG==='en'?en:nl; if(!DB.sb||!DB.sb.functions) throw new Error(L('De AI werkt alleen online.','The AI only works online.'));
-  const {data,error}=await DB.sb.functions.invoke('twf-ai',{body});
+  const {data,error}=await Promise.race([DB.sb.functions.invoke('twf-ai',{body}),new Promise((_,rj)=>setTimeout(()=>rj(new Error(L('De AI reageert niet op tijd. Probeer het zo nog een keer.','The AI did not respond in time. Please try again shortly.'))),120000))]);
   if(error){ let msg=error.message; try{ const j=await error.context.json(); msg=j.message||j.error||msg; if(j.error==='no_key'||j.error==='bad_key'){ const er=new Error(j.error==='bad_key'?L('De Gemini-sleutel klopt niet.','The Gemini key is not valid.'):L('De AI is nog niet ingesteld.','The AI is not set up yet.')); er.setup=true; throw er } }catch(e){ if(e&&e.setup) throw e } throw new Error(msg) }
   return data }
 async function aiSend(text,opts={}){ const p=aiPanel(), q=p.querySelector('#aiQ'); text=(text||q.value||'').trim(); if(!text||AI.busy) return; q.value=''; q.style.height='auto';
