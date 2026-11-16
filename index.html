@@ -1769,6 +1769,56 @@ html.updating #updScr.hide{display:grid!important}
 
 :where(.jpage,.jx) .calt{height:auto!important;flex:none!important;background:none!important}
 @media (max-width:480px){ .finebar{flex-wrap:wrap}.finebar>div{flex:1 1 100%!important;order:3}.finebar .btn{margin-left:auto} }
+
+/* ===== v12: prop-paneel op de chart ===== */
+.pfhud{position:absolute;left:10px;top:112px;z-index:7;width:268px;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:14px;padding:10px 12px;box-shadow:var(--shadow);font-size:12px}
+.pfhud.min{width:auto;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none}
+.ph-pill{display:flex;align-items:center;gap:8px;height:30px;padding:0 10px;border-radius:999px;background:color-mix(in srgb,var(--panel) 92%,transparent);border:1px solid var(--line2);font-weight:700;font-size:12px;color:var(--ink)}
+.ph-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}.ph-t{flex:1;min-width:0}.ph-t b{display:block;font-size:13px}.ph-t small{display:block;color:var(--ink3);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph-x{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;color:var(--ink3)}.ph-x:hover{background:var(--panel2)}
+.ph-pro{font-size:10px;font-weight:800;padding:2px 6px;border-radius:6px;background:linear-gradient(145deg,#f8d98a,#c8901f);color:#1a1306}
+.ph-r{margin:7px 0}.ph-l{display:flex;justify-content:space-between;gap:8px;color:var(--ink3);font-weight:700;font-size:11px}.ph-l b{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:700}
+.ph-b{height:5px;border-radius:3px;background:var(--panel2);overflow:hidden;margin-top:4px}.ph-b i{display:block;height:100%;border-radius:3px;background:var(--pos);transition:width .3s}.ph-b.mid i{background:var(--amber)}.ph-b.bad i{background:var(--neg)}
+.ph-st{padding:6px 8px;border-radius:8px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;background:var(--panel2)}.ph-st.bad{background:rgba(229,83,75,.14);color:var(--neg)}.ph-st.ok{background:rgba(47,191,113,.14);color:var(--pos)}
+.ph-news{margin-top:8px;padding:6px 8px;border-radius:8px;background:rgba(224,163,58,.12);color:var(--amber);font-weight:700;display:flex;gap:6px;align-items:center}.ph-news.now{background:rgba(229,83,75,.16);color:var(--neg)}
+.ph-a{display:flex;gap:6px;margin-top:10px}.ph-a .btn{flex:1;height:30px;font-size:12px;padding:0 8px}
+@media (max-width:900px){ .pfhud{top:118px;left:auto;right:74px;width:min(250px,calc(100% - 150px));z-index:9} }
+@media (max-width:700px){ .pfscr{min-height:70vh;display:flex;flex-direction:column;justify-content:center} }
+/* schermen */
+.pfscr{padding:28px 24px 22px;text-align:center}.pfscr-i{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;font-size:32px}
+.pfscr.bad .pfscr-i{background:rgba(229,83,75,.14);color:var(--neg)}.pfscr.ok .pfscr-i{background:rgba(47,191,113,.14)}
+.pfscr h2{margin:0 0 8px;font-size:22px}.pfscr p{margin:0 0 10px;line-height:1.55;color:var(--ink2)}.pfscr-a{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+/* rapport */
+.rcgrp{margin-bottom:10px}.rcgrp>small{display:block;font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin:8px 0 6px}
+.rcrow.mid .rcic{background:rgba(224,163,58,.18);color:var(--amber)}.rcrow.req .rcic{background:var(--accentSoft);color:var(--accent)}.rcrow.info .rcic{background:var(--panel2);color:var(--ink3)}
+.rcic{font-weight:800}
+.rcrep{width:22px;height:22px;border-radius:50%;border:1px solid var(--line2);color:var(--ink3);font-weight:800;font-size:11px;flex:none;margin-left:6px}.rcrep:hover{color:var(--accent);border-color:var(--accent)}
+.rcwi,.rctl{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:6px}.rctl{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))}
+.rcwi>div,.rctl>div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 10px}.rcwi small,.rctl small{display:block;color:var(--ink3);font-size:11px}.rcwi b,.rctl b{display:block;font-size:14px;margin:2px 0}
+.rctl>div.pos b{color:var(--pos)}.rctl>div.neg b{color:var(--neg)}
+.rcai{margin-top:16px;display:flex;justify-content:center}
+.proprog{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px;font-size:12px}.proprog>span{font-weight:800}.proprog>div{min-width:120px}.proprog small{color:var(--ink3);font-weight:700}
+.seg button.locked{opacity:.6}
+/* ===== v12: AI-paneel ===== */
+.aipanel{position:fixed;right:16px;bottom:16px;top:16px;width:420px;max-width:calc(100vw - 32px);z-index:150;background:var(--panel);border:1px solid var(--line2);border-radius:20px;box-shadow:0 24px 70px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;transform:translateY(16px) scale(.98);opacity:0;pointer-events:none;transition:.22s}
+.aipanel.on{transform:none;opacity:1;pointer-events:auto}
+.ai-h{display:flex;align-items:center;gap:8px;padding:12px 12px 12px 14px;border-bottom:1px solid var(--line)}
+.ai-logo{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,#8b6dff,#4c74ff);flex:none}.ai-logo.big{width:52px;height:52px;border-radius:16px}
+.ai-t{flex:1}.ai-t b{display:block}.ai-t small{color:var(--ink3);font-size:12px}
+.ai-set{padding:10px 14px;border-bottom:1px solid var(--line)}.ai-tg{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.ai-tg b{display:block;font-size:13px}.ai-tg small{display:block;color:var(--ink3);font-size:12px;line-height:1.4}
+.ai-m{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.ai-hello{margin:auto 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px}.ai-hello small{color:var(--ink3);line-height:1.5;max-width:320px}
+.ai-u{align-self:flex-end;max-width:85%;background:var(--accent);color:#fff;padding:9px 12px;border-radius:14px 14px 4px 14px;white-space:pre-wrap;font-size:14px}
+.ai-a{align-self:flex-start;max-width:94%;background:var(--panel2);border:1px solid var(--line);padding:10px 13px;border-radius:14px 14px 14px 4px;font-size:14px;line-height:1.55}
+.ai-a h4,.ai-a h5{margin:8px 0 4px}.ai-a ul{margin:4px 0;padding-left:18px}.ai-a pre{white-space:pre-wrap;background:var(--panel);padding:8px;border-radius:8px;font-size:12px}.ai-a code{background:var(--panel);padding:1px 5px;border-radius:5px;font-size:12.5px}
+.ai-act{margin-top:8px;height:34px}
+.ai-fb{display:flex;gap:4px;margin-top:6px}.ai-fb button{font-size:13px;opacity:.45;padding:2px 4px;border-radius:6px}.ai-fb button.on,.ai-fb button:hover{opacity:1;background:var(--panel)}
+.ai-typing{display:flex;gap:5px;padding:14px}.ai-typing i{width:7px;height:7px;border-radius:50%;background:var(--ink3);animation:aidot 1s infinite}.ai-typing i:nth-child(2){animation-delay:.15s}.ai-typing i:nth-child(3){animation-delay:.3s}
+@keyframes aidot{50%{opacity:.25;transform:translateY(-3px)}}
+.ai-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 8px}.ai-chips button{padding:7px 11px;border-radius:999px;border:1px solid var(--line2);background:var(--panel2);font-size:12.5px;font-weight:600;color:var(--ink2)}.ai-chips button:hover{border-color:var(--accent);color:var(--accent)}
+.ai-in{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}.ai-in textarea{flex:1;resize:none;min-height:42px;max-height:140px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);font:inherit;font-size:14.5px;color:var(--ink);outline:none}.ai-in textarea:focus{border-color:var(--accent)}
+.ai-in .btn{width:44px;padding:0;height:42px;align-self:flex-end}
+@media (max-width:700px){ .aipanel{inset:0;max-width:none;width:auto;border-radius:0;border:0;top:0;bottom:0;right:0;padding-top:env(safe-area-inset-top)} body.ai-on .tabbar{display:none!important} }
 </style>
 </head>
 <body class="">
@@ -1911,7 +1961,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v11.4', BUILD: '2026-11-17'
+  VERSION: 'v12.0', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2399,6 +2449,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.0':{nl:['TWF AI-assistent: coach, trade-review, prop-adviseur, backtest-hulp en app-hulp','Strenge prop-regels zoals de firm: equity, dagreset per firm, nieuws, gokken, martingale, futures plat om 16:10 CT, payout-regels','Prop-paneel op de chart met gevarenlijnen, pre-trade-check en nieuwsvlaggen','Rapport met tijdlijn en wat-als, regel melden, TWF Pro (5 challenges of 5 payouts)'],en:['TWF AI assistant: coach, trade review, prop advisor, backtest help and app help','Strict prop rules like the firm: equity, daily reset per firm, news, gambling, martingale, futures flat at 16:10 CT, payout rules','Prop panel on the chart with danger lines, pre-trade check and news flags','Report with timeline and what-if, report a rule, TWF Pro (5 challenges or 5 payouts)']},
   'v11.4':{nl:['iPad en telefoon nagelopen: kleine schermen netjes, tekst op iPad niet meer te klein'],en:['iPad and phone checked: small screens tidy, text on iPad no longer too small']},
   'v11.3':{nl:['Prop firm-sessie: je rekening komt uit de firm (programma + grootte), geen losse handelsrekening meer','Markten volgen de firm: futures-firms alleen futures, CFD-firms geen futures','Prop firms-pagina: je rekeningen per firm'],en:['Prop firm session: your account comes from the firm (program + size), no separate trading account','Markets follow the firm: futures firms futures only, CFD firms no futures','Prop firms page: your accounts per firm']},
   'v11.2':{nl:['iPhone: vensters schermvullend en normaal scrollen','Backtest-overzicht netjes op de telefoon'],en:['iPhone: full-screen dialogs with normal scrolling','Backtest overview tidy on phone']},
@@ -2588,7 +2639,7 @@ function enterApp(resumed){
   $('#login').classList.add('hide');$('#app').classList.remove('hide');document.body.classList.add('in-app');try{applyLogoTheme();applyAppIcon()}catch(e){}$('#fab').classList.remove('hide');
   $('#lgPass').value='';$('#rgPass').value='';
   { const pf=profile(); const ob=!!pf.onboarded||DB.list('sessions').length>0; document.body.classList.toggle('onboarded',ob); if(!pf.onboarded&&DB.uid) Promise.resolve().then(()=>DB.put('profile',{...pf,id:'me',onboarded:new Date().toISOString()})).catch(()=>{}) }
-  S.page='home';S.tab='dash';render(); journalLoad(true); Promise.all([MD.loadManifest(),MK.load(),checkAdmin()]).then(()=>{ if(!SX&&S.page!=='journal') render() });
+  S.page='home';S.tab='dash';render(); journalLoad(true); setTimeout(()=>{ newsSync(); loadRuleOverrides() },1500); Promise.all([MD.loadManifest(),MK.load(),checkAdmin()]).then(()=>{ if(!SX&&S.page!=='journal') render() });
   if(!resumed) toast(t('toast.welcome')+', '+(profile().name||''),'', 'ok',2500);
   updatedToast(); startUpdateWatch(); markUpdate(); if(!resumed) pkOffer(); setTimeout(()=>instOffer(),9000);
 }
@@ -3075,7 +3126,7 @@ function sessionModal(type='backtest',editId,opts){
       const cust=(st.pfKind||((F.find(x=>x.id===st.firm)||{}).kind)||'CFD')==='custom';
       c=pfRulesHtml(st)+`<details class="pfadv" ${cust?'open':''}><summary>${cust?L('Regels','Rules'):L('Regels aanpassen (optioneel)','Adjust rules (optional)')}</summary><div style="display:none">
         </div>
-      <div class="field"><label>${L('Strengheid payout-check','Payout check strictness')}</label><div class="seg">${[['','Standaard','Default'],['soft','Soepel','Relaxed'],['normal','Normaal','Normal'],['strict','Streng','Strict']].map(([k,nl,en])=>`<button class="${st.strict===k?'on':''}" data-strict="${k}">${L(nl,en)}</button>`).join('')}</div><div class="hint">${STRICT_HINT(st.strict||(profile().prefs||{}).propStrict||'normal')}</div></div>
+      <div class="field"><label>${L('Strengheid payout-check','Payout check strictness')}</label><div class="seg">${[['firm','Zoals de firm','As the firm'],['pro','TWF Pro','TWF Pro']].map(([k,nl,en])=>`<button class="${(st.strict==='pro'?'pro':'firm')===k?'on':''}${k==='pro'&&!twfPro().unlocked?' locked':''}" data-strict="${k}">${L(nl,en)}</button>`).join('')}</div><div class="hint">${STRICT_HINT(st.strict==='pro'?'pro':'firm')}${!twfPro().unlocked?' · 🔒 '+L(`TWF Pro ontgrendel je met 5 gehaalde challenges of 5 payouts (nu ${twfPro().passed}/5 · ${twfPro().payouts}/5).`,`Unlock TWF Pro with 5 passed challenges or 5 payouts (now ${twfPro().passed}/5 · ${twfPro().payouts}/5).`):''}</div></div>
       <div class="two"><div class="field"><label>${t('ns.target')}</label><input class="inp" type="number" step="0.5" id="nTarget" value="${st.target}"></div><div class="field"><label>${t('ns.daily')}</label><input class="inp" type="number" step="0.5" id="nDaily" value="${st.daily}"></div></div>
       <div class="two"><div class="field"><label>${t('ns.maxloss')}</label><input class="inp" type="number" step="0.5" id="nMaxloss" value="${st.maxloss}"></div><div class="field"><label>${L('Soort drawdown','Drawdown type')}</label><select class="inp" id="nDd">${DDTYPES.map(([v,nl,en])=>`<option value="${v}" ${st.ddType===v?'selected':''}>${L(nl,en)}</option>`).join('')}</select></div></div>
       <div class="two"><div class="field"><label>${t('ns.mindays')}</label><input class="inp" type="number" id="nMindays" value="${st.mindays}"></div><div class="field"><label>${L('Consistentie (max % winst op 1 dag, 0 = uit)','Consistency (max % profit in 1 day, 0 = off)')}</label><input class="inp" type="number" id="nCons" value="${st.consistency}"></div></div>
@@ -3123,7 +3174,7 @@ function sessionModal(type='backtest',editId,opts){
       const rq=M.querySelector('[data-mkreq]'); if(rq) rq.onclick=async()=>{ rq.disabled=true; for(const a of st.assets.filter(x=>!mkHasData(x))) await requestData(a) } }
     const sm=M.querySelector('#nSmooth'); if(sm) sm.onclick=()=>{st.smooth=!st.smooth;sm.classList.toggle('on',st.smooth)};
     if(st.sec==='rules') pfRulesBind(M,st,read,draw);
-    q('[data-strict]').forEach(b=>b.onclick=()=>{read();st.strict=b.dataset.strict;draw()});
+    q('[data-strict]').forEach(b=>b.onclick=()=>{read(); if(b.dataset.strict==='pro'&&!twfPro().unlocked){ toast('TWF Pro 🔒',LANG==='en'?'Unlock with 5 passed challenges or 5 approved payouts.':'Ontgrendel met 5 gehaalde challenges of 5 goedgekeurde payouts.','info',5000); return } st.strict=b.dataset.strict;draw()});
     const sl2=M.querySelector('#nSlReq'); if(sl2) sl2.onclick=()=>{st.slReq=!st.slReq;sl2.classList.toggle('on',st.slReq)};
     const wk=M.querySelector('#nWknd'); if(wk) wk.onclick=()=>{st.weekend=!st.weekend;wk.classList.toggle('on',st.weekend)};
     const hd=M.querySelector('#nHedge'); if(hd) hd.onclick=()=>{st.hedge=!st.hedge;hd.classList.toggle('on',st.hedge)};
@@ -3354,47 +3405,114 @@ function pfRulesBind(M,st,read,draw){ const q=s=>M.querySelectorAll(s), F=allFir
         <div><small>${L('Verwacht resultaat per poging','Expected result per attempt')}</small><b class="${e.ev>=0?'pos':'neg'}">${e.ev>=0?'+':'−'}${pfMoney(Math.abs(e.ev),so.ccy)}</b><small>${L('kosten','cost')} ${pfMoney(e.cost,so.ccy)}${e.months>1?` (${e.months} ${L('mnd','mo')})`:''}</small></div></div>
         <div class="pfverdict ${e.ev>=0?'ok':'bad'}">${e.ev>=0?L('Met je huidige resultaten lijkt deze challenge de moeite waard.','With your current results this challenge looks worth it.'):L('Met je huidige resultaten kost deze challenge je naar verwachting geld. Kijk naar een ander programma of verbeter eerst je strategie.','With your current results this challenge is expected to cost you money. Try another program or improve your strategy first.')}</div>` },30) }
 }
-const STRICT_HINT=k=>{ const L=(nl,en)=>LANG==='en'?en:nl; return {soft:L('Soepel: alleen winstdoel, dagverlies en max drawdown.','Relaxed: only profit target, daily loss and max drawdown.'),normal:L('Normaal: + minimaal aantal handelsdagen, consistentie en max lots.','Normal: + minimum trading days, consistency and max lots.'),strict:L('Streng: + minimale tradeduur, stop loss verplicht, max risico per trade en weekendregel.','Strict: + minimum trade duration, stop loss required, max risk per trade and weekend rule.')}[k]||'' };
+const STRICT_HINT=k=>{ const L0=(nl,en)=>LANG==='en'?en:nl; if(k!=='pro') return L0('Zoals de firm: precies de regels van deze firm — dagverlies en drawdown op equity (ook open verlies), dagreset per firm, nieuws, gokken, martingale, lot-limiet, consistentie en payout-regels.','As the firm: exactly this firm\'s rules — daily loss and drawdown on equity (incl. open loss), daily reset per firm, news, gambling, martingale, lot limit, consistency and payout rules.'); return L0('TWF Pro: extra streng — max 1% risico per trade, altijd een stop loss, geen nieuws en max 3 trades per dag.','TWF Pro: extra strict — max 1% risk per trade, always a stop loss, no news and max 3 trades per day.'); };
 const propDayOf=sec=>new Date((sec-nyOff(sec)*3600+7*3600)*1000).toISOString().slice(0,10);
-function propEval(s){
+
+/* =========================================================
+   v12: STRENGE PROP-ENGINE — precies zoals de firm rekent
+   ========================================================= */
+const pfKindS=s=>{ const f=allFirms().find(x=>x.id===s.firm); return f?f.kind:(s.pfCustomKind||'CFD') };
+const _pfTzF={};
+function pfTz(sec,tz){ const f=_pfTzF[tz]||(_pfTzF[tz]=new Intl.DateTimeFormat('en-GB',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false,weekday:'short'}));
+  const p={}; f.formatToParts(new Date(sec*1000)).forEach(x=>p[x.type]=x.value); return {y:+p.year,m:+p.month,d:+p.day,h:(+p.hour)%24,mi:+p.minute,wd:p.weekday} }
+/* dagreset per soort firm: CFD om 00:00 Praag (FTMO e.d.), futures om 17:00 Chicago (CME-handelsdag) */
+const pfReset=s=>pfKindS(s)==='Futures'?{tz:'America/Chicago',h:17,label:'17:00 CT'}:{tz:'Europe/Prague',h:0,label:'00:00 CE(S)T'};
+function pfDayKey(sec,s){ const r=pfReset(s), p=pfTz(sec+(r.h?(24-r.h)*3600:0),r.tz); return `${p.y}-${String(p.m).padStart(2,'0')}-${String(p.d).padStart(2,'0')}` }
+/* extra regels per soort firm (bovenop de programma-regels) */
+function pfProfile(s){ const k=pfKindS(s), f=allFirms().find(x=>x.id===s.firm), p=f&&firmProg(f,s.prog)||{};
+  return { kind:k, reset:pfReset(s),
+    flatBy:k==='Futures'?{h:16,mi:10,tz:'America/Chicago',label:'16:10 CT'}:null,
+    news:p.news===false?null:(p.news&&typeof p.news==='object'?p.news:(k==='CFD'?{min:2,impact:'high',funded:true}:null)),
+    gamblePct:p.gamblePct||5, martingale:true, lock:k==='Futures',
+    payout:(!(+s.target>0))?(p.payout||(k==='Futures'?{winDays:5,winDayPct:0.3}:{winDays:0,winDayPct:0})):null } }
+/* TWF Pro: ontgrendel met 5 gehaalde challenges of 5 goedgekeurde payouts */
+function twfPro(){ let passed=0, payouts=0; DB.list('sessions').filter(s=>s.type==='propfirm').forEach(s=>{ if(s.pfPassedAt) passed++; payouts+=(+s.pfPayouts||0) });
+  return {passed,payouts,unlocked:passed>=5||payouts>=5,need:5} }
+const pfStrict=s=>((s&&s.strict==='pro')||(!s||!s.strict)&&(profile().prefs||{}).propStrict==='pro')&&twfPro().unlocked?'pro':'firm';
+/* ---------- nieuws (ForexFactory) ---------- */
+const NEWS={rows:[],from:Infinity,to:-Infinity,busy:null};
+function symCcys(sym){ const a=asset(sym)||{}, u=String(sym).toUpperCase();
+  if(a.cat==='Forex'&&u.length>=6) return [u.slice(0,3),u.slice(3,6)];
+  if(/^(GER|DE|FDAX|FESX|EU50|FRA|ESP)/.test(u)||u==='6E1') return ['EUR'].concat(u==='6E1'?['USD']:[]);
+  if(/^UK100/.test(u)||u==='6B1') return ['GBP'].concat(u==='6B1'?['USD']:[]);
+  if(/^JP225/.test(u)||u==='6J1') return ['JPY'].concat(u==='6J1'?['USD']:[]);
+  if(/^AUS200/.test(u)) return ['AUD']; if(/^HK50/.test(u)) return ['CNY','USD'];
+  return ['USD'] }
+async function newsEnsure(fromSec,toSec){ if(!DB.sb) return NEWS.rows; if(fromSec>=NEWS.from&&toSec<=NEWS.to) return NEWS.rows;
+  if(NEWS.busy) return NEWS.busy;
+  NEWS.busy=(async()=>{ try{ const a=Math.min(fromSec,NEWS.from), b=Math.max(toSec,NEWS.to);
+      const {data}=await DB.sb.from('news_events').select('ts,ccy,title,impact').gte('ts',new Date(a*1000).toISOString()).lte('ts',new Date(b*1000).toISOString()).eq('impact','high').order('ts').limit(5000);
+      if(data){ NEWS.rows=data.map(r=>({t:Math.floor(new Date(r.ts).getTime()/1000),ccy:r.ccy,title:r.title})); NEWS.from=a; NEWS.to=b } }catch(e){}
+    NEWS.busy=null; return NEWS.rows })();
+  return NEWS.busy }
+function newsNear(sec,ccys,min){ const w=(min||2)*60; return NEWS.rows.find(n=>Math.abs(n.t-sec)<=w&&ccys.includes(n.ccy))||null }
+async function newsSync(force){ try{ if(!DB.sb||!DB.sb.functions) return; const last=+lsGet('twf_newssync')||0; if(!force&&Date.now()-last<6*3600e3) return; lsSet('twf_newssync',String(Date.now())); await DB.sb.functions.invoke('twf-news',{body:{}}) }catch(e){} }
+
+/* ---------- de regelcheck (vervangt de oude) ---------- */
+function propEval(s,forceMode){
   const L=(nl,en)=>LANG==='en'?en:nl, acc=DB.get('accounts',s.account)||{}, start=s.startBalance??acc.balance??100000, sp=sym=>SPEC[sym]||{cs:1};
-  const lvl={soft:1,normal:2,strict:3}[s.strict||(profile().prefs||{}).propStrict||'normal']||2;
-  const tr=(s.trades||[]).slice().sort((a,b)=>a.closeTime-b.closeTime), days={};
+  const mode=forceMode||pfStrict(s), P=pfProfile(s), lvl=3;
+  const tr=(s.trades||[]).slice().sort((a,b)=>a.closeTime-b.closeTime), days={}, dayN={};
   let bal=start, peak=start, maxDD=0, eodPeak=start, lastDay=null;
-  for(const x of tr){ const d=propDayOf(x.closeTime); if(lastDay&&d!==lastDay) eodPeak=Math.max(eodPeak,bal); lastDay=d;
-    days[d]=(days[d]||0)+(x.pnl||0); bal+=x.pnl||0; peak=Math.max(peak,bal);
-    const ref=s.ddType==='trailing'?peak:s.ddType==='eod'?eodPeak:start; maxDD=Math.max(maxDD,ref-bal) }
-  const profit=bal-start, dvals=Object.values(days), bestDay=dvals.length?Math.max(...dvals):0, worstDay=dvals.length?Math.min(...dvals):0, nDays=dvals.length;
+  for(const x of tr){ const d=pfDayKey(x.closeTime,s); if(lastDay&&d!==lastDay) eodPeak=Math.max(eodPeak,bal); lastDay=d;
+    days[d]=(days[d]||0)+(x.pnl||0); dayN[d]=(dayN[d]||0)+1; bal+=x.pnl||0; peak=Math.max(peak,bal);
+    let ref=s.ddType==='trailing'?peak:s.ddType==='eod'?eodPeak:start; if(P.lock&&s.ddType!=='static') ref=Math.min(ref,start+start*(+s.maxloss||10)/100); maxDD=Math.max(maxDD,ref-bal) }
+  // de zwevende (live) drawdown telt ook mee — gemeten in de sessie
+  if(s.pfWorstFloat!=null) maxDD=Math.max(maxDD,s.pfWorstFloat);
+  const profit=bal-start, dvals=Object.values(days), bestDay=dvals.length?Math.max(...dvals):0, worstDay=Math.min(0,dvals.length?Math.min(...dvals):0, s.pfWorstDayFloat!=null?-s.pfWorstDayFloat:0), nDays=dvals.length;
   const pct=v=>(v/start*100).toFixed(2)+'%', checks=[], issues={};
-  const add=(k,label,ok,val,lim,level)=>{ if(level<=lvl) checks.push({k,label,ok,val,lim,level}) };
-  const flag=(x,msg)=>{ (issues[x.id]=issues[x.id]||[]).push(msg) };
-  if(+s.target>0) add('target',L('Winstdoel','Profit target'),profit>=start*s.target/100,`${money(profit)} (${pct(profit)})`,`${s.target}%`,1);
-  if(+s.daily>0) add('daily',L('Max dagverlies','Max daily loss'),-worstDay<start*s.daily/100&&s.pfStatus!=='failed',`${money(Math.min(0,worstDay))}`,`${s.daily}% (${money(-start*s.daily/100)})`,1);
-  add('maxdd',L('Max drawdown','Max drawdown')+(s.ddType&&s.ddType!=='static'?` (${s.ddType==='eod'?'EOD trailing':'trailing'})`:''),maxDD<start*(+s.maxloss||10)/100&&s.pfStatus!=='failed',`${money(-maxDD)} (${pct(maxDD)})`,`${s.maxloss||10}%`,1);
-  if(+s.mindays>0) add('mindays',L('Minimaal aantal handelsdagen','Minimum trading days'),nDays>=+s.mindays,`${nDays}`,`${s.mindays}`,2);
-  if(+s.consistency>0) add('cons',L('Consistentie (beste dag t.o.v. totale winst)','Consistency (best day vs total profit)'),profit<=0||bestDay<=profit*s.consistency/100,profit>0?`${Math.round(bestDay/profit*100)}%`:'—',`≤ ${s.consistency}%`,2);
-  if(+s.maxLots>0){ const bad=tr.filter(x=>x.qty>s.maxLots); bad.forEach(x=>flag(x,L(`Te groot: ${x.qty} (max ${s.maxLots})`,`Too large: ${x.qty} (max ${s.maxLots})`))); add('lots',L('Max positiegrootte','Max position size'),!bad.length,bad.length?L(`${bad.length} trade(s) te groot`,`${bad.length} trade(s) too large`):'OK',`${s.maxLots}`,2) }
-  if(+s.minHold>0){ const bad=tr.filter(x=>(x.closeTime-x.openTime)<s.minHold*60); bad.forEach(x=>flag(x,L(`Te kort aangehouden (${Math.round((x.closeTime-x.openTime)/60)} min)`,`Held too short (${Math.round((x.closeTime-x.openTime)/60)} min)`))); add('hold',L('Minimale tradeduur','Minimum trade duration'),!bad.length,bad.length?L(`${bad.length} te kort`,`${bad.length} too short`):'OK',`${s.minHold} min`,3) }
-  if(s.slReq){ const bad=tr.filter(x=>x.sl==null); bad.forEach(x=>flag(x,L('Geen stop loss','No stop loss'))); add('sl',L('Stop loss verplicht','Stop loss required'),!bad.length,bad.length?L(`${bad.length} zonder SL`,`${bad.length} without SL`):'OK','',3) }
-  if(+s.maxRisk>0){ const bad=tr.filter(x=>x.sl!=null&&Math.abs(x.entry-x.sl)*x.qty*sp(x.sym).cs/start*100>s.maxRisk+1e-9); bad.forEach(x=>flag(x,L(`Risico ${(Math.abs(x.entry-x.sl)*x.qty*sp(x.sym).cs/start*100).toFixed(2)}% (max ${s.maxRisk}%)`,`Risk ${(Math.abs(x.entry-x.sl)*x.qty*sp(x.sym).cs/start*100).toFixed(2)}% (max ${s.maxRisk}%)`))); add('risk',L('Max risico per trade','Max risk per trade'),!bad.length,bad.length?L(`${bad.length} te veel risico`,`${bad.length} too much risk`):'OK',`${s.maxRisk}%`,3) }
-  if(s.weekend===false){ const wk=x=>{ const a=new Date(x.openTime*1000), span=(x.closeTime-x.openTime)/86400, dow=a.getUTCDay(); return span>=2.5||(dow===5&&new Date(x.closeTime*1000).getUTCDay()!==5&&span>0.2) }; const bad=tr.filter(wk); bad.forEach(x=>flag(x,L('Over het weekend aangehouden','Held over the weekend'))); add('wknd',L('Geen weekendposities','No weekend positions'),!bad.length,bad.length?L(`${bad.length} over weekend`,`${bad.length} over weekend`):'OK','',3) }
-  const failed=s.pfStatus==='failed'||checks.some(c=>(c.k==='daily'||c.k==='maxdd')&&!c.ok);
-  const allOk=checks.every(c=>c.ok), funded=!(+s.target>0);
-  const status=failed?'failed':(!funded&&allOk)?'passed':funded?'funded':'running';
+  /* sev: hard = challenge direct mislukt · viol = overtreding (payout/goedkeuring in gevaar) · req = nog te halen · warn = riskant */
+  const add=(k,label,ok,val,lim,sev,why)=>checks.push({k,label,ok,val,lim,level:1,sev,why});
+  const flag=(x,msg,sev='viol')=>{ (issues[x.id]=issues[x.id]||[]).push(msg); (x._sev=x._sev||{})[sev]=1 };
+  const riskPct=x=>x.sl!=null?Math.abs(x.entry-x.sl)*x.qty*sp(x.sym).cs/start*100:null;
+  if(+s.target>0) add('target',L('Winstdoel','Profit target'),profit>=start*s.target/100,`${money(profit)} (${pct(profit)})`,`${s.target}%`,'req');
+  if(+s.daily>0) add('daily',L('Max dagverlies','Max daily loss')+` · reset ${P.reset.label}`,-worstDay<start*s.daily/100&&s.pfFail!=='daily',`${money(worstDay)}`,`${s.daily}% (${money(-start*s.daily/100)})`,'hard',L('Inclusief open verlies (equity). Raak je de grens, dan is de challenge direct mislukt.','Including open loss (equity). Hitting the limit fails the challenge immediately.'));
+  add('maxdd',L('Max drawdown','Max drawdown')+(s.ddType&&s.ddType!=='static'?` (${s.ddType==='eod'?'EOD trailing':'trailing'})`:''),maxDD<start*(+s.maxloss||10)/100&&s.pfFail!=='max',`${money(-maxDD)} (${pct(maxDD)})`,`${s.maxloss||10}%`,'hard',L('Gemeten op equity, ook tijdens een trade.','Measured on equity, also during a trade.'));
+  if(+s.mindays>0) add('mindays',L('Minimaal aantal handelsdagen','Minimum trading days'),nDays>=+s.mindays,`${nDays}`,`${s.mindays}`,'req');
+  if(+s.consistency>0) add('cons',L('Consistentie (beste dag t.o.v. totale winst)','Consistency (best day vs total profit)'),profit<=0||bestDay<=profit*s.consistency/100,profit>0?`${Math.round(bestDay/profit*100)}%`:'—',`≤ ${s.consistency}%`,'viol',L('Eén uitschieter-dag mag niet het grootste deel van je winst zijn.','One outlier day may not be most of your profit.'));
+  if(+s.maxLots>0){ const bad=tr.filter(x=>x.qty>s.maxLots); bad.forEach(x=>flag(x,L(`Te groot: ${x.qty} (max ${s.maxLots})`,`Too large: ${x.qty} (max ${s.maxLots})`))); add('lots',L('Max positiegrootte','Max position size'),!bad.length,bad.length?L(`${bad.length} trade(s) te groot`,`${bad.length} trade(s) too large`):'OK',`${s.maxLots}`,'viol') }
+  if(+s.minHold>0){ const bad=tr.filter(x=>(x.closeTime-x.openTime)<s.minHold*60); bad.forEach(x=>flag(x,L(`Te kort aangehouden (${Math.round((x.closeTime-x.openTime)/60)} min)`,`Held too short (${Math.round((x.closeTime-x.openTime)/60)} min)`))); add('hold',L('Minimale tradeduur','Minimum trade duration'),!bad.length,bad.length?L(`${bad.length} te kort`,`${bad.length} too short`):'OK',`${s.minHold} min`,'viol') }
+  if(s.slReq||mode==='pro'){ const bad=tr.filter(x=>x.sl==null); bad.forEach(x=>flag(x,L('Geen stop loss','No stop loss'))); add('sl',L('Stop loss verplicht','Stop loss required')+(mode==='pro'&&!s.slReq?' (TWF Pro)':''),!bad.length,bad.length?L(`${bad.length} zonder SL`,`${bad.length} without SL`):'OK','','viol') }
+  { const cap=mode==='pro'?Math.min(1,+s.maxRisk||1):+s.maxRisk; if(cap>0){ const bad=tr.filter(x=>riskPct(x)!=null&&riskPct(x)>cap+1e-9); bad.forEach(x=>flag(x,L(`Risico ${riskPct(x).toFixed(2)}% (max ${cap}%)`,`Risk ${riskPct(x).toFixed(2)}% (max ${cap}%)`))); add('risk',L('Max risico per trade','Max risk per trade')+(mode==='pro'?' (TWF Pro)':''),!bad.length,bad.length?L(`${bad.length} te veel risico`,`${bad.length} too much risk`):'OK',`${cap}%`,'viol') } }
+  { const bad=tr.filter(x=>riskPct(x)!=null&&riskPct(x)>P.gamblePct); bad.forEach(x=>flag(x,L(`Gokken: ${riskPct(x).toFixed(1)}% risico op één trade`,`Gambling: ${riskPct(x).toFixed(1)}% risk on one trade`)));
+    add('gamble',L('Geen "gok"-trades','No gambling trades'),!bad.length,bad.length?L(`${bad.length} trade(s) > ${P.gamblePct}% risico`,`${bad.length} trade(s) > ${P.gamblePct}% risk`):'OK',`≤ ${P.gamblePct}%`,'viol',L('Firms keuren accounts af waar één trade een groot deel van het account riskeert.','Firms reject accounts where one trade risks a large part of the account.')) }
+  if(P.martingale){ const bad=[]; for(let i=1;i<tr.length;i++){ const a=tr[i-1], b=tr[i]; if((a.pnl||0)<0&&b.qty>=a.qty*2&&b.openTime-a.closeTime<6*3600) bad.push(b) } bad.forEach(x=>flag(x,L('Martingale: positie verdubbeld direct na verlies','Martingale: size doubled right after a loss')));
+    add('marti',L('Geen martingale','No martingale'),!bad.length,bad.length?L(`${bad.length}×`,`${bad.length}×`):'OK','','viol') }
+  if(s.weekend===false){ const wk=x=>{ const a=new Date(x.openTime*1000), span=(x.closeTime-x.openTime)/86400, dow=a.getUTCDay(); return span>=2.5||(dow===5&&new Date(x.closeTime*1000).getUTCDay()!==5&&span>0.2) }; const bad=tr.filter(wk); bad.forEach(x=>flag(x,L('Over het weekend aangehouden','Held over the weekend'))); add('wknd',L('Geen weekendposities','No weekend positions'),!bad.length,bad.length?L(`${bad.length} over weekend`,`${bad.length} over weekend`):'OK','','viol') }
+  if(P.flatBy){ const late=(s.pfViol||[]).filter(v=>v.k==='flat'); const cut=P.flatBy.h*60+P.flatBy.mi;
+    const crosses=x=>{ const o=pfTz(x.openTime,'America/Chicago'), m=o.h*60+o.mi; const next=x.openTime+((m<cut?cut-m:24*60-m+cut)*60); return next<x.closeTime };
+    const bad=tr.filter(crosses); bad.forEach(x=>flag(x,L('Positie over de dagafsluiting (16:10 CT) aangehouden','Position held past the daily close (16:10 CT)')));
+    add('flat',L('Plat vóór 16:10 CT','Flat before 16:10 CT'),!bad.length&&!late.length,(bad.length+late.length)?L(`${bad.length+late.length}×`,`${bad.length+late.length}×`):'OK','','viol',L('Futures-firms sluiten je posities om 16:10 CT; overnight aanhouden mag niet.','Futures firms close your positions at 16:10 CT; holding overnight is not allowed.')) }
+  if(P.news||mode==='pro'){ const win=(P.news&&P.news.min)||2, applies=mode==='pro'||!P.news.funded||!(+s.target>0);
+    const bad=NEWS.rows.length?tr.filter(x=>{ const c=symCcys(x.sym); return newsNear(x.openTime,c,win)||newsNear(x.closeTime,c,win) }):[];
+    bad.forEach(x=>{ const n=newsNear(x.openTime,symCcys(x.sym),win)||newsNear(x.closeTime,symCcys(x.sym),win); flag(x,L(`Rond nieuws: ${n?n.ccy+' '+n.title:''}`,`Around news: ${n?n.ccy+' '+n.title:''}`),applies?'viol':'warn') });
+    add('news',L(`Geen trades ±${win} min rond high-impact nieuws`,`No trades ±${win} min around high-impact news`)+(mode==='pro'?' (TWF Pro)':''),!(applies&&bad.length),NEWS.rows.length?(bad.length?L(`${bad.length} trade(s)`,`${bad.length} trade(s)`):'OK'):L('geen nieuwsdata','no news data'),'',applies?'viol':'warn',applies?'':L('Bij deze firm geldt dit pas in de funded fase; nu ter info.','At this firm this applies in the funded phase; shown as info now.')) }
+  if(mode==='pro'){ const over=Object.entries(dayN).filter(([,n])=>n>3); add('pro3',L('Max 3 trades per dag (TWF Pro)','Max 3 trades per day (TWF Pro)'),!over.length,over.length?L(`${over.length} dag(en) te veel`,`${over.length} day(s) too many`):'OK','≤ 3','viol') }
+  let winDays=0; if(P.payout&&P.payout.winDays){ winDays=dvals.filter(v=>v>=start*P.payout.winDayPct/100).length; add('windays',L(`Winstdagen voor payout (≥ ${P.payout.winDayPct}%)`,`Winning days for payout (≥ ${P.payout.winDayPct}%)`),winDays>=P.payout.winDays,`${winDays}`,`${P.payout.winDays}`,'req') }
+  const failed=s.pfStatus==='failed'||checks.some(c=>c.sev==='hard'&&!c.ok);
+  const allOk=checks.every(c=>c.ok||c.sev==='warn'), funded=!(+s.target>0);
+  const status=s.pfPractice?'practice':failed?'failed':(!funded&&allOk)?'passed':funded?'funded':'running';
   const payout=funded?(allOk&&profit>0):null;
-  return {start,profit,bal,bestDay,worstDay,nDays,maxDD,checks,issues,status,payout,lvl,split:+s.split||80,funded};
+  // tijdlijn per dag
+  const timeline=Object.keys(days).sort().map(d=>({d,pnl:days[d],n:dayN[d]}));
+  return {start,profit,bal,bestDay,worstDay,nDays,maxDD,checks,issues,status,payout,lvl,split:+s.split||80,funded,mode,P,timeline,winDays};
 }
-const PFSTAT=st=>{ const L=(nl,en)=>LANG==='en'?en:nl; return {failed:[L('Gezakt','Failed'),'neg'],passed:[L('Gehaald','Passed'),'pos'],funded:[L('Funded','Funded'),'acc'],running:[L('Lopend','Running'),'']}[st] };
+const PFSTAT=st=>{ const L=(nl,en)=>LANG==='en'?en:nl; return {failed:[L('Gezakt','Failed'),'neg'],passed:[L('Gehaald','Passed'),'pos'],funded:[L('Funded','Funded'),'acc'],running:[L('Lopend','Running'),''],practice:[L('Oefenen','Practice'),'']}[st]||['',''] };
+/* "wat als": dezelfde trades met een andere risicofactor */
+function pfWhatIf(s,k){ const t2=(s.trades||[]).map(x=>({...x,pnl:(x.pnl||0)*k,qty:x.qty*k})); const e=propEval({...s,trades:t2,pfStatus:null,pfFail:null,pfWorstFloat:s.pfWorstFloat!=null?s.pfWorstFloat*k:null,pfWorstDayFloat:s.pfWorstDayFloat!=null?s.pfWorstDayFloat*k:null},'firm');
+  let passDay=null; if(+s.target>0){ let b=e.start; for(const x of t2.slice().sort((a,b)=>a.closeTime-b.closeTime)){ b+=x.pnl; if(b-e.start>=e.start*s.target/100){ passDay=pfDayKey(x.closeTime,s); break } } }
+  return {k,status:e.status,profit:e.profit,maxDD:e.maxDD,passDay} }
+
 function pageProp(){
   const L=(nl,en)=>LANG==='en'?en:nl, pf=(profile().prefs||{}).propStrict||'normal', ss=DB.list('sessions').filter(s=>s.type==='propfirm').sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
   const bar=(v,max,neg)=>`<div class="pbar ${neg?'neg':''}"><i style="width:${Math.max(0,Math.min(100,max?v/max*100:0))}%"></i></div>`;
   return `<div class="phead"><div class="row" style="align-items:flex-end"><div><h1>Prop firms</h1><div class="psub">${L('Oefen een challenge alsof het echt is — met dezelfde regels als de prop firm.','Practise a challenge like it is real — with the same rules as the prop firm.')}</div></div><div class="spacer"></div>
-     <button class="btn btn-g" disabled title="${L('Binnenkort','Coming soon')}">${ic('spark',15)} ${L('AI-assistent','AI assistant')} <span class="soon">${L('binnenkort','soon')}</span></button>
+     <button class="btn btn-g" id="pfAi">${ic('spark',15)} ${L('AI-adviseur','AI advisor')}</button>${IS_ADMIN&&DB.sb?`<button class="btn btn-g" id="pfAiRules">${ic('check',15)} ${L('Regels controleren','Check rules')}</button>`:''}
      <button class="btn btn-g" id="pfNewFirm">${ic('plus',15)} ${L('Eigen prop firm','Custom prop firm')}</button><button class="btn btn-p" id="pfNew">${ic('plus',15)} ${L('Prop firm-sessie','Prop firm session')}</button></div></div>
    <div class="pbody">
     <div class="pfhow">${[[ic('trophy',20),L('1. Kies een prop firm','1. Pick a prop firm'),L('Neem een bekende firm of maak je eigen regels.','Use a known firm or create your own rules.')],[ic('play',20),L('2. Trade de challenge','2. Trade the challenge'),L('Dagverlies en drawdown worden live bewaakt; bij overschrijden ben je gezakt.','Daily loss and drawdown are watched live; breach them and you fail.')],[ic('check',20),L('3. Regelcheck & payout','3. Rule check & payout'),L('Elke trade wordt gecontroleerd. Bij een funded fase zie je of je payout zou worden goedgekeurd.','Every trade is checked. In a funded phase you see if your payout would be approved.')]].map(([i,a,b])=>`<div class="box"><span class="ci">${i}</span><b>${a}</b><small>${b}</small></div>`).join('')}</div>
-    <div class="box pfstrict"><div><b>${L('Strengheid van de payout-check','Payout check strictness')}</b><small>${STRICT_HINT(pf)}</small></div>
-      <div class="seg">${[['soft','Soepel','Relaxed'],['normal','Normaal','Normal'],['strict','Streng','Strict']].map(([k,nl,en])=>`<button class="${pf===k?'on':''}" data-pstrict="${k}">${L(nl,en)}</button>`).join('')}</div></div>
+    ${(()=>{ const pr=twfPro(), m=pf==='pro'&&pr.unlocked?'pro':'firm'; return `<div class="box pfstrict"><div><b>${L('Strengheid van de regelcheck','Rule check strictness')}</b><small>${STRICT_HINT(m)}</small>${pr.unlocked?`<small class="pos">✓ ${L('TWF Pro ontgrendeld','TWF Pro unlocked')}</small>`:`<div class="proprog"><span>🔒 TWF Pro</span><div><small>${L('Gehaalde challenges','Passed challenges')} ${pr.passed}/5</small><div class="ph-b ok"><i style="width:${Math.min(100,pr.passed/5*100)}%"></i></div></div><div><small>${L('Payouts','Payouts')} ${pr.payouts}/5</small><div class="ph-b ok"><i style="width:${Math.min(100,pr.payouts/5*100)}%"></i></div></div></div>`}</div>
+      <div class="seg">${[['firm','Zoals de firm','As the firm'],['pro','TWF Pro','TWF Pro']].map(([k,nl,en])=>`<button class="${m===k?'on':''}${k==='pro'&&!pr.unlocked?' locked':''}" data-pstrict="${k}">${k==='pro'&&!pr.unlocked?'🔒 ':''}${L(nl,en)}</button>`).join('')}</div></div>` })()}
     <h3 class="sech">${L('Jouw prop-rekeningen','Your prop accounts')}</h3>
     ${ss.length?Object.entries(ss.reduce((g,x)=>{ (g[x.firm||'_custom']=g[x.firm||'_custom']||[]).push(x); return g },{})).map(([fid,list])=>{ const F0=allFirms().find(x=>x.id===fid);
       return `<div class="pfgroup"><div class="pfgh">${F0?firmLogo(F0,34):`<span class="flogo2" style="width:34px;height:34px">${ic('trophy',16)}</span>`}<div style="flex:1;min-width:0"><b>${F0?esc(F0.name):L('Eigen regels','Custom rules')}</b><small>${F0?esc(F0.kind==='Futures'?'Futures':'CFD & forex'):''} · ${list.length} ${L(list.length===1?'rekening':'rekeningen',list.length===1?'account':'accounts')} · ${L('totaal','total')} ${money(list.reduce((a,x)=>a+propEval(x).profit,0))}</small></div>${F0?`<button class="btn btn-g sm" data-pstart="${F0.id}">${ic('plus',14)} ${L('Nieuwe rekening','New account')}</button>`:''}</div>
@@ -3416,8 +3534,10 @@ function pageProp(){
 }
 function bindProp(m){
   const q=s=>m.querySelectorAll(s);
-  q('[data-pstrict]').forEach(b=>b.onclick=async()=>{ const p=profile(); await DB.put('profile',{...p,id:'me',prefs:{...(p.prefs||{}),propStrict:b.dataset.pstrict}}); render() });
+  q('[data-pstrict]').forEach(b=>b.onclick=async()=>{ if(b.dataset.pstrict==='pro'&&!twfPro().unlocked){ toast('TWF Pro 🔒',LANG==='en'?'Unlock with 5 passed challenges or 5 approved payouts.':'Ontgrendel met 5 gehaalde challenges of 5 goedgekeurde payouts.','info',5000); return } const p=profile(); await DB.put('profile',{...p,id:'me',prefs:{...(p.prefs||{}),propStrict:b.dataset.pstrict}}); render() });
   const nw=m.querySelector('#pfNew'); if(nw) nw.onclick=()=>sessionModal('propfirm');
+  const pa=m.querySelector('#pfAi'); if(pa) pa.onclick=()=>aiOpen(LANG==='en'?'Which prop firm challenge fits my results best and why? Compare the best options.':'Welke prop-firm-challenge past het best bij mijn resultaten en waarom? Vergelijk de beste opties.',{prop:true});
+  const pr=m.querySelector('#pfAiRules'); if(pr) pr.onclick=()=>aiRulesPicker();
   const nf=m.querySelector('#pfNewFirm'); if(nf) nf.onclick=()=>firmModal();
   q('[data-pstart]').forEach(b=>b.onclick=()=>sessionModal('propfirm',null,{firm:b.dataset.pstart,phase:0}));
   q('[data-pedit]').forEach(b=>b.onclick=()=>firmModal(DB.get('propfirms',b.dataset.pedit)));
@@ -3425,18 +3545,236 @@ function bindProp(m){
   q('[data-popen]').forEach(b=>b.onclick=()=>openSession(b.dataset.popen));
   q('[data-pcheck]').forEach(b=>b.onclick=()=>ruleCheckModal(DB.get('sessions',b.dataset.pcheck)));
 }
-function ruleCheckModal(s){
-  if(!s) return; const L=(nl,en)=>LANG==='en'?en:nl, e=propEval(s), [stl,stc]=PFSTAT(e.status), tr=(s.trades||[]).filter(x=>e.issues[x.id]);
+
+/* =========================================================
+   v12: PROP FIRM OP DE CHART — live bewaking, paneel, lijnen, checks, schermen
+   ========================================================= */
+function checkProp(live){
+  const s=SX.s; if(s.type!=='propfirm'||s.pfStatus||s.pfPractice) return;
+  const start=s.startBalance??SX.acc.balance, eq=equity(), ns=nowSec(), P=pfProfile(s), L=(nl,en)=>LANG==='en'?en:nl;
+  const day=pfDayKey(ns,s);
+  if(s.dayKey!==day){ if(s.dayKey&&live) pfEndOfDay(s,s.dayKey); s.dayKey=day; s.dayStart=s.balance??start }
+  if(s.ddType==='trailing') s.peak=Math.max(s.peak??start,eq); else if(s.ddType==='eod') s.peak=Math.max(s.peak??start,s.dayStart);
+  const ml=start*(+s.maxloss||10)/100; let ref=(s.ddType==='trailing'||s.ddType==='eod')?(s.peak??start):start; if(P.lock&&s.ddType!=='static') ref=Math.min(ref,start+ml);
+  const floor=ref-ml, dfloor=+s.daily>0?s.dayStart-start*(+s.daily)/100:-Infinity;
+  s.pfFloors={daily:dfloor,max:floor,ref};
+  s.pfWorstFloat=Math.max(s.pfWorstFloat||0,ref-eq); s.pfWorstDayFloat=Math.max(s.pfWorstDayFloat||0,s.dayStart-eq);
+  // futures: om 16:10 CT moet je plat staan (de firm sluit je posities)
+  if(P.flatBy&&SX.pos.length){ const c=pfTz(ns,'America/Chicago'), m=c.h*60+c.mi;
+    if(m>=P.flatBy.h*60+P.flatBy.mi&&m<17*60&&c.wd!=='Sat'&&c.wd!=='Sun'){ [...SX.pos].filter(p=>p.sym===SX.sym).forEach(p=>closePos(p,closeQuote(p),'rule'));
+      (s.pfViol=s.pfViol||[]).push({k:'flat',t:ns}); toast(L('Dagafsluiting 16:10 CT','Daily close 16:10 CT'),L('Je posities zijn gesloten, zoals de firm doet. Overnight aanhouden telt als overtreding.','Your positions were closed, like the firm does. Holding overnight counts as a violation.'),'bad',7000); SX.dirty=true } }
+  const fail=eq<=floor+1e-9?'max':eq<=dfloor+1e-9?'daily':null;
+  if(fail){ s.pfStatus='failed'; s.pfFail=fail; s.pfFailAt=ns; s.pfFailEq=eq; [...SX.pos].forEach(p=>{ if(p.sym===SX.sym) closePos(p,closeQuote(p),'rule') }); stopPlay(); SX.dirty=true;
+    try{ saveSession() }catch(e){} setTimeout(()=>pfBreachScreen(s),60); return }
+  if(!live&&+s.target>0&&(s.balance??start)>=start*(1+(+s.target)/100)){
+    const e=propEval(s), open=e.checks.filter(c=>!c.ok&&c.sev!=='warn'&&c.k!=='target');
+    if(!open.length){ s.pfStatus='passed'; s.pfPassedAt=new Date().toISOString(); stopPlay(); try{ saveSession() }catch(x){} setTimeout(()=>pfPassScreen(s,e),60) }
+    else if(s.pfNoteAt!==s.trades.length){ s.pfNoteAt=s.trades.length; toast(L('Winstdoel bereikt — nog niet geslaagd','Profit target reached — not passed yet'),open.map(c=>`${c.label}: ${c.val} / ${c.lim}`).join(' · '),'info',9000) } }
+}
+function pfEndOfDay(s,dayKey){ const L=(nl,en)=>LANG==='en'?en:nl, tr=(s.trades||[]).filter(x=>pfDayKey(x.closeTime,s)===dayKey); if(!tr.length) return;
+  const net=tr.reduce((a,x)=>a+(x.pnl||0),0), e=propEval(s), bad=e.checks.filter(c=>!c.ok&&(c.sev==='viol'||c.sev==='hard'));
+  toast(L(`Handelsdag ${dayKey.slice(5)} afgesloten`,`Trading day ${dayKey.slice(5)} closed`),`${fmtUsd(net)} · ${tr.length} trade(s) · ${bad.length?'⚠ '+bad.map(c=>c.label).join(', '):L('✓ alle regels','✓ all rules')}`,bad.length?'info':'ok',6500) }
+/* ---------- prop-paneel op de chart ---------- */
+function pfHud(){ const el=$('#pfHud'); if(!el||!SX||SX.s.type!=='propfirm') return; const s=SX.s, L=(nl,en)=>LANG==='en'?en:nl;
+  const start=s.startBalance??SX.acc.balance, eq=equity(), F=s.pfFloors||{daily:-Infinity,max:start*(1-(+s.maxloss||10)/100)}, f=allFirms().find(x=>x.id===s.firm), P=pfProfile(s);
+  const e=s._pfE&&s._pfE.n===s.trades.length?s._pfE.e:(s._pfE={n:s.trades.length,e:propEval(s)}).e;
+  const tgt=+s.target>0?start*s.target/100:0, dLim=+s.daily>0?start*s.daily/100:0, mLim=start*(+s.maxloss||10)/100;
+  const dFl=isFinite(F.daily)?F.daily:(s.dayStart??s.balance??start)-dLim, dRoom=dLim?Math.max(0,eq-dFl):null, mRoom=Math.max(0,eq-(isFinite(F.max)?F.max:start-mLim));
+  const bar=(lab,val,used,txt)=>{ const u=Math.max(0,Math.min(1,used)), c=u<.7?'ok':u<.9?'mid':'bad'; return `<div class="ph-r"><div class="ph-l"><span>${lab}</span><b>${txt}</b></div><div class="ph-b ${c}"><i style="width:${(u*100).toFixed(1)}%"></i></div></div>` };
+  const nx=NEWS.rows.find(n=>n.t>nowSec()&&symCcys(SX.sym).includes(n.ccy)), nxMin=nx?Math.round((nx.t-nowSec())/60):null;
+  const _mv=lsGet('twf_pfhud_min'), min=_mv==null?matchMedia('(max-width:700px)').matches:_mv==='1', st=s.pfPractice?'practice':s.pfStatus;
+  const sig=[min,st,Math.round(eq),Math.round(F.daily),Math.round(F.max),s.trades.length,nxMin,e.nDays].join('|'); if(el._sig===sig) return; el._sig=sig;
+  const head=`<div class="ph-h">${f?firmLogo(f,22):''}<span class="ph-t"><b>${esc(f?f.name:L('Eigen regels','Custom'))}</b><small>${esc([s.progName,(f&&firmProg(f,s.prog)?firmProg(f,s.prog).phases[s.phase||0].name:''),L('dag','day')+' '+e.nDays].filter(Boolean).join(' · '))}</small></span>${e.mode==='pro'?'<span class="ph-pro">PRO</span>':''}<button class="ph-x" data-phmin>${ic(min?'next':'x',13)}</button></div>`;
+  if(min){ el.className='pfhud min'; el.innerHTML=`<button class="ph-pill" data-phmin>${f?firmLogo(f,18):ic('trophy',14)}<span>${tgt?L('Doel','Target')+' '+Math.max(0,Math.round((eq-start)/tgt*100))+'%':L('Funded','Funded')}</span>${dRoom!=null?`<span class="${dRoom<dLim*.3?'neg':''}">${L('Dag','Day')} ${fmtUsd(dRoom)}</span>`:''}${st==='failed'?`<span class="neg">✗</span>`:st==='passed'?`<span class="pos">✓</span>`:''}</button>`; }
+  else { el.className='pfhud';
+    el.innerHTML=head+(st==='failed'?`<div class="ph-st bad">${ic('x',14)} ${L('Challenge mislukt','Challenge failed')}${s.pfPractice?' · '+L('oefenmodus','practice mode'):''}</div>`:st==='passed'?`<div class="ph-st ok">${ic('check',14)} ${L('Fase gehaald','Phase passed')}</div>`:st==='practice'?`<div class="ph-st">${L('Oefenmodus — regels uit','Practice mode — rules off')}</div>`:'')+
+      (tgt?bar(L('Winstdoel','Profit target'),eq-start,(eq-start)/tgt,`${fmtUsd(eq-start)} / ${fmtUsd(tgt)}`):bar(L('Winst (funded)','Profit (funded)'),eq-start,0,fmtUsd(eq-start)))+
+      (dLim?bar(L('Dagverlies-ruimte','Daily loss room'),dRoom,1-dRoom/dLim,`${fmtUsd(dRoom)} ${L('over','left')}`):'')+
+      bar(L('Drawdown-ruimte','Drawdown room'),mRoom,1-mRoom/mLim,`${fmtUsd(mRoom)} ${L('over','left')}`)+
+      (+s.mindays>0?bar(L('Handelsdagen','Trading days'),e.nDays,0,`${e.nDays} / ${s.mindays}`):'')+
+      (+s.consistency>0&&e.profit>0?bar(L('Consistentie','Consistency'),e.bestDay,(e.bestDay/e.profit*100)/(+s.consistency),`${Math.round(e.bestDay/e.profit*100)}% / ${s.consistency}%`):'')+
+      (P.payout&&P.payout.winDays?bar(L('Winstdagen (payout)','Winning days (payout)'),e.winDays,0,`${e.winDays} / ${P.payout.winDays}`):'')+
+      (nx&&nxMin<=240?`<div class="ph-news ${nxMin<=(P.news?P.news.min:2)?'now':''}">${ic('info',13)} ${esc(nx.ccy)} ${esc(nx.title)} · ${nxMin<=0?L('nu','now'):L(`over ${nxMin} min`,`in ${nxMin} min`)}</div>`:'')+
+      `<div class="ph-a"><button class="btn btn-g sm" data-phrules>${ic('check',13)} ${L('Regels','Rules')}</button>${!(+s.target>0)&&st!=='failed'?`<button class="btn btn-p sm" data-phpay>${ic('coins',13)} ${L('Payout aanvragen','Request payout')}</button>`:''}</div>` }
+  el.querySelectorAll('[data-phmin]').forEach(b=>b.onclick=ev=>{ ev.stopPropagation(); lsSet('twf_pfhud_min',min?'0':'1'); el._sig=''; pfHud() });
+  const r=el.querySelector('[data-phrules]'); if(r) r.onclick=ev=>{ ev.stopPropagation(); ruleCheckModal(s) };
+  const py=el.querySelector('[data-phpay]'); if(py) py.onclick=ev=>{ ev.stopPropagation(); pfRequestPayout(s) };
+  el.onpointerdown=ev=>ev.stopPropagation() }
+/* rode stippellijnen: op welke prijs raak je je dagverlies / max drawdown met je open posities */
+function pfDangerLines(){ if(!SX||!SX.series) return; const s=SX.s; (SX.pfLines||[]).forEach(l=>{ try{ SX.series.removePriceLine(l) }catch(e){} }); SX.pfLines=[];
+  if(s.type!=='propfirm'||s.pfStatus||s.pfPractice||!s.pfFloors) return; const ps=SX.pos.filter(p=>p.sym===SX.sym); if(!ps.length) return;
+  const k=ps.reduce((a,p)=>a+(p.side==='buy'?1:-1)*p.qty*ccs(SX.sym),0); if(Math.abs(k)<1e-12) return; const cur=SX.rp.current().close, eq=equity(), L=(nl,en)=>LANG==='en'?en:nl;
+  [[s.pfFloors.daily,L('Dagverlies','Daily loss')],[s.pfFloors.max,'Max DD']].forEach(([fl,t0])=>{ if(!isFinite(fl)) return; const P=cur+(fl-eq)/k; if(!(P>0)||Math.abs(P-cur)/cur>.25) return;
+    SX.pfLines.push(SX.series.createPriceLine({price:P,color:'#e5534b',lineWidth:1,lineStyle:2,axisLabelVisible:true,title:t0})) }) }
+/* nieuwsvlaggen op de chart (alleen nieuws dat al geweest is) */
+function pfNewsMarkers(){ if(!SX||!SX.series||!NEWS.rows.length) return; const c=symCcys(SX.sym), B=SX.blist||[]; if(!B.length) return; const last=B[B.length-1].time, first=B[0].time;
+  const m=NEWS.rows.filter(n=>c.includes(n.ccy)&&n.t>=first&&n.t<=nowSec()).map(n=>({time:Math.min(last,bucketOf(n.t,SX.tf)),position:'aboveBar',shape:'circle',color:'#e0a33a',text:n.ccy+' '+n.title.slice(0,18)}));
+  const seen=new Set(), out=[]; m.forEach(x=>{ const k=x.time+'|'+x.text; if(!seen.has(k)){ seen.add(k); out.push(x) } }); out.sort((a,b)=>a.time-b.time);
+  const sig=out.length+'|'+(out.length?out[out.length-1].time:0); if(SX._nmSig===sig) return; SX._nmSig=sig; try{ SX.series.setMarkers(out) }catch(e){} }
+/* check vóór een order */
+function pfPreTrade(side,qty,sl){ const s=SX.s, L=(nl,en)=>LANG==='en'?en:nl, w=[]; if(s.type!=='propfirm'||s.pfPractice) return w;
+  const start=s.startBalance??SX.acc.balance, cur=SX.rp.current().close, risk=sl!=null?Math.abs(cur-sl)*qty*ccs(SX.sym):null, rp=risk!=null?risk/start*100:null, P=pfProfile(s), mode=pfStrict(s);
+  if(rp!=null&&+s.maxRisk>0&&rp>+s.maxRisk) w.push(L(`Risico ${rp.toFixed(2)}% > max ${s.maxRisk}%`,`Risk ${rp.toFixed(2)}% > max ${s.maxRisk}%`));
+  if(rp!=null&&mode==='pro'&&rp>1) w.push(L(`TWF Pro: risico ${rp.toFixed(2)}% > 1%`,`TWF Pro: risk ${rp.toFixed(2)}% > 1%`));
+  if(rp!=null&&rp>P.gamblePct) w.push(L(`"Gok"-trade: ${rp.toFixed(1)}% risico`,`"Gambling" trade: ${rp.toFixed(1)}% risk`));
+  if(sl==null&&(s.slReq||mode==='pro')) w.push(L('Stop loss verplicht','Stop loss required'));
+  if(+s.maxLots>0&&qty>+s.maxLots) w.push(L(`${qty} lots > max ${s.maxLots}`,`${qty} lots > max ${s.maxLots}`));
+  const n=newsNear(nowSec(),symCcys(SX.sym),(P.news&&P.news.min)||2); if(n&&(P.news||mode==='pro')) w.push(L(`Nieuws nu: ${n.ccy} ${n.title}`,`News now: ${n.ccy} ${n.title}`));
+  if(risk!=null&&s.pfFloors&&isFinite(s.pfFloors.daily)&&equity()-risk<=s.pfFloors.daily) w.push(L('Raakt je SL, dan zit je onder je dagverlies-grens','If your SL hits, you are below your daily loss limit'));
+  if(P.flatBy){ const c=pfTz(nowSec(),'America/Chicago'), m=c.h*60+c.mi; if(m>=15*60+45&&m<17*60) w.push(L('Bijna dagafsluiting (16:10 CT)','Close to daily close (16:10 CT)')) }
+  return w }
+/* ---------- momenten: mislukt / fase gehaald / payout ---------- */
+function pfBreachScreen(s){ const L=(nl,en)=>LANG==='en'?en:nl, start=s.startBalance??100000, F=s.pfFloors||{};
+  const why=s.pfFail==='daily'?L(`Je equity raakte de dagverliesgrens van ${fmtUsd(start*(+s.daily)/100)} (${s.daily}% van ${fmtUsd(start)}).`,`Your equity hit the daily loss limit of ${fmtUsd(start*(+s.daily)/100)} (${s.daily}% of ${fmtUsd(start)}).`):L(`Je equity raakte de max-drawdowngrens (${fmtUsd(F.max||0)}).`,`Your equity hit the max drawdown limit (${fmtUsd(F.max||0)}).`);
+  const ov=modal(`<div class="pfscr bad"><div class="pfscr-i">${ic('x',34)}</div><h2>${L('Challenge mislukt','Challenge failed')}</h2><p>${why}</p><p class="muted">${L('Zo werkt het bij de echte firm ook: één keer over de grens en het account is weg — ook als de trade daarna terugkomt.','That is how the real firm works too: one breach and the account is gone — even if the trade comes back afterwards.')}</p>
+    <div class="pfscr-a"><button class="btn btn-g" data-r>${ic('check',15)} ${L('Rapport','Report')}</button><button class="btn btn-g" data-pr>${L('Doorgaan als oefening','Continue as practice')}</button><button class="btn btn-p" data-re>${ic('refresh',15)} ${L('Opnieuw starten','Start again')}</button></div></div>`,'sm');
+  ov.querySelector('[data-r]').onclick=()=>{ ov.remove(); ruleCheckModal(s) };
+  ov.querySelector('[data-pr]').onclick=()=>{ s.pfPractice=true; try{ saveSession() }catch(e){} ov.remove(); SX&&(SX.dirty=true); pfHud() };
+  ov.querySelector('[data-re]').onclick=async()=>{ ov.remove(); await pfSpawn(s,s.phase||0,L('opnieuw','retry')) } }
+function pfPassScreen(s,e){ const L=(nl,en)=>LANG==='en'?en:nl, f=allFirms().find(x=>x.id===s.firm), p=f&&firmProg(f,s.prog), ph=p?p.phases:[], i=+s.phase||0, nx=ph[i+1];
+  const ov=modal(`<div class="pfscr ok"><div class="pfscr-i">🎉</div><h2>${ph[i]?esc(ph[i].name):L('Fase','Phase')} ${L('gehaald!','passed!')}</h2><p>${L(`Winst ${fmtUsd(e.profit)} in ${e.nDays} handelsdag(en), alle regels gehaald.`,`Profit ${fmtUsd(e.profit)} in ${e.nDays} trading day(s), all rules met.`)}</p>${nx?`<p class="muted">${L(`Volgende stap: <b>${esc(nx.name)}</b>${nx.target?` — doel ${nx.target}%`:' — funded account'}, met een nieuw startsaldo.`,`Next step: <b>${esc(nx.name)}</b>${nx.target?` — target ${nx.target}%`:' — funded account'}, with a fresh starting balance.`)}</p>`:''}
+    <div class="pfscr-a"><button class="btn btn-g" data-r>${ic('check',15)} ${L('Rapport','Report')}</button>${nx?`<button class="btn btn-p" data-nx>${L('Door naar','On to')} ${esc(nx.name)} ${ic('next',15)}</button>`:''}</div></div>`,'sm');
+  ov.querySelector('[data-r]').onclick=()=>{ ov.remove(); ruleCheckModal(s) };
+  const b=ov.querySelector('[data-nx]'); if(b) b.onclick=async()=>{ ov.remove(); await pfSpawn(s,i+1) } }
+async function pfSpawn(s,phase,suffix){ const f=allFirms().find(x=>x.id===s.firm), st={...s}; if(f) applyFirm(st,f,phase,s.prog,s.size);
+  const size=+s.startBalance||+s.size||100000, cur=(SX&&SX.s.id===s.id)?new Date(nowSec()*1000).toISOString():s.cursor;
+  const ph=f&&firmProg(f,s.prog)?firmProg(f,s.prog).phases[phase]:null;
+  const o={...st,id:uid(),name:(s.name||'').replace(/ · (Fase|Phase) .*$/,'').replace(/ · (opnieuw|retry)$/,'')+(ph?` · ${ph.name}`:'')+(suffix?` · ${suffix}`:''),phase,trades:[],positions:[],orders:[],balance:size,startBalance:size,
+    pfStatus:null,pfFail:null,pfFailAt:null,pfPassedAt:null,pfPractice:false,pfViol:[],pfWorstFloat:null,pfWorstDayFloat:null,pfFloors:null,peak:null,dayKey:null,dayStart:null,pfNoteAt:null,pfPayouts:0,pfPayoutList:[],pfParent:s.id,
+    start:(cur||s.start||'').slice(0,10)||s.start,cursor:cur||s.cursor,created:new Date().toISOString(),updated:new Date().toISOString(),timeSpent:0};
+  delete o._pfE; await DB.put('sessions',o); try{ if(SX) closeSession() }catch(e){} setTimeout(()=>openSession(o.id),250) }
+function pfRequestPayout(s){ const L=(nl,en)=>LANG==='en'?en:nl; if(SX&&SX.pos.length){ toast(L('Sluit eerst je posities','Close your positions first'),'','bad'); return }
+  const e=propEval(s), bad=e.checks.filter(c=>!c.ok&&c.sev!=='warn');
+  if(e.profit<=0||bad.length){ const ov=modal(`<div class="pfscr bad"><div class="pfscr-i">${ic('x',30)}</div><h2>${L('Payout afgewezen','Payout denied')}</h2><p>${e.profit<=0?L('Je hebt nog geen winst.','You have no profit yet.'):bad.map(c=>`<b>${esc(c.label)}</b>: ${esc(String(c.val))}${c.lim?' / '+esc(String(c.lim)):''}`).join('<br>')}</p><div class="pfscr-a"><button class="btn btn-g" data-r>${L('Rapport','Report')}</button><button class="btn btn-p" data-x2>OK</button></div></div>`,'sm');
+    ov.querySelector('[data-x2]').onclick=()=>ov.remove(); ov.querySelector('[data-r]').onclick=()=>{ ov.remove(); ruleCheckModal(s) }; return }
+  const amt=e.profit*(e.split/100); s.pfPayouts=(+s.pfPayouts||0)+1; (s.pfPayoutList=s.pfPayoutList||[]).push({at:new Date().toISOString(),amount:amt,profit:e.profit});
+  (s.pfPrevTrades=s.pfPrevTrades||[]).push(...s.trades); s.trades=[]; s.balance=e.start; s.peak=null; s.dayStart=e.start; s.pfWorstFloat=null; s.pfWorstDayFloat=null; s._pfE=null; try{ saveSession() }catch(x){}
+  const pro=twfPro(); const ov=modal(`<div class="pfscr ok"><div class="pfscr-i">💸</div><h2>${L('Payout goedgekeurd!','Payout approved!')}</h2><p>${L(`Je ontvangt ${fmtUsd(amt)} (${e.split}% van ${fmtUsd(e.profit)}). Je account staat weer op het startsaldo.`,`You receive ${fmtUsd(amt)} (${e.split}% of ${fmtUsd(e.profit)}). Your account is back at the starting balance.`)}</p>${!pro.unlocked?`<p class="muted">TWF Pro: ${pro.payouts}/5 ${L('payouts','payouts')} · ${pro.passed}/5 ${L('challenges','challenges')}</p>`:''}<div class="pfscr-a"><button class="btn btn-p" data-x2>OK</button></div></div>`,'sm');
+  ov.querySelector('[data-x2]').onclick=()=>ov.remove(); SX&&(SX.dirty=true); pfHud() }
+/* ---------- regelcheck + rapport + feedback ---------- */
+async function ruleCheckModal(s){
+  if(!s) return; const L=(nl,en)=>LANG==='en'?en:nl;
+  try{ const ts=(s.trades||[]).flatMap(x=>[x.openTime,x.closeTime]).filter(Boolean); if(ts.length) await newsEnsure(Math.min(...ts)-3600,Math.max(...ts)+3600) }catch(e){}
+  const e=propEval(s), [stl,stc]=PFSTAT(e.status), tr=(s.trades||[]).filter(x=>e.issues[x.id]), f=allFirms().find(x=>x.id===s.firm);
+  const sevI={hard:['✗','bad',L('Harde regel — direct mislukt','Hard rule — instant fail')],viol:['!','mid',L('Overtreding — payout/goedkeuring in gevaar','Violation — payout/approval at risk')],req:['…','req',L('Nog te halen','Still to reach')],warn:['i','info',L('Ter info','For info')]};
+  const row=c=>{ const [sy,cl]=c.ok?['✓','ok']:sevI[c.sev]||['!','mid']; return `<div class="rcrow ${c.ok?'ok':cl}"><span class="rcic">${sy}</span><div class="stx"><b>${esc(c.label)}</b><small>${c.lim?L('Limiet','Limit')+': '+esc(String(c.lim)):''}${c.why?(c.lim?' · ':'')+esc(c.why):''}</small></div><span class="rcv">${esc(String(c.val))}</span><button class="rcrep" data-rep="${esc(c.k)}" title="${L('Klopt deze regel niet?','Is this rule wrong?')}">?</button></div>` };
+  const wi=+s.target>0||e.funded?[0.5,0.75,1.25].map(k=>pfWhatIf(s,k)):[];
   const ov=modal(`<div class="mh"><h3>${L('Regelcheck','Rule check')} · ${esc(s.name)}</h3><div class="spacer"></div><span class="stype ${stc}">${stl}</span><button class="ib" data-x>${ic('x')}</button></div>
    <div class="mcont rc">
-    <div class="rcsum">${[[L('Winst','Profit'),money(e.profit)],[L('Beste dag','Best day'),money(e.bestDay)],[L('Max drawdown','Max drawdown'),money(-e.maxDD)],[L('Handelsdagen','Trading days'),e.nDays],[L('Strengheid','Strictness'),[L('Soepel','Relaxed'),L('Normaal','Normal'),L('Streng','Strict')][e.lvl-1]]].map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join('')}</div>
-    ${e.funded?`<div class="rcpay ${e.payout?'ok':'bad'}">${e.payout?ic('check',18):ic('x',18)}<div><b>${e.payout?L('Payout zou worden goedgekeurd','Payout would be approved'):L('Payout zou (nog) niet worden goedgekeurd','Payout would not be approved (yet)')}</b><small>${e.payout?L(`Jouw deel bij ${e.split}% split: ${money(Math.max(0,e.profit)*e.split/100)}`,`Your share at ${e.split}% split: ${money(Math.max(0,e.profit)*e.split/100)}`):L('Los de rode punten hieronder op.','Fix the red items below.')}</small></div></div>`:''}
-    <div class="rclist">${e.checks.map(c=>`<div class="rcrow ${c.ok?'ok':'bad'}"><span class="rcic">${c.ok?ic('check',14):ic('x',14)}</span><div class="stx"><b>${c.label}</b>${c.lim?`<small>${L('Limiet','Limit')}: ${c.lim}</small>`:''}</div><span class="rcv">${c.val}</span></div>`).join('')}</div>
+    <div class="rcsum">${[[L('Winst','Profit'),money(e.profit)],[L('Beste dag','Best day'),money(e.bestDay)],[L('Max drawdown','Max drawdown'),money(-e.maxDD)],[L('Handelsdagen','Trading days'),e.nDays],[L('Modus','Mode'),e.mode==='pro'?'TWF Pro':L('Zoals de firm','As the firm')]].map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join('')}</div>
+    ${s.pfFail?`<div class="rcpay bad">${ic('x',18)}<div><b>${L('Mislukt','Failed')}: ${s.pfFail==='daily'?L('dagverlies geraakt','daily loss hit'):L('max drawdown geraakt','max drawdown hit')}</b><small>${s.pfFailAt?new Date(s.pfFailAt*1000).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'UTC'})+' UTC':''}</small></div></div>`:''}
+    ${e.funded?`<div class="rcpay ${e.payout?'ok':'bad'}">${e.payout?ic('check',18):ic('x',18)}<div><b>${e.payout?L('Payout zou worden goedgekeurd','Payout would be approved'):L('Payout zou (nog) niet worden goedgekeurd','Payout would not be approved (yet)')}</b><small>${L('Winstdeling','Profit split')} ${e.split}% · ${(s.pfPayoutList||[]).length} ${L('payout(s) gehad','payout(s) so far')}</small></div></div>`:''}
+    <div class="rclist">${['hard','viol','req','warn'].map(sv=>{ const cs=e.checks.filter(c=>c.sev===sv); return cs.length?`<div class="rcgrp"><small>${sevI[sv][2]}</small>${cs.map(row).join('')}</div>`:'' }).join('')}</div>
+    ${wi.length?`<h4>${L('Wat als je ander risico had genomen?','What if you had used different risk?')}</h4><div class="rcwi">${wi.map(w=>{ const [a,b]=PFSTAT(w.status); return `<div><small>${w.k<1?L(`${Math.round(w.k*100)}% van je risico`,`${Math.round(w.k*100)}% of your risk`):L(`${Math.round(w.k*100)}% risico`,`${Math.round(w.k*100)}% risk`)}</small><b class="${b}">${a}</b><small>${money(w.profit)} · DD ${money(-w.maxDD)}${w.passDay?' · '+L('doel op','target on')+' '+w.passDay.slice(5):''}</small></div>` }).join('')}</div>`:''}
+    ${e.timeline.length?`<h4>${L('Tijdlijn','Timeline')}</h4><div class="rctl">${e.timeline.map(d=>`<div class="${d.pnl>=0?'pos':'neg'}"><small>${d.d.slice(5)}</small><b>${money(d.pnl)}</b><small>${d.n}×</small></div>`).join('')}</div>`:''}
     <h4>${L('Trades die niet prop-waardig zijn','Trades that are not prop-worthy')}</h4>
-    ${tr.length?`<div class="rctr">${tr.map(x=>`<div class="rcrow bad"><span class="rcic">${ic('x',14)}</span><div class="stx"><b>${x.sym} · ${x.side==='buy'?'Long':'Short'} ${x.qty} · ${new Date(x.closeTime*1000).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'UTC'})}</b><small>${e.issues[x.id].join(' · ')}</small></div><span class="rcv ${x.pnl>=0?'pos':'neg'}">${money(x.pnl)}</span></div>`).join('')}</div>`:`<div class="mut" style="padding:6px 0">${L('Geen — alle trades voldoen aan de regels.','None — every trade follows the rules.')}</div>`}
+    ${tr.length?`<div class="rctr">${tr.map(x=>`<div class="rcrow ${x._sev&&x._sev.viol?'mid':'info'}"><span class="rcic">!</span><div class="stx"><b>${x.sym} · ${x.side==='buy'?'Long':'Short'} ${x.qty} · ${new Date(x.closeTime*1000).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',timeZone:'UTC'})}</b><small>${e.issues[x.id].map(esc).join(' · ')}</small></div><span class="rcv ${x.pnl>=0?'pos':'neg'}">${money(x.pnl)}</span></div>`).join('')}</div>`:`<div class="muted">${L('Alle trades zijn prop-waardig.','All trades are prop-worthy.')}</div>`}
+    <div class="rcai"><button class="btn btn-p" data-ai>${ic('spark',15)} ${L('Vraag de AI om feedback','Ask the AI for feedback')}</button></div>
    </div>`,'');
   ov.querySelector('.modal').classList.add('rcm'); ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
+  ov.querySelectorAll('[data-rep]').forEach(b=>b.onclick=async()=>{ const c=e.checks.find(x=>x.k===b.dataset.rep); const note=await askText(L('Klopt deze regel niet?','Is this rule wrong?'),L(`Wat klopt er niet aan "${c.label}" bij ${f?f.name:'deze firm'}? (bijv. de juiste waarde + link)`,`What is wrong with "${c.label}" at ${f?f.name:'this firm'}? (e.g. the correct value + link)`),'');
+    if(!note) return; try{ if(DB.sb) await DB.sb.from('rule_reports').insert({user_id:DB.uid,firm:s.firm||'',prog:s.prog||'',rule:c.k,note}); toast(L('Bedankt!','Thanks!'),L('Je melding is naar de beheerder gestuurd.','Your report was sent to the admin.'),'ok') }catch(x){ toast(L('Mislukt','Failed'),String(x.message||x),'bad') } });
+  ov.querySelector('[data-ai]').onclick=()=>{ ov.remove(); aiOpen(L(`Geef feedback op mijn prop-challenge "${s.name}": wat ging goed, wat ging fout en wat moet ik anders doen?`,`Give feedback on my prop challenge "${s.name}": what went well, what went wrong and what should I do differently?`),{sessionId:s.id}) };
 }
+
+
+/* =========================================================
+   v12: TWF AI-ASSISTENT — chatpaneel, context, acties, feedback
+   ========================================================= */
+const AI={open:false,msgs:[],busy:false,opts:{}};
+const aiDiaryOn=()=>{ try{ return localStorage.getItem('twf_ai_diary')==='1' }catch(e){ return false } };
+function aiContext(opts={}){ const L=(nl,en)=>LANG==='en'?en:nl, ctx={app:'TWF',version:CFG.VERSION,lang:LANG,now:new Date().toISOString(),page:S.page,user:{name:profile().name||''}};
+  try{ const J=window.TWFJ; if(J&&J.ready()){ const sm=J.summary(); ctx.journal={account:sm.name,ccy:sm.ccy,balance:Math.round(sm.balance),returnPct:+(sm.ret||0).toFixed(2),todayPnl:sm.today,monthPnl:sm.month,trades:sm.n,winrate:Math.round(sm.wr||0),planPct:Math.round(sm.planPct||0),profitFactor:+(sm.pf||0).toFixed(2),avgR:sm.avgR,greenDaysPct:Math.round(sm.greenDays||0),maxDD:Math.round(sm.mdd||0),fineOpen:sm.fine,mt5:sm.mt5&&sm.mt5.k};
+      if(J.recentTrades) ctx.journal.recentTrades=J.recentTrades(60) } }catch(e){}
+  try{ const ss=DB.list('sessions').slice().sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||''))).slice(0,12);
+    ctx.backtest=ss.map(s=>{ const tr=s.trades||[], acc=DB.get('accounts',s.account)||{}, start=+(s.startBalance??acc.balance)||0, net=tr.reduce((a,x)=>a+(+x.pnl||0),0), w=tr.filter(x=>x.pnl>0).length;
+      const o={name:s.name,type:s.type,assets:s.assets,start:s.start,ccy:acc.currency,startBalance:start,trades:tr.length,net:Math.round(net),winrate:tr.length?Math.round(w/tr.length*100):null};
+      if(s.type==='propfirm'){ const e=propEval(s); o.prop={firm:s.firm,program:s.progName,phase:s.phase,status:e.status,failedBy:s.pfFail||null,checks:e.checks.map(c=>({rule:c.label,ok:c.ok,sev:c.sev,val:c.val,lim:c.lim}))} }
+      if(opts.sessionId===s.id) o.tradeList=tr.slice(-80).map(x=>({sym:x.sym,side:x.side,qty:x.qty,entry:x.entry,exit:x.exit,sl:x.sl,tp:x.tp,pnl:+(+x.pnl).toFixed(2),rr:x.rr,open:new Date(x.openTime*1000).toISOString(),close:new Date(x.closeTime*1000).toISOString(),reason:x.reason}));
+      return o }) }catch(e){}
+  try{ if(SX){ const s=SX.s; ctx.liveSession={name:s.name,sym:SX.sym,tf:SX.tf,time:new Date(nowSec()*1000).toISOString(),equity:Math.round(equity()),positions:SX.pos.map(p=>({sym:p.sym,side:p.side,qty:p.qty,entry:p.entry,sl:p.sl,tp:p.tp})),recentBars:(SX.blist||[]).slice(-40).map(b=>[b.time,+b.open.toFixed(5),+b.high.toFixed(5),+b.low.toFixed(5),+b.close.toFixed(5)])} } }catch(e){}
+  if(opts.prop||/prop|challenge|firm|ftmo|apex|topstep|funded/i.test(opts.q||'')){ try{ const out=[]; allFirms().forEach(f=>f.programs.forEach(p=>{ const so=(p.sizes||[]).find(x=>x.size===100000)||(p.sizes||[])[Math.floor(((p.sizes||[]).length-1)/2)]; if(!so) return; const sim=pfSim(p,so.size,250), ev=pfEV(p,so,sim);
+        if(sim&&sim.need==null) out.push({firm:f.name,kind:f.kind,program:p.name,size:so.size,fee:so.fee,ccy:so.ccy,monthly:!!p.monthly,passRate:Math.round(sim.pAll*100),daysToFunded:Math.round(sim.avgDays),expPayout:Math.round(sim.avgPayout),evPerAttempt:ev?Math.round(ev.ev):null,rules:{daily:p.daily,maxloss:p.maxloss,dd:p.ddType,cons:p.consistency,phases:p.phases.map(x=>x.target)}}) }));
+      ctx.propOptions=out.sort((a,b)=>(b.evPerAttempt||-1e9)-(a.evPerAttempt||-1e9)).slice(0,25); if(!out.length) ctx.propNote=L('Te weinig backtest-trades voor slagingskansen (min. 15).','Too few backtest trades for pass rates (min. 15).') }catch(e){} }
+  if(aiDiaryOn()){ try{ ctx.diary=DB.list('diary').filter(d=>!isEmptyEntryG(d)).sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,25).map(d=>({date:d.date,mood:d.mood||'',title:d.title,text:String(d.body||'').slice(0,800)})) }catch(e){} }
+  if(opts.admin&&IS_ADMIN) ctx.adminNote='Gebruiker is beheerder (admin).';
+  return ctx }
+const isEmptyEntryG=d=>!String(d.body||'').replace(/\*\*[^*]+:\*\*\s*[^\n]*\d{4}[^\n]*/g,'').trim()&&!d.mood;
+function aiMd(t){ let h=esc(t||'');
+  const acts=[]; h=h.replace(/```twf-action\s*([\s\S]*?)```/g,(m,j)=>{ try{ acts.push(JSON.parse(j.replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>'))); return `<!--ACT${acts.length-1}-->` }catch(e){ return '' } });
+  h=h.replace(/```(\w*)\n?([\s\S]*?)```/g,(m,l,c)=>`<pre>${c}</pre>`).replace(/^### (.*)$/gm,'<h5>$1</h5>').replace(/^## (.*)$/gm,'<h4>$1</h4>').replace(/^# (.*)$/gm,'<h4>$1</h4>')
+    .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(^|\s)\*(.+?)\*(?=\s|$)/g,'$1<i>$2</i>').replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/^\s*[-*] (.*)$/gm,'<li>$1</li>').replace(/^\s*\d+\. (.*)$/gm,'<li>$1</li>').replace(/(<li>[\s\S]*?<\/li>)(?!\s*<li>)/g,'<ul>$1</ul>').replace(/<\/ul>\s*<ul>/g,'')
+    .replace(/\n{2,}/g,'<br><br>').replace(/\n/g,'<br>').replace(/<br>(<\/?(ul|li|h4|h5|pre))/g,'$1').replace(/(<\/(ul|li|h4|h5|pre)>)<br>/g,'$1');
+  return {html:h,acts} }
+function aiPanel(){ let p=$('#aiPanel'); if(p) return p; const L=(nl,en)=>LANG==='en'?en:nl; p=document.createElement('div'); p.id='aiPanel'; p.className='aipanel';
+  p.innerHTML=`<div class="ai-h"><span class="ai-logo">${ic('spark',18)}</span><div class="ai-t"><b>TWF AI</b><small>${L('Je eigen trading-coach','Your own trading coach')}</small></div><button class="ib" data-aiset title="${L('Instellingen','Settings')}">${ic('gear',17)}</button><button class="ib" data-aiclr title="${L('Nieuw gesprek','New chat')}">${ic('refresh',17)}</button><button class="ib" data-aix>${ic('x',18)}</button></div>
+    <div class="ai-set hide"><label class="ai-tg"><span class="sw ${aiDiaryOn()?'on':''}" data-aidiary></span><span><b>${L('Dagboek delen met de AI','Share diary with the AI')}</b><small>${L('Uit = je dagboek blijft privé. Aan = de AI mag je laatste 25 notities lezen om verbanden te leggen.','Off = your diary stays private. On = the AI may read your last 25 entries to find links.')}</small></span></label></div>
+    <div class="ai-m" id="aiMsgs"></div>
+    <div class="ai-chips" id="aiChips"></div>
+    <div class="ai-in"><textarea id="aiQ" rows="1" placeholder="${L('Vraag iets over je trading…','Ask anything about your trading…')}"></textarea><button class="btn btn-p" id="aiSend">${ic('next',18)}</button></div>`;
+  document.body.appendChild(p);
+  p.querySelector('[data-aix]').onclick=()=>aiClose(); p.querySelector('[data-aiclr]').onclick=()=>{ AI.msgs=[]; aiRender() };
+  p.querySelector('[data-aiset]').onclick=()=>p.querySelector('.ai-set').classList.toggle('hide');
+  p.querySelector('[data-aidiary]').onclick=e=>{ const on=!e.currentTarget.classList.contains('on'); e.currentTarget.classList.toggle('on',on); try{ localStorage.setItem('twf_ai_diary',on?'1':'0') }catch(x){} };
+  const q=p.querySelector('#aiQ'); q.oninput=()=>{ q.style.height='auto'; q.style.height=Math.min(140,q.scrollHeight)+'px' }; q.onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); aiSend() } };
+  p.querySelector('#aiSend').onclick=()=>aiSend(); p.addEventListener('pointerdown',e=>e.stopPropagation());
+  return p }
+function aiChips(){ const L=(nl,en)=>LANG==='en'?en:nl, c=[[L('Coach mijn trading','Coach my trading'),L('Analyseer mijn trading: wat gaat goed, wat gaat fout en wat zijn de 3 belangrijkste verbeterpunten?','Analyse my trading: what goes well, what goes wrong and what are the 3 most important improvements?')],
+  [L('Welke prop firm past bij mij?','Which prop firm suits me?'),L('Welke prop-firm-challenge past het best bij mijn resultaten en waarom? Vergelijk de beste opties.','Which prop firm challenge fits my results best and why? Compare the best options.'),{prop:true}],
+  [L('Review mijn laatste sessie','Review my last session'),L('Review mijn laatste backtest-sessie: trades, risico en regels.','Review my last backtest session: trades, risk and rules.')],
+  [L('Help bij de app','Help with the app'),L('Hoe werkt TWF? Geef me de belangrijkste tips.','How does TWF work? Give me the key tips.')]];
+  if(IS_ADMIN&&DB.sb) c.push([L('Data-aanvragen samenvatten','Summarise data requests'),'__dr'],[L('Firm-regels controleren','Check firm rules'),'__rules']);
+  return c }
+function aiRender(){ const p=aiPanel(), m=p.querySelector('#aiMsgs'), L=(nl,en)=>LANG==='en'?en:nl;
+  if(!AI.msgs.length){ m.innerHTML=`<div class="ai-hello"><span class="ai-logo big">${ic('spark',26)}</span><b>${L('Hoi','Hi')}${profile().name?' '+esc(profile().name.split(' ')[0]):''}!</b><small>${L('Ik ken je journal, backtests en prop-challenges. Vraag me alles — ik geef geen koop/verkoopsignalen, wel eerlijke coaching op je eigen data.','I know your journal, backtests and prop challenges. Ask me anything — no buy/sell signals, but honest coaching on your own data.')}</small></div>` }
+  else m.innerHTML=AI.msgs.map((x,i)=>{ if(x.role==='user') return `<div class="ai-u">${esc(x.content)}</div>`; const r=aiMd(x.content);
+      return `<div class="ai-a">${r.html.replace(/<!--ACT(\d+)-->/g,(mm,k)=>{ const a=r.acts[+k]; return a?`<button class="btn btn-g ai-act" data-act="${i}:${k}">${ic('play',14)} ${esc(aiActLabel(a))}</button>`:'' })}${x.err?'':`<div class="ai-fb"><button data-fb="${i}:1" class="${x.fb===1?'on':''}">👍</button><button data-fb="${i}:-1" class="${x.fb===-1?'on':''}">👎</button></div>`}</div>` }).join('')+(AI.busy?`<div class="ai-a ai-typing"><i></i><i></i><i></i></div>`:'');
+  m.scrollTop=m.scrollHeight;
+  const ch=p.querySelector('#aiChips'); ch.innerHTML=AI.msgs.length?'':aiChips().map(([l],i)=>`<button data-chip="${i}">${esc(l)}</button>`).join('');
+  ch.querySelectorAll('[data-chip]').forEach(b=>b.onclick=()=>{ const c=aiChips()[+b.dataset.chip]; if(c[1]==='__dr') return aiDataRequests(); if(c[1]==='__rules') return aiRulesPicker(); aiSend(c[1],c[2]||{}) });
+  m.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ const [i,k]=b.dataset.act.split(':').map(Number); aiDoAction(aiMd(AI.msgs[i].content).acts[k]) });
+  m.querySelectorAll('[data-fb]').forEach(b=>b.onclick=async()=>{ const [i,r]=b.dataset.fb.split(':').map(Number); AI.msgs[i].fb=r; aiRender(); try{ if(DB.sb) await DB.sb.from('ai_feedback').insert({user_id:DB.uid,rating:r,q:(AI.msgs[i-1]||{}).content||'',a:AI.msgs[i].content.slice(0,4000)}) }catch(e){} }) }
+function aiActLabel(a){ const L=(nl,en)=>LANG==='en'?en:nl; if(a.type==='create_session') return L(`Sessie aanmaken${a.name?': '+a.name:''}`,`Create session${a.name?': '+a.name:''}`); if(a.type==='open_page') return L(`Open ${a.page}`,`Open ${a.page}`); return a.type }
+function aiDoAction(a){ if(!a) return; if(a.type==='open_page'){ aiClose(); go(a.page==='testing'?'testing':a.page,a.jp); return }
+  if(a.type==='create_session'){ aiClose(); const ty=a.session_type==='propfirm'?'propfirm':'backtest'; sessionModal(ty,null,{firm:a.firm,phase:0,ai:a}) } }
+function aiOpen(q,opts){ AI.open=true; const p=aiPanel(); aiRender(); requestAnimationFrame(()=>p.classList.add('on')); document.body.classList.add('ai-on'); if(q) aiSend(q,opts||{}); else setTimeout(()=>p.querySelector('#aiQ').focus(),200) }
+function aiClose(){ AI.open=false; const p=$('#aiPanel'); if(p) p.classList.remove('on'); document.body.classList.remove('ai-on') }
+async function aiCall(body){ const L=(nl,en)=>LANG==='en'?en:nl; if(!DB.sb||!DB.sb.functions) throw new Error(L('De AI werkt alleen online.','The AI only works online.'));
+  const {data,error}=await DB.sb.functions.invoke('twf-ai',{body});
+  if(error){ let msg=error.message; try{ const j=await error.context.json(); msg=j.message||j.error||msg; if(j.error==='no_key') msg=L('De AI is nog niet ingesteld: zet de Claude API-sleutel als secret ANTHROPIC_API_KEY in Supabase (Edge Functions → Secrets).','The AI is not set up yet: add the Claude API key as secret ANTHROPIC_API_KEY in Supabase (Edge Functions → Secrets).') }catch(e){} throw new Error(msg) }
+  return data }
+async function aiSend(text,opts={}){ const p=aiPanel(), q=p.querySelector('#aiQ'); text=(text||q.value||'').trim(); if(!text||AI.busy) return; q.value=''; q.style.height='auto';
+  AI.msgs.push({role:'user',content:text}); AI.busy=true; aiRender();
+  try{ const d=await aiCall({mode:'chat',messages:AI.msgs.filter(m=>!m.err).map(m=>({role:m.role,content:m.content})),context:aiContext({...AI.opts,...opts,q:text})}); AI.msgs.push({role:'assistant',content:d.text||''}) }
+  catch(e){ AI.msgs.push({role:'assistant',content:'⚠️ '+(e.message||e),err:true}) }
+  AI.busy=false; aiRender() }
+async function aiDataRequests(){ const L=(nl,en)=>LANG==='en'?en:nl; let rows=[]; try{ const {data}=await DB.sb.from('data_requests').select('sym,name,status,created_at').eq('status','open'); rows=data||[] }catch(e){}
+  let rr=[]; try{ const {data}=await DB.sb.from('rule_reports').select('firm,prog,rule,note,created_at').eq('status','open'); rr=data||[] }catch(e){}
+  AI.opts={admin:true}; aiSend(L('Vat de openstaande data-aanvragen en regel-meldingen samen en zeg wat ik als eerste moet doen.','Summarise the open data requests and rule reports and tell me what to do first.')+`\n\n${JSON.stringify({dataRequests:rows,ruleReports:rr}).slice(0,20000)}`,{admin:true}) }
+/* admin: firm-regels laten controleren via web search, wijzigingen goedkeuren */
+function aiRulesPicker(){ const L=(nl,en)=>LANG==='en'?en:nl, F=allFirms().filter(f=>PROP_FIRMS.some(x=>x.id===f.id));
+  const ov=modal(`<div class="mh"><h3>${L('Firm-regels controleren','Check firm rules')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont"><p class="muted" style="margin-top:0">${L('De AI zoekt op de officiële sites naar gewijzigde regels en prijzen. Jij keurt elke wijziging goed. Kies een firm (één controle duurt ±1–2 minuten).','The AI searches the official sites for changed rules and prices. You approve every change. Pick a firm (one check takes ±1–2 minutes).')}</p><div class="pfpick">${F.map(f=>`<button data-rf="${f.id}">${firmLogo(f,24)}<span>${esc(f.name)}</span></button>`).join('')}</div></div></div>`,'sm');
+  ov.querySelector('[data-x]').onclick=()=>ov.remove(); ov.querySelectorAll('[data-rf]').forEach(b=>b.onclick=()=>{ ov.remove(); aiRulesCheck(b.dataset.rf) }) }
+async function aiRulesCheck(fid){ const L=(nl,en)=>LANG==='en'?en:nl, f=allFirms().find(x=>x.id===fid); if(!f) return; aiOpen();
+  AI.msgs.push({role:'user',content:L(`Controleer de regels en prijzen van ${f.name}.`,`Check the rules and prices of ${f.name}.`)}); AI.busy=true; aiRender();
+  try{ const slim={id:f.id,name:f.name,domain:f.domain,kind:f.kind,programs:f.programs.map(p=>({id:p.id,name:p.name,phases:p.phases.map(x=>x.target),daily:p.daily,maxloss:p.maxloss,ddType:p.ddType,mindays:p.mindays,consistency:p.consistency,split:p.split,act:p.act,monthly:p.monthly,sizes:(p.sizes||[]).map(x=>[x.size,x.fee,x.ccy])}))};
+    const d=await aiCall({mode:'rules',firms:[slim],messages:[{role:'user',content:L('Controleer deze firm.','Check this firm.')}]});
+    const m=(d.text||'').match(/```json\s*([\s\S]*?)```/); let res=null; try{ res=m?JSON.parse(m[1]):null }catch(e){}
+    AI.msgs.push({role:'assistant',content:(d.text||'').replace(/```json[\s\S]*?```/,'').trim()||L('Klaar.','Done.')}); AI.busy=false; aiRender();
+    const ch=res&&res[0]&&res[0].changes||[]; if(!ch.length){ toast(L('Geen wijzigingen gevonden','No changes found'),f.name,'ok'); return }
+    const ov=modal(`<div class="mh"><h3>${L('Voorgestelde wijzigingen','Proposed changes')} · ${esc(f.name)}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont"><div class="rclist">${ch.map((c,i)=>`<label class="rcrow mid"><input type="checkbox" data-ch="${i}" checked><div class="stx"><b>${esc(c.program||'')} · ${esc(c.field||'')}</b><small>${esc(String(c.old??'—'))} → <b>${esc(String(c.new??''))}</b>${c.source?` · <a href="${esc(c.source)}" target="_blank" rel="noopener">${L('bron','source')}</a>`:''}</small></div></label>`).join('')}</div></div></div><div class="mf"><button class="btn btn-g" data-x>${L('Annuleren','Cancel')}</button><button class="btn btn-p" data-ok>${L('Goedkeuren','Approve')}</button></div>`,'sm');
+    ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
+    ov.querySelector('[data-ok]').onclick=async()=>{ const pick=ch.filter((c,i)=>ov.querySelector(`[data-ch="${i}"]`).checked); const {data:cur}=await DB.sb.from('prop_rules').select('data').eq('id',fid).maybeSingle(); const data=(cur&&cur.data)||{programs:{}};
+      pick.forEach(c=>{ const p=f.programs.find(x=>x.id===c.program||x.name===c.program)||f.programs[0]; const pid=p.id; (data.programs[pid]=data.programs[pid]||{}); let v=c.new; if(typeof v==='string'&&/^-?\d+(\.\d+)?%?$/.test(v.trim())) v=parseFloat(v); data.programs[pid][c.field]=v });
+      const {error}=await DB.sb.from('prop_rules').upsert({id:fid,data,checked:new Date().toISOString().slice(0,7),source:'ai',updated_at:new Date().toISOString(),updated_by:DB.uid});
+      if(error){ toast(L('Opslaan mislukt','Save failed'),error.message,'bad'); return } ov.remove(); applyRuleOverrides([{id:fid,data,checked:new Date().toISOString().slice(0,7)}]); toast(L('Regels bijgewerkt','Rules updated'),`${f.name}: ${pick.length} ${L('wijziging(en)','change(s)')}`,'ok'); if(S.page==='prop') render() } }
+  catch(e){ AI.msgs.push({role:'assistant',content:'⚠️ '+(e.message||e),err:true}); AI.busy=false; aiRender() } }
+/* goedgekeurde regel-wijzigingen uit de database toepassen op de ingebouwde firms */
+function applyRuleOverrides(rows){ (rows||[]).forEach(r=>{ const f=PROP_FIRMS.find(x=>x.id===r.id); if(!f||!r.data) return; if(r.checked) f.checked=r.checked;
+  Object.entries(r.data.programs||{}).forEach(([pid,patch])=>{ const p=f.programs.find(x=>x.id===pid); if(!p) return; Object.entries(patch).forEach(([k,v])=>{ if(k==='sizes'&&Array.isArray(v)) p.sizes=v.map(x=>Array.isArray(x)?{size:+x[0],fee:+x[1],ccy:x[2]||'$'}:x); else if(k==='phases'&&Array.isArray(v)) p.phases=v.map((t0,i)=>typeof t0==='object'?t0:{name:p.phases[i]?p.phases[i].name:(t0?`Phase ${i+1}`:'Funded'),target:+t0}); else p[k]=v }) }) }) }
+async function loadRuleOverrides(){ try{ if(!DB.sb) return; const {data}=await DB.sb.from('prop_rules').select('id,data,checked'); if(data) applyRuleOverrides(data) }catch(e){} }
+
 function firmModal(f){
   const L=(nl,en)=>LANG==='en'?en:nl, x=f?JSON.parse(JSON.stringify(f)):{id:uid(),name:'',col:'#4c74ff',kind:'CFD',desc:'',phases:[{name:'Phase 1',target:8},{name:'Phase 2',target:5},{name:'Funded',target:0}],daily:5,maxloss:10,ddType:'static',mindays:3,consistency:0,maxLots:0,minHold:0,maxRisk:0,slReq:false,weekend:true,split:80};
   const ov=modal(`<div class="mh"><h3>${f?L('Prop firm bewerken','Edit prop firm'):L('Eigen prop firm','Custom prop firm')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div>
@@ -3988,7 +4326,7 @@ function buildSessionDom(){
   </div>
   <div class="sxmain">
     <div class="sxtools">${tools.map(([i,k],n)=>`<button class="ib ${n===0?'on':''}" data-tool="${i}" title="${t(k)}">${ic(i)}</button>${n===8||n===10?'<div class="hsep"></div>':''}`).join('')}<div style="flex:1"></div><button class="ib" title="${t('sx.t.fav')}">${ic('star')}</button></div>
-    <div class="sxchartwrap"><div id="sxChart"></div>${tradeWidgetHtml('sxTw')}<div class="sxovl" id="sxOvl"></div><div class="sxlegend" id="sxLegend"></div><div class="sxinds" id="sxInds"></div><div class="sxtest">${t('sx.testdata')}</div><div class="sxload hide" id="sxLoading">${t('md.loading')}</div></div>
+    <div class="sxchartwrap"><div id="sxChart"></div>${tradeWidgetHtml('sxTw')}<div class="sxovl" id="sxOvl"></div><div class="sxlegend" id="sxLegend"></div><div class="sxinds" id="sxInds"></div>${SX&&SX.s.type==='propfirm'?'<div class="pfhud" id="pfHud"></div>':''}<div class="sxtest">${t('sx.testdata')}</div><div class="sxload hide" id="sxLoading">${t('md.loading')}</div></div>
     <div class="sxpanel hide" id="sxPanel"></div>
     <div class="sxrail">
       <button data-panel="order"><span>${ic('plusc',20)}</span>${t('sx.order')}</button>
@@ -4101,6 +4439,7 @@ function fullRender(fit){
   if(!SX.indS) buildIndicators(); else { indSetData(); layoutScales(); }
   if(fit){ const n=bars.length; const vis=innerWidth<900?45:140; SX.chart.timeScale().setVisibleLogicalRange({from:Math.max(0,n-vis),to:n+(innerWidth<900?4:12)}) }
   SX.lastPx=SX.rp.current().close; legend(null); hud();
+  try{ const f0=SX.rp.f; if(f0&&f0.n) newsEnsure(f0.t[0]-86400,f0.t[f0.n-1]+7*86400).then(()=>{ if(SX){ SX._nmSig=''; pfNewsMarkers(); SX.s._pfE=null } }) }catch(e){}
 }
 function pushBar(b){ const B=SX.blist; if(B){ if(B.length&&B[B.length-1].time===b.time) B[B.length-1]={...b}; else if(!B.length||b.time>B[B.length-1].time) B.push({...b}); } SX.series.update(toSeries(b)); if(SX.indS&&SX.indS.length){ indStep(); const nw=performance.now(); if(!SX.lastIL||nw-SX.lastIL>300){SX.lastIL=nw;indLegend()} } if(SX.volS) SX.volS.update(toVol(b)); }
 function legend(d){ if(!SX) return;
@@ -4120,6 +4459,8 @@ function hud(){ if(!SX) return;
   updTradeWidgets(); const op=SX.pos?openPnl():0; const bh=`${fmtBal(equity())}${SX.pos&&SX.pos.length?` <span class="dotsep">●</span> <span class="${op>=0?'pos':'neg'}">${fmtUsd(op)}</span>`:''}`; if(SX._bh!==bh){ SX._bh=bh; $('#sxBal').innerHTML=bh }
   const pf=$('#sxPf'); if(pf&&SX.s.type==='propfirm'){const st=SX.s.startBalance??SX.acc.balance, g=((equity()-st)/st*100);pf.innerHTML=SX.s.pfStatus?`<b class="${SX.s.pfStatus==='passed'?'pos':'neg'}">${SX.s.pfStatus==='passed'?t('pf.passed'):t('pf.failed')}</b>`:`${t('pf.progress')} <b class="${g>=0?'pos':'neg'}">${g>=0?'+':''}${g.toFixed(2)}%</b> / ${SX.s.target||10}%`}
   liveOrderPanel();
+  if(SX.s.type==='propfirm'){ try{ pfHud(); const nowT=performance.now(); if(nowT-(SX._pfAt||0)>300){ SX._pfAt=nowT; pfDangerLines() } }catch(e){} }
+  try{ if(SX.blist&&SX._nmLen!==SX.blist.length){ SX._nmLen=SX.blist.length; pfNewsMarkers() } }catch(e){}
 }
 function updateTopbar(){
   $('#sxSym').innerHTML=`${symBadge(SX.sym)}<b>${SX.sym}</b><span style="opacity:.6">▾</span>`;
@@ -4421,6 +4762,8 @@ function addPosition(p){
 }
 function placeMarket(side,qty,sl,tp,silent){
   qty=+qty; if(!(qty>0)){toast(t('tr.badqty'),'', 'bad');return}
+  if(SX.s.type==='propfirm'&&SX.s.pfStatus==='failed'&&!SX.s.pfPractice){ toast(LANG==='en'?'Challenge failed':'Challenge mislukt',LANG==='en'?'This account is closed. Start again or continue as practice.':'Dit account is gesloten. Start opnieuw of ga verder als oefening.','bad'); pfBreachScreen(SX.s); return }
+  { const w=pfPreTrade(side,qty,sl); if(w.length) toast(LANG==='en'?'Prop check':'Prop-check','⚠ '+w.join(' · '),'bad',6000) }
   const sp=SPEC[SX.sym]; qty=Math.round(qty/sp.step)*sp.step; qty=+qty.toFixed(2);
   let remaining=qty;
   if(SX.s.hedge===false){ // netting: eerst tegengestelde posities sluiten
@@ -4491,18 +4834,6 @@ function afterTicks(){ if(!SX) return;
     checkProp(true);
   }
   if(SX.dirty){SX.dirty=false;drawOverlay();persistTrading();renderTradePanels()}
-}
-function checkProp(live){
-  const s=SX.s; if(s.type!=='propfirm'||s.pfStatus) return;
-  const start=s.startBalance??SX.acc.balance, eq=equity();
-  const ns=nowSec(), day=new Date((ns-nyOff(ns)*3600+7*3600)*1000).toISOString().slice(0,10);
-  if(s.dayKey!==day){s.dayKey=day;s.dayStart=s.balance??start}
-  if(s.ddType==='trailing') s.peak=Math.max(s.peak??start,eq); else if(s.ddType==='eod'&&s.dayKey===day) s.peak=Math.max(s.peak??start,s.dayStart);
-  const floor=(s.ddType==='trailing'||s.ddType==='eod')?((s.peak??start)-start*(+s.maxloss||10)/100):start*(1-(+s.maxloss||10)/100);
-  const fail=eq<=floor?'max':(+s.daily>0&&eq<=s.dayStart*(1-(+s.daily)/100))?'daily':null;
-  if(fail){ s.pfStatus='failed'; [...SX.pos].forEach(p=>{if(p.sym===SX.sym)closePos(p,closeQuote(p),'rule')}); stopPlay();
-    toast(t('pf.failed'),fail==='max'?t('pf.maxhit'):t('pf.dailyhit'),'bad',8000); SX.dirty=true; return }
-  if(!live&&(s.balance??start)>=start*(1+(+s.target||10)/100)){ s.pfStatus='passed'; stopPlay(); toast(t('pf.passed'),t('pf.passed2'),'ok',8000) }
 }
 let _ocHint=false;
 function firstOneClickHint(){ if(_ocHint||profile().ocHintSeen) return; _ocHint=true;
@@ -5587,6 +5918,7 @@ function pageData(){
     <td style="text-align:right">${r?`<button class="btn btn-g" data-mddel="${a.sym}" style="height:34px">${ic('trash',14)}</button>`:''}</td></tr>`}).join('');
   return `<div class="phead"><h1>${t('md.title')}</h1><div style="color:var(--ink2);margin:-12px 0 24px">${t('md.sub')}</div></div>
   <div class="pbody"><div class="dash">
+   ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="newsBox"><h3 style="margin-bottom:10px">${LANG==='en'?'News calendar (ForexFactory)':'Nieuws-kalender (ForexFactory)'}</h3><div class="muted" style="margin-bottom:10px">${LANG==='en'?'This week syncs automatically from ForexFactory and is kept from then on. For older backtests, import a historical calendar as CSV (columns: datetime UTC, currency, impact, title).':'Deze week wordt automatisch van ForexFactory gehaald en vanaf dan bewaard. Voor oudere backtests importeer je een historische kalender als CSV (kolommen: datum-tijd UTC, valuta, impact, titel).'}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-g" id="newsSync">${ic('refresh',15)} ${LANG==='en'?'Sync now':'Nu synchroniseren'}</button><button class="btn btn-g" id="newsCsv">${ic('upload',15)} ${LANG==='en'?'Import CSV':'CSV importeren'}</button><span class="pill" id="newsCount">…</span></div></div>`:''}
    ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="drBox"><h3 style="margin-bottom:10px">${LANG==='en'?'Data requests':'Data-aanvragen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
    <div class="box" style="grid-column:span 7"><h3 style="margin-bottom:14px">${t('md.markets')}</h3><table class="tbl"><thead><tr><th></th><th>${t('markets')}</th><th>${t('md.source')}</th><th>${t('period')}</th><th>${t('md.months')}</th><th></th></tr></thead><tbody>${rows}</tbody></table>
      <div class="hint" style="margin-top:12px">${MD.cloud()?t('md.cloudon'):t('md.cloudoff')}</div></div>
@@ -5607,6 +5939,12 @@ async function loadDataRequests(){ const box=$('#drBox'); if(!box||!DB.sb) retur
   box.querySelectorAll('[data-drdone]').forEach(b=>b.onclick=async()=>{ b.disabled=true; await DB.sb.from('data_requests').update({status:'done'}).eq('sym',b.dataset.drdone).eq('status','open'); loadDataRequests() }) }
 function bindData(m){
   try{ loadDataRequests() }catch(e){}
+  try{ const nc=m.querySelector('#newsCount'); if(nc&&DB.sb) DB.sb.from('news_events').select('id',{count:'exact',head:true}).then(r=>{ nc.textContent=(r.count||0)+(LANG==='en'?' events':' events') });
+    const ns=m.querySelector('#newsSync'); if(ns) ns.onclick=async()=>{ ns.disabled=true; try{ const {data,error}=await DB.sb.functions.invoke('twf-news?force=1',{body:{}}); if(error) throw error; toast(LANG==='en'?'Synced':'Gesynchroniseerd',(data&&data.n!=null?data.n:0)+' events','ok') }catch(e){ toast('Sync',String(e.message||e),'bad') } ns.disabled=false; render() };
+    const nv=m.querySelector('#newsCsv'); if(nv) nv.onclick=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='.csv,text/csv'; inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const txt=await f.text(); const rows=[];
+      txt.split(/\r?\n/).forEach((ln,i)=>{ if(!ln.trim()) return; const c=ln.match(/("([^"]|"")*"|[^,]*)(,|$)/g).map(x=>x.replace(/,$/,'').replace(/^"|"$/g,'').replace(/""/g,'"').trim()); const d=new Date(c[0].includes('T')||c[0].endsWith('Z')?c[0]:c[0]+'Z'); if(isNaN(d)) return; const imp=(c[2]||'').toLowerCase(); rows.push({id:`${d.toISOString()}|${c[1]}|${c[3]}`.slice(0,200),ts:d.toISOString(),ccy:(c[1]||'').toUpperCase(),impact:/high|hoog|3/.test(imp)?'high':/med|2/.test(imp)?'medium':'low',title:c[3]||'',src:'csv'}) });
+      if(!rows.length){ toast('CSV',LANG==='en'?'No valid rows':'Geen geldige regels','bad'); return } for(let i=0;i<rows.length;i+=500){ const {error}=await DB.sb.from('news_events').upsert(rows.slice(i,i+500),{onConflict:'id'}); if(error){ toast('CSV',error.message,'bad'); return } }
+      NEWS.from=Infinity; NEWS.to=-Infinity; toast(LANG==='en'?'Imported':'Geïmporteerd',rows.length+' events','ok'); render() }; inp.click() } }catch(e){}
   const inp=m.querySelector('#mdFile'), drop=m.querySelector('#mdDrop');
   const run=async files=>{ if(!files.length) return; const sym=m.querySelector('#mdSym').value, tz=m.querySelector('#mdTz').value;
     m.querySelector('#mdProg').classList.remove('hide'); let tot={count:0,months:0,bad:0,bytes:0};
@@ -6777,7 +7115,7 @@ function init(){
   $('#btnBell').onclick=toggleNotif;
   $('#btnHelp').onclick=()=>go('start');
   $('#btnFull').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()};
-  $('#fab').onclick=()=>toast('TWF AI',t('soon.ai'));
+  $('#fab').onclick=()=>{ AI.open?aiClose():aiOpen() };
   document.querySelectorAll('#app [data-go],#tabbar [data-go],#msheet [data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go,b.dataset.jp));
   $('#tbMore').onclick=openSheet; $('#tbPlus').onclick=()=>{ try{haptic&&haptic()}catch(e){} plusSheet() }; $('#msheet').querySelector('[data-msx]').onclick=closeSheet;
   $('#mshTheme').onclick=()=>{ setTheme(curTheme()==='dark'?'light':'dark'); openSheet(); render() };
@@ -7499,7 +7837,7 @@ function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='l
   return { name:A.name, uname:SETTINGS.name, ccy:A.ccy, balance:balanceOf(A), ret:retPct(A), today:tday.reduce((s,t)=>s+t.pnl,0), todayN:tday.length, month:tmo.reduce((s,t)=>s+t.pnl,0), monthN:tmo.length,
     planPct:m.planPct, n:m.n, wr:m.wr, pf:m.pf, planDots:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).reverse().map(t=>t.hadPlan), accts:['live',...D.live.map(la=>'live:'+la.id)].map(k=>{ const s1=S.acct; S.acct=k; const B=acct(); S.acct=s1; const td=B.trades.filter(t=>dKey(t.date)===dKey(new Date())).reduce((a,t)=>a+t.pnl,0); return {key:k,name:B.name,sub:B.sub,bal:balanceOf(B),today:td,n:B.trades.length,f:(v,o)=>fmtM(v,B.ccy,o)} }), avgR:m.avgR, best:m.best, worst:m.worst, wins:m.wins, losses:m.losses, days:m.days, greenDays:m.greenDays, mdd:m.mdd, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
     last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList().find(d=>!isEmptyEntry(d))||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
-window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
+window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
 
