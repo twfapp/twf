@@ -1821,6 +1821,8 @@ html.updating #updScr.hide{display:grid!important}
 @media (max-width:700px){ .aipanel{inset:0;max-width:none;width:auto;border-radius:0;border:0;top:0;bottom:0;right:0;padding-top:env(safe-area-inset-top)} body.ai-on .tabbar{display:none!important} }
 .ai-key{margin-top:10px;padding:12px;border-radius:12px;background:var(--panel);border:1px solid var(--line2)}.ai-key>b{display:block;margin-bottom:6px}.ai-key ol{margin:0 0 8px;padding-left:18px}.ai-key li{margin:3px 0}.ai-key a{color:var(--accent);font-weight:700}.ai-key small{display:block;color:var(--ink3);font-size:12px;line-height:1.45}
 .ai-krow{display:flex;gap:8px;margin-top:10px}.ai-krow input{flex:1;min-width:0;height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink);font:inherit;font-size:16px}
+.hai{display:none;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;color:#fff;font-weight:700;font-size:13.5px;background:linear-gradient(145deg,#8b6dff,#4c74ff);box-shadow:0 6px 18px rgba(92,104,255,.35)}
+@media (max-width:700px){ .hai{display:inline-flex} .hhead{align-items:center} }
 </style>
 </head>
 <body class="">
@@ -1963,7 +1965,7 @@ html.updating #updScr.hide{display:grid!important}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1', BUILD: '2026-11-17'
+  VERSION: 'v12.1.2', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2451,6 +2453,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.2':{nl:['TWF AI nu ook op de telefoon: knop op Home en bovenaan in het ＋-menu'],en:['TWF AI now also on phones: button on Home and at the top of the ＋ menu']},
   'v12.1':{nl:['De AI-assistent is nu gratis (Google Gemini) — de beheerder plakt eenmalig een gratis sleutel in het AI-scherm'],en:['The AI assistant is now free (Google Gemini) — the admin pastes a free key once in the AI panel']},
   'v12.0':{nl:['TWF AI-assistent: coach, trade-review, prop-adviseur, backtest-hulp en app-hulp','Strenge prop-regels zoals de firm: equity, dagreset per firm, nieuws, gokken, martingale, futures plat om 16:10 CT, payout-regels','Prop-paneel op de chart met gevarenlijnen, pre-trade-check en nieuwsvlaggen','Rapport met tijdlijn en wat-als, regel melden, TWF Pro (5 challenges of 5 payouts)'],en:['TWF AI assistant: coach, trade review, prop advisor, backtest help and app help','Strict prop rules like the firm: equity, daily reset per firm, news, gambling, martingale, futures flat at 16:10 CT, payout rules','Prop panel on the chart with danger lines, pre-trade check and news flags','Report with timeline and what-if, report a rule, TWF Pro (5 challenges or 5 payouts)']},
   'v11.4':{nl:['iPad en telefoon nagelopen: kleine schermen netjes, tekst op iPad niet meer te klein'],en:['iPad and phone checked: small screens tidy, text on iPad no longer too small']},
@@ -2858,12 +2861,13 @@ function pageHome(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), sm=J&&J.ready()
       <div><small>${L('Groene dagen','Green days')}</small><b>${sm.n?Math.round(sm.greenDays)+'%':'—'}</b></div><div><small>${L('Winst / verlies','Wins / losses')}</small><b><span class="pos">${sm.wins}</span> / <span class="neg">${sm.losses}</span></b></div>
       <div><small>${L('Beste trade','Best trade')}</small><b class="pos">${sm.n?sm.fmt(sm.best,{sign:1}):'—'}</b></div><div><small>${L('Max. drawdown','Max drawdown')}</small><b class="neg">${sm.n?sm.fmt(-sm.mdd):'—'}</b></div></div></button>`
     :`<div class="box hcard">${sk}</div>`;
-  return `<div class="hpage"><div class="hhead"><div><h1>${greet()}${nm?', '+esc(nm.split(' ')[0]):''}</h1><p>${dt}</p></div>${sm&&sm.mt5?`<button class="hmt5 ${sm.mt5.k}" data-hgo="journal" data-hjp="mt5"><span class="dot"></span>MT5 · ${esc(sm.mt5.k==='live'?L('verbonden','connected'):sm.mt5.k==='stale'?L('stil','idle'):L('niet gekoppeld','not connected'))}</button>`:''}</div>
+  return `<div class="hpage"><div class="hhead"><div><h1>${greet()}${nm?', '+esc(nm.split(' ')[0]):''}</h1><p>${dt}</p></div>${sm&&sm.mt5?`<button class="hmt5 ${sm.mt5.k}" data-hgo="journal" data-hjp="mt5"><span class="dot"></span>MT5 · ${esc(sm.mt5.k==='live'?L('verbonden','connected'):sm.mt5.k==='stale'?L('stil','idle'):L('niet gekoppeld','not connected'))}</button>`:''}<button class="hai" data-hai>${ic('spark',16)} TWF AI</button></div>
     <div class="hgrid">${live}${disc}${lt}${bt}${diary}${cal}${sts}${sm?`<div class="box hcard hq"><div class="hlab">${ic('wallet',16)} ${L('Live-rekeningen','Live accounts')}<button class="hlink" data-hplus="live">${ic('plus',14)} ${L('Toevoegen','Add')}</button></div>
       <div class="haccts">${sm.accts.map(a=>`<button class="hacc" data-hacct="${esc(a.key)}"><span class="ad">${ic('plug',16)}</span><span class="hat"><b>${esc(a.name)}</b><small>${esc(a.sub)} · ${a.n} trades</small></span><span class="har"><b>${a.f(a.bal)}</b><small class="${sgn(a.today)}">${L('vandaag','today')} ${a.f(a.today,{sign:1})}</small></span></button>`).join('')}</div>
       ${q?`<div class="quote hqt">“${esc(q)}”</div>`:''}</div>`:''}</div></div>` }
 function bindHome(m){ const J=JX();
   m.querySelectorAll('[data-hgo]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); go(b.dataset.hgo,b.dataset.hjp) });
+  m.querySelectorAll('[data-hai]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); aiOpen() });
   m.querySelectorAll('[data-htr]').forEach(b=>b.onclick=()=>J&&J.openTrade(b.dataset.htr));
   m.querySelectorAll('[data-hdy]').forEach(b=>b.onclick=()=>J&&J.openDiary(b.dataset.hdy));
   m.querySelectorAll('[data-hplus="diary"]').forEach(b=>b.onclick=()=>J&&J.addDiary());
@@ -2874,7 +2878,7 @@ function bindHome(m){ const J=JX();
 
 /* ----- ＋ : iets toevoegen ----- */
 function plusSheet(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), ready=J&&J.ready();
-  const items=[['trade','edit',L('Trade toevoegen','Add trade'),L('Handmatig een live trade loggen','Log a live trade manually'),1],
+  const items=[['ai','spark','TWF AI',L('Vraag je trading-coach iets','Ask your trading coach'),0],['trade','edit',L('Trade toevoegen','Add trade'),L('Handmatig een live trade loggen','Log a live trade manually'),1],
     ['diary','book',L('Dagboek-notitie','Diary entry'),L('Gedachten en lessen van vandaag','Thoughts and lessons from today'),1],
     ['session','chart',L('Backtest-sessie','Backtest session'),L('Nieuwe sessie starten','Start a new session'),0],
     ['payout','coins',L('Payout','Payout'),L('Uitbetaling vastleggen','Record a withdrawal'),1],
@@ -2882,7 +2886,7 @@ function plusSheet(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), ready=J&&J.rea
     ['live','plug',L('Live-rekening','Live account'),L('Nieuwe MT5-rekening met eigen API-sleutel','New MT5 account with its own API key'),1],
     ['notion','download',L('Importeer uit Notion','Import from Notion'),L('Je bestaande dagboek (.zip, .md, .csv)','Your existing diary (.zip, .md, .csv)'),1]];
   const html=`<div class="plist">${items.map(([k,i,t1,t2,j])=>`<button data-pk="${k}" ${j&&!ready?'disabled':''}><span class="pic">${ic(i,20)}</span><span class="ptx"><b>${t1}</b><small>${t2}</small></span>${ic('next',16)}</button>`).join('')}</div>`;
-  const run=k=>{ if(k==='session'){ if(S.page!=='testing'){ S.page='testing'; render() } sessionModal('backtest'); return }
+  const run=k=>{ if(k==='ai'){ aiOpen(); return } if(k==='session'){ if(S.page!=='testing'){ S.page='testing'; render() } sessionModal('backtest'); return }
     if(!J) return; ({trade:()=>J.addTrade(),diary:()=>J.addDiary(),payout:()=>J.addMoney('payout'),adj:()=>J.addMoney('adj'),live:()=>J.addLive(),notion:()=>J.importNotion()})[k]() };
   if(matchMedia('(max-width:900px)').matches){ const sh=mSheet(L('Toevoegen','Add'),html,'plus'); sh.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ sh.close(); setTimeout(()=>run(b.dataset.pk),240) }); return }
   const ov=modal(`<div class="mh"><h3>${L('Toevoegen','Add')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">${html}</div></div>`,'sm');
