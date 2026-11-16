@@ -1836,6 +1836,12 @@ body.ai-on .ov{z-index:220}
 .aihero{display:flex;gap:14px;align-items:center;margin-bottom:6px}.aihero b{display:block;font-size:16px}.aihero small{display:block;color:var(--ink3);line-height:1.5;margin-top:3px}
 .aip{margin:0 0 8px;line-height:1.6;color:var(--ink2)}.aiul{margin:0 0 4px;padding-left:20px;line-height:1.6;color:var(--ink2)}.aiul li{margin:5px 0}
 @media (max-width:700px){ .setnav{display:grid!important;grid-template-columns:repeat(9,minmax(0,1fr));gap:2px!important;overflow:visible!important} .setnav button{min-width:0!important;width:auto!important;padding-left:0!important;padding-right:0!important;justify-content:center} }
+.sxbal{cursor:pointer}.sxbal:hover{border-color:var(--accent)}
+.sxmenu.walpop{width:320px;padding:14px!important}
+.wtop{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}.wtop small{color:var(--ink3);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}.wtop b{font-size:24px;font-variant-numeric:tabular-nums}.wtop span{font-size:13px;font-weight:700}.wtop span:not(.pos):not(.neg){color:var(--ink3)}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.wrow{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:7px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}.wrow span{color:var(--ink3);font-size:11.5px;font-weight:700}.wrow b{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wrow b.warn{color:var(--amber)}.wrow small{font-size:11px}
+.wfoot{margin-top:10px;color:var(--ink3);font-size:12px}
+.sxlegend.lglight .lgt{opacity:1}.sxlegend.lglight .lgv{opacity:1}
 </style>
 </head>
 <body class="">
@@ -1978,7 +1984,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.7', BUILD: '2026-11-17'
+  VERSION: 'v12.1.8', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2466,6 +2472,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.8':{nl:['Lichte chart: marktnaam en koersen nu goed leesbaar','Positie-tool: winst altijd blauw, verlies altijd rood','Tik op je saldo voor je rekening: equity, marge, vrije marge, marge-niveau, hefboom, positiegrootte en risico'],en:['Light chart: symbol name and prices now readable','Position tool: profit always blue, loss always red','Tap your balance for your account: equity, margin, free margin, margin level, leverage, position size and risk']},
   'v12.1.7':{nl:['Instellingen → TWF AI: uitleg, welke AI, wat er met je data gebeurt en disclaimer','Melden en Info onder AI-antwoorden als rustige icoontjes'],en:['Settings → TWF AI: explanation, which AI, what happens to your data and disclaimer','Report and Info under AI answers as quiet icons']},
   'v12.1.6':{nl:['AI: Melden (naar de beheerder) en Info (welk model antwoordde) in plaats van duimpjes','Nieuwe TWF-denkanimatie met bewegende candles','Beheerder ziet AI-meldingen onder Marktdata'],en:['AI: Report (to the admin) and Info (which model answered) instead of thumbs','New TWF thinking animation with moving candles','Admin sees AI reports under Market data']},
   'v12.1.5':{nl:['AI: antwoord verschijnt woord voor woord, meerdere gratis modellen tegelijk (snelste wint), optioneel supersnelle gratis Groq-sleutel'],en:['AI: answer appears word by word, several free models at once (fastest wins), optional super-fast free Groq key']},
@@ -4551,7 +4558,10 @@ function pushBar(b){ const B=SX.blist; if(B){ if(B.length&&B[B.length-1].time===
 function legend(d){ if(!SX) return;
   const b=d||(SX.rp?SX.rp.current():null); if(!b) return; const dec=SYMCFG[SX.sym].dec;
   const o=b.open??b.value, cl=b.close??b.value, ch=cl-o, pc=o?ch/o*100:0, col=ch>=0?'var(--pos)':'var(--neg)';
-  const f=x=>x==null?'—':fmtPx(x), c=tplColors(), vc=ch>=0?(c.bodyUp||c.up):(c.bodyDown||c.down), a=asset(SX.sym)||{};
+  const f=x=>x==null?'—':fmtPx(x), c=tplColors(), a=asset(SX.sym)||{};
+  let vc=ch>=0?(c.bodyUp||c.up):(c.bodyDown||c.down); const bgL=colLum(c.bg||'#000'), light=bgL>.5;
+  if(Math.abs(colLum(vc)-bgL)<.28) vc=ch>=0?(light?'#0b7a5c':'#26a69a'):(light?'#c62828':'#ef5350');
+  { const el=$('#sxLegend'); if(el){ el.style.color=light?'#131722':''; el.classList.toggle('lglight',light) } }
   const html=`${c.slSymbol!==false?`<span class="lgt">${symBadge(SX.sym)}<span>${esc(a.nameEn||SX.sym)} · ${tvTf(SX.tf)} · TWF</span></span>`:''}
    ${c.slOHLC!==false?`<span class="lgv" style="--vc:${vc}">O<i>${f(b.open??b.value)}</i> H<i>${f(b.high??b.value)}</i> L<i>${f(b.low??b.value)}</i> C<i>${f(cl)}</i></span>`:''}
    ${c.slChange!==false?`<span class="lgv" style="--vc:${vc}"><i>${ch>=0?'+':''}${fmtPx(ch)} (${pc>=0?'+':''}${pc.toFixed(2)}%)</i></span>`:''}
@@ -4848,6 +4858,25 @@ function closeQuote(p){return p.side==='buy'?bid():ask()}
 function pnlAt(p,level){return (level-p.entry)*dirOf(p)*p.qty*ccs(p.sym)}
 function openPnl(){return SX.pos.reduce((a,p)=>a+(p.sym===SX.sym?pnlAt(p,closeQuote(p)):(p.lastPnl||0)),0)}
 function equity(){return (SX.s.balance??0)+openPnl()}
+function walletHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, lev=+SX.acc.leverage||100, bal=SX.s.balance??SX.acc.balance??0, eq=equity(), op=SX.pos.length?openPnl():0, m=SX.pos.length?marginUsed():0, free=eq-m, lvl=m>0?eq/m*100:null, so=+SX.acc.so||50;
+  const start=+(SX.s.startBalance??SX.acc.balance)||0, ret=start?(eq-start)/start*100:0;
+  const lots=SX.pos.reduce((a,p)=>a+(+p.qty||0),0), notional=SX.pos.reduce((a,p)=>a+p.entry*p.qty*ccs(p.sym),0);
+  const risk=SX.pos.reduce((a,p)=>p.sl!=null?a+Math.max(0,(p.entry-p.sl)*dirOf(p))*p.qty*ccs(p.sym):a,0), noSl=SX.pos.filter(p=>p.sl==null).length;
+  const row=(k,v,cls='')=>`<div class="wrow"><span>${k}</span><b class="${cls}">${v}</b></div>`;
+  const lc=lvl==null?'':lvl<=so*1.5?'neg':lvl<=so*3?'warn':'pos';
+  return `<div class="wtop"><small>Equity</small><b>${fmtBal(eq)}</b><span class="${op>=0?'pos':'neg'}">${SX.pos.length?fmtUsd(op)+' '+L('open','open'):L('Geen open posities','No open positions')}</span></div>
+    <div class="wgrid">${row(L('Saldo','Balance'),fmtBal(bal))}${row(L('Rendement','Return'),(ret>=0?'+':'')+ret.toFixed(2)+'%',ret>=0?'pos':'neg')}
+    ${row(L('Gebruikte marge','Used margin'),fmtBal(m))}${row(L('Vrije marge','Free margin'),fmtBal(free),free<0?'neg':'')}
+    ${row(L('Marge-niveau','Margin level'),lvl==null?'—':Math.round(lvl).toLocaleString(locale())+'%',lc)}${row(L('Hefboom','Leverage'),'1:'+lev)}
+    ${row(L('Open posities','Open positions'),SX.pos.length+(SX.pos.length?` · ${(+lots.toFixed(2)).toLocaleString(locale())} lot`:''))}${row(L('Positiegrootte','Position size'),fmtBal(notional))}
+    ${row(L('Risico tot SL','Risk to SL'),SX.pos.length?fmtBal(risk)+(noSl?` <small class="neg">· ${noSl} ${L('zonder SL','without SL')}</small>`:''):'—',noSl?'':'')}${row('Stop-out',so+'%')}</div>
+    <div class="wfoot">${L('Startsaldo','Starting balance')} ${fmtBal(start)} · ${esc(SX.acc.name||'')}</div>` }
+function walletPop(anchor){ if(!SX) return; const L=(nl,en)=>LANG==='en'?en:nl;
+  if(innerWidth<700||!anchor||!anchor.offsetParent){ const sh=mSheet(L('Rekening','Account'),`<div class="walbody">${walletHtml()}</div>`,'wallet'); const t=setInterval(()=>{ const b=sh.querySelector&&sh.querySelector('.walbody'); if(!SX||!b||!document.body.contains(b)){ clearInterval(t); return } b.innerHTML=walletHtml() },500); return }
+  if(document.querySelector('.sxmenu.walpop')){ document.querySelectorAll('.sxmenu').forEach(x=>x.remove()); return }
+  popMenu(anchor,`<div class="walbody">${walletHtml()}</div>`,()=>{},'walpop');
+  const t=setInterval(()=>{ const b=document.querySelector('.sxmenu.walpop .walbody'); if(!SX||!b){ clearInterval(t); return } b.innerHTML=walletHtml() },500) }
+document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('.sxbal'); if(b&&SX){ e.stopPropagation(); walletPop(b) } });
 function marginUsed(){const lev=+SX.acc.leverage||100;return SX.pos.reduce((a,p)=>a+p.entry*p.qty*ccs(p.sym)/lev,0)}
 const cur=()=>SX.acc.currency||'USD';
 const fmtUsd=(n,dp=2)=>(n>=0?'+':'−')+new Intl.NumberFormat(locale(),{style:'currency',currency:cur(),currencyDisplay:'narrowSymbol',minimumFractionDigits:dp,maximumFractionDigits:dp}).format(Math.abs(n));
@@ -5414,6 +5443,8 @@ function ensureCanvas(){
   return cv;
 }
 function textCol(){const c=tplColors();return (c.bg||'#000').toLowerCase()>'#888888'?'#121826':'#eef1f6'}
+function colLum(c){ try{ let r,g,b; if(/^rgb/i.test(c)){ [r,g,b]=c.match(/[\d.]+/g).map(Number) } else { const h=String(c).replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h.slice(0,6),16); r=n>>16&255; g=n>>8&255; b=n&255 } return (0.2126*r+0.7152*g+0.0722*b)/255 }catch(e){ return 0 } }
+function colSat(c){ try{ const h=String(c).replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h.slice(0,6),16); const r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255, mx=Math.max(r,g,b), mn=Math.min(r,g,b); return mx===0?0:(mx-mn)/mx }catch(e){ return 1 } }
 function hexA(hex,a){ if(!hex) hex='#2962FF'; if(/^rgb/i.test(hex)){const m=hex.match(/[\d.]+/g);return `rgba(${m[0]},${m[1]},${m[2]},${a})`} const h=hex.replace('#',''); const n=parseInt(h.length===3?h.split('').map(x=>x+x).join(''):h,16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})` }
 function renderDrawings(){
   const cv=ensureCanvas(); if(!cv) return; const ctx=cv.getContext('2d'), dpr=cv._d;
@@ -6640,7 +6671,7 @@ function tfSheet(){ const L=(nl,en)=>LANG==='en'?en:nl, R=['1D','5D','1M','3M','
   sh.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>{ setTf(b.dataset.tf); updDock(); sh.close() }); }
 /* ⋯ : Analysis hub met tegels */
 function moreHub(){ const L=(nl,en)=>LANG==='en'?en:nl;
-  const top=[['settings','gear',t('sx.chartset')],['type','candle',L('Grafiektype','Chart type')],['shot','camera','Screenshot']];
+  const top=[['settings','gear',t('sx.chartset')],['type','candle',L('Grafiektype','Chart type')],['wallet','wallet',L('Rekening','Account')]];
   const tools=[['ind','chart','Indicators'],['ana','bars','Analytics'],['order','plusc','Order'],['watch','list',t('sx.watch')],['tree','layers',t('sx.tree')],['journal','edit','Journal'],['range','calendar',L('Datumbereik','Date range')],['goto','clock',L('Ga naar datum','Go to date')]];
   const tile=([k,i,l],big)=>`<button class="tvs-tile${big?' big':''}" data-v="${k}">${ic(i,24)}<span>${esc(l)}</span></button>`;
   const sh=mSheet('Analysis hub',`<div class="tvs-grid g3">${top.map(x=>tile(x)).join('')}</div>
@@ -6649,6 +6680,7 @@ function moreHub(){ const L=(nl,en)=>LANG==='en'?en:nl;
     <button class="tvs-close" data-v="close">${ic('back',18)} ${L('Sessie sluiten','Close session')}</button>`,'hub');
   sh.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{ const v=b.dataset.v; sh.close();
     if(v==='range'){ setTimeout(tfSheet,230); return }
+    if(v==='wallet'){ setTimeout(()=>walletPop(null),230); return }
     const q={close:'#sxBack',ind:'#sxInd',ana:'#sxAna',undo:'#sxUndo',redo:'#sxRedo',type:'#sxType',shot:'#sxShot',goto:'#sxGoto'}[v];
     setTimeout(()=>{ if(q){ const el=$(q); if(el) el.click(); return } const rb=document.querySelector(`.sxrail [data-panel="${v}"]`); if(rb) rb.click() },q==='#sxType'?240:0) }); }
 function updDock(){ const s=$('#dkSym'), f=$('#dkTf'); if(!s||!SX) return; s.innerHTML=`${symBadge(SX.sym)}<b>${SX.sym}</b>`; f.textContent=tfLabel(SX.tf) }
@@ -6798,7 +6830,7 @@ function posCalc(d){ const sp=SPEC[SX.sym], e=d.pts[0].p, dist=Math.abs(e-d.stop
   const rew=Math.abs(d.target-e); return {sp,e,dist,acct,riskCash,qty,rew,rr:rew/dist} }
 function drawPosTool(ctx,d,P){
   const e=d.pts[0], isL=d.type==='long', wt=posWt(d), x1=P[0].x, x2=X(e.t+wt), ye=P[0].y, yt=Y(d.target), ys=Y(d.stop);
-  const cT=d.cTarget||'#089981', cS=d.cStop||'#F23645', cL=d.cLine||'#787B86', cX=d.cText||'#FFFFFF', fa=d.fillA??0.2;
+  const cT=d.cTarget&&colSat(d.cTarget)>.18?d.cTarget:'#2962FF', cS=d.cStop&&colSat(d.cStop)>.18?d.cStop:'#F23645', cL=d.cLine||'#787B86', cX=d.cText||'#FFFFFF', fa=d.fillA??0.2;
   ctx.setLineDash([]); ctx.fillStyle=hexA(cT,fa); ctx.fillRect(x1,Math.min(ye,yt),x2-x1,Math.abs(yt-ye)); ctx.fillStyle=hexA(cS,fa); ctx.fillRect(x1,Math.min(ye,ys),x2-x1,Math.abs(ys-ye));
   ctx.strokeStyle=cL; ctx.lineWidth=1; line(ctx,{x:x1,y:ye},{x:x2,y:ye});
   const c=posCalc(d), sp=c.sp, dec=SYMCFG[SX.sym].dec, show=d.alwaysStats===true||SX.sel===d.id||SX.hoverId===d.id||SX.drag&&SX.drag.d===d, cx=(x1+x2)/2;
