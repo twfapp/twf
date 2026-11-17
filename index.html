@@ -1533,7 +1533,7 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
 /* v10.2: app past zich zelf aan het venster aan (zie applyUiScale) */
 @media (min-width:901px){ #main>*{zoom:var(--uiz,1)} }
 /* donkere, dunne scrollbalken i.p.v. witte balken */
-*{scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+@supports (-moz-appearance:none){ *{scrollbar-width:thin;scrollbar-color:var(--line2) transparent} }
 ::-webkit-scrollbar{width:9px;height:9px;background:transparent}
 ::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:9px;border:2px solid transparent;background-clip:padding-box}
@@ -1548,7 +1548,7 @@ body.theme-light .hrow3>div,body.theme-light .hdy{background:var(--panel2)}
   .side .nav .grp{padding:9px 12px 2px}
   .side .bottom{padding:8px 14px}
 }
-@media (min-width:901px) and (max-height:820px){ .nav button{height:30px!important} .side .bottom .ver{display:none} }
+
 
 /* ===== v10.1: inlogscherm ===== */
 #login{--panel:#0f131b;--panel2:rgba(255,255,255,.06);--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--ink:#eef1f6;--ink2:#c3cad6;--ink3:#8f9aac;color:var(--ink);
@@ -1858,6 +1858,15 @@ body.side-tight .side .prof{padding-top:8px!important;padding-bottom:8px!importa
 body.side-tighter .side .nav button{height:27px!important;font-size:13px}
 body.side-tighter .side .nav .grp{padding-top:4px!important;margin-top:2px!important}
 body.side-tighter .side .bottom{padding-top:4px!important;padding-bottom:4px!important}
+/* v12.1.17: eigen scrollbalken in TWF-stijl + juiste kleurmodus voor Safari */
+html,body{color-scheme:dark}
+body.theme-light{color-scheme:light}
+:root:has(body.theme-light){color-scheme:light}
+::-webkit-scrollbar{width:8px;height:8px;background:transparent}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(140,150,170,.28);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:rgba(140,150,170,.5);background-clip:padding-box;border:2px solid transparent}
+body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);background-clip:padding-box;border:2px solid transparent}
 </style>
 </head>
 <body class="">
@@ -2000,7 +2009,7 @@ body.side-tighter .side .bottom{padding-top:4px!important;padding-bottom:4px!imp
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.16', BUILD: '2026-11-22'
+  VERSION: 'v12.1.17', BUILD: '2026-11-22'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2488,6 +2497,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.17':{nl:['App schaalt nu mee op hoogte én breedte: alles past weer op MacBook, iPad en kleinere vensters','Eigen donkere scrollbalken — geen witte balken meer in Safari'],en:['App now scales with height and width: everything fits again on MacBook, iPad and smaller windows','Own dark scrollbars — no more white bars in Safari']},
   'v12.1.16':{nl:['Zijbalk past zich aan je schermhoogte aan: Accountinstellingen en het versienummer staan weer altijd in beeld (Mac en iPad)'],en:['Sidebar adapts to your screen height: Account settings and the version number are always visible again (Mac and iPad)']},
   'v12.1.15':{nl:['iPad/iPhone-app: zoom wordt altijd teruggezet naar 100%, per ongeluk inzoomen is geblokkeerd en de app gebruikt precies de zichtbare schermhoogte'],en:['iPad/iPhone app: zoom always reset to 100%, accidental zooming blocked and the app uses exactly the visible screen height']},
   'v12.1.14':{nl:['iPad/iPhone-app: scherm niet meer verschoven (geen zwarte balk boven, onderkant weer zichtbaar)','Chart-templates: rasterlijnen aan/uit worden nu altijd overgenomen bij het openen van een sessie'],en:['iPad/iPhone app: screen no longer shifted (no black bar on top, bottom visible again)','Chart templates: grid lines on/off are now always applied when opening a session']},
@@ -2789,9 +2799,9 @@ const CVARS=['--bg','--bg2','--panel','--panel2','--line','--line2','--ink','--i
 /* v10.2: grootte van de app — 'auto' rekent met de venstergrootte (ontwerp: 1500×920) */
 function uiScalePref(){ try{ return localStorage.getItem('twf_uiscale')||'auto' }catch(e){ return 'auto' } }
 function applyUiScale(){ const v=uiScalePref(); let z=1;
-  if(v==='auto'){ const w=innerWidth, h=innerHeight, touch=matchMedia('(pointer:coarse)').matches&&!matchMedia('(pointer:fine)').matches; if(w>900&&!touch) z=Math.max(.84,Math.min(1.05,Math.min(w/1560,h/940))); z=Math.round(z*50)/50 }
+  if(v==='auto'){ const w=innerWidth, h=innerHeight, touch=matchMedia('(pointer:coarse)').matches&&!matchMedia('(pointer:fine)').matches; if(w>900&&!touch) z=Math.max(.7,Math.min(1.05,w/1560,h/940)); else if(w>900&&touch) z=Math.max(.8,Math.min(1,h/880)); z=Math.min(1.04,Math.floor(z*50)/50) }
   else z=Math.max(.5,Math.min(2,parseFloat(v)||1));
-  document.documentElement.style.setProperty('--uiz',z) }
+  document.documentElement.style.setProperty('--uiz',z); setTimeout(()=>{ try{ window.fitSide&&fitSide() }catch(e){} },60) }
 addEventListener('resize',()=>{ clearTimeout(window._uizT); window._uizT=setTimeout(applyUiScale,120) });
 try{ applyUiScale() }catch(e){}
 function applyColors(){ const th=curTheme(), own=((prefsSafe().colors)||{})[th], st=document.body.style;
