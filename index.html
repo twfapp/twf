@@ -1987,7 +1987,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.11', BUILD: '2026-11-17'
+  VERSION: 'v12.1.12', BUILD: '2026-11-17'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2475,6 +2475,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.12':{nl:['iPad: tekenen met je vinger verbeterd — geen per ongeluk instellingenvenster meer bij snel tikken','"Add text" midden op lijnen en rechthoeken; tik nog een keer op een geselecteerde tekening om tekst te typen','Handelsrekeningen: nieuwe sessie kiest altijd de rekening die je ziet (laatst gebruikt), wisselen van rekening neemt het juiste saldo over'],en:['iPad: drawing with your finger improved — no accidental settings dialog on quick taps','"Add text" in the middle of lines and rectangles; tap a selected drawing again to type text','Trading accounts: a new session always uses the account you see (last used), switching account takes the right balance']},
   'v12.1.11':{nl:['TWF AI slimmer: krijgt kant-en-klare analyses van al je trades (per dag, uur, markt, setup, na een verlies, drukke dagen), gebruikt betere modellen en herhaalt zichzelf niet'],en:['TWF AI smarter: gets ready-made analyses of all your trades (per day, hour, market, setup, after a loss, busy days), uses better models and does not repeat itself']},
   'v12.1.10':{nl:['Break-even klopt: TP/SL-labels tonen nu je netto resultaat inclusief commissie, BE = €0,00','Journal-kalender toont bedragen met centen'],en:['Break-even fixed: TP/SL labels now show your net result including commission, BE = €0.00','Journal calendar shows amounts with cents']},
   'v12.1.9':{nl:['Backtest: zon/maan-knop met keuze — alles licht, alles donker, of chart en balken apart','Koersen en prijs-as altijd leesbaar, ook met grijze kleuren op een lichte chart','Bijwerken robuuster (vooral op de Mac): oude cache wordt gewist en het controleert of de nieuwe versie er echt is'],en:['Backtest: sun/moon button with choice — all light, all dark, or chart and bars separately','Prices and price axis always readable, even with grey colours on a light chart','More robust updating (especially on Mac): old cache is cleared and it checks the new version really loaded']},
@@ -3054,14 +3055,14 @@ function pageAccounts(){
    :`<div class="box empty"><div class="ei">${ic('wallet',24)}</div><h4>${t('acc.empty')}</h4><div>${t('acc.emptysub')}</div><button class="btn btn-p" data-act="newacc" style="margin-top:8px">${ic('plus',16)} ${t('acc.new')}</button></div>`}</div>`;
 }
 function accountModal(id,after){
-  const a=id?DB.get('accounts',id):{name:'',balance:100000,currency:'USD',leverage:100,mc:100,so:50};
+  const a0=id?DB.get('accounts',id):{name:'',balance:100000,currency:'USD',leverage:100,mc:100,so:50}; const a={...a0,balance:+a0.balance||0,leverage:+a0.leverage||100,currency:a0.currency||'USD'};
   const bal=[10000,25000,50000,100000,250000], lev=[10,30,50,100,200,500];
   const ov=modal(`<div class="mh"><h3>${id?t('edit'):t('acc.new')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div>
    <div class="mbody single"><div class="mcont">
     <div class="field"><label>${t('acc.name')} <span class="req">*</span></label><input class="inp" id="aName" value="${esc(a.name)}" placeholder="Demo 100K"></div>
-    <div class="field"><label>${t('acc.balance')} <span class="req">*</span></label><div class="opts" id="aBal">${bal.map(b=>`<button data-v="${b}" class="${a.balance===b?'on':''}">${b>=1000?'$'+b/1000+'K':b}</button>`).join('')}<button data-v="custom" class="${bal.includes(a.balance)?'':'on'}">${t('acc.custom')}</button></div></div>
+    <div class="field"><label>${t('acc.balance')} <span class="req">*</span></label><div class="opts" id="aBal">${bal.map(b=>`<button data-v="${b}" class="${a.balance===b?'on':''}">${b>=1000?({EUR:'€',GBP:'£'}[a.currency]||'$')+b/1000+'K':b}</button>`).join('')}<button data-v="custom" class="${bal.includes(a.balance)?'':'on'}">${t('acc.custom')}</button></div></div>
     <div class="field ${bal.includes(a.balance)?'hide':''}" id="aBalC"><input class="inp" id="aBalV" type="number" min="100" step="100" value="${a.balance}"></div>
-    <div class="two"><div class="field"><label>${t('acc.currency')}</label><select class="inp" id="aCur">${['USD','EUR','GBP'].map(c=>`<option ${a.currency===c?'selected':''}>${c}</option>`).join('')}</select></div>
+    <div class="two"><div class="field"><label>${t('acc.currency')}</label><select class="inp" id="aCur">${[...new Set(['USD','EUR','GBP',a.currency])].map(c=>`<option ${a.currency===c?'selected':''}>${c}</option>`).join('')}</select></div>
      <div class="field"><label>${t('acc.leverage')}</label><select class="inp" id="aLev">${lev.map(l=>`<option value="${l}" ${a.leverage==l?'selected':''}>1:${l}</option>`).join('')}<option value="custom" ${lev.includes(+a.leverage)?'':'selected'}>${t('acc.custom')}</option></select></div></div>
     <div class="field ${lev.includes(+a.leverage)?'hide':''}" id="aLevC"><label>${t('acc.leverage')} (1:x)</label><input class="inp" id="aLevV" type="number" min="1" max="3000" value="${a.leverage}"></div>
     <div class="two"><div class="field"><label>${t('acc.mc')}</label><input class="inp" id="aMc" type="number" value="${a.mc}"></div><div class="field"><label>${t('acc.so')}</label><input class="inp" id="aSo" type="number" value="${a.so}"></div></div>
@@ -3124,7 +3125,7 @@ function strategyModal(id,after){
 function sessionModal(type='backtest',editId,opts){
   const ed=editId?DB.get('sessions',editId):null;
   const p=profile();
-  const st={type:ed?ed.type:type,sec:'basics',name:ed?ed.name:'',account:ed?ed.account:(DB.list('accounts')[0]||{}).id||'',strategy:ed?ed.strategy||'':'',assets:ed?[...ed.assets]:[],
+  const st={type:ed?ed.type:type,sec:'basics',name:ed?ed.name:'',account:ed?ed.account:((()=>{ const ns=DB.list('accounts').filter(a=>!a.prop); return (ns.find(a=>a.id===lsGet('twf_lastacc'))||ns[0]||{}).id||'' })()),strategy:ed?ed.strategy||'':'',assets:ed?[...ed.assets]:[],
     start:ed?ed.start:'',endMode:ed?ed.endMode:'auto',end:ed?ed.end||'':'',template:ed?ed.template:(p.lastTemplate||p.defaultTemplate||'tv-dark'),smooth:ed?!!ed.smooth:false,
     spreadMode:ed?ed.spreadMode:'real',spread:ed?ed.spread:0.3,comm:ed?ed.comm:7,slip:ed?ed.slip:0,hedge:ed?ed.hedge:true,
     target:ed?ed.target:10,daily:ed?ed.daily:5,maxloss:ed?ed.maxloss:10,mindays:ed?ed.mindays:4,ddOpen:false,
@@ -3142,6 +3143,7 @@ function sessionModal(type='backtest',editId,opts){
   const today=new Date().toISOString().slice(0,10);
   function draw(){
     const accs=DB.list('accounts').filter(a=>!a.prop), strs=DB.list('strategies');
+    if(st.type!=='propfirm'&&!accs.some(a=>a.id===st.account)) st.account=(accs.find(a=>a.id===lsGet('twf_lastacc'))||accs[0]||{}).id||'';
     const secs=st.type==='propfirm'?[['rules','ns.rules','ns.rulessub'],['basics','ns.basics','ns.basicsub'],['more','ns.more','ns.moresub']]:[['basics','ns.basics','ns.basicsub'],['more','ns.more','ns.moresub']];
     let c='';
     if(st.sec==='basics') c=`
@@ -3244,9 +3246,10 @@ function sessionModal(type='backtest',editId,opts){
       const acc=DB.get('accounts',st.account);
       const {sec,ddOpen,...data}=st;
       const pfSize=st.type==='propfirm'&&st.firm&&st.size?+st.size:0; if(pfSize&&!ed) data.startBalance=pfSize;
-      const obj={...(ed||{}),...data,name:st.name.trim(),id:ed?ed.id:uid(),balance:ed?ed.balance:(pfSize||acc.balance),cursor:ed?ed.cursor:st.start+'T00:00:00Z',
+      const obj={...(ed||{}),...data,name:st.name.trim(),id:ed?ed.id:uid(),balance:ed?(ed.account!==st.account&&!(ed.trades||[]).length&&st.type!=='propfirm'?+acc.balance:ed.balance):(pfSize||+acc.balance),cursor:ed?ed.cursor:st.start+'T00:00:00Z',
         trades:ed?ed.trades||[]:[],timeSpent:ed?ed.timeSpent||0:0,created:ed?ed.created:new Date().toISOString(),updated:new Date().toISOString(),
         activity:[...new Set([...(ed&&ed.activity||[]),new Date().toISOString().slice(0,10)])]};
+      if(st.type!=='propfirm'&&acc&&!acc.prop) lsSet('twf_lastacc',acc.id);
       await DB.put('sessions',obj); ov.remove(); toast(editId?t('toast.saved'):t('toast.sesscreated'),obj.name+' · '+obj.assets.join(', '),'ok');
       S.page='testing'; if(!editId) S.tab='sessions'; render();
       if(!editId) openSession(obj.id);
@@ -5786,7 +5789,7 @@ function startCreate(k,pt,x,y){
 function onDown(e){
   if(!SX||e.button>0) return; if(e.target.closest&&(e.target.closest('.olab,.dtb,.dtedit,.sxlegend,.favbar,.sxmenu,.cpop')||!e.target.closest('#sxChart,#sxDraw'))) return; const {x,y}=relXY(e); if(!inPane(x,y)) return;
   SX.touch=e.pointerType==='touch'||e.pointerType==='pen'; SX.touchBlock=false;
-  if(SX.touch){ const now=performance.now(), lt=SX._lastTap; SX._lastTap={t:now,x,y};
+  if(SX.touch&&!SX.creating&&!(TOOLS[SX.tool||'cross']&&TOOLS[SX.tool||'cross'].g!=='cursor')){ const now=performance.now(), lt=SX._lastTap; SX._lastTap={t:now,x,y};
     if(lt&&now-lt.t<350&&Math.hypot(x-lt.x,y-lt.y)<28){ SX._lastTap=null; if(onDbl(e)){ SX.touchBlock=true; return } } }
   if(!SX.drag&&SX._hsOff){ SX._hsOff=false; SX.chart.applyOptions({handleScroll:true,handleScale:true}) }
   const tool=SX.tool||'cross', g=TOOLS[tool]?TOOLS[tool].g:'cursor';
@@ -5841,7 +5844,7 @@ function onUp(e){
     if(c.pend){ c.pend=false; const {x,y}=relXY(e), pt=(e.shiftKey&&c.idx>0&&constrainPt(c.d.type,c.d.pts[c.idx-1],x,y))||toPt(x,y,true); if(pt) c.d.pts[c.idx]=pt; c.idx++; if(c.idx>=c.need) finishCreate(); else c.d.pts.push({...c.d.pts[c.idx-1]}); return }
     if(c.down&&c.idx===1&&c.need===2){ const {x,y}=relXY(e); if(Math.hypot(x-c.down.x,y-c.down.y)>8){ const pt=(e.shiftKey&&constrainPt(c.d.type,c.d.pts[0],x,y))||toPt(x,y,true); if(pt) c.d.pts[1]=pt; c.idx=2; finishCreate() } }
     return }
-  if(SX.drag){ const g=SX.drag; SX.drag=null; SX._hsOff=false; SX.chart.applyOptions({handleScroll:true,handleScale:true}); if(!g.moved){SX.hist.pop(); if(g.wasSel&&canInline(g.d)&&!g.d.locked&&!SX.touch) inlineEdit(g.d)} else saveDrawLater() }
+  if(SX.drag){ const g=SX.drag; SX.drag=null; SX._hsOff=false; SX.chart.applyOptions({handleScroll:true,handleScale:true}); if(!g.moved){SX.hist.pop(); if(g.wasSel&&canInline(g.d)&&!g.d.locked) inlineEdit(g.d)} else saveDrawLater() }
 }
 function onDbl(e){
   if(!SX) return false; if(e.type==='dblclick'&&performance.now()-(SX._dblAt||0)<600) return false;
@@ -5894,7 +5897,8 @@ function constrainPt(type,anc,x,y){
 /* ----- v7.2: direct tekst typen in een vak / op een lijn ----- */
 const BOXT=['rect','rrect','circle','ellipse','triangle','flattop'];
 const LINET=['trend','ray','ext','info','angle','hline','hray','vline','arrow'];
-function canInline(d){ return BOXT.includes(d.type)||(TEXTTYPES.includes(d.type)&&d.type!=='table') }
+const TXTLINE=['trend','ray','ext','arrow','hline','hray','vline'];
+function canInline(d){ return BOXT.includes(d.type)||TXTLINE.includes(d.type)||(TEXTTYPES.includes(d.type)&&d.type!=='table') }
 function inlineEdit(d,isNew){
   const wrap=$('.sxchartwrap'); if(!wrap) return; document.querySelectorAll('.dtedit').forEach(x=>x.blur());
   const cv=$('#sxDraw'), W=cv?cv._w:wrap.clientWidth, H=cv?cv._h:wrap.clientHeight, P=d.pts.map(q=>({x:X(q.t),y:Y(q.p)})), st=d.style, ty=d.type;
@@ -6866,7 +6870,7 @@ function textGap(ctx,d,P,W,H){
   return null }
 function drawItemText(ctx,d,P,W,H){
   if(TEXTTYPES.includes(d.type)||d.type==='emoji'||!P.length||d._editing) return;
-  const ph=!d.text&&SX.sel===d.id&&BOXT.includes(d.type)&&!SX.creating;
+  const ph=!d.text&&SX.sel===d.id&&(BOXT.includes(d.type)||TXTLINE.includes(d.type))&&!SX.creating&&!(SX.drag&&SX.drag.moved);
   if(!d.text&&!ph) return;
   const st=d.style, col=ph?hexA(st.textColor||st.color||textCol(),.45):hexA(st.textColor||st.color||textCol(),st.textA??1), al=st.align||'center', va=st.valign||'middle';
   ctx.save(); ctx.setLineDash([]); ctx.font=fontOf(st); ctx.fillStyle=col;
