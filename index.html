@@ -1987,7 +1987,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.12', BUILD: '2026-11-17'
+  VERSION: 'v12.1.13', BUILD: '2026-11-22'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2475,6 +2475,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.13':{nl:['Bijwerken herlaadt nu gewoon dezelfde pagina — voorkomt dat het scherm op iPad/iPhone naar beneden verschuift'],en:['Updating now simply reloads the same page — prevents the screen shifting down on iPad/iPhone']},
   'v12.1.12':{nl:['iPad: tekenen met je vinger verbeterd — geen per ongeluk instellingenvenster meer bij snel tikken','"Add text" midden op lijnen en rechthoeken; tik nog een keer op een geselecteerde tekening om tekst te typen','Handelsrekeningen: nieuwe sessie kiest altijd de rekening die je ziet (laatst gebruikt), wisselen van rekening neemt het juiste saldo over'],en:['iPad: drawing with your finger improved — no accidental settings dialog on quick taps','"Add text" in the middle of lines and rectangles; tap a selected drawing again to type text','Trading accounts: a new session always uses the account you see (last used), switching account takes the right balance']},
   'v12.1.11':{nl:['TWF AI slimmer: krijgt kant-en-klare analyses van al je trades (per dag, uur, markt, setup, na een verlies, drukke dagen), gebruikt betere modellen en herhaalt zichzelf niet'],en:['TWF AI smarter: gets ready-made analyses of all your trades (per day, hour, market, setup, after a loss, busy days), uses better models and does not repeat itself']},
   'v12.1.10':{nl:['Break-even klopt: TP/SL-labels tonen nu je netto resultaat inclusief commissie, BE = €0,00','Journal-kalender toont bedragen met centen'],en:['Break-even fixed: TP/SL labels now show your net result including commission, BE = €0.00','Journal calendar shows amounts with cents']},
@@ -2503,19 +2504,20 @@ function showUpdScreen(from,to,resuming){ const sc=$('#updScr'); if(!sc) return;
   $('#updV').textContent=to?(from?`${from} → ${to}`:to):'';
   try{ const sv=$('#updBg'); if(sv){ const keep=$('#lgBg'); sv.innerHTML=''; if(keep){ const W=innerWidth,H=innerHeight; sv.setAttribute('viewBox',`0 0 ${W} ${H}`); drawLoginBg(); sv.innerHTML=keep.innerHTML } } }catch(e){} }
 function hideUpdScreen(){ const sc=$('#updScr'); if(!sc) return; sc.classList.add('out'); setTimeout(()=>{ sc.classList.add('hide'); sc.classList.remove('out'); document.documentElement.classList.remove('updating') },450) }
+function updReload(){ if(location.search){ try{ history.replaceState(null,'',location.pathname) }catch(e){} } location.reload() }
 async function updClearCaches(hard){ try{ if(window.caches){ const ks=await caches.keys(); await Promise.all(ks.map(k=>caches.delete(k))) } }catch(e){}
   try{ if(navigator.serviceWorker){ const rs=await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(r=>hard?r.unregister():r.update().catch(()=>{}))) } }catch(e){} }
 function updStuck(to){ const L=(nl,en)=>LANG==='en'?en:nl, sc=$('#updScr'); if(!sc||sc.classList.contains('hide')||sc.querySelector('.updfail')) return;
   const d=document.createElement('div'); d.className='updfail';
   d.innerHTML=`<p>${L('Het bijwerken lukt niet automatisch. Sluit de app helemaal af (op de Mac met ⌘Q) en open hem opnieuw.','Updating did not finish automatically. Fully quit the app (⌘Q on Mac) and open it again.')}</p><div><button class="btn btn-p" data-ur>${L('Opnieuw proberen','Try again')}</button><button class="btn btn-g" data-uc>${L('Sluiten','Close')}</button></div>`;
-  sc.appendChild(d); d.querySelector('[data-ur]').onclick=async()=>{ await updClearCaches(true); location.replace(location.pathname+'?v='+Date.now()) }; d.querySelector('[data-uc]').onclick=()=>{ d.remove(); window._updBusy=false; hideUpdScreen() } }
+  sc.appendChild(d); d.querySelector('[data-ur]').onclick=async()=>{ await updClearCaches(true); updReload() }; d.querySelector('[data-uc]').onclick=()=>{ d.remove(); window._updBusy=false; hideUpdScreen() } }
 async function reloadForUpdate(){
   setTimeout(()=>updStuck(UPD.latest),20000);
   if(window._updBusy) return; window._updBusy=true; const L=(nl,en)=>LANG==='en'?en:nl, to=UPD.latest;
   document.querySelectorAll('.ov,.tvsheet,.tvsheet-bg,.updcard').forEach(x=>x.remove());
   showUpdScreen(CFG.VERSION,to,false); updSteps(1,.12);
   // 1. nieuwe versie alvast ophalen (zodat het herladen meteen gaat)
-  try{ await Promise.race([fetch(location.pathname+'?v='+Date.now(),{cache:'no-store'}),new Promise(r=>setTimeout(r,6000))]) }catch(e){}
+  try{ await Promise.race([fetch(location.pathname,{cache:'reload'}),new Promise(r=>setTimeout(r,6000))]) }catch(e){}
   await updClearCaches();
   updSteps(2,.55);
   // 2. sessie en plek bewaren
@@ -2525,7 +2527,7 @@ async function reloadForUpdate(){
   try{ sessionStorage.setItem('twf_upd',JSON.stringify({from:CFG.VERSION,to,at:Date.now()})) }catch(e){}
   await new Promise(r=>setTimeout(r,500)); updSteps(3,.85);
   await new Promise(r=>setTimeout(r,250));
-  location.replace(location.pathname+'?v='+Date.now());
+  updReload();
 }
 /* nieuwe versie gevonden → kaartje (of meteen bijwerken als automatisch updaten aan staat) */
 function updOffer(){ if(!updAvailable()) return; const L=(nl,en)=>LANG==='en'?en:nl;
@@ -2549,7 +2551,7 @@ async function tryResume(){
   let u=null; try{ u=JSON.parse(sessionStorage.getItem('twf_upd')||'null') }catch(e){} sessionStorage.removeItem('twf_upd');
   if(u&&Date.now()-u.at<5*60*1000){ showUpdScreen(u.from,u.to||CFG.VERSION,true); updSteps(3,.92);
     if(u.to&&verCmp(CFG.VERSION,u.to)<0){ // nog de oude versie geladen (cache) → één keer hard opnieuw
-      if(!u.retry){ try{ sessionStorage.setItem('twf_upd',JSON.stringify({...u,retry:1,at:Date.now()})); const rr=sessionStorage.getItem('twfbt_resume_bak'); if(rr) sessionStorage.setItem('twfbt_resume',rr) }catch(e){} await updClearCaches(true); location.replace(location.pathname+'?v='+Date.now()+'&h=1'); return false }
+      if(!u.retry){ try{ sessionStorage.setItem('twf_upd',JSON.stringify({...u,retry:1,at:Date.now()})); const rr=sessionStorage.getItem('twfbt_resume_bak'); if(rr) sessionStorage.setItem('twfbt_resume',rr) }catch(e){} await updClearCaches(true); updReload(); return false }
       setTimeout(()=>updStuck(u.to),400) } }
   const done=ok=>{ if(u){ updSteps(4,1); setTimeout(hideUpdScreen,ok?350:150) } return ok };
   if(!r||!r.sec||Date.now()-r.at>5*60*1000) return done(false);
