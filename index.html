@@ -1851,6 +1851,13 @@ body.ai-on .ov{z-index:220}
 /* v12.1.15: altijd precies de zichtbare hoogte gebruiken */
 html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 #app,#login,#session,#updScr{bottom:auto!important;height:var(--vvh,100%)!important}
+/* v12.1.16: zijbalk past zich aan de schermhoogte aan, versie altijd zichtbaar */
+body.side-tight .side .nav button{height:30px!important;min-height:0!important}
+body.side-tight .side .nav .grp{padding-top:6px!important;padding-bottom:1px!important}
+body.side-tight .side .prof{padding-top:8px!important;padding-bottom:8px!important}
+body.side-tighter .side .nav button{height:27px!important;font-size:13px}
+body.side-tighter .side .nav .grp{padding-top:4px!important;margin-top:2px!important}
+body.side-tighter .side .bottom{padding-top:4px!important;padding-bottom:4px!important}
 </style>
 </head>
 <body class="">
@@ -1993,7 +2000,7 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.15', BUILD: '2026-11-22'
+  VERSION: 'v12.1.16', BUILD: '2026-11-22'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2481,6 +2488,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.16':{nl:['Zijbalk past zich aan je schermhoogte aan: Accountinstellingen en het versienummer staan weer altijd in beeld (Mac en iPad)'],en:['Sidebar adapts to your screen height: Account settings and the version number are always visible again (Mac and iPad)']},
   'v12.1.15':{nl:['iPad/iPhone-app: zoom wordt altijd teruggezet naar 100%, per ongeluk inzoomen is geblokkeerd en de app gebruikt precies de zichtbare schermhoogte'],en:['iPad/iPhone app: zoom always reset to 100%, accidental zooming blocked and the app uses exactly the visible screen height']},
   'v12.1.14':{nl:['iPad/iPhone-app: scherm niet meer verschoven (geen zwarte balk boven, onderkant weer zichtbaar)','Chart-templates: rasterlijnen aan/uit worden nu altijd overgenomen bij het openen van een sessie'],en:['iPad/iPhone app: screen no longer shifted (no black bar on top, bottom visible again)','Chart templates: grid lines on/off are now always applied when opening a session']},
   'v12.1.13':{nl:['Bijwerken herlaadt nu gewoon dezelfde pagina — voorkomt dat het scherm op iPad/iPhone naar beneden verschuift'],en:['Updating now simply reloads the same page — prevents the screen shifting down on iPad/iPhone']},
@@ -8079,6 +8087,15 @@ window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, allTrades:()=>{ const
   document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') setTimeout(go,100) });
   go();
 })();
+</script>
+<script>
+/* v12.1.16: zijbalk compacter maken als hij niet in het scherm past */
+(function(){ function fit(){ var s=document.querySelector('.side'); if(!s||!s.offsetParent) return; var b=document.body; b.classList.remove('side-tight','side-tighter');
+    if(s.scrollHeight>s.clientHeight+1){ b.classList.add('side-tight'); if(s.scrollHeight>s.clientHeight+1) b.classList.add('side-tighter') } }
+  window.fitSide=fit; addEventListener('resize',function(){ clearTimeout(window._fsT); window._fsT=setTimeout(fit,80) });
+  var s=document.querySelector('.side'); if(s&&window.ResizeObserver) new ResizeObserver(function(){ clearTimeout(window._fsT); window._fsT=setTimeout(fit,30) }).observe(s);
+  var n=document.querySelector('#nav'); if(n) new MutationObserver(function(){ setTimeout(fit,30) }).observe(n,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+  setTimeout(fit,300) })();
 </script>
 </body>
 </html>
