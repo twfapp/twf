@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TWF">
 <meta name="theme-color" content="#06080c">
 <script>try{if(navigator.standalone||matchMedia("(display-mode: standalone)").matches)document.documentElement.classList.add("pwa")}catch(e){}try{if(sessionStorage.getItem("twf_upd"))document.documentElement.classList.add("updating")}catch(e){}</script>
@@ -1845,6 +1845,9 @@ body.ai-on .ov{z-index:220}
 .updfail{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);width:min(420px,calc(100% - 40px));text-align:center;color:#fff;z-index:3}.updfail p{margin:0 0 12px;line-height:1.5;opacity:.9}.updfail div{display:flex;gap:8px;justify-content:center}
 .sxmenu .mhd{padding:6px 12px 2px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
 [data-calfit]{font-style:normal;letter-spacing:-.02em}[data-calfit] small{font-size:.74em;opacity:.85;letter-spacing:-.03em}
+/* v12.1.14: statusbalk doorzichtig → overal ruimte bovenin vrijhouden */
+.ov{padding-top:max(20px,calc(env(safe-area-inset-top) + 8px))}
+@media (min-width:701px){ .aipanel{top:calc(16px + env(safe-area-inset-top))} }
 </style>
 </head>
 <body class="">
@@ -1987,7 +1990,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.13', BUILD: '2026-11-22'
+  VERSION: 'v12.1.14', BUILD: '2026-11-22'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2475,6 +2478,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.14':{nl:['iPad/iPhone-app: scherm niet meer verschoven (geen zwarte balk boven, onderkant weer zichtbaar)','Chart-templates: rasterlijnen aan/uit worden nu altijd overgenomen bij het openen van een sessie'],en:['iPad/iPhone app: screen no longer shifted (no black bar on top, bottom visible again)','Chart templates: grid lines on/off are now always applied when opening a session']},
   'v12.1.13':{nl:['Bijwerken herlaadt nu gewoon dezelfde pagina — voorkomt dat het scherm op iPad/iPhone naar beneden verschuift'],en:['Updating now simply reloads the same page — prevents the screen shifting down on iPad/iPhone']},
   'v12.1.12':{nl:['iPad: tekenen met je vinger verbeterd — geen per ongeluk instellingenvenster meer bij snel tikken','"Add text" midden op lijnen en rechthoeken; tik nog een keer op een geselecteerde tekening om tekst te typen','Handelsrekeningen: nieuwe sessie kiest altijd de rekening die je ziet (laatst gebruikt), wisselen van rekening neemt het juiste saldo over'],en:['iPad: drawing with your finger improved — no accidental settings dialog on quick taps','"Add text" in the middle of lines and rectangles; tap a selected drawing again to type text','Trading accounts: a new session always uses the account you see (last used), switching account takes the right balance']},
   'v12.1.11':{nl:['TWF AI slimmer: krijgt kant-en-klare analyses van al je trades (per dag, uur, markt, setup, na een verlies, drukke dagen), gebruikt betere modellen en herhaalt zichzelf niet'],en:['TWF AI smarter: gets ready-made analyses of all your trades (per day, hour, market, setup, after a loss, busy days), uses better models and does not repeat itself']},
@@ -3057,7 +3061,7 @@ function pageAccounts(){
    :`<div class="box empty"><div class="ei">${ic('wallet',24)}</div><h4>${t('acc.empty')}</h4><div>${t('acc.emptysub')}</div><button class="btn btn-p" data-act="newacc" style="margin-top:8px">${ic('plus',16)} ${t('acc.new')}</button></div>`}</div>`;
 }
 function accountModal(id,after){
-  const a0=id?DB.get('accounts',id):{name:'',balance:100000,currency:'USD',leverage:100,mc:100,so:50}; const a={...a0,balance:+a0.balance||0,leverage:+a0.leverage||100,currency:a0.currency||'USD'};
+  const a0=id?DB.get('accounts',id):{name:'',balance:100000,currency:'USD',leverage:100,mc:100,so:50}; const a={...a0,balance:+a0.balance||0,leverage:+a0.leverage||100,currency:a0.currency||'USD',mc:a0.mc??100,so:a0.so??50};
   const bal=[10000,25000,50000,100000,250000], lev=[10,30,50,100,200,500];
   const ov=modal(`<div class="mh"><h3>${id?t('edit'):t('acc.new')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div>
    <div class="mbody single"><div class="mcont">
@@ -4543,7 +4547,7 @@ function setupChart(){
   const box=$('#sxChart'); const c=tplColors();
   SX.chart=LightweightCharts.createChart(box,{autoSize:true,
     layout:{background:{type:'solid',color:c.bg},textColor:ccText(c),fontFamily:"-apple-system,BlinkMacSystemFont,'Trebuchet MS',Roboto,Ubuntu,sans-serif",fontSize:12},
-    grid:{vertLines:{color:c.grid,visible:SX.s.grid!==false},horzLines:{color:c.grid,visible:SX.s.grid!==false}},
+    grid:{vertLines:{color:c.gridVColor||c.grid,visible:c.gridV!==false&&SX.s.grid!==false},horzLines:{color:c.gridHColor||c.grid,visible:c.gridH!==false&&SX.s.grid!==false}},
     rightPriceScale:{borderColor:c.border,scaleMargins:{top:0.08,bottom:SX.vol?0.2:0.06}},
     timeScale:{borderColor:c.border,timeVisible:true,secondsVisible:false,rightOffset:12,barSpacing:9},
     crosshair:{mode:0},localization:{locale:'en-US',priceFormatter:x=>fmtPx(x),timeFormatter:crossTimeFmt}
