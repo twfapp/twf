@@ -1848,6 +1848,9 @@ body.ai-on .ov{z-index:220}
 /* v12.1.14: statusbalk doorzichtig → overal ruimte bovenin vrijhouden */
 .ov{padding-top:max(20px,calc(env(safe-area-inset-top) + 8px))}
 @media (min-width:701px){ .aipanel{top:calc(16px + env(safe-area-inset-top))} }
+/* v12.1.15: altijd precies de zichtbare hoogte gebruiken */
+html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+#app,#login,#session,#updScr{bottom:auto!important;height:var(--vvh,100%)!important}
 </style>
 </head>
 <body class="">
@@ -1990,7 +1993,7 @@ body.ai-on .ov{z-index:220}
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.14', BUILD: '2026-11-22'
+  VERSION: 'v12.1.15', BUILD: '2026-11-22'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2478,6 +2481,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.1.15':{nl:['iPad/iPhone-app: zoom wordt altijd teruggezet naar 100%, per ongeluk inzoomen is geblokkeerd en de app gebruikt precies de zichtbare schermhoogte'],en:['iPad/iPhone app: zoom always reset to 100%, accidental zooming blocked and the app uses exactly the visible screen height']},
   'v12.1.14':{nl:['iPad/iPhone-app: scherm niet meer verschoven (geen zwarte balk boven, onderkant weer zichtbaar)','Chart-templates: rasterlijnen aan/uit worden nu altijd overgenomen bij het openen van een sessie'],en:['iPad/iPhone app: screen no longer shifted (no black bar on top, bottom visible again)','Chart templates: grid lines on/off are now always applied when opening a session']},
   'v12.1.13':{nl:['Bijwerken herlaadt nu gewoon dezelfde pagina — voorkomt dat het scherm op iPad/iPhone naar beneden verschuift'],en:['Updating now simply reloads the same page — prevents the screen shifting down on iPad/iPhone']},
   'v12.1.12':{nl:['iPad: tekenen met je vinger verbeterd — geen per ongeluk instellingenvenster meer bij snel tikken','"Add text" midden op lijnen en rechthoeken; tik nog een keer op een geselecteerde tekening om tekst te typen','Handelsrekeningen: nieuwe sessie kiest altijd de rekening die je ziet (laatst gebruikt), wisselen van rekening neemt het juiste saldo over'],en:['iPad: drawing with your finger improved — no accidental settings dialog on quick taps','"Add text" in the middle of lines and rectangles; tap a selected drawing again to type text','Trading accounts: a new session always uses the account you see (last used), switching account takes the right balance']},
@@ -8058,6 +8062,22 @@ window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, allTrades:()=>{ const
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
 
+})();
+</script>
+<script>
+/* v12.1.15: iPad/iPhone-app nooit ingezoomd of verschoven */
+(function(){
+  var vm=document.querySelector('meta[name=viewport]'), base='width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover';
+  function resetZoom(){ try{ var sc=window.visualViewport?visualViewport.scale:1; if(sc&&Math.abs(sc-1)>0.01){ vm.setAttribute('content',base+', user-scalable=no'); setTimeout(function(){ vm.setAttribute('content',base) },300) } if(window.scrollY||window.scrollX) window.scrollTo(0,0) }catch(e){} }
+  function fitH(){ try{ var ae=document.activeElement; if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return; var vv=window.visualViewport, h=Math.round(vv&&vv.scale<=1.01?vv.height:window.innerHeight); if(h>200) document.documentElement.style.setProperty('--vvh',h+'px') }catch(e){} }
+  // pinch-zoom van de pagina blokkeren (chart-zoom blijft werken: die gebruikt eigen touch-events)
+  ['gesturestart','gesturechange'].forEach(function(t){ document.addEventListener(t,function(e){ e.preventDefault() },{passive:false}) });
+  document.addEventListener('touchmove',function(e){ if(e.scale&&e.scale!==1&&!(e.target.closest&&e.target.closest('.sxchartwrap'))) e.preventDefault() },{passive:false});
+  var go=function(){ resetZoom(); fitH() };
+  addEventListener('load',go); addEventListener('resize',fitH); addEventListener('orientationchange',function(){ setTimeout(go,300) });
+  if(window.visualViewport){ visualViewport.addEventListener('resize',function(){ fitH(); if(visualViewport.scale>1.01) clearTimeout(window._zt), window._zt=setTimeout(resetZoom,1500) }) }
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') setTimeout(go,100) });
+  go();
 })();
 </script>
 </body>
