@@ -1867,6 +1867,26 @@ body.theme-light{color-scheme:light}
 ::-webkit-scrollbar-thumb{background:rgba(140,150,170,.28);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
 ::-webkit-scrollbar-thumb:hover{background:rgba(140,150,170,.5);background-clip:padding-box;border:2px solid transparent}
 body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);background-clip:padding-box;border:2px solid transparent}
+/* ===== v12.2: herbeleven ===== */
+.rlbar{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);z-index:8;display:flex;align-items:center;gap:10px;flex-wrap:nowrap;white-space:nowrap;max-width:calc(100% - 140px);overflow:hidden;padding:7px 8px 7px 12px;border-radius:999px;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line2);box-shadow:var(--shadow);font-size:12.5px;color:var(--ink)}
+.rlbar .rli,.rlbox .rli{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:var(--accentSoft);color:var(--accent);flex:none}
+.rlbar .sep{width:1px;height:16px;background:var(--line2)}.rlbar .muted{color:var(--ink3)}.rlbar .btn{height:26px;padding:0 10px;font-size:12px}
+@media (max-width:900px){ .rlbar{bottom:96px;max-width:calc(100% - 24px);font-size:12px} }
+.rlb{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:11.5px;font-weight:800;background:var(--panel2);color:var(--ink3);white-space:nowrap}.rlb.pos{background:rgba(47,191,113,.15);color:var(--pos)}.rlb.neg{background:rgba(229,83,75,.15);color:var(--neg)}.rlb.amber{background:rgba(224,163,58,.16);color:var(--amber)}
+.rlsum{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}.rlsum>div{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0}.rlsum small{display:block;color:var(--ink3);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rlsum b{font-size:15px}
+@media (max-width:560px){ .rlsum{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.rllist{display:flex;flex-direction:column;gap:6px}.rlrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border-radius:12px;border:1px solid var(--line);background:var(--panel2)}.rlrow:hover{border-color:var(--accent)}
+.rlrow .rlt{flex:1;min-width:0}.rlrow .rlt b{display:block;font-size:14px}.rlrow .rlt small{color:var(--ink3);font-size:12px}.rlrow>b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.rld{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:800;color:#fff;flex:none;background:linear-gradient(145deg,#2f6bff,#1d47c9)}.rld.s{background:linear-gradient(145deg,#ef5350,#b9312e)}
+.rlhead{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);margin-bottom:14px}.rlhead b{display:block}.rlhead small{display:block;color:var(--ink3);font-size:12px;margin-top:2px}.rlhead>b{font-size:16px;font-variant-numeric:tabular-nums}
+.rlok,.rlwarn{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:10px;font-size:13px;font-weight:600;margin:-4px 0 12px}.rlok{background:rgba(47,191,113,.12);color:var(--pos)}.rlwarn{background:rgba(224,163,58,.12);color:var(--amber);align-items:flex-start;flex-wrap:wrap}.rlwarn span{flex:1;min-width:200px;line-height:1.45}
+.rlmore{margin:4px 0 12px;padding:10px 12px;border-radius:12px;border:1px dashed var(--line2)}.rlmore summary{cursor:pointer;font-weight:700;font-size:13.5px}.rlmore small{display:block;margin-top:6px;line-height:1.45}
+.rlpop{padding:24px 22px 20px;text-align:center}.rlpi{width:56px;height:56px;border-radius:16px;margin:0 auto 10px;display:grid;place-items:center;background:var(--accentSoft);color:var(--accent)}.rlpop h3{margin:0 0 8px}.rlpop p{margin:0 0 8px;line-height:1.5}
+.rlpa{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.rlcmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rlcmp>div{padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--line)}.rlcmp small{display:block;color:var(--ink3);font-size:11.5px;font-weight:700}.rlcmp b{display:block;font-size:20px;margin:4px 0 2px;font-variant-numeric:tabular-nums}.rlcmp span{font-size:12px;color:var(--ink3)}
+.rlv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.rlv button{padding:12px 8px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);font-weight:700;font-size:13.5px}.rlv button.on.pos{border-color:var(--pos);background:rgba(47,191,113,.14);color:var(--pos)}.rlv button.on.neg{border-color:var(--neg);background:rgba(229,83,75,.14);color:var(--neg)}.rlv button.on.amber{border-color:var(--amber);background:rgba(224,163,58,.14);color:var(--amber)}
+.rlbox{margin:0 0 16px;padding:12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2)}.rlbh{display:flex;align-items:center;gap:10px}.rlbh b{display:block;font-size:14px}.rlbh small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px;line-height:1.4}.rlba{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+@media (max-width:700px){ .rlpop{min-height:70vh;display:flex;flex-direction:column;justify-content:center} }
 </style>
 </head>
 <body class="">
@@ -2009,7 +2029,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.1.17', BUILD: '2026-11-22'
+  VERSION: 'v12.2.0', BUILD: '2026-11-20'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2345,7 +2365,7 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
 const locale=()=>LANG==='en'?'en-GB':'nl-NL';
-const fmtMoney=(n,c='USD')=>new Intl.NumberFormat(locale(),{style:'currency',currency:c,currencyDisplay:'narrowSymbol',maximumFractionDigits:0}).format(n||0);
+const fmtMoney=(n,c='USD')=>new Intl.NumberFormat(locale(),{style:'currency',currency:c,currencyDisplay:'narrowSymbol',minimumFractionDigits:2,maximumFractionDigits:2}).format(n||0);
 const fmtDate=d=>d?new Date(d).toLocaleDateString(locale(),{day:'numeric',month:'short',year:'numeric'}):'—';
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 function loginNameToEmail(n){n=n.trim().toLowerCase(); if(n.includes('@')) return n; return n.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'.').replace(/^\.|\.$/g,'')+'@twfjournal.local';}
@@ -2497,6 +2517,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.2.0':{nl:['Nieuw: live trades herbeleven — speel de markt opnieuw af tot je live trade en kijk eerlijk of je hem opnieuw had genomen (Journal → trade, of ＋ → Live trade herbeleven)','Bedragen overal met centen, ook bij Handelsrekeningen en statistieken','Screenshot met ⇧⌘S: schone chart met al je tekeningen, zonder knoppen, balans of panelen — opgeslagen én gekopieerd'],en:['New: relive live trades — replay the market up to your live trade and honestly check whether you would take it again (Journal → trade, or ＋ → Relive a live trade)','Amounts everywhere with cents, including Trading accounts and statistics','Screenshot with ⇧⌘S: clean chart with all your drawings, without buttons, balance or panels — saved and copied']},
   'v12.1.17':{nl:['App schaalt nu mee op hoogte én breedte: alles past weer op MacBook, iPad en kleinere vensters','Eigen donkere scrollbalken — geen witte balken meer in Safari'],en:['App now scales with height and width: everything fits again on MacBook, iPad and smaller windows','Own dark scrollbars — no more white bars in Safari']},
   'v12.1.16':{nl:['Zijbalk past zich aan je schermhoogte aan: Accountinstellingen en het versienummer staan weer altijd in beeld (Mac en iPad)'],en:['Sidebar adapts to your screen height: Account settings and the version number are always visible again (Mac and iPad)']},
   'v12.1.15':{nl:['iPad/iPhone-app: zoom wordt altijd teruggezet naar 100%, per ongeluk inzoomen is geblokkeerd en de app gebruikt precies de zichtbare schermhoogte'],en:['iPad/iPhone app: zoom always reset to 100%, accidental zooming blocked and the app uses exactly the visible screen height']},
@@ -2894,7 +2915,7 @@ function pageHome(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), sm=J&&J.ready()
   const pp=sm&&sm.n?Math.round(sm.planPct):null, R=34, C=2*Math.PI*R;
   const disc=sm?`<button class="box hcard" data-hgo="journal" data-hjp="discipline"><div class="hlab">${ic('target',16)} Discipline<span class="hgo">${ic('next',16)}</span></div>
       <div class="hdisc"><div class="hring"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="${R}" fill="none" stroke="var(--panel2)" stroke-width="8"/><circle cx="40" cy="40" r="${R}" fill="none" stroke="${pp==null?'var(--line2)':pp>=80?'#2fbf71':pp>=60?'#e0a33a':'#e5534b'}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C*(pp||0)/100} ${C}" transform="rotate(-90 40 40)"/></svg><b>${pp==null?'—':pp+'%'}</b></div>
-      <div class="hdtx"><div><b>${sm.streak}</b> ${L(sm.streak===1?'dag op rij volgens plan':'dagen op rij volgens plan',sm.streak===1?'day in a row on plan':'days in a row on plan')}</div>${sm.fine?`<div class="chip amber" style="margin-top:8px">${L('Boete','Fine')}: ${sm.fmt(sm.fine,{dp:0})}${sm.goal?' → '+esc(sm.goal):''}</div>`:`<div class="muted" style="margin-top:6px;font-size:13px">${L('Trades volgens je plan','Trades following your plan')}</div>`}</div></div>
+      <div class="hdtx"><div><b>${sm.streak}</b> ${L(sm.streak===1?'dag op rij volgens plan':'dagen op rij volgens plan',sm.streak===1?'day in a row on plan':'days in a row on plan')}</div>${sm.fine?`<div class="chip amber" style="margin-top:8px">${L('Boete','Fine')}: ${sm.fmt(sm.fine,{dp:2})}${sm.goal?' → '+esc(sm.goal):''}</div>`:`<div class="muted" style="margin-top:6px;font-size:13px">${L('Trades volgens je plan','Trades following your plan')}</div>`}</div></div>
       ${sm.planDots.length?`<div class="hdots" title="${L('Laatste 20 trades: groen = volgens plan','Last 20 trades: green = on plan')}">${sm.planDots.map(v=>`<i class="${v?'y':'n'}"></i>`).join('')}</div><div class="hdl">${L('Laatste 20 trades','Last 20 trades')}</div>`:''}</button>`
     :`<div class="box hcard">${sk}</div>`;
   // laatste trades
@@ -2949,7 +2970,7 @@ function bindHome(m){ const J=JX();
 
 /* ----- ＋ : iets toevoegen ----- */
 function plusSheet(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), ready=J&&J.ready();
-  const items=[['ai','spark','TWF AI',L('Vraag je trading-coach iets','Ask your trading coach'),0],['trade','edit',L('Trade toevoegen','Add trade'),L('Handmatig een live trade loggen','Log a live trade manually'),1],
+  const items=[['ai','spark','TWF AI',L('Vraag je trading-coach iets','Ask your trading coach'),0],['relive','refresh',L('Live trade herbeleven','Relive a live trade'),L('Had je hem opnieuw genomen?','Would you have taken it again?'),1],['trade','edit',L('Trade toevoegen','Add trade'),L('Handmatig een live trade loggen','Log a live trade manually'),1],
     ['diary','book',L('Dagboek-notitie','Diary entry'),L('Gedachten en lessen van vandaag','Thoughts and lessons from today'),1],
     ['session','chart',L('Backtest-sessie','Backtest session'),L('Nieuwe sessie starten','Start a new session'),0],
     ['payout','coins',L('Payout','Payout'),L('Uitbetaling vastleggen','Record a withdrawal'),1],
@@ -2957,7 +2978,7 @@ function plusSheet(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), ready=J&&J.rea
     ['live','plug',L('Live-rekening','Live account'),L('Nieuwe MT5-rekening met eigen API-sleutel','New MT5 account with its own API key'),1],
     ['notion','download',L('Importeer uit Notion','Import from Notion'),L('Je bestaande dagboek (.zip, .md, .csv)','Your existing diary (.zip, .md, .csv)'),1]];
   const html=`<div class="plist">${items.map(([k,i,t1,t2,j])=>`<button data-pk="${k}" ${j&&!ready?'disabled':''}><span class="pic">${ic(i,20)}</span><span class="ptx"><b>${t1}</b><small>${t2}</small></span>${ic('next',16)}</button>`).join('')}</div>`;
-  const run=k=>{ if(k==='ai'){ aiOpen(); return } if(k==='session'){ if(S.page!=='testing'){ S.page='testing'; render() } sessionModal('backtest'); return }
+  const run=k=>{ if(k==='ai'){ aiOpen(); return } if(k==='relive'){ reliveList(); return } if(k==='session'){ if(S.page!=='testing'){ S.page='testing'; render() } sessionModal('backtest'); return }
     if(!J) return; ({trade:()=>J.addTrade(),diary:()=>J.addDiary(),payout:()=>J.addMoney('payout'),adj:()=>J.addMoney('adj'),live:()=>J.addLive(),notion:()=>J.importNotion()})[k]() };
   if(matchMedia('(max-width:900px)').matches){ const sh=mSheet(L('Toevoegen','Add'),html,'plus'); sh.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ sh.close(); setTimeout(()=>run(b.dataset.pk),240) }); return }
   const ov=modal(`<div class="mh"><h3>${L('Toevoegen','Add')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">${html}</div></div>`,'sm');
@@ -4508,12 +4529,12 @@ function buildSessionDom(){
  <button class="ib hide-m" id="sxTplB" title="Chart templates">${ic('gridtool')}</button>
     <button class="ib hide-m" id="sxKeys" title="${t('sx.keys')}">${ic('keyboard')}</button>
     <button class="ib" id="sxThemeC" title="${t('sx.charttheme')}">${ic('moon')}</button>
-    <button class="ib hide-m" id="sxShot" title="Screenshot">${ic('camera')}</button>
+    <button class="ib hide-m" id="sxShot" title="Screenshot (⇧⌘S)">${ic('camera')}</button>
     <button class="ib hide-m" id="sxFull" title="${t('sx.full')}">${ic('full')}</button>
   </div>
   <div class="sxmain">
     <div class="sxtools">${tools.map(([i,k],n)=>`<button class="ib ${n===0?'on':''}" data-tool="${i}" title="${t(k)}">${ic(i)}</button>${n===8||n===10?'<div class="hsep"></div>':''}`).join('')}<div style="flex:1"></div><button class="ib" title="${t('sx.t.fav')}">${ic('star')}</button></div>
-    <div class="sxchartwrap"><div id="sxChart"></div>${tradeWidgetHtml('sxTw')}<div class="sxovl" id="sxOvl"></div><div class="sxlegend" id="sxLegend"></div><div class="sxinds" id="sxInds"></div>${SX&&SX.s.type==='propfirm'?'<div class="pfhud" id="pfHud"></div>':''}<div class="sxtest">${t('sx.testdata')}</div><div class="sxload hide" id="sxLoading">${t('md.loading')}</div></div>
+    <div class="sxchartwrap"><div id="sxChart"></div>${tradeWidgetHtml('sxTw')}<div class="sxovl" id="sxOvl"></div><div class="sxlegend" id="sxLegend"></div><div class="sxinds" id="sxInds"></div>${SX&&SX.s.type==='propfirm'?'<div class="pfhud" id="pfHud"></div>':''}${SX&&SX.s.relive?'<div class="rlbar" id="rlBar"></div>':''}<div class="sxtest">${t('sx.testdata')}</div><div class="sxload hide" id="sxLoading">${t('md.loading')}</div></div>
     <div class="sxpanel hide" id="sxPanel"></div>
     <div class="sxrail">
       <button data-panel="order"><span>${ic('plusc',20)}</span>${t('sx.order')}</button>
@@ -4649,6 +4670,7 @@ function hud(){ if(!SX) return;
   updTradeWidgets(); const op=SX.pos?openPnl():0; const bh=`${fmtBal(equity())}${SX.pos&&SX.pos.length?` <span class="dotsep">●</span> <span class="${op>=0?'pos':'neg'}">${fmtUsd(op)}</span>`:''}`; if(SX._bh!==bh){ SX._bh=bh; $('#sxBal').innerHTML=bh }
   const pf=$('#sxPf'); if(pf&&SX.s.type==='propfirm'){const st=SX.s.startBalance??SX.acc.balance, g=((equity()-st)/st*100);pf.innerHTML=SX.s.pfStatus?`<b class="${SX.s.pfStatus==='passed'?'pos':'neg'}">${SX.s.pfStatus==='passed'?t('pf.passed'):t('pf.failed')}</b>`:`${t('pf.progress')} <b class="${g>=0?'pos':'neg'}">${g>=0?'+':''}${g.toFixed(2)}%</b> / ${SX.s.target||10}%`}
   liveOrderPanel();
+  try{ reliveTick() }catch(e){}
   if(SX.s.type==='propfirm'){ try{ pfHud(); const nowT=performance.now(); if(nowT-(SX._pfAt||0)>300){ SX._pfAt=nowT; pfDangerLines() } }catch(e){} }
   try{ if(SX.blist&&SX._nmLen!==SX.blist.length){ SX._nmLen=SX.blist.length; pfNewsMarkers() } }catch(e){}
 }
@@ -4737,10 +4759,26 @@ function applyChartLook(){
   const ie=$('#sxInds'); if(ie) ie.style.display=c.slInds===false?'none':'';
   makeSeries(); fullRender(false);
 }
-function screenshot(){
-  const cv=SX.chart.takeScreenshot(); const a=document.createElement('a');
-  const d=new Date(SX.rp.f.t[SX.rp.idx]*1000).toISOString().slice(0,16).replace(/[:T]/g,'-');
-  a.download=`TWF_${SX.sym}_${tfLabel(SX.tf)}_${d}.png`; a.href=cv.toDataURL('image/png'); a.click(); toast('Screenshot',a.download,'ok');
+async function screenshot(){ if(!SX) return; const L=(nl,en)=>LANG==='en'?en:nl;
+  // schone chart: geen selectie, hover of crosshair
+  const keep={sel:SX.sel,hov:SX.hoverId}; SX.sel=null; SX.hoverId=null; SX._shot=true; try{ SX.chart.clearCrosshairPosition&&SX.chart.clearCrosshairPosition() }catch(e){} try{ renderDrawings() }catch(e){}
+  let out;
+  try{ const shot=SX.chart.takeScreenshot(), box=$('#sxChart').getBoundingClientRect(), k=shot.width/Math.max(1,box.width);
+    out=document.createElement('canvas'); out.width=shot.width; out.height=shot.height; const g=out.getContext('2d'); g.drawImage(shot,0,0);
+    const dc=$('#sxDraw'); if(dc&&dc.width){ const r=dc.getBoundingClientRect(); g.drawImage(dc,(r.left-box.left)*k,(r.top-box.top)*k,r.width*k,r.height*k) }
+    // kop: markt · timeframe · datum
+    const c=tplColors(), col=ccText(c), a=asset(SX.sym)||{}, o=tzParts(nowSec());
+    g.save(); g.scale(k,k); g.textBaseline='top'; g.fillStyle=col;
+    g.font="600 14px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif"; const t1=`${a.nameEn||SX.sym} · ${tvTf(SX.tf)}`; g.fillText(t1,12,10);
+    g.globalAlpha=.7; g.font="500 12px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif"; g.fillText(`${o.weekday} ${o.day} ${o.month} '${o.year}  ${o.hour}:${o.minute}  ${tzLabel(nowSec())}`,12,30);
+    g.globalAlpha=.35; g.font="800 13px -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif"; g.fillText('TWF',12,box.height-SX.chart.timeScale().height()-24);
+    g.restore() }
+  finally{ SX._shot=false; SX.sel=keep.sel; SX.hoverId=keep.hov; try{ renderDrawings() }catch(e){} }
+  const d=new Date(nowSec()*1000).toISOString().slice(0,16).replace(/[:T]/g,'-'), name=`TWF_${SX.sym}_${tfLabel(SX.tf)}_${d}.png`;
+  const blob=await new Promise(r=>out.toBlob(r,'image/png'));
+  let copied=false; try{ if(navigator.clipboard&&window.ClipboardItem){ await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]); copied=true } }catch(e){}
+  const a=document.createElement('a'); a.download=name; a.href=URL.createObjectURL(blob); a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  toast('Screenshot',copied?L('Opgeslagen en gekopieerd naar je klembord','Saved and copied to your clipboard'):name,'ok');
 }
 function saveSession(){
   if(!SX) return; const s=SX.s, rp=SX.rp;
@@ -4778,7 +4816,7 @@ function symMenuOld(anchor){
 function keysHelp(){
   const ov=modal(`<div class="mh"><h3>${t('sx.keys')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div>
    <div class="mbody single"><div class="mcont"><table class="tbl"><tbody>
-    ${[['Space',t('sx.next')],['←',t('sx.prev')],['Shift + Space','Play / Pause'],['+ / −',t('sx.speed')],['Esc',t('close')]].map(([k,v])=>`<tr><td><span class="kbd">${k}</span></td><td>${v}</td></tr>`).join('')}
+    ${[['Space',t('sx.next')],['←',t('sx.prev')],['⇧⌘S / Ctrl+Shift+S','Screenshot'],['Shift + Space','Play / Pause'],['+ / −',t('sx.speed')],['Esc',t('close')]].map(([k,v])=>`<tr><td><span class="kbd">${k}</span></td><td>${v}</td></tr>`).join('')}
    </tbody></table></div></div>`,'sm'); ov.querySelector('[data-x]').onclick=()=>ov.remove();
 }
 function gotoMenu(){
@@ -4865,6 +4903,7 @@ document.addEventListener('keydown',e=>{
   if(!SX||$('#session').classList.contains('hide')) return;
   if(e.target.closest&&e.target.closest('input,textarea,select')) return;
   if(document.querySelector('.ov')) return;
+  if((e.metaKey||e.ctrlKey)&&e.shiftKey&&e.key.toLowerCase()==='s'){e.preventDefault(); e.stopPropagation(); screenshot(); return}
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault(); e.shiftKey?redo():undo(); return}
   if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='y'){e.preventDefault(); redo(); return}
   if((e.key==='Delete'||e.key==='Backspace')&&SX.sel){e.preventDefault(); deleteSel(); return}
@@ -4932,6 +4971,106 @@ function closeQuote(p){return p.side==='buy'?bid():ask()}
 function pnlAt(p,level){return (level-p.entry)*dirOf(p)*p.qty*ccs(p.sym)}
 function openPnl(){return SX.pos.reduce((a,p)=>a+(p.sym===SX.sym?pnlAt(p,closeQuote(p)):(p.lastPnl||0)),0)}
 function equity(){return (SX.s.balance??0)+openPnl()}
+/* ===== v12.2: live trades herbeleven ===== */
+const RL=(nl,en)=>((window._sxLang||LANG)==='en'?en:nl);
+const rlM=(v,ccy,o={})=>{ v=+v||0; let t; try{ t=new Intl.NumberFormat(((window._sxLang||LANG)==='en')?'en-US':'nl-NL',{style:'currency',currency:ccy||'USD',currencyDisplay:'narrowSymbol',minimumFractionDigits:2,maximumFractionDigits:2}).format(Math.abs(v)) }catch(e){ t=(ccy||'')+' '+Math.abs(v).toFixed(2) } return (v<0?'−':(o.sign&&v>0?'+':''))+t };
+const RL_ALIAS={NAS100:'US100',USTEC:'US100',NDX100:'US100',SPX500:'US500',SP500:'US500',US500CASH:'US500',DJ30:'US30',WS30:'US30',DOW30:'US30',GOLD:'XAUUSD',SILVER:'XAGUSD',DE40:'GER40',DE30:'GER40',GER30:'GER40',UK100CASH:'UK100',BTC:'BTCUSD',ETH:'ETHUSD',ETHEUR:'ETHUSD',BTCEUR:'BTCUSD',WTI:'USOIL',BRENT:'UKOIL'};
+function reliveSym(pair){ const all=[...new Set([...ASSETS.map(a=>a.sym),...MKC.map(m=>m.sym)])]; let p=String(pair||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(all.includes(p)) return p; if(RL_ALIAS[p]&&all.includes(RL_ALIAS[p])) return RL_ALIAS[p];
+  const pre=all.filter(s=>p.startsWith(s)).sort((a,b)=>b.length-a.length)[0]; if(pre) return pre;
+  const k=Object.keys(RL_ALIAS).find(a=>p.startsWith(a)); return k&&all.includes(RL_ALIAS[k])?RL_ALIAS[k]:null }
+function reliveEnsureMarket(sym){ if(!asset(sym)){ const m=MKC.find(x=>x.sym===sym); if(m) registerMarket(m) } }
+function reliveSessions(){ return DB.list('sessions').filter(s=>s.relive) }
+function reliveFor(tid){ return reliveSessions().filter(s=>s.relive.tid===String(tid)).sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||'')))[0]||null }
+const RL_VERD={again:['Opnieuw genomen','Taken again','pos'],skip:['Overgeslagen','Skipped','neg'],diff:['Anders genomen','Taken differently','amber']};
+function reliveBadge(s){ const r=s&&s.relive; if(!r) return ''; if(!r.verdict) return `<span class="rlb">${ic('play',12)} ${RL('Bezig','In progress')}</span>`; const v=RL_VERD[r.verdict]; return `<span class="rlb ${v[2]}">${RL(v[0],v[1])}</span>` }
+/* overzicht: welke live trades heb je herbeleefd? */
+function reliveStats(){ const ss=reliveSessions().filter(s=>s.relive.verdict), skip=ss.filter(s=>s.relive.verdict==='skip');
+  return {n:ss.length,again:ss.filter(s=>s.relive.verdict==='again').length,skip:skip.length,diff:ss.filter(s=>s.relive.verdict==='diff').length,saved:-skip.reduce((a,s)=>a+(+s.relive.pnl||0),0)} }
+function reliveList(){ const J=window.TWFJ; if(!J||!J.ready()||!J.allTrades){ toast(RL('Journal niet geladen','Journal not loaded'),'','bad'); return }
+  const tr=J.allTrades().filter(t=>t.id).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,60), st=reliveStats(), ccy=(J.summary()||{}).ccy||'EUR';
+  const ov=modal(`<div class="mh"><h3>${RL('Live trade herbeleven','Relive a live trade')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
+    <p class="muted" style="margin:0 0 12px">${RL('Speel de markt opnieuw af tot vlak voor je live trade en kijk eerlijk: had je hem opnieuw genomen?','Replay the market up to your live trade and be honest: would you take it again?')}</p>
+    ${st.n?`<div class="rlsum"><div><small>${RL('Herbeleefd','Relived')}</small><b>${st.n}</b></div><div><small>${RL('Opnieuw','Again')}</small><b class="pos">${st.again}</b></div><div><small>${RL('Overgeslagen','Skipped')}</small><b class="neg">${st.skip}</b></div><div><small>${RL('Overslaan had opgeleverd','Skipping would have made')}</small><b class="${st.saved>=0?'pos':'neg'}">${rlM(st.saved,ccy,{sign:1})}</b></div></div>`:''}
+    <div class="rllist">${tr.length?tr.map(t=>{ const s=reliveFor(t.id); return `<button class="rlrow" data-rl="${esc(String(t.id))}"><span class="rld ${t.dir==='long'?'l':'s'}">${t.dir==='long'?'↑':'↓'}</span><span class="rlt"><b>${esc(t.pair)} · ${t.dir==='long'?'Long':'Short'}</b><small>${new Date(t.date).toLocaleString(locale(),{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'})}</small></span>${reliveBadge(s)}<b class="${t.pnl>=0?'pos':'neg'}">${rlM(t.pnl,ccy,{sign:1})}</b></button>` }).join(''):`<div class="muted">${RL('Nog geen live trades in je Journal.','No live trades in your Journal yet.')}</div>`}</div></div></div>`);
+  ov.querySelector('[data-x]').onclick=()=>ov.remove();
+  ov.querySelectorAll('[data-rl]').forEach(b=>b.onclick=()=>{ const t=tr.find(x=>String(x.id)===b.dataset.rl); ov.remove(); const s=reliveFor(t.id); if(s&&!s.relive.verdict){ reliveOpen(s.id); return } reliveModal(t) }) }
+function reliveOpen(id){ document.querySelectorAll('.ov,.jpanel,.tvsheet,.tvsheet-bg').forEach(x=>{ try{ x.close?x.close():x.remove() }catch(e){ x.remove() } }); if(S.page!=='testing'){ S.page='testing'; render() } openSession(id) }
+/* instellen en starten */
+function reliveModal(t){ const ccy=((window.TWFJ&&TWFJ.summary())||{}).ccy||'EUR', closeT=Math.floor(new Date(t.date).getTime()/1000);
+  const st={sym:reliveSym(t.pair)||'',look:86400,tf:'5',entryT:t.entryT||'',entry:t.entry??'',sl:t.sl??'',tp:t.tp??'',acc:''};
+  const accs=DB.list('accounts').filter(a=>!a.prop); st.acc=(accs.find(a=>a.id===lsGet('twf_lastacc'))||accs[0]||{}).id||'';
+  const ov=modal('','sm'), M=ov.querySelector('.modal');
+  const dataOk=()=>{ if(!st.sym) return null; const ym=new Date((closeT-st.look)*1000).toISOString().slice(0,7), ym2=new Date(closeT*1000).toISOString().slice(0,7); let ms=[]; try{ ms=MD.months(st.sym) }catch(e){} return ms.includes(ym)&&ms.includes(ym2) };
+  const toLocal=sec=>{ const d=new Date(sec*1000); const z=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}` };
+  const draw=()=>{ const ok=dataOk(), mk=st.sym&&(asset(st.sym)||MKC.find(m=>m.sym===st.sym));
+    M.innerHTML=`<div class="mh"><h3>${RL('Trade herbeleven','Relive trade')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
+      <div class="rlhead"><span class="rld ${t.dir==='long'?'l':'s'}">${t.dir==='long'?'↑':'↓'}</span><div style="flex:1;min-width:0"><b>${esc(t.pair)} · ${t.dir==='long'?'Long':'Short'}</b><small>${RL('Gesloten','Closed')} ${new Date(t.date).toLocaleString(locale(),{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}${t.rr!=null?' · '+(+t.rr).toFixed(2)+'R':''}</small></div><b class="${t.pnl>=0?'pos':'neg'}">${rlM(t.pnl,ccy,{sign:1})}</b></div>
+      <div class="field"><label>${RL('Markt in de backtest','Market in the backtest')}</label><select class="inp" id="rlSym"><option value="">${RL('— kies een markt —','— choose a market —')}</option>${MKC.map(m=>`<option value="${m.sym}" ${m.sym===st.sym?'selected':''}>${m.sym} · ${esc(LANG==='en'?m.nameEn:m.name)}</option>`).join('')}</select></div>
+      ${st.sym?(ok?`<div class="rlok">${ic('check',14)} ${RL('Echte koersdata beschikbaar voor deze periode.','Real price data available for this period.')}</div>`:`<div class="rlwarn">${ic('info',14)} <span>${RL('Voor deze periode is nog geen echte koersdata van '+st.sym+'. Je ziet dan testdata, en dat zegt niets over je echte trade. Importeer data via Marktdata of vraag het aan.','No real '+st.sym+' price data for this period yet. You would see test data, which says nothing about your real trade. Import data via Market data or request it.')}</span><button class="btn btn-g sm" data-req>${RL('Data aanvragen','Request data')}</button></div>`):''}
+      <div class="field"><label>${RL('Begin vóór je trade','Start before your trade')}</label><div class="seg" id="rlLook">${[[14400,RL('4 uur','4 hours')],[86400,RL('1 dag','1 day')],[259200,RL('3 dagen','3 days')],[604800,RL('1 week','1 week')]].map(([v,l])=>`<button data-v="${v}" class="${st.look===v?'on':''}">${l}</button>`).join('')}</div></div>
+      <div class="field"><label>Timeframe</label><div class="seg" id="rlTf">${[['1','1m'],['5','5m'],['15','15m'],['60','1h']].map(([v,l])=>`<button data-v="${v}" class="${st.tf===v?'on':''}">${l}</button>`).join('')}</div></div>
+      <details class="rlmore" ${st.entryT||st.entry?'open':''}><summary>${RL('Weet je je instap? (optioneel)','Know your entry? (optional)')}</summary>
+        <small class="muted">${RL('Dan pauzeert de replay precies op je instapmoment en vraagt: neem je hem opnieuw? MT5 stuurt alleen de sluitingstijd mee.','The replay then pauses exactly at your entry and asks: would you take it again? MT5 only sends the closing time.')}</small>
+        <div class="field" style="margin-top:8px"><label>${RL('Instaptijd','Entry time')}</label><input class="inp" type="datetime-local" id="rlEt" value="${st.entryT?toLocal(st.entryT):''}" max="${toLocal(closeT)}"></div>
+        <div class="three"><div class="field"><label>Entry</label><input class="inp" id="rlEn" type="number" step="any" value="${st.entry}"></div><div class="field"><label>SL</label><input class="inp" id="rlSl" type="number" step="any" value="${st.sl}"></div><div class="field"><label>TP</label><input class="inp" id="rlTp" type="number" step="any" value="${st.tp}"></div></div></details>
+      <div class="field"><label>${RL('Handelsrekening','Trading account')}</label><select class="inp" id="rlAcc">${accs.map(a=>`<option value="${a.id}" ${a.id===st.acc?'selected':''}>${esc(a.name)} — ${fmtMoney(a.balance,a.currency)}</option>`).join('')}<option value="__new">${RL('+ Nieuwe rekening','+ New account')}</option></select></div>
+      <div class="err" id="rlErr"></div></div></div>
+      <div class="mf"><button class="btn btn-g" data-x>${RL('Annuleren','Cancel')}</button><button class="btn btn-p" id="rlGo" ${mk?'':'disabled'}>${ic('play',15)} ${RL('Start herbeleving','Start reliving')}</button></div>`;
+    M.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
+    const rd=()=>{ const et=M.querySelector('#rlEt').value; st.entryT=et?Math.floor(new Date(et).getTime()/1000):''; ['entry','sl','tp'].forEach((k,i)=>{ st[k]=M.querySelector(['#rlEn','#rlSl','#rlTp'][i]).value }) };
+    M.querySelector('#rlSym').onchange=e=>{ rd(); st.sym=e.target.value; draw() };
+    M.querySelectorAll('#rlLook button').forEach(b=>b.onclick=()=>{ rd(); st.look=+b.dataset.v; draw() });
+    M.querySelectorAll('#rlTf button').forEach(b=>b.onclick=()=>{ rd(); st.tf=b.dataset.v; draw() });
+    M.querySelector('#rlAcc').onchange=e=>{ rd(); if(e.target.value==='__new'){ accountModal(null,o=>{ st.acc=o.id; accs.push(o); draw() }); e.target.value=st.acc } else st.acc=e.target.value };
+    const rq=M.querySelector('[data-req]'); if(rq) rq.onclick=()=>{ try{ requestData(st.sym) }catch(e){} };
+    M.querySelector('#rlGo').onclick=async()=>{ rd(); const err=M.querySelector('#rlErr');
+      if(!st.sym){ err.textContent=RL('Kies een markt.','Choose a market.'); return } if(!st.acc){ err.textContent=RL('Kies of maak een handelsrekening.','Choose or create a trading account.'); return }
+      if(st.entryT&&st.entryT>closeT){ err.textContent=RL('Je instaptijd ligt na de sluitingstijd.','Your entry time is after the closing time.'); return }
+      reliveEnsureMarket(st.sym); const acc=DB.get('accounts',st.acc), startT=Math.min(closeT,(st.entryT||closeT))-st.look, p=profile(), num=v=>v===''||v==null?null:+v;
+      const obj={id:uid(),type:'backtest',name:`${RL('Herbeleven','Relive')} · ${t.pair} ${new Date(t.date).toLocaleDateString(locale(),{day:'numeric',month:'short'})}`,account:st.acc,strategy:'',assets:[st.sym],symbol:st.sym,tf:st.tf,
+        start:new Date(startT*1000).toISOString().slice(0,10),endMode:'auto',end:'',template:p.lastTemplate||p.defaultTemplate||'tv-dark',smooth:false,spreadMode:'real',spread:0.3,comm:7,slip:0,hedge:true,
+        balance:+acc.balance,cursor:new Date(startT*1000).toISOString(),trades:[],timeSpent:0,created:new Date().toISOString(),updated:new Date().toISOString(),activity:[new Date().toISOString().slice(0,10)],
+        relive:{tid:String(t.id),pair:t.pair,sym:st.sym,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,ccy,closeT,entryT:st.entryT||null,entry:num(st.entry),sl:num(st.sl),tp:num(st.tp),startT,dataOk:!!dataOk(),verdict:null}};
+      lsSet('twf_lastacc',st.acc); await DB.put('sessions',obj); ov.remove(); toast(RL('Herbeleving klaar','Relive ready'),RL('Trade de markt zoals je toen zou doen. Bij je live trade pauzeert de replay.','Trade the market as you would have. The replay pauses at your live trade.'),'ok',6000); reliveOpen(obj.id) } };
+  draw() }
+/* in de sessie */
+function reliveFmtDur(s){ s=Math.max(0,Math.round(s)); const d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60); return d?`${d}d ${h}u`:h?`${h}u ${m}m`:`${m}m` }
+function reliveBtNet(){ const r=SX.s.relive; const closed=(SX.s.trades||[]).reduce((a,x)=>a+(+x.pnl||0),0), open=SX.pos.length?openPnl():0; return {net:closed+open,n:(SX.s.trades||[]).length+SX.pos.length} }
+function reliveTick(){ if(!SX||!SX.s.relive) return; const r=SX.s.relive, el=$('#rlBar'); const now=nowSec(), target=r.entryT&&!r.seenEntry?r.entryT:r.closeT, ccy=r.ccy||'EUR';
+  if(el){ const done=now>=r.closeT, bt=reliveBtNet();
+    const html=`<span class="rli">${ic('refresh',14)}</span><b>${RL('Herbeleven','Reliving')}</b><span>${esc(r.pair)} ${r.dir==='long'?'Long':'Short'}</span>${done?`<span class="sep"></span><span>Live <b class="${r.pnl>=0?'pos':'neg'}">${rlM(r.pnl,ccy,{sign:1})}</b></span><span>${RL('Jij nu','You now')} <b class="${bt.net>=0?'pos':'neg'}">${bt.n?rlM(bt.net,SX.acc.currency||'USD',{sign:1}):RL('geen trade','no trade')}</b></span>${r.verdict?reliveBadge(SX.s):`<button class="btn btn-p sm" data-rlv>${RL('Beoordelen','Review')}</button>`}`:`<span class="sep"></span><span class="muted">${r.entryT&&!r.seenEntry?RL('Live instap over','Live entry in'):RL('Live trade gesloten over','Live trade closes in')} <b>${reliveFmtDur(target-now)}</b></span>`}`;
+    if(el._h!==html){ el._h=html; el.innerHTML=html; const v=el.querySelector('[data-rlv]'); if(v) v.onclick=()=>reliveVerdict() } }
+  if(r.entryT&&!r.seenEntry&&now>=r.entryT){ r.seenEntry=true; stopPlay(); saveSession(); reliveEntryPrompt() }
+  else if(!r.seenEnd&&now>=r.closeT){ r.seenEnd=true; stopPlay(); saveSession(); setTimeout(()=>{ try{ renderDrawings() }catch(e){} reliveVerdict() },250) } }
+function reliveEntryPrompt(){ const r=SX.s.relive, dec=SYMCFG[SX.sym].dec, f=v=>v==null?'—':(+v).toFixed(dec);
+  const ov=modal(`<div class="rlpop"><div class="rlpi">${ic('target',26)}</div><h3>${RL('Dit is je live instapmoment','This is your live entry moment')}</h3>
+    <p>${RL('Toen ging je','Back then you went')} <b>${r.dir==='long'?'Long':'Short'}</b>${r.entry!=null?` @ <b>${f(r.entry)}</b>`:''}${r.sl!=null?` · SL ${f(r.sl)}`:''}${r.tp!=null?` · TP ${f(r.tp)}`:''}.</p>
+    <p class="muted">${RL('Kijk naar de chart zoals hij nu is. Zou je deze trade opnieuw nemen?','Look at the chart as it is now. Would you take this trade again?')}</p>
+    <div class="rlpa"><button class="btn btn-g" data-k="skip">${RL('Nee, ik sla over','No, I skip')}</button><button class="btn btn-g" data-k="own">${RL('Ik trade zelf','I trade myself')}</button><button class="btn btn-p" data-k="take">${RL('Ja, neem hem','Yes, take it')}</button></div></div>`,'sm');
+  ov.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{ const k=b.dataset.k; ov.remove(); r.entryChoice=k; saveSession();
+    if(k==='take'){ const side=r.dir==='long'?'buy':'sell', qty=+($('#sxQty')&&$('#sxQty').value)||SPEC[SX.sym].step; placeMarket(side,qty,r.sl,r.tp); toast(RL('Trade geopend','Trade opened'),RL('Zelfde richting als je live trade. Speel verder af.','Same direction as your live trade. Keep replaying.'),'ok') }
+    else if(k==='skip') toast(RL('Overgeslagen','Skipped'),RL('Speel verder af en kijk wat de markt deed.','Keep replaying and see what the market did.'),'info') }) }
+function reliveVerdict(){ const r=SX.s.relive, ccy=r.ccy||'EUR', bt=reliveBtNet(), bccy=SX.acc.currency||'USD';
+  const ov=modal(`<div class="mh"><h3>${RL('Had je deze trade opnieuw genomen?','Would you have taken this trade again?')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
+    <div class="rlcmp"><div><small>${RL('Je live trade','Your live trade')}</small><b class="${r.pnl>=0?'pos':'neg'}">${rlM(r.pnl,ccy,{sign:1})}</b><span>${r.dir==='long'?'Long':'Short'}${r.rr!=null?' · '+(+r.rr).toFixed(2)+'R':''}</span></div>
+      <div><small>${RL('Nu in de herbeleving','Now in the relive')}</small><b class="${bt.net>=0?'pos':'neg'}">${bt.n?rlM(bt.net,bccy,{sign:1}):'—'}</b><span>${bt.n?bt.n+' trade'+(bt.n===1?'':'s'):RL('Geen trade genomen','No trade taken')}${r.entryChoice?' · '+(r.entryChoice==='take'?RL('bij instap: genomen','at entry: taken'):r.entryChoice==='skip'?RL('bij instap: overgeslagen','at entry: skipped'):RL('bij instap: zelf getrade','at entry: own trade')):''}</span></div></div>
+    <p class="muted" style="margin:12px 0 8px">${RL('Op de chart staat nu een lijn op het moment dat je live trade sloot. Wees eerlijk tegen jezelf:','The chart now shows a line where your live trade closed. Be honest with yourself:')}</p>
+    <div class="rlv">${Object.entries(RL_VERD).map(([k,v])=>`<button data-v="${k}" class="${r.verdict===k?'on':''} ${v[2]}">${RL(v[0],v[1])}</button>`).join('')}</div>
+    <div class="field" style="margin-top:12px"><label>${RL('Wat neem je mee? (optioneel)','What do you take away? (optional)')}</label><textarea class="inp" id="rlNote" rows="3" style="width:100%;resize:vertical">${esc(r.note||'')}</textarea></div></div></div>
+    <div class="mf"><button class="btn btn-g" data-x>${RL('Later','Later')}</button><button class="btn btn-p" id="rlSave" ${r.verdict?'':'disabled'}>${RL('Opslaan','Save')}</button></div>`,'sm');
+  let v=r.verdict; ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
+  ov.querySelectorAll('.rlv button').forEach(b=>b.onclick=()=>{ v=b.dataset.v; ov.querySelectorAll('.rlv button').forEach(x=>x.classList.toggle('on',x===b)); ov.querySelector('#rlSave').disabled=false });
+  ov.querySelector('#rlSave').onclick=()=>{ r.verdict=v; r.note=ov.querySelector('#rlNote').value.trim(); r.btNet=+bt.net.toFixed(2); r.btN=bt.n; r.at=new Date().toISOString(); saveSession(); ov.remove(); const el=$('#rlBar'); if(el) el._h=''; reliveTick();
+    toast(RL('Opgeslagen','Saved'),RL('Je ziet dit terug bij de trade in je Journal.','You will see this with the trade in your Journal.'),'ok') } }
+/* lijnen op de chart: live instap/sluiting (pas zichtbaar als de replay daar is) */
+function reliveDraw(ctx){ if(!SX||!SX.s.relive) return; const r=SX.s.relive, now=nowSec(), H=ctx.canvas._h||ctx.canvas.height, items=[];
+  if(r.entryT&&now>=r.entryT) items.push([r.entryT,RL('Live instap','Live entry')+(r.entry!=null?' @ '+(+r.entry).toFixed(SYMCFG[SX.sym].dec):''),'#4c74ff']);
+  if(now>=r.closeT) items.push([r.closeT,`Live ${r.dir==='long'?'Long':'Short'} ${rlM(r.pnl,r.ccy||'EUR',{sign:1})}`,r.pnl>=0?'#2fbf71':'#e5534b']);
+  items.forEach(it0=>{ const [t,txt,col]=it0; let x; try{ x=X(t) }catch(e){ x=null } if(x==null||!isFinite(x)) return; ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=1.5; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); ctx.setLineDash([]);
+    ctx.font="700 11.5px -apple-system,BlinkMacSystemFont,sans-serif"; const w=ctx.measureText(txt).width+12, Wc=ctx.canvas._w||ctx.canvas.width, lx=x+4+w>Wc-4?x-4-w:x+4; ctx.fillStyle=col; ctx.beginPath(); const ly=items.indexOf(it0)*24+36; ctx.roundRect?ctx.roundRect(lx,ly,w,20,5):ctx.rect(lx,ly,w,20); ctx.fill(); ctx.fillStyle='#fff'; ctx.textBaseline='middle'; ctx.fillText(txt,lx+6,ly+10); ctx.restore() });
+  if(r.entry!=null&&r.entryT&&now>=r.entryT){ try{ const y=Y(r.entry), x=X(r.entryT); if(isFinite(y)&&isFinite(x)){ ctx.save(); ctx.fillStyle='#4c74ff'; ctx.beginPath(); ctx.arc(x,y,4,0,7); ctx.fill(); ctx.restore() } }catch(e){} } }
+
 function walletHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, lev=+SX.acc.leverage||100, bal=SX.s.balance??SX.acc.balance??0, eq=equity(), op=SX.pos.length?openPnl():0, m=SX.pos.length?marginUsed():0, free=eq-m, lvl=m>0?eq/m*100:null, so=+SX.acc.so||50;
   const start=+(SX.s.startBalance??SX.acc.balance)||0, ret=start?(eq-start)/start*100:0;
   const lots=SX.pos.reduce((a,p)=>a+(+p.qty||0),0), notional=SX.pos.reduce((a,p)=>a+p.entry*p.qty*ccs(p.sym),0);
@@ -5547,6 +5686,7 @@ function renderDrawings(){
   if(SX.creating&&SX.creating.d&&SX.creating.d.pts&&!SX.creating.free){ const cd=SX.creating.d, r=SX.touch?7:4; cd.pts.forEach((q,i)=>{ const px=X(q.t), py=Y(q.p); if(px==null||py==null) return; ctx.beginPath(); ctx.arc(px,py,r,0,7); ctx.fillStyle=i===cd.pts.length-1&&!SX.creating.pend?'rgba(76,116,255,.35)':tplColors().bg; ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle='#4c74ff'; ctx.setLineDash([]); ctx.stroke() }) }
   const sel=SX.sel&&list.find(d=>d.id===SX.sel);
   if(sel&&!sel.hidden){ handlesOf(sel).forEach(h=>{ctx.beginPath();ctx.arc(h.x,h.y,SX.touch?8:5,0,7);ctx.fillStyle=tplColors().bg;ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=sel.locked?'#8a94a6':'#4c74ff';ctx.stroke()}) }
+  try{ reliveDraw(ctx) }catch(e){}
   placeDtb(sel);
 }
 function stroke(ctx,d,w){ctx.strokeStyle=hexA(d.style.color||textCol(),d.style.alpha??1);ctx.lineWidth=w??d.style.width;ctx.setLineDash(d.style.dash===1?[6,4]:d.style.dash===2?[2,3]:[]);}
@@ -7500,10 +7640,10 @@ function edge(m){ const c=v=>Math.max(0,Math.min(100,v));
 function acctListHtml(){ const live={kind:'live'}; const A0=S.acct;
   const row=(key,cls,title,sub,right)=>`<button data-acct="${key}" class="${A0===key?'on':''}"><span class="ad ${cls}">${ic(cls==='live'?'plug':'chart',18)}</span><span style="min-width:0"><b>${esc(title)}</b><small>${esc(sub)}</small></span><span class="ar">${right}</span></button>`;
   const LA=(()=>{ const s=S.acct; S.acct='live'; const a=acct(); S.acct=s; return a })();
-  let h=`<div class="acctlist"><div class="grp">Live</div>`+row('live','live',D.live.length?L('Hoofdrekening','Main account'):L('Live-rekening','Live account'),'MT5'+(SETTINGS.login?' · '+SETTINGS.login:'')+' · '+LA.trades.length+' trades',S.blur?'••••':fmtM(balanceOf(LA),LA.ccy,{dp:0}))+
-    D.live.map(la=>{ const s0=S.acct; S.acct='live:'+la.id; const A=acct(); S.acct=s0; return row('live:'+la.id,'live',la.name||'Live','MT5'+(la.login?' · '+la.login:'')+' · '+A.trades.length+' trades',S.blur?'••••':fmtM(balanceOf(A),A.ccy,{dp:0})) }).join('')+
+  let h=`<div class="acctlist"><div class="grp">Live</div>`+row('live','live',D.live.length?L('Hoofdrekening','Main account'):L('Live-rekening','Live account'),'MT5'+(SETTINGS.login?' · '+SETTINGS.login:'')+' · '+LA.trades.length+' trades',S.blur?'••••':fmtM(balanceOf(LA),LA.ccy,{dp:2}))+
+    D.live.map(la=>{ const s0=S.acct; S.acct='live:'+la.id; const A=acct(); S.acct=s0; return row('live:'+la.id,'live',la.name||'Live','MT5'+(la.login?' · '+la.login:'')+' · '+A.trades.length+' trades',S.blur?'••••':fmtM(balanceOf(A),A.ccy,{dp:2})) }).join('')+
     `<button class="addacct" data-addlive>${ic('plus',18)}<span><b>${L('Live-rekening toevoegen','Add live account')}</b><small>${L('Met een eigen API-sleutel voor de EA','With its own API key for the EA')}</small></span></button>`;
-  if(D.bt.sessions.length){ h+=`<div class="grp">Backtest</div>`+D.bt.sessions.map(s=>{ const A={kind:'bt',trades:s.trades,payouts:[],adjs:[],capital:s.capital,ccy:s.ccy}; return row('bt:'+s.id,'bt',s.name,(s.type==='propfirm'?'Prop firm':'Backtest')+(s.acctName?' · '+s.acctName:'')+' · '+s.trades.length+' trades',fmtM(balanceOf(A),s.ccy,{dp:0})) }).join('') }
+  if(D.bt.sessions.length){ h+=`<div class="grp">Backtest</div>`+D.bt.sessions.map(s=>{ const A={kind:'bt',trades:s.trades,payouts:[],adjs:[],capital:s.capital,ccy:s.ccy}; return row('bt:'+s.id,'bt',s.name,(s.type==='propfirm'?'Prop firm':'Backtest')+(s.acctName?' · '+s.acctName:'')+' · '+s.trades.length+' trades',fmtM(balanceOf(A),s.ccy,{dp:2})) }).join('') }
   else h+=`<div class="grp">Backtest</div><div class="muted" style="padding:6px 4px 2px;font-size:13px">${L('Nog geen backtest-sessies. Maak er een in Backtest.','No backtest sessions yet. Create one in Backtest.')}</div>`;
   return h+'</div>' }
 function openAcctPicker(anchor){
@@ -7575,7 +7715,7 @@ function pgOverview(){
       ${kc(L('Winratio','Win rate'),Math.round(m.wr)+'%',m.wr>=50?'pos':m.n?'neg':'',`${m.wins}W · ${m.losses}L`,'target',m.wr)}
       ${kc(L('Gem. R:R','Avg R:R'),m.avgR!=null?m.avgR.toFixed(2)+'R':'—','',`PF ${m.pf>=99?'∞':m.pf.toFixed(2)}`,'bars')}
       ${kc(L('Plan gevolgd','Plan followed'),Math.round(m.planPct)+'%',m.planPct>=70?'pos':m.planPct<40&&m.n?'neg':'',`${m.plan} / ${m.n} trades`,'shield',m.planPct)}
-      ${kc('Trades',m.n,'',`${L('Beste','Best')} ${fmtM(m.best,A.ccy,{dp:0,sign:1})}`,'list')}
+      ${kc('Trades',m.n,'',`${L('Beste','Best')} ${fmtM(m.best,A.ccy,{dp:2,sign:1})}`,'list')}
     </div></div>
     <div class="box c7"><div class="boxh"><h3>${L('Laatste trades','Latest trades')}</h3><button class="link" data-go="trades">${L('Alles','All')} ›</button></div>${last.length?`<div class="tlist">${last.map(tRow).join('')}</div>`:emptyTrades()}</div>
     <div class="box c5"><div class="boxh"><h3>${L('Deze maand','This month')}</h3><button class="link" data-go="calendar">${L('Kalender','Calendar')} ›</button></div>${miniMonth(A)}</div>
@@ -7657,11 +7797,14 @@ function openTrade(id){ const t=findTrade(id); if(!t) return; const A=acct();
     <div class="big mono ${t.pnl>=0?'pos':'neg'}">${fmtM(t.pnl,A.ccy,{sign:1})}</div>
     <div class="mgrid">${meta.map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join('')}</div>
     ${t.layers?`<h4 style="margin:0 0 8px">${t.layers.length} ${L('trades samengevoegd','trades merged')}</h4><div class="tlist" style="margin-bottom:16px">${t.layers.map(tRow).join('')}</div>`:''}
+    ${!t.bt&&!t.layers&&typeof reliveFor==='function'?(()=>{ const rs=reliveFor(t.id), r=rs&&rs.relive; return `<div class="rlbox"><div class="rlbh"><span class="rli">${ic('refresh',15)}</span><div style="flex:1;min-width:0"><b>${L('Herbeleven','Relive')}</b><small>${r&&r.verdict?`${L('Beoordeeld','Reviewed')} ${new Date(r.at).toLocaleDateString(locale(),{day:'numeric',month:'short'})}${r.btN?' · '+L('herbeleving','relive')+' '+fmtM(r.btNet,DB.get('accounts',rs.account)?.currency||'USD',{sign:1}):''}`:r?L('Herbeleving gestart, nog niet beoordeeld.','Relive started, not reviewed yet.'):L('Speel de markt opnieuw af: had je deze trade opnieuw genomen?','Replay the market: would you take this trade again?')}</small></div>${r?reliveBadge(rs):''}</div>${r&&r.note?`<div class="note" style="margin-top:8px">${esc(r.note)}</div>`:''}<div class="rlba">${r?`<button class="btn btn-g sm" data-rlopen="${rs.id}">${ic('play',14)} ${L('Open herbeleving','Open relive')}</button>`:''}<button class="btn ${r?'btn-g':'btn-p'} sm" data-relive>${ic('refresh',14)} ${r?L('Opnieuw herbeleven','Relive again'):L('Herbeleef deze trade','Relive this trade')}</button></div></div>` })():''}
     ${t.note?`<h4 style="margin:0 0 8px">${L('Notitie','Note')}</h4><div class="note">${esc(t.note)}</div>`:''}
     <h4 style="margin:18px 0 8px">Screenshots</h4>${t.photos&&t.photos.length?`<div class="shots">${t.photos.map((u,i)=>`<div class="sh" data-lb="${i}"><img src="${esc(u)}" alt="" loading="lazy"></div>`).join('')}</div>`:`<div class="muted" style="font-size:13.5px">${t.bt?L('Backtest-trades hebben geen screenshots.','Backtest trades have no screenshots.'):L('Nog geen screenshots. Tik op Bewerken om ze toe te voegen.','No screenshots yet. Tap Edit to add some.')}</div>`}</div>`;
   const foot=t.layers?`<button class="btn btn-danger" data-ungroup>${ic('x',16)} ${L('Opheffen','Ungroup')}</button><button class="btn btn-g" data-gplan>${ic('shield',16)} ${t.hadPlan?L('Geen plan','No plan'):L('Plan gevolgd','Plan followed')}</button><button class="btn btn-p" data-x2>${L('Sluiten','Close')}</button>`:t.bt?`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-obt>${ic('chart',16)} ${L('Open sessie','Open session')}</button>`:`<button class="btn btn-danger" data-del>${ic('trash',16)}</button><button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-ed>${ic('edit',16)} ${L('Bewerken','Edit')}</button>`;
   const p=panel(L('Trade','Trade')+' · '+fmtDate(t.date,{day:'numeric',month:'short'}),body,foot,'');
   p.querySelectorAll('[data-lb]').forEach(el=>el.onclick=()=>lightbox(t.photos,+el.dataset.lb));
+  p.querySelectorAll('[data-relive]').forEach(b=>b.onclick=()=>{ try{ p.close() }catch(e){} setTimeout(()=>reliveModal({id:t.id,date:t.date,pair:t.pair,dir:t.dir,pnl:t.pnl,rr:t.rr,entry:t.entry??'',sl:t.sl??'',tp:t.tp??''}),isPhone()?240:0) });
+  p.querySelectorAll('[data-rlopen]').forEach(b=>b.onclick=()=>{ try{ p.close() }catch(e){} reliveOpen(b.dataset.rlopen) });
   p.querySelectorAll('[data-tr]').forEach(b=>b.onclick=()=>{ p.close(); setTimeout(()=>openTrade(b.dataset.tr),isPhone()?240:0) });
   const q=s=>p.querySelector(s);
   if(q('[data-x2]')) q('[data-x2]').onclick=()=>p.close();
@@ -7763,7 +7906,7 @@ function openDay(day){ const A=acct(), c=S.cal; const tr=A.trades.filter(t=>{ co
   p.querySelectorAll('[data-tr]').forEach(b=>b.onclick=()=>{ p.close(); setTimeout(()=>openTrade(b.dataset.tr),isPhone()?240:0) }) }
 
 /* ---------- Statistieken ---------- */
-function hbars(items,ccy){ const mx=Math.max(1,...items.map(i=>Math.abs(i.v))); return `<div class="hbars">${items.map(i=>`<div class="hbr"><span class="hl">${esc(i.l)}</span><span class="ht"><i class="${i.v>=0?'p':'n'}" style="width:${Math.abs(i.v)/mx*50}%"></i></span><span class="hv mono ${i.v>=0?'pos':'neg'}">${fmtM(i.v,ccy,{dp:0,sign:1})}</span></div>`).join('')}</div>` }
+function hbars(items,ccy){ const mx=Math.max(1,...items.map(i=>Math.abs(i.v))); return `<div class="hbars">${items.map(i=>`<div class="hbr"><span class="hl">${esc(i.l)}</span><span class="ht"><i class="${i.v>=0?'p':'n'}" style="width:${Math.abs(i.v)/mx*50}%"></i></span><span class="hv mono ${i.v>=0?'pos':'neg'}">${fmtM(i.v,ccy,{dp:2,sign:1})}</span></div>`).join('')}</div>` }
 function vbars(items,ccy){ const mx=Math.max(1,...items.map(i=>Math.abs(i.v))); return `<div class="vbars">${items.map(i=>`<div class="vb" title="${esc(i.l)}: ${fmtM(i.v,ccy)} (${i.n})"><div class="vt"><i class="${i.n?(i.v>=0?'p':'n'):'z'}" style="height:${i.n?Math.max(4,Math.abs(i.v)/mx*100):3}%"></i></div><span class="vl">${esc(i.l)}</span></div>`).join('')}</div>` }
 function radarSvg(ax){ const n=ax.length,cx=150,cy=128,R=88, pt=(i,f)=>{ const a=-Math.PI/2+2*Math.PI*i/n; return [cx+R*f*Math.cos(a),cy+R*f*Math.sin(a)] };
   let g=''; [.33,.66,1].forEach(f=>g+=`<polygon points="${ax.map((_,i)=>pt(i,f).join(',')).join(' ')}" fill="none" stroke="var(--line2)"/>`);
@@ -7780,7 +7923,7 @@ function pgStats(){ const A=acct(), tr=A.trades, m=stats(tr,A);
   const last30=Array.from({length:30},(_,i)=>{ const d=new Date(); d.setDate(d.getDate()-29+i); const k=dKey(d); const g=tr.filter(t=>dKey(t.date)===k); return {l:d.getDate()===1||i===0||i===29?String(d.getDate()):'',v:g.reduce((s,t)=>s+t.pnl,0),n:g.length} });
   return head(L('Statistieken','Statistics'),`${esc(A.name)} · ${m.n} trades`,'')+
   `<div class="jgrid">
-   <div class="c12"><div class="kgrid">${kc(L('Netto P&L','Net P&L'),fmtM(m.net,A.ccy,{sign:1}),m.net>=0?'pos':'neg',`${fmtM(m.exp,A.ccy,{sign:1})} / trade`,'chart')}${kc(L('Winratio','Win rate'),Math.round(m.wr)+'%','',`${m.wins}W · ${m.losses}L`,'target',m.wr)}${kc(L('Winstfactor','Profit factor'),m.pf>=99?'∞':m.pf.toFixed(2),m.pf>=1?'pos':'neg',`${fmtM(m.gp,A.ccy,{dp:0})} / ${fmtM(m.gl,A.ccy,{dp:0})}`,'bars')}${kc(L('Gem. winst / verlies','Avg win / loss'),m.al?(m.aw/m.al).toFixed(2):'—','',`${fmtM(m.aw,A.ccy,{dp:0})} / ${fmtM(m.al,A.ccy,{dp:0})}`,'coins')}${kc('Max drawdown',fmtM(-m.mdd,A.ccy,{dp:0}),'neg',m.ddPct.toFixed(1)+'%','arrowdown')}</div></div>
+   <div class="c12"><div class="kgrid">${kc(L('Netto P&L','Net P&L'),fmtM(m.net,A.ccy,{sign:1}),m.net>=0?'pos':'neg',`${fmtM(m.exp,A.ccy,{sign:1})} / trade`,'chart')}${kc(L('Winratio','Win rate'),Math.round(m.wr)+'%','',`${m.wins}W · ${m.losses}L`,'target',m.wr)}${kc(L('Winstfactor','Profit factor'),m.pf>=99?'∞':m.pf.toFixed(2),m.pf>=1?'pos':'neg',`${fmtM(m.gp,A.ccy,{dp:2})} / ${fmtM(m.gl,A.ccy,{dp:2})}`,'bars')}${kc(L('Gem. winst / verlies','Avg win / loss'),m.al?(m.aw/m.al).toFixed(2):'—','',`${fmtM(m.aw,A.ccy,{dp:2})} / ${fmtM(m.al,A.ccy,{dp:2})}`,'coins')}${kc('Max drawdown',fmtM(-m.mdd,A.ccy,{dp:2}),'neg',m.ddPct.toFixed(1)+'%','arrowdown')}</div></div>
    <div class="box c8"><div class="boxh"><h3>${L('Resultaat laatste 30 dagen','Result last 30 days')}</h3></div>${vbars(last30,A.ccy)}</div>
    <div class="box c4 jradar"><div class="boxh"><h3>Edge score</h3></div>${radarSvg(eg.ax)}<div class="escore"><b>${eg.score}</b><span>/ 100</span></div></div>
    <div class="box c6"><div class="boxh"><h3>${L('Per weekdag','By weekday')}</h3></div>${hbars(byDay.filter(x=>x.n),A.ccy)}</div>
@@ -7798,7 +7941,7 @@ function pgCapital(){ const A=acct();
     <div class="box c12"><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><span class="chip">${ic('info',14)} Backtest</span><span class="muted">${L('Kapitaal van backtest-rekeningen stel je in bij Handelsrekeningen in Backtest.','Capital of backtest accounts is set under Trading accounts in Backtest.')}</span><button class="btn btn-g" data-act="openbt" style="margin-left:auto">${L('Open Backtest','Open Backtest')}</button></div></div></div>` }
   const st=capSteps(A), cr=D.adjs.filter(a=>a.kind==='credit').reduce((s,a)=>s+a.amount,0), po=D.payouts.reduce((s,p)=>s+p.amount,0);
   return head(L('Kapitaal','Capital'),L('Startkapitaal, stortingen, upgrades, credits en payouts.','Starting capital, deposits, upgrades, credits and payouts.'),`<button class="btn btn-g" data-act="adj">${ic('plus',16)} ${L('Storting / upgrade','Deposit / upgrade')}</button><button class="btn btn-p" data-act="payout">${ic('plus',16)} Payout</button>`)+
-  `<div class="jgrid"><div class="c12"><div class="kgrid">${kc(L('Startkapitaal','Starting capital'),fmtM(A.capital,A.ccy,{dp:0}),'',`<a class="link" data-go="settings" data-stab="profile">${L('Wijzigen','Change')}</a>`,'coins')}${kc(L('Kapitaal nu','Capital now'),fmtM(capNow(A),A.ccy,{dp:0}),'',st.length?`${st.length} ${L('wijziging(en)','change(s)')}`:L('geen wijzigingen','no changes'),'wallet')}${kc(L('Saldo','Balance'),S.blur?'••••':fmtM(balanceOf(A),A.ccy),'',fmtPct(retPct(A))+' '+L('rendement','return'),'chart')}${kc(L('Totaal uitbetaald','Total paid out'),fmtM(po,A.ccy),po?'pos':'',`${D.payouts.length} payout(s)`,'download')}${kc('Credits',fmtM(cr,A.ccy),'',L('telt niet mee in saldo','not counted in balance'),'info')}</div></div>
+  `<div class="jgrid"><div class="c12"><div class="kgrid">${kc(L('Startkapitaal','Starting capital'),fmtM(A.capital,A.ccy,{dp:2}),'',`<a class="link" data-go="settings" data-stab="profile">${L('Wijzigen','Change')}</a>`,'coins')}${kc(L('Kapitaal nu','Capital now'),fmtM(capNow(A),A.ccy,{dp:2}),'',st.length?`${st.length} ${L('wijziging(en)','change(s)')}`:L('geen wijzigingen','no changes'),'wallet')}${kc(L('Saldo','Balance'),S.blur?'••••':fmtM(balanceOf(A),A.ccy),'',fmtPct(retPct(A))+' '+L('rendement','return'),'chart')}${kc(L('Totaal uitbetaald','Total paid out'),fmtM(po,A.ccy),po?'pos':'',`${D.payouts.length} payout(s)`,'download')}${kc('Credits',fmtM(cr,A.ccy),'',L('telt niet mee in saldo','not counted in balance'),'info')}</div></div>
    <div class="box c6"><div class="boxh"><h3>Payouts</h3><button class="btn btn-g" data-act="payout" style="height:34px">${ic('plus',14)}</button></div>${D.payouts.length?D.payouts.map(p=>`<div class="lrow" data-po="${p.id}" style="cursor:pointer"><span class="li po">${ic('download',17)}</span><span class="lt"><b>Payout</b><small>${fmtDate(p.date)}${p.note?' · '+esc(p.note):''}</small></span><span class="lv mono neg">−${fmtM(p.amount,A.ccy)}</span></div>`).join(''):`<div class="muted" style="padding:10px 4px">${L('Nog geen payouts.','No payouts yet.')}</div>`}</div>
    <div class="box c6"><div class="boxh"><h3>${L('Stortingen, upgrades & credits','Deposits, upgrades & credits')}</h3><button class="btn btn-g" data-act="adj" style="height:34px">${ic('plus',14)}</button></div>${D.adjMissing?`<div class="muted">${L('De tabel "adjustments" bestaat nog niet in de database.','The "adjustments" table does not exist in the database yet.')}</div>`:D.adjs.length?D.adjs.map(a=>{ const k=ADJ[a.kind]||ADJ.deposit; return `<div class="lrow" data-adj="${a.id}" style="cursor:pointer"><span class="li ${k[1]}">${ic(k[2],17)}</span><span class="lt"><b>${k[0]()}</b><small>${fmtDate(a.date)}${a.note?' · '+esc(a.note):''}</small></span><span class="lv mono">${a.kind==='upgrade'?'→ ':'+'}${fmtM(a.amount,A.ccy)}</span></div>` }).join(''):`<div class="muted" style="padding:10px 4px">${L('Nog niets toegevoegd.','Nothing added yet.')}</div>`}</div>
   </div>` }
@@ -8076,7 +8219,7 @@ function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='l
   return { name:A.name, uname:SETTINGS.name, ccy:A.ccy, balance:balanceOf(A), ret:retPct(A), today:tday.reduce((s,t)=>s+t.pnl,0), todayN:tday.length, month:tmo.reduce((s,t)=>s+t.pnl,0), monthN:tmo.length,
     planPct:m.planPct, n:m.n, wr:m.wr, pf:m.pf, planDots:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).reverse().map(t=>t.hadPlan), accts:['live',...D.live.map(la=>'live:'+la.id)].map(k=>{ const s1=S.acct; S.acct=k; const B=acct(); S.acct=s1; const td=B.trades.filter(t=>dKey(t.date)===dKey(new Date())).reduce((a,t)=>a+t.pnl,0); return {key:k,name:B.name,sub:B.sub,bal:balanceOf(B),today:td,n:B.trades.length,f:(v,o)=>fmtM(v,B.ccy,o)} }), avgR:m.avgR, best:m.best, worst:m.worst, wins:m.wins, losses:m.losses, days:m.days, greenDays:m.greenDays, mdd:m.mdd, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
     last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList().find(d=>!isEmptyEntry(d))||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
-window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, allTrades:()=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,setup:t.setup||'',plan:!!t.hadPlan})) }, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
+window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, allTrades:()=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.map(t=>({id:t.id,date:t.date,pair:t.pair,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,setup:t.setup||'',plan:!!t.hadPlan,entry:t.entry,exit:t.exitPrice,lots:t.lots})) }, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
 
