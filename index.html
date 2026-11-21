@@ -1908,6 +1908,17 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 .tw .tw-s:hover{background:#d82f3c!important}.tw .tw-b:hover{background:#1f4fd6!important}
 .tw .tw-q{background:var(--panel);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
 .tw .tw-q .inp{background:var(--panel2);color:var(--ink)}
+/* v12.2.2: koop/verkoop-blok op de chart in TradingView-stijl */
+#sxTw{top:38px!important;left:12px;display:flex;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.28)}
+#sxTw button{min-width:80px!important;height:36px;padding:2px 10px!important;border:0!important;border-radius:0!important}
+#sxTw .tw-s{border-radius:6px 0 0 6px!important}#sxTw .tw-b{border-radius:0 6px 6px 0!important}
+#sxTw .tw-q{background:#2a2e39!important;border:0!important;padding:0 6px;color:#d1d4dc}
+#sxTw .tw-q .inp{background:transparent!important;border:0!important;box-shadow:none!important;color:#d1d4dc!important;height:20px;width:52px}
+#sxTw .tw-q small{color:#868993}
+.sxchartwrap.chlight #sxTw{box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.sxchartwrap.chlight #sxTw .tw-q{background:#fff!important;color:#131722;box-shadow:inset 0 1px 0 #e0e3eb,inset 0 -1px 0 #e0e3eb}
+.sxchartwrap.chlight #sxTw .tw-q .inp{color:#131722!important}
+.sxchartwrap.chlight #sxTw .tw-q small{color:#787b86}
 </style>
 </head>
 <body class="">
@@ -2052,7 +2063,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.2.1', BUILD: '2026-11-21'
+  VERSION: 'v12.2.2', BUILD: '2026-11-21'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2540,6 +2551,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.2.2':{nl:['Koop/verkoop-blok linksboven op de chart netter: één strakke balk, lots-vakje in de kleur van je chart'],en:['Buy/sell block at the top left of the chart cleaner: one tidy bar, lots box in your chart colour']},
   'v12.2.1':{nl:['Nieuwe pagina Trades herbeleven (Backtest in de zijbalk / Meer): kies één trade, een hele dag of een samengevoegde groep','Meerdere trades in één herbeleving — de replay pauzeert bij elke trade','Pijltjes op de chart waar je live kocht en verkocht','MT5: instap, uitstap, SL, TP, lots en openingstijd worden nu bewaard en gebruikt','Koop- en verkoopknoppen op de chart vol en goed zichtbaar, ook op een witte chart'],en:['New Relive trades page (Backtest in the sidebar / More): pick one trade, a whole day or a merged group','Several trades in one relive — the replay pauses at each trade','Arrows on the chart where you bought and sold live','MT5: entry, exit, SL, TP, lots and open time are now stored and used','Buy and sell buttons on the chart solid and clearly visible, also on a white chart']},
   'v12.2.0':{nl:['Nieuw: live trades herbeleven — speel de markt opnieuw af tot je live trade en kijk eerlijk of je hem opnieuw had genomen (Journal → trade, of ＋ → Live trade herbeleven)','Bedragen overal met centen, ook bij Handelsrekeningen en statistieken','Screenshot met ⇧⌘S: schone chart met al je tekeningen, zonder knoppen, balans of panelen — opgeslagen én gekopieerd'],en:['New: relive live trades — replay the market up to your live trade and honestly check whether you would take it again (Journal → trade, or ＋ → Relive a live trade)','Amounts everywhere with cents, including Trading accounts and statistics','Screenshot with ⇧⌘S: clean chart with all your drawings, without buttons, balance or panels — saved and copied']},
   'v12.1.17':{nl:['App schaalt nu mee op hoogte én breedte: alles past weer op MacBook, iPad en kleinere vensters','Eigen donkere scrollbalken — geen witte balken meer in Safari'],en:['App now scales with height and width: everything fits again on MacBook, iPad and smaller windows','Own dark scrollbars — no more white bars in Safari']},
@@ -4682,6 +4694,7 @@ function legend(d){ if(!SX) return;
   let vc=ch>=0?(c.bodyUp||c.up):(c.bodyDown||c.down); const bgL=colLum(c.bg||'#000'), light=bgL>.5;
   if(colContrast(vc,c.bg||'#000')<3) vc=ch>=0?(light?'#0b7a5c':'#26a69a'):(light?'#c62828':'#ef5350');
   { const el=$('#sxLegend'); if(el){ el.style.color=light?'#131722':''; el.classList.toggle('lglight',light) } }
+  { const w=document.querySelector('.sxchartwrap'); if(w) w.classList.toggle('chlight',light) }
   const html=`${c.slSymbol!==false?`<span class="lgt">${symBadge(SX.sym)}<span>${esc(a.nameEn||SX.sym)} · ${tvTf(SX.tf)} · TWF</span></span>`:''}
    ${c.slOHLC!==false?`<span class="lgv" style="--vc:${vc}">O<i>${f(b.open??b.value)}</i> H<i>${f(b.high??b.value)}</i> L<i>${f(b.low??b.value)}</i> C<i>${f(cl)}</i></span>`:''}
    ${c.slChange!==false?`<span class="lgv" style="--vc:${vc}"><i>${ch>=0?'+':''}${fmtPx(ch)} (${pc>=0?'+':''}${pc.toFixed(2)}%)</i></span>`:''}
