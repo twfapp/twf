@@ -2063,7 +2063,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.2.3', BUILD: '2026-11-21'
+  VERSION: 'v12.2.4', BUILD: '2026-11-21'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2551,6 +2551,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.2.4':{nl:['Tekst bij lijnen staat nu netjes bóven de lijn (Add text glitchte en korte lijnen verdwenen)','Winst in een positie altijd blauw, verlies rood — ook bij een short'],en:['Text on lines now sits neatly above the line (Add text glitched and short lines disappeared)','Profit in a position always blue, loss red — also for a short']},
   'v12.2.3':{nl:['Koop/verkoop-blok staat altijd netjes onder de marktnaam en koersen, ook op de iPhone'],en:['Buy/sell block always sits neatly below the symbol name and prices, also on iPhone']},
   'v12.2.2':{nl:['Koop/verkoop-blok linksboven op de chart netter: één strakke balk, lots-vakje in de kleur van je chart'],en:['Buy/sell block at the top left of the chart cleaner: one tidy bar, lots box in your chart colour']},
   'v12.2.1':{nl:['Nieuwe pagina Trades herbeleven (Backtest in de zijbalk / Meer): kies één trade, een hele dag of een samengevoegde groep','Meerdere trades in één herbeleving — de replay pauzeert bij elke trade','Pijltjes op de chart waar je live kocht en verkocht','MT5: instap, uitstap, SL, TP, lots en openingstijd worden nu bewaard en gebruikt','Koop- en verkoopknoppen op de chart vol en goed zichtbaar, ook op een witte chart'],en:['New Relive trades page (Backtest in the sidebar / More): pick one trade, a whole day or a merged group','Several trades in one relive — the replay pauses at each trade','Arrows on the chart where you bought and sold live','MT5: entry, exit, SL, TP, lots and open time are now stored and used','Buy and sell buttons on the chart solid and clearly visible, also on a white chart']},
@@ -5329,7 +5330,8 @@ function placeOverlay(force){
     if(it.k==='pos') n=pnlAt(it.p,closeQuote(it.p));
     else if(it.k==='tp'||it.k==='sl') n=pnlAt(it.p,it.price)-(+SX.s.comm||0)*it.p.qty; // netto, incl. commissie
     else if(it.k==='otp'||it.k==='osl') n=(it.price-it.o.price)*(it.o.side==='buy'?1:-1)*it.o.qty*ccs(it.o.sym);
-    const tx=n!=null?fmtUsd(n):(it.o.type==='limit'?'LMT ':'STP ')+it.price.toFixed(SYMCFG[SX.sym].dec); if(val.textContent!==tx) val.textContent=tx });
+    const tx=n!=null?fmtUsd(n):(it.o.type==='limit'?'LMT ':'STP ')+it.price.toFixed(SYMCFG[SX.sym].dec); if(val.textContent!==tx) val.textContent=tx;
+    if(it.k==='pos'){ const c=n>=0?'#2962FF':'#F23645'; if(val.style.color!==c) val.style.color=c } });
   // v10.2: elk label precies op zijn eigen prijslijn; raken labels elkaar, dan komen ze NAAST elkaar (geen draden/beugels meer)
   const it0=i=>SX.ovItems[i], pri=v=>{ const k=it0(v.i).k; return k==='pos'||k==='ord'?0:1 };
   vis.sort((a,b)=>pri(a)-pri(b)||a.y-b.y);
@@ -6169,6 +6171,7 @@ function inlineEdit(d,isNew){
   else if(ty==='vline'){ cx=P[0].x; cy=H/2 }
   else if(BOXT.includes(ty)||P.length>2){ const xs=P.map(p=>p.x), ys=P.map(p=>p.y); cx=(Math.min(...xs)+Math.max(...xs))/2; cy=(Math.min(...ys)+Math.max(...ys))/2; if(ty==='circle'){cx=P[0].x;cy=P[0].y} }
   else if(P.length>=2){ cx=(P[0].x+P[1].x)/2; cy=(P[0].y+P[1].y)/2 } else { cx=P[0].x; cy=P[0].y }
+  if(LINET.includes(ty)&&(st.valign||'top')==='top'){ cy-=((st.font||13)+4)/2+8 } else if(LINET.includes(ty)&&st.valign==='bottom'){ cy+=((st.font||13)+4)/2+8 }
   const before=d.text||''; snap(); d._editing=true;
   const ta=document.createElement('textarea'); ta.className='dtedit'+(anchorTL?' tl':''); ta.value=before; ta.placeholder='Add text'; ta.spellcheck=false;
   const col=TEXTTYPES.includes(ty)?(tStyle(d).color||'#fff'):hexA(st.textColor||st.color||textCol(),st.textA??1);
@@ -7120,19 +7123,20 @@ function drawLineExtras(ctx,d,P,W,H){
 /* v10.2: tekst midden op een lijn onderbreekt alleen de lijn zelf (geen zwart blok over posities/vlakken) */
 function textGap(ctx,d,P,W,H){
   if(!d.text||d._editing||TEXTTYPES.includes(d.type)||!P.length) return null;
-  const st=d.style, ty=d.type; if((st.valign||'middle')!=='middle') return null;
+  const st=d.style, ty=d.type; if((st.valign||(LINET.includes(ty)?'top':'middle'))!=='middle') return null;
   if(!(LINET.includes(ty)||['regr','channel','fibch'].includes(ty))) return null;
   ctx.save(); ctx.font=fontOf(st); const lines=String(d.text).split('\n'), lh=(st.font||13)+4, w=Math.max(...lines.map(l=>ctx.measureText(l).width))+14, h=lines.length*lh; ctx.restore();
   const al=st.align||'center'; const off=(ang)=>al==='center'?0:al==='left'?w/2-7:-(w/2-7);
   if(ty==='hline'||ty==='hray'){ const x=al==='left'?(ty==='hray'?P[0].x+6:8):al==='right'?W-70:(ty==='hray'?(P[0].x+W)/2:W/2); return {x:x+off(),y:P[0].y,a:0,w,h} }
   if(ty==='vline'){ return {x:P[0].x,y:H/2,a:-Math.PI/2,w,h} }
-  if(P.length>=2){ let a=P[0],b=P[1]; if(b.x<a.x){const t0=a;a=b;b=t0} const ang=Math.atan2(b.y-a.y,b.x-a.x), f=al==='left'?0:al==='right'?1:0.5, o=off(); return {x:a.x+(b.x-a.x)*f+o*Math.cos(ang),y:a.y+(b.y-a.y)*f+o*Math.sin(ang),a:ang,w,h} }
+  if(P.length>=2){ let a=P[0],b=P[1]; if(b.x<a.x){const t0=a;a=b;b=t0} if(Math.hypot(b.x-a.x,b.y-a.y)<w+24) return null; // lijn korter dan de tekst: niet wegknippen
+    const ang=Math.atan2(b.y-a.y,b.x-a.x), f=al==='left'?0:al==='right'?1:0.5, o=off(); return {x:a.x+(b.x-a.x)*f+o*Math.cos(ang),y:a.y+(b.y-a.y)*f+o*Math.sin(ang),a:ang,w,h} }
   return null }
 function drawItemText(ctx,d,P,W,H){
   if(TEXTTYPES.includes(d.type)||d.type==='emoji'||!P.length||d._editing) return;
   const ph=!d.text&&SX.sel===d.id&&(BOXT.includes(d.type)||TXTLINE.includes(d.type))&&!SX.creating&&!(SX.drag&&SX.drag.moved);
   if(!d.text&&!ph) return;
-  const st=d.style, col=ph?hexA(st.textColor||st.color||textCol(),.45):hexA(st.textColor||st.color||textCol(),st.textA??1), al=st.align||'center', va=st.valign||'middle';
+  const st=d.style, col=ph?hexA(st.textColor||st.color||textCol(),.5):hexA(st.textColor||st.color||textCol(),st.textA??1), al=st.align||'center', va=st.valign||(LINET.includes(d.type)?'top':'middle');
   ctx.save(); ctx.setLineDash([]); ctx.font=fontOf(st); ctx.fillStyle=col;
   const lines=String(ph?'Add text':d.text).split('\n'), lh=(st.font||13)+4, n=lines.length, gapL=LINET.includes(d.type)||['regr','channel','fibch'].includes(d.type);
   const put=(x,y,ang,align)=>{ ctx.translate(x,y); if(ang) ctx.rotate(ang); ctx.textAlign=align; ctx.textBaseline='middle';
