@@ -1919,6 +1919,9 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 .sxchartwrap.chlight #sxTw .tw-q{background:#fff!important;color:#131722;box-shadow:inset 0 1px 0 #e0e3eb,inset 0 -1px 0 #e0e3eb}
 .sxchartwrap.chlight #sxTw .tw-q .inp{color:#131722!important}
 .sxchartwrap.chlight #sxTw .tw-q small{color:#787b86}
+.atsug{display:flex;flex-direction:column;gap:4px;margin-top:-4px}.atsug small{color:var(--ink3);font-size:11.5px;font-weight:700;margin-bottom:2px}
+.atsug button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);text-align:left;font-weight:600;font-size:13px;color:var(--ink2)}.atsug button:hover{border-color:var(--accent);color:var(--ink)}
+.atsug button span{flex:1}.atsug button.on{border-color:var(--amber);color:var(--ink)}.atsug button em{font-style:normal;font-size:11px;font-weight:800;color:var(--amber)}
 </style>
 </head>
 <body class="">
@@ -2063,7 +2066,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.2.4', BUILD: '2026-11-21'
+  VERSION: 'v12.2.5', BUILD: '2026-11-21'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2551,6 +2554,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.2.5':{nl:['Tekst bij lijnen weer standaard in het midden van de lijn (lijn netjes onderbroken, ook bij Add text)','Opslaan van templates en presets: bestaande namen verschijnen terwijl je typt; kies er één en bevestig om die bij te werken'],en:['Text on lines back in the middle of the line by default (line neatly interrupted, also for Add text)','Saving templates and presets: existing names appear as you type; pick one and confirm to update it']},
   'v12.2.4':{nl:['Tekst bij lijnen staat nu netjes bóven de lijn (Add text glitchte en korte lijnen verdwenen)','Winst in een positie altijd blauw, verlies rood — ook bij een short'],en:['Text on lines now sits neatly above the line (Add text glitched and short lines disappeared)','Profit in a position always blue, loss red — also for a short']},
   'v12.2.3':{nl:['Koop/verkoop-blok staat altijd netjes onder de marktnaam en koersen, ook op de iPhone'],en:['Buy/sell block always sits neatly below the symbol name and prices, also on iPhone']},
   'v12.2.2':{nl:['Koop/verkoop-blok linksboven op de chart netter: één strakke balk, lots-vakje in de kleur van je chart'],en:['Buy/sell block at the top left of the chart cleaner: one tidy bar, lots box in your chart colour']},
@@ -3318,7 +3322,7 @@ function sessionModal(type='backtest',editId,opts){
     const wk=M.querySelector('#nWknd'); if(wk) wk.onclick=()=>{st.weekend=!st.weekend;wk.classList.toggle('on',st.weekend)};
     const hd=M.querySelector('#nHedge'); if(hd) hd.onclick=()=>{st.hedge=!st.hedge;hd.classList.toggle('on',st.hedge)};
     const ps=M.querySelector('#nPreset'); if(ps) ps.onchange=()=>{const pr=DB.get('presets',ps.value);if(pr){Object.assign(st,pr.data,{name:st.name,sec:st.sec,ddOpen:false});draw()}};
-    M.querySelector('#nPresetSave').onclick=async()=>{read();const nm=await askText(t('ns.savepreset'),t('name'),st.name||'Preset');if(!nm)return;const {name,sec,ddOpen,...data}=st;await DB.put('presets',{id:uid(),name:nm,data});presets.splice(0,presets.length,...DB.list('presets'));toast(t('toast.preset'),nm,'ok');draw()};
+    M.querySelector('#nPresetSave').onclick=async()=>{read();const nm=await askText(t('ns.savepreset'),t('name'),st.name||'Preset',{names:DB.list('presets').map(x=>x.name)});if(!nm)return;const {name,sec,ddOpen,...data}=st;const _ex=DB.list('presets').find(x=>x.name===nm);await DB.put('presets',{id:_ex?_ex.id:uid(),name:nm,data});presets.splice(0,presets.length,...DB.list('presets'));toast(t('toast.preset'),nm,'ok');draw()};
     M.querySelector('#nCreate').onclick=async()=>{
       read(); const err=M.querySelector('#nErr'); err.textContent='';
       if(!st.name.trim()&&st.type!=='propfirm'){st.sec='basics';draw();M.querySelector('#nErr').textContent=t('ns.err.name');return}
@@ -6171,7 +6175,7 @@ function inlineEdit(d,isNew){
   else if(ty==='vline'){ cx=P[0].x; cy=H/2 }
   else if(BOXT.includes(ty)||P.length>2){ const xs=P.map(p=>p.x), ys=P.map(p=>p.y); cx=(Math.min(...xs)+Math.max(...xs))/2; cy=(Math.min(...ys)+Math.max(...ys))/2; if(ty==='circle'){cx=P[0].x;cy=P[0].y} }
   else if(P.length>=2){ cx=(P[0].x+P[1].x)/2; cy=(P[0].y+P[1].y)/2 } else { cx=P[0].x; cy=P[0].y }
-  if(LINET.includes(ty)&&(st.valign||'top')==='top'){ cy-=((st.font||13)+4)/2+8 } else if(LINET.includes(ty)&&st.valign==='bottom'){ cy+=((st.font||13)+4)/2+8 }
+  if(LINET.includes(ty)&&st.valign==='top'){ cy-=((st.font||13)+4)/2+8 } else if(LINET.includes(ty)&&st.valign==='bottom'){ cy+=((st.font||13)+4)/2+8 }
   const before=d.text||''; snap(); d._editing=true;
   const ta=document.createElement('textarea'); ta.className='dtedit'+(anchorTL?' tl':''); ta.value=before; ta.placeholder='Add text'; ta.spellcheck=false;
   const col=TEXTTYPES.includes(ty)?(tStyle(d).color||'#fff'):hexA(st.textColor||st.color||textCol(),st.textA??1);
@@ -6822,15 +6826,23 @@ function colorPop(anchor,hex,alpha,onChange,opts={}){
 function bindSwatch(el,get,set,opts){ el.onclick=e=>{e.stopPropagation(); const [h,a]=get(); colorPop(el,h,a,(nh,na)=>{set(nh,na); const i=el.querySelector('.swi'); if(i) i.style.background=hexA(nh,opts&&opts.alpha===false?1:na)},opts)} }
 
 /* ----- eigen invoer- en bevestigvensters (i.p.v. prompt/confirm) ----- */
-function askText(title,label,def=''){ return new Promise(res=>{
+function askText(title,label,def='',opts={}){ return new Promise(res=>{ const names=(opts.names||[]).filter(Boolean), Lx=(nl,en)=>((window._sxLang||LANG)==='en'?en:nl);
   const ov=modal(`<div class="mh"><h3>${esc(title)}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div>
-   <div class="mbody single"><div class="mcont"><div class="field"><label>${esc(label)}</label><input class="inp" id="atI" value="${esc(def)}"></div></div></div>
+   <div class="mbody single"><div class="mcont"><div class="field"><label>${esc(label)}</label><input class="inp" id="atI" value="${esc(def)}" autocomplete="off"></div>${names.length?`<div class="atsug" id="atSug"></div>`:''}</div></div>
    <div class="mf"><button class="btn btn-ghost" data-x>${t('cancel')}</button><button class="btn btn-p" id="atOk">${t('save')}</button></div>`,'sm');
-  const i=ov.querySelector('#atI'); setTimeout(()=>{i.focus();i.select()},30);
+  const i=ov.querySelector('#atI'), sg=ov.querySelector('#atSug'); setTimeout(()=>{i.focus();i.select()},30);
+  const match=v=>names.find(n=>n.toLowerCase()===String(v||'').trim().toLowerCase());
+  const drawSug=()=>{ if(!sg) return; const q=i.value.trim().toLowerCase(), list=names.filter(n=>!q||n.toLowerCase().startsWith(q)).slice(0,8);
+    sg.innerHTML=list.length?`<small>${Lx('Bestaande namen — kies er één om die bij te werken','Existing names — pick one to update it')}</small>`+list.map(n=>`<button data-n="${esc(n)}" class="${match(i.value)===n?'on':''}">${ic('refresh',13)} <span>${esc(n)}</span>${match(i.value)===n?`<em>${Lx('wordt vervangen','will be replaced')}</em>`:''}</button>`).join(''):'';
+    sg.querySelectorAll('[data-n]').forEach(b=>b.onclick=()=>{ i.value=b.dataset.n; drawSug(); i.focus() }) };
+  drawSug(); i.oninput=drawSug;
   const done=v=>{ov.remove();res(v)};
+  const submit=async()=>{ const v=i.value.trim(); if(!v){ done(null); return } const ex=match(v);
+    if(ex){ ov.style.visibility='hidden'; const ok=await askConfirm(Lx(`“${ex}” bestaat al. Wil je deze vervangen (bijwerken) met je huidige instellingen?`,`“${ex}” already exists. Do you want to replace (update) it with your current settings?`),Lx('Vervangen','Replace'),false); ov.style.visibility=''; if(!ok){ i.focus(); return } done(ex); return }
+    done(v) };
   ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>done(null));
-  ov.querySelector('#atOk').onclick=()=>done(i.value.trim()||null);
-  i.onkeydown=e=>{if(e.key==='Enter')done(i.value.trim()||null); e.stopPropagation()};
+  ov.querySelector('#atOk').onclick=submit;
+  i.onkeydown=e=>{ if(e.key==='Enter') submit(); e.stopPropagation() };
 })}
 function askConfirm(msg,okLabel,danger=true,typeWord){ return new Promise(res=>{
   const ov=modal(`<div class="mh"><h3>${t('confirm.title')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div>
@@ -6906,7 +6918,7 @@ function tplMenu(anchor,d,after){
   const all=(profile().drawTpls||{})[d.type]||[];
   const m=popMenu(anchor,`<button data-v="__save">${t('dr.tplsave')}</button><button data-v="__def">${t('dr.tpldef')}</button>${all.length?'<div class="msep"></div>':''}
     ${all.map((x,i)=>`<button data-v="${i}" data-ti="${i}"><span class="tplg" title="Drag to reorder">⠿</span><span style="flex:1">${esc(x.name)}</span><span class="tplx" data-tx="${i}">✕</span></button>`).join('')}`,
-   async v=>{ if(v==='__save'){ const nm=await askText(t('dr.tplsave'),t('name'),toolName(d.type)); if(!nm) return; const p=profile(), dt={...(p.drawTpls||{})}; dt[d.type]=[...(dt[d.type]||[]).filter(x=>x.name!==nm),{name:nm,...tplPayload(d)}]; await DB.put('profile',{...p,id:'me',drawTpls:dt}); toast(t('toast.saved'),nm,'ok') }
+   async v=>{ if(v==='__save'){ const nm=await askText(t('dr.tplsave'),t('name'),d.tplName||toolName(d.type),{names:(((profile().drawTpls)||{})[d.type]||[]).map(x=>x.name)}); if(!nm) return; d.tplName=nm; const p=profile(), dt={...(p.drawTpls||{})}; dt[d.type]=[...(dt[d.type]||[]).filter(x=>x.name!==nm),{name:nm,...tplPayload(d)}]; await DB.put('profile',{...p,id:'me',drawTpls:dt}); toast(t('toast.saved'),nm,'ok') }
      else if(v==='__def'){ snap(); d.style=DEF_STYLE(d.type); delete d.extL; delete d.extR; const p=profile(); const ds={...(p.drawStyles||{})}; delete ds[d.type]; DB.put('profile',{...p,id:'me',drawStyles:ds}); saveDrawLater() }
      else tplApply(d,all[+v]); after&&after() },'small');
   m.querySelectorAll('.tplg').forEach(g=>{ g.onclick=e=>e.stopPropagation(); g.onpointerdown=e=>{ e.stopPropagation(); e.preventDefault(); const b=g.closest('button'); b.classList.add('drag');
@@ -7122,10 +7134,11 @@ function drawLineExtras(ctx,d,P,W,H){
 }
 /* v10.2: tekst midden op een lijn onderbreekt alleen de lijn zelf (geen zwart blok over posities/vlakken) */
 function textGap(ctx,d,P,W,H){
-  if(!d.text||d._editing||TEXTTYPES.includes(d.type)||!P.length) return null;
-  const st=d.style, ty=d.type; if((st.valign||(LINET.includes(ty)?'top':'middle'))!=='middle') return null;
+  const ph=!d.text&&SX.sel===d.id&&TXTLINE.includes(d.type)&&!SX.creating&&!(SX.drag&&SX.drag.moved), txt=d.text||(ph?'Add text':'');
+  if(!txt||d._editing||TEXTTYPES.includes(d.type)||!P.length) return null;
+  const st=d.style, ty=d.type; if((st.valign||'middle')!=='middle') return null;
   if(!(LINET.includes(ty)||['regr','channel','fibch'].includes(ty))) return null;
-  ctx.save(); ctx.font=fontOf(st); const lines=String(d.text).split('\n'), lh=(st.font||13)+4, w=Math.max(...lines.map(l=>ctx.measureText(l).width))+14, h=lines.length*lh; ctx.restore();
+  ctx.save(); ctx.font=fontOf(st); const lines=String(txt).split('\n'), lh=(st.font||13)+4, w=Math.max(...lines.map(l=>ctx.measureText(l).width))+14, h=lines.length*lh; ctx.restore();
   const al=st.align||'center'; const off=(ang)=>al==='center'?0:al==='left'?w/2-7:-(w/2-7);
   if(ty==='hline'||ty==='hray'){ const x=al==='left'?(ty==='hray'?P[0].x+6:8):al==='right'?W-70:(ty==='hray'?(P[0].x+W)/2:W/2); return {x:x+off(),y:P[0].y,a:0,w,h} }
   if(ty==='vline'){ return {x:P[0].x,y:H/2,a:-Math.PI/2,w,h} }
@@ -7136,7 +7149,7 @@ function drawItemText(ctx,d,P,W,H){
   if(TEXTTYPES.includes(d.type)||d.type==='emoji'||!P.length||d._editing) return;
   const ph=!d.text&&SX.sel===d.id&&(BOXT.includes(d.type)||TXTLINE.includes(d.type))&&!SX.creating&&!(SX.drag&&SX.drag.moved);
   if(!d.text&&!ph) return;
-  const st=d.style, col=ph?hexA(st.textColor||st.color||textCol(),.5):hexA(st.textColor||st.color||textCol(),st.textA??1), al=st.align||'center', va=st.valign||(LINET.includes(d.type)?'top':'middle');
+  const st=d.style, col=ph?hexA(st.textColor||st.color||textCol(),.5):hexA(st.textColor||st.color||textCol(),st.textA??1), al=st.align||'center', va=st.valign||'middle';
   ctx.save(); ctx.setLineDash([]); ctx.font=fontOf(st); ctx.fillStyle=col;
   const lines=String(ph?'Add text':d.text).split('\n'), lh=(st.font||13)+4, n=lines.length, gapL=LINET.includes(d.type)||['regr','channel','fibch'].includes(d.type);
   const put=(x,y,ang,align)=>{ ctx.translate(x,y); if(ang) ctx.rotate(ang); ctx.textAlign=align; ctx.textBaseline='middle';
@@ -7307,7 +7320,7 @@ function drawSettings(d,startTab){
   draw();
 }
 function tplPayload(d){ const o={style:JSON.parse(JSON.stringify(d.style))}; ['text','extL','extR','levels','levelDefs','extend','stats','statsPos','statsAlways','endL','endR','mid','midLine','fibTrend','fibBg','reverse','oneColor','lblPrices','lblLevels','lblPct','lblH','lblV','cLine','cStop','cTarget','cText','fillA','compact','showPrices','alwaysStats','risk','riskMode'].forEach(k=>{ if(d[k]!==undefined) o[k]=JSON.parse(JSON.stringify(d[k])) }); return o }
-function tplApply(d,pl){ snap(); d.style={...DEF_STYLE(d.type),...pl.style}; Object.keys(pl).forEach(k=>{ if(k!=='style'&&k!=='name') d[k]=JSON.parse(JSON.stringify(pl[k])) }); rememberStyle(d); saveDrawLater() }
+function tplApply(d,pl){ snap(); if(pl&&pl.name) d.tplName=pl.name; d.style={...DEF_STYLE(d.type),...pl.style}; Object.keys(pl).forEach(k=>{ if(k!=='style'&&k!=='name') d[k]=JSON.parse(JSON.stringify(pl[k])) }); rememberStyle(d); saveDrawLater() }
 
 /* ----- interval typen (zoals TradingView): 1 = 1 minuut, 1H = 1 uur, D, W, M ----- */
 function parseInterval(s){ s=(s||'').trim(); const m=s.match(/^(\d*)\s*([smhHdDwWM]?)$/); if(!m||(!m[1]&&!m[2])) return null; const n=m[1]?+m[1]:1, u=m[2];
@@ -7407,7 +7420,7 @@ function symSearch(first){
   draw(); setTimeout(()=>{q.focus();q.setSelectionRange(q.value.length,q.value.length)},0);
 }
 /* ----- v7.4: chart-template opslaan ----- */
-async function saveChartTpl(){ const nm=await askText('Save chart template','Template name','My template'); if(!nm) return; const p=profile(); const list=[...(p.chartTpls||[]).filter(x=>x.name!==nm),{name:nm,cfg:{...tplColors()}}];
+async function saveChartTpl(){ const p0=profile(), cur=String(SX.tplId||'').startsWith('u:')?SX.tplId.slice(2):''; const nm=await askText('Save chart template','Template name',cur||'My template',{names:(p0.chartTpls||[]).map(x=>x.name)}); if(!nm) return; const p=profile(); const list=[...(p.chartTpls||[]).filter(x=>x.name!==nm),{name:nm,cfg:{...tplColors()}}];
   await DB.put('profile',{...p,id:'me',chartTpls:list}); SX.tplId='u:'+nm; tplRemember(SX.tplId); saveSession(); toast('Template saved',nm,'ok') }
 const allTplOpts=()=>{ const p=profile(); return [...visTemplates().map(x=>[x.id,LANG==='en'?x.nameEn:x.name]),...(p.chartCustom?[['custom',t('sx.mytpl')]]:[]),...(p.chartTpls||[]).map(x=>['u:'+x.name,x.name])] };
 
@@ -7473,7 +7486,7 @@ function chartSettings(startTab){
     const m=popMenu(anchor,`<button data-v="__save">${ic('copy',15)} Save as…</button><button data-v="__def">Apply defaults</button><div class="msep"></div>`+visTemplates().map(x=>`<button data-v="b:${x.id}" class="tplrow"><span class="tplck">${pickedTpl===x.id?'✓':''}</span><span style="flex:1">${esc(x.nameEn||x.name)}</span></button>`).join('')
       +(u.length?'<div class="msep"></div><div class="mh2">My templates</div>'+u.map((x,i)=>`<button data-v="u:${i}" class="tplrow"><span class="tplck">${pickedTpl==='u:'+x.name?'✓':''}</span><span style="flex:1">${esc(x.name)}</span><span class="tplx" data-ux="${i}" title="Delete">${ic('trash',14)}</span></button>`).join(''):''),
       async v=>{
-        if(v==='__save'){ const nm=((await askText('Save chart template','Template name','My template'))||'').trim(); if(!nm) return; const p=profile(); const list=[...(p.chartTpls||[]).filter(x=>x.name!==nm),{name:nm,cfg:{...C}}];
+        if(v==='__save'){ const _p=profile(), _cur=String(pickedTpl||SX.tplId||'').startsWith('u:')?String(pickedTpl||SX.tplId).slice(2):''; const nm=((await askText('Save chart template','Template name',_cur||'My template',{names:(_p.chartTpls||[]).map(x=>x.name)}))||'').trim(); if(!nm) return; const p=profile(); const list=[...(p.chartTpls||[]).filter(x=>x.name!==nm),{name:nm,cfg:{...C}}];
           await DB.put('profile',{...p,id:'me',chartTpls:list}); pickedTpl='u:'+nm; pickedCfg=JSON.stringify(C); toast('Template saved',nm,'ok') }
         else if(v==='__def'){ C=CC_DEF(CHART_TPL['tv-dark']); pickedTpl='tv-dark'; pickedCfg=JSON.stringify(C); live(); draw() }
         else if(v.startsWith('b:')){ const id=v.slice(2); C=CC_DEF(CHART_TPL[id]); pickedTpl=id; pickedCfg=JSON.stringify(C); live(); draw() }
