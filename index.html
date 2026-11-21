@@ -1887,6 +1887,27 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 .rlv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.rlv button{padding:12px 8px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);font-weight:700;font-size:13.5px}.rlv button.on.pos{border-color:var(--pos);background:rgba(47,191,113,.14);color:var(--pos)}.rlv button.on.neg{border-color:var(--neg);background:rgba(229,83,75,.14);color:var(--neg)}.rlv button.on.amber{border-color:var(--amber);background:rgba(224,163,58,.14);color:var(--amber)}
 .rlbox{margin:0 0 16px;padding:12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2)}.rlbh{display:flex;align-items:center;gap:10px}.rlbh b{display:block;font-size:14px}.rlbh small{display:block;color:var(--ink3);font-size:12.5px;margin-top:2px;line-height:1.4}.rlba{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 @media (max-width:700px){ .rlpop{min-height:70vh;display:flex;flex-direction:column;justify-content:center} }
+/* v12.2: pagina Trades herbeleven */
+.rlstats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}.rlstats .box{padding:14px 16px}.rlstats small{display:block;color:var(--ink3);font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rlstats b{display:block;font-size:22px;margin-top:4px;font-variant-numeric:tabular-nums}.rlstats b.amber{color:var(--amber)}
+.rlcols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start;padding-bottom:80px}
+@media (max-width:1100px){ .rlcols{grid-template-columns:minmax(0,1fr)} .rlstats{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:600px){ .rlstats{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px} .rlstats .box{padding:8px 9px;border-radius:12px} .rlstats small{font-size:10.5px} .rlstats b{font-size:16px;margin-top:2px} .rlstats .box:last-child{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between} .rlstats .box:last-child b{margin:0} }
+.rlbar2{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rlday{margin-bottom:12px}.rldh{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:6px 4px 8px;border-bottom:1px solid var(--line);margin-bottom:6px}.rldh b{text-transform:capitalize;font-size:13.5px}.rldh small{color:var(--ink3);font-size:12px;flex:1}.rldh>span:last-child{font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.rlck{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line2);display:grid;place-items:center;flex:none;color:#fff}.rlck.on,.rlrow.on .rlck{background:var(--accent);border-color:var(--accent)}
+.rlrow.on{border-color:var(--accent);background:var(--accentSoft)}.rlday .rlrow{margin-bottom:6px}
+.rlgrp{display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:800;padding:2px 6px;border-radius:6px;background:var(--accentSoft);color:var(--accent);vertical-align:middle;margin-left:4px}
+.rlhs{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.rlhs:last-child{border-bottom:0}.rlhs b{display:block;font-size:13.5px}.rlhs small{color:var(--ink3);font-size:12px}.rlhb{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.rlact{position:fixed;left:50%;bottom:24px;transform:translate(-50%,140%);z-index:45;display:flex;align-items:center;gap:10px;padding:10px 10px 10px 18px;border-radius:16px;background:var(--panel);border:1px solid var(--line2);box-shadow:0 18px 50px rgba(0,0,0,.45);transition:transform .25s;white-space:nowrap}.rlact.on{transform:translate(-50%,0)}
+@media (max-width:900px){ .rlact{bottom:calc(92px + env(safe-area-inset-bottom));left:12px;right:12px;transform:translateY(160%)}.rlact.on{transform:none}.rlact span{flex:1} }
+.rlmini{display:flex;flex-direction:column;gap:4px;max-height:160px;overflow:auto;margin:-6px 0 14px;padding:8px 10px;border-radius:10px;background:var(--panel2);font-size:12.5px}.rlmini div{display:flex;gap:6px;align-items:center}.rlmini b{margin-left:auto;font-variant-numeric:tabular-nums}
+.rlbar .rlpg{font-weight:800;font-size:11.5px;padding:2px 7px;border-radius:6px;background:var(--panel2);color:var(--ink2)}
+/* v12.2: koop/verkoopknoppen vol (ook op een witte chart) */
+.tw .tw-s{background:#F23645!important;color:#fff!important;border-color:#F23645!important}
+.tw .tw-b{background:#2962FF!important;color:#fff!important;border-color:#2962FF!important}
+.tw .tw-s:hover{background:#d82f3c!important}.tw .tw-b:hover{background:#1f4fd6!important}
+.tw .tw-q{background:var(--panel);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.tw .tw-q .inp{background:var(--panel2);color:var(--ink)}
 </style>
 </head>
 <body class="">
@@ -1966,6 +1987,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
       <button data-go="journal" data-jp="mt5"><span data-ic="plug"></span><span class="lbl" data-t="nav.j.mt5">MT5</span></button>
       <div class="grp">Backtest</div>
       <button data-go="testing"><span data-ic="chart"></span><span class="lbl" data-t="nav.testing">Testing</span></button>
+      <button data-go="relive"><span data-ic="refresh"></span><span class="lbl" data-t="nav.relive">Trades herbeleven</span></button>
       <button data-go="accounts"><span data-ic="wallet"></span><span class="lbl" data-t="nav.accounts">Handelsrekeningen</span></button>
       <button data-go="strategies"><span data-ic="compass"></span><span class="lbl" data-t="nav.strategies">Strategieën</span></button>
       <button data-go="prop"><span data-ic="trophy"></span><span class="lbl" data-t="nav.prop">Prop firms</span></button>
@@ -1993,6 +2015,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
   <div class="msh-prof" id="mshProf"></div>
   <div class="msh-list">
     <div class="msh-grp">Backtest</div>
+    <button data-go="relive"><span data-ic="refresh"></span><span data-t="nav.relive">Trades herbeleven</span></button>
     <button data-go="accounts"><span data-ic="wallet"></span><span data-t="nav.accounts">Handelsrekeningen</span></button>
     <button data-go="strategies"><span data-ic="compass"></span><span data-t="nav.strategies">Strategieën</span></button>
     <button data-go="prop"><span data-ic="trophy"></span><span>Prop firms</span></button>
@@ -2029,7 +2052,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.2.0', BUILD: '2026-11-20'
+  VERSION: 'v12.2.1', BUILD: '2026-11-21'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2165,7 +2188,7 @@ const T = {
   'reg.title':'Account maken','reg.sub':'Eén account voor je journal, backtests en dagboek.','reg.btn':'Account maken','reg.have':'Al een account?',
   'f.login':'Inlognaam','f.password':'Wachtwoord','f.username':'Gebruikersnaam (getoond)','f.loginfull':'Inlognaam (volledige naam of e-mail)',
   'nav.home':'Home','nav.journal':'Journal','nav.j.overview':'Overzicht','nav.j.trades':'Trades','nav.j.calendar':'Kalender','nav.j.stats':'Statistieken','nav.j.diary':'Dagboek','nav.j.capital':'Kapitaal','nav.j.discipline':'Discipline','nav.j.mt5':'MT5','nav.j.settings':'Journal-instellingen',
-  'nav.start':'Aan de slag','nav.testing':'Backtesten','nav.accounts':'Handelsrekeningen','nav.strategies':'Strategieën','nav.settings':'Accountinstellingen','tag.soon':'Binnenkort',
+  'nav.start':'Aan de slag','nav.testing':'Backtesten','nav.relive':'Trades herbeleven','nav.accounts':'Handelsrekeningen','nav.strategies':'Strategieën','nav.settings':'Accountinstellingen','tag.soon':'Binnenkort',
   'tab.dash':'Overzicht','tab.sessions':'Sessies','tab.trades':'Trades','tab.analytics':'Statistieken',
   'streak':'dagen streak','streak1':'dag streak','hello.morning':'Goedemorgen','hello.afternoon':'Goedemiddag','hello.evening':'Goedenavond','hello.night':'Goedenacht',
   'dash.welcome':'Kies hoe je je strategie wilt testen: bouw data op met een backtest, of test onder prop-firm-regels.',
@@ -2262,7 +2285,7 @@ const T = {
   'reg.title':'Create account','reg.sub':'One account for your journal, backtests and diary.','reg.btn':'Create account','reg.have':'Already have an account?',
   'f.login':'Login name','f.password':'Password','f.username':'Username (shown)','f.loginfull':'Login name (full name or email)',
   'nav.home':'Home','nav.journal':'Journal','nav.j.overview':'Overview','nav.j.trades':'Trades','nav.j.calendar':'Calendar','nav.j.stats':'Statistics','nav.j.diary':'Diary','nav.j.capital':'Capital','nav.j.discipline':'Discipline','nav.j.mt5':'MT5','nav.j.settings':'Journal settings',
-  'nav.start':'Get started','nav.testing':'Testing','nav.accounts':'Trading accounts','nav.strategies':'Strategies','nav.settings':'Account settings','tag.soon':'Soon',
+  'nav.start':'Get started','nav.testing':'Testing','nav.relive':'Relive trades','nav.accounts':'Trading accounts','nav.strategies':'Strategies','nav.settings':'Account settings','tag.soon':'Soon',
   'tab.dash':'Dashboard','tab.sessions':'Sessions','tab.trades':'Trades','tab.analytics':'Analytics',
   'streak':'day streak','streak1':'day streak','hello.morning':'Good morning','hello.afternoon':'Good afternoon','hello.evening':'Good evening','hello.night':'Good night',
   'dash.welcome':'Choose how you want to test your strategy: build data with a backtest, or test under prop firm rules.',
@@ -2517,6 +2540,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.2.1':{nl:['Nieuwe pagina Trades herbeleven (Backtest in de zijbalk / Meer): kies één trade, een hele dag of een samengevoegde groep','Meerdere trades in één herbeleving — de replay pauzeert bij elke trade','Pijltjes op de chart waar je live kocht en verkocht','MT5: instap, uitstap, SL, TP, lots en openingstijd worden nu bewaard en gebruikt','Koop- en verkoopknoppen op de chart vol en goed zichtbaar, ook op een witte chart'],en:['New Relive trades page (Backtest in the sidebar / More): pick one trade, a whole day or a merged group','Several trades in one relive — the replay pauses at each trade','Arrows on the chart where you bought and sold live','MT5: entry, exit, SL, TP, lots and open time are now stored and used','Buy and sell buttons on the chart solid and clearly visible, also on a white chart']},
   'v12.2.0':{nl:['Nieuw: live trades herbeleven — speel de markt opnieuw af tot je live trade en kijk eerlijk of je hem opnieuw had genomen (Journal → trade, of ＋ → Live trade herbeleven)','Bedragen overal met centen, ook bij Handelsrekeningen en statistieken','Screenshot met ⇧⌘S: schone chart met al je tekeningen, zonder knoppen, balans of panelen — opgeslagen én gekopieerd'],en:['New: relive live trades — replay the market up to your live trade and honestly check whether you would take it again (Journal → trade, or ＋ → Relive a live trade)','Amounts everywhere with cents, including Trading accounts and statistics','Screenshot with ⇧⌘S: clean chart with all your drawings, without buttons, balance or panels — saved and copied']},
   'v12.1.17':{nl:['App schaalt nu mee op hoogte én breedte: alles past weer op MacBook, iPad en kleinere vensters','Eigen donkere scrollbalken — geen witte balken meer in Safari'],en:['App now scales with height and width: everything fits again on MacBook, iPad and smaller windows','Own dark scrollbars — no more white bars in Safari']},
   'v12.1.16':{nl:['Zijbalk past zich aan je schermhoogte aan: Accountinstellingen en het versienummer staan weer altijd in beeld (Mac en iPad)'],en:['Sidebar adapts to your screen height: Account settings and the version number are always visible again (Mac and iPad)']},
@@ -2871,23 +2895,24 @@ function render(){
   const m=$('#main');
   document.body.dataset.area=areaOf(S.page);
   if(S.page==='journal'&&JX()){ if(!JX().ready()) journalLoad(); JX().render(); return }
-  const pages={home:pageHome,start:pageStart,testing:pageTesting,accounts:pageAccounts,strategies:pageStrategies,settings:pageSettings,data:pageData,markets:pageMarkets,prop:pageProp};
+  const pages={home:pageHome,start:pageStart,testing:pageTesting,relive:pageRelive,accounts:pageAccounts,strategies:pageStrategies,settings:pageSettings,data:pageData,markets:pageMarkets,prop:pageProp};
   m.innerHTML=(pages[S.page]||pageHome)(); m.scrollTop=0;
-  wrapTables(m); bindPage(); if(S.page==='home') bindHome(m);
+  wrapTables(m); bindPage(); if(S.page==='home') bindHome(m); if(S.page==='relive') bindRelive(m);
 }
 
 /* =========================================================
    v10.0: TWF — één app: Home · Journal · Backtest
    ========================================================= */
+IC.refresh=IC.refresh||'<path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/>';
 IC.plug=IC.plug||'<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0V8zM12 17v4"/>';
 IC.coins=IC.coins||'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>';
 IC.home=IC.home||'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/>';
-const BT_PAGES=['testing','accounts','strategies','prop','start'];
+const BT_PAGES=['testing','relive','accounts','strategies','prop','start'];
 const JX=()=>window.TWFJ;
 function areaOf(p){ return p==='home'?'home':p==='journal'?'journal':BT_PAGES.includes(p)?'backtest':'other' }
 let _jLoading=null;
 function journalLoad(force){ const J=JX(); if(!J) return Promise.resolve(false); if(_jLoading&&!force) return _jLoading;
-  _jLoading=J.load().catch(e=>{ console.warn('journal',e); return false }).then(ok=>{ if(['home','journal'].includes(S.page)&&!SX&&!document.querySelector('.ov,.tvsheet')) render(); return ok }); return _jLoading }
+  _jLoading=J.load().catch(e=>{ console.warn('journal',e); return false }).then(ok=>{ if(['home','journal','relive'].includes(S.page)&&!SX&&!document.querySelector('.ov,.tvsheet')) render(); return ok }); return _jLoading }
 function go(p,jp){ closeSheet(); if(p==='backtest') p='testing'; if(p==='journal'&&jp&&JX()) JX().setPage(jp); S.page=p; render(); }
 window.TWF={ go:p=>{ go(p) }, render:()=>render() };
 
@@ -2978,7 +3003,7 @@ function plusSheet(){ const L=(nl,en)=>LANG==='en'?en:nl, J=JX(), ready=J&&J.rea
     ['live','plug',L('Live-rekening','Live account'),L('Nieuwe MT5-rekening met eigen API-sleutel','New MT5 account with its own API key'),1],
     ['notion','download',L('Importeer uit Notion','Import from Notion'),L('Je bestaande dagboek (.zip, .md, .csv)','Your existing diary (.zip, .md, .csv)'),1]];
   const html=`<div class="plist">${items.map(([k,i,t1,t2,j])=>`<button data-pk="${k}" ${j&&!ready?'disabled':''}><span class="pic">${ic(i,20)}</span><span class="ptx"><b>${t1}</b><small>${t2}</small></span>${ic('next',16)}</button>`).join('')}</div>`;
-  const run=k=>{ if(k==='ai'){ aiOpen(); return } if(k==='relive'){ reliveList(); return } if(k==='session'){ if(S.page!=='testing'){ S.page='testing'; render() } sessionModal('backtest'); return }
+  const run=k=>{ if(k==='ai'){ aiOpen(); return } if(k==='relive'){ go('relive'); return } if(k==='session'){ if(S.page!=='testing'){ S.page='testing'; render() } sessionModal('backtest'); return }
     if(!J) return; ({trade:()=>J.addTrade(),diary:()=>J.addDiary(),payout:()=>J.addMoney('payout'),adj:()=>J.addMoney('adj'),live:()=>J.addLive(),notion:()=>J.importNotion()})[k]() };
   if(matchMedia('(max-width:900px)').matches){ const sh=mSheet(L('Toevoegen','Add'),html,'plus'); sh.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{ sh.close(); setTimeout(()=>run(b.dataset.pk),240) }); return }
   const ov=modal(`<div class="mh"><h3>${L('Toevoegen','Add')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">${html}</div></div>`,'sm');
@@ -4971,54 +4996,83 @@ function closeQuote(p){return p.side==='buy'?bid():ask()}
 function pnlAt(p,level){return (level-p.entry)*dirOf(p)*p.qty*ccs(p.sym)}
 function openPnl(){return SX.pos.reduce((a,p)=>a+(p.sym===SX.sym?pnlAt(p,closeQuote(p)):(p.lastPnl||0)),0)}
 function equity(){return (SX.s.balance??0)+openPnl()}
-/* ===== v12.2: live trades herbeleven ===== */
+/* ===== v12.2: live trades herbeleven (één trade, een selectie of een groep) ===== */
 const RL=(nl,en)=>((window._sxLang||LANG)==='en'?en:nl);
 const rlM=(v,ccy,o={})=>{ v=+v||0; let t; try{ t=new Intl.NumberFormat(((window._sxLang||LANG)==='en')?'en-US':'nl-NL',{style:'currency',currency:ccy||'USD',currencyDisplay:'narrowSymbol',minimumFractionDigits:2,maximumFractionDigits:2}).format(Math.abs(v)) }catch(e){ t=(ccy||'')+' '+Math.abs(v).toFixed(2) } return (v<0?'−':(o.sign&&v>0?'+':''))+t };
 const RL_ALIAS={NAS100:'US100',USTEC:'US100',NDX100:'US100',SPX500:'US500',SP500:'US500',US500CASH:'US500',DJ30:'US30',WS30:'US30',DOW30:'US30',GOLD:'XAUUSD',SILVER:'XAGUSD',DE40:'GER40',DE30:'GER40',GER30:'GER40',UK100CASH:'UK100',BTC:'BTCUSD',ETH:'ETHUSD',ETHEUR:'ETHUSD',BTCEUR:'BTCUSD',WTI:'USOIL',BRENT:'UKOIL'};
-function reliveSym(pair){ const all=[...new Set([...ASSETS.map(a=>a.sym),...MKC.map(m=>m.sym)])]; let p=String(pair||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+function reliveSym(pair){ const all=[...new Set([...ASSETS.map(a=>a.sym),...MKC.map(m=>m.sym)])]; let p=String(pair||'').split('+')[0].toUpperCase().replace(/[^A-Z0-9]/g,'');
   if(all.includes(p)) return p; if(RL_ALIAS[p]&&all.includes(RL_ALIAS[p])) return RL_ALIAS[p];
   const pre=all.filter(s=>p.startsWith(s)).sort((a,b)=>b.length-a.length)[0]; if(pre) return pre;
   const k=Object.keys(RL_ALIAS).find(a=>p.startsWith(a)); return k&&all.includes(RL_ALIAS[k])?RL_ALIAS[k]:null }
 function reliveEnsureMarket(sym){ if(!asset(sym)){ const m=MKC.find(x=>x.sym===sym); if(m) registerMarket(m) } }
+const rlItems=r=>!r?[]:r.items||[{...r}];           // oude herbelevingen (één trade) blijven werken
 function reliveSessions(){ return DB.list('sessions').filter(s=>s.relive) }
-function reliveFor(tid){ return reliveSessions().filter(s=>s.relive.tid===String(tid)).sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||'')))[0]||null }
+function reliveItem(tid){ tid=String(tid); let best=null; reliveSessions().forEach(s=>{ const it=rlItems(s.relive).find(x=>String(x.tid)===tid); if(it&&(!best||String(s.updated||'')>String(best.s.updated||''))) best={s,it} }); return best }
+function reliveFor(tid){ const r=reliveItem(tid); return r?r.s:null }
 const RL_VERD={again:['Opnieuw genomen','Taken again','pos'],skip:['Overgeslagen','Skipped','neg'],diff:['Anders genomen','Taken differently','amber']};
-function reliveBadge(s){ const r=s&&s.relive; if(!r) return ''; if(!r.verdict) return `<span class="rlb">${ic('play',12)} ${RL('Bezig','In progress')}</span>`; const v=RL_VERD[r.verdict]; return `<span class="rlb ${v[2]}">${RL(v[0],v[1])}</span>` }
-/* overzicht: welke live trades heb je herbeleefd? */
-function reliveStats(){ const ss=reliveSessions().filter(s=>s.relive.verdict), skip=ss.filter(s=>s.relive.verdict==='skip');
-  return {n:ss.length,again:ss.filter(s=>s.relive.verdict==='again').length,skip:skip.length,diff:ss.filter(s=>s.relive.verdict==='diff').length,saved:-skip.reduce((a,s)=>a+(+s.relive.pnl||0),0)} }
-function reliveList(){ const J=window.TWFJ; if(!J||!J.ready()||!J.allTrades){ toast(RL('Journal niet geladen','Journal not loaded'),'','bad'); return }
-  const tr=J.allTrades().filter(t=>t.id).sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,60), st=reliveStats(), ccy=(J.summary()||{}).ccy||'EUR';
-  const ov=modal(`<div class="mh"><h3>${RL('Live trade herbeleven','Relive a live trade')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
-    <p class="muted" style="margin:0 0 12px">${RL('Speel de markt opnieuw af tot vlak voor je live trade en kijk eerlijk: had je hem opnieuw genomen?','Replay the market up to your live trade and be honest: would you take it again?')}</p>
-    ${st.n?`<div class="rlsum"><div><small>${RL('Herbeleefd','Relived')}</small><b>${st.n}</b></div><div><small>${RL('Opnieuw','Again')}</small><b class="pos">${st.again}</b></div><div><small>${RL('Overgeslagen','Skipped')}</small><b class="neg">${st.skip}</b></div><div><small>${RL('Overslaan had opgeleverd','Skipping would have made')}</small><b class="${st.saved>=0?'pos':'neg'}">${rlM(st.saved,ccy,{sign:1})}</b></div></div>`:''}
-    <div class="rllist">${tr.length?tr.map(t=>{ const s=reliveFor(t.id); return `<button class="rlrow" data-rl="${esc(String(t.id))}"><span class="rld ${t.dir==='long'?'l':'s'}">${t.dir==='long'?'↑':'↓'}</span><span class="rlt"><b>${esc(t.pair)} · ${t.dir==='long'?'Long':'Short'}</b><small>${new Date(t.date).toLocaleString(locale(),{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'})}</small></span>${reliveBadge(s)}<b class="${t.pnl>=0?'pos':'neg'}">${rlM(t.pnl,ccy,{sign:1})}</b></button>` }).join(''):`<div class="muted">${RL('Nog geen live trades in je Journal.','No live trades in your Journal yet.')}</div>`}</div></div></div>`);
-  ov.querySelector('[data-x]').onclick=()=>ov.remove();
-  ov.querySelectorAll('[data-rl]').forEach(b=>b.onclick=()=>{ const t=tr.find(x=>String(x.id)===b.dataset.rl); ov.remove(); const s=reliveFor(t.id); if(s&&!s.relive.verdict){ reliveOpen(s.id); return } reliveModal(t) }) }
-function reliveOpen(id){ document.querySelectorAll('.ov,.jpanel,.tvsheet,.tvsheet-bg').forEach(x=>{ try{ x.close?x.close():x.remove() }catch(e){ x.remove() } }); if(S.page!=='testing'){ S.page='testing'; render() } openSession(id) }
-/* instellen en starten */
-function reliveModal(t){ const ccy=((window.TWFJ&&TWFJ.summary())||{}).ccy||'EUR', closeT=Math.floor(new Date(t.date).getTime()/1000);
-  const st={sym:reliveSym(t.pair)||'',look:86400,tf:'5',entryT:t.entryT||'',entry:t.entry??'',sl:t.sl??'',tp:t.tp??'',acc:''};
+function reliveBadge(x){ const it=x&&x.relive?rlItems(x.relive)[0]:x; if(!it) return ''; if(!it.verdict) return `<span class="rlb">${ic('play',12)} ${RL('Bezig','In progress')}</span>`; const v=RL_VERD[it.verdict]; return `<span class="rlb ${v[2]}">${RL(v[0],v[1])}</span>` }
+function reliveStats(){ const all=[]; reliveSessions().forEach(s=>rlItems(s.relive).forEach(it=>{ if(it.verdict) all.push(it) })); const skip=all.filter(i=>i.verdict==='skip');
+  return {n:all.length,again:all.filter(i=>i.verdict==='again').length,skip:skip.length,diff:all.filter(i=>i.verdict==='diff').length,saved:-skip.reduce((a,i)=>a+(+i.pnl||0),0)} }
+function reliveTradeOf(t){ const ot=t.openTime||(t.layers&&t.layers[0]&&t.layers[0].openTime)||null; return {id:t.id,date:t.date,pair:t.pair,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,entry:t.entry??(t.layers&&t.layers[0]?t.layers[0].entry:null)??null,exit:t.exitPrice??t.exit??null,sl:t.sl??null,tp:t.tp??null,openT:ot&&new Date(ot).getTime()<new Date(t.date).getTime()?Math.floor(new Date(ot).getTime()/1000):null,group:t.layers?t.layers.length:(t.group||0),layerT:t.layers?t.layers.map(l=>l.date):(t.layerT||null),acct:t.acct||'',ccy:t.ccy||'EUR'} }
+function reliveOpen(id){ document.querySelectorAll('.ov,.tvsheet,.tvsheet-bg').forEach(x=>x.remove()); document.querySelectorAll('.jpanel').forEach(x=>{ try{ x.close?x.close():x.remove() }catch(e){ x.remove() } }); if(S.page!=='testing'&&S.page!=='relive'){ S.page='relive'; render() } openSession(id) }
+function reliveList(){ go('relive') }
+/* ---- pagina: Trades herbeleven ---- */
+const RLP={sel:new Set(),q:'',mk:'',open:{}};
+function pageRelive(){ const J=window.TWFJ, L=(nl,en)=>LANG==='en'?en:nl;
+  const head=`<div class="phead"><h1>${L('Trades herbeleven','Relive trades')}</h1><div style="color:var(--ink2);margin:-12px 0 24px">${L('Speel de markt opnieuw af tot vlak voor je live trades en kijk eerlijk: had je ze opnieuw genomen?','Replay the market up to your live trades and be honest: would you take them again?')}</div></div>`;
+  if(!J||!J.ready()){ try{ journalLoad() }catch(e){} return head+`<div class="pbody"><div class="box empty"><div class="ei">${ic('refresh',24)}</div><h4>${L('Je live trades laden…','Loading your live trades…')}</h4></div></div>` }
+  const all=(J.liveTrades?J.liveTrades():[]).sort((a,b)=>new Date(b.date)-new Date(a.date)), st=reliveStats(), ccy=(all[0]||{}).ccy||'EUR';
+  const mks=[...new Set(all.map(t=>reliveSym(t.pair)||t.pair))];
+  const list=all.filter(t=>(!RLP.mk||(reliveSym(t.pair)||t.pair)===RLP.mk)&&(!RLP.q||(t.pair+' '+(t.setup||'')+' '+(t.acct||'')).toLowerCase().includes(RLP.q.toLowerCase())));
+  const days={}; list.forEach(t=>{ const k=new Date(t.date).toISOString().slice(0,10); (days[k]=days[k]||[]).push(t) });
+  const sess=reliveSessions().sort((a,b)=>String(b.updated||'').localeCompare(String(a.updated||'')));
+  const row=t=>{ const k=String(t.id), r=reliveItem(k), on=RLP.sel.has(k); return `<button class="rlrow ${on?'on':''}" data-rlsel="${esc(k)}"><span class="rlck">${on?ic('check',14):''}</span><span class="rld ${t.dir==='long'?'l':'s'}">${t.dir==='long'?'↑':'↓'}</span><span class="rlt"><b>${esc(t.pair)} · ${t.dir==='long'?'Long':'Short'}${t.layers?` <span class="rlgrp">${ic('layers',11)} ${L('groep','group')} · ${t.layers.length}</span>`:''}</b><small>${new Date(t.date).toLocaleTimeString(locale(),{hour:'2-digit',minute:'2-digit'})}${t.rr!=null?' · '+(+t.rr).toFixed(2)+'R':''}${t.acct?' · '+esc(t.acct):''}</small></span>${r?reliveBadge(r.it):''}<b class="${t.pnl>=0?'pos':'neg'}">${rlM(t.pnl,t.ccy,{sign:1})}</b></button>` };
+  return head+`<div class="pbody">
+    <div class="rlstats">${[[L('Herbeleefd','Relived'),st.n,''],[L('Opnieuw genomen','Taken again'),st.again,'pos'],[L('Overgeslagen','Skipped'),st.skip,'neg'],[L('Anders genomen','Differently'),st.diff,'amber'],[L('Overslaan had opgeleverd','Skipping would have made'),rlM(st.saved,ccy,{sign:1}),st.saved>=0?'pos':'neg']].map(([a,b,c])=>`<div class="box"><small>${a}</small><b class="${c}">${b}</b></div>`).join('')}</div>
+    <div class="rlcols"><div class="box rlpick"><div class="rlbar2"><h3 style="margin:0;flex:1">${L('Kies je trades','Choose your trades')}</h3><input class="inp" id="rlQ" placeholder="${L('Zoeken…','Search…')}" value="${esc(RLP.q)}" style="max-width:180px"><select class="inp" id="rlMk" style="max-width:150px"><option value="">${L('Alle markten','All markets')}</option>${mks.map(m=>`<option ${RLP.mk===m?'selected':''}>${esc(m)}</option>`).join('')}</select></div>
+      <div class="muted" style="font-size:13px;margin:4px 0 12px">${L('Tik één trade, een hele dag of een groep aan. Samengevoegde trades kies je als één groep.','Tap one trade, a whole day or a group. Merged trades are picked as one group.')}</div>
+      ${Object.keys(days).length?Object.entries(days).map(([d,ts])=>{ const allOn=ts.every(t=>RLP.sel.has(String(t.id))), net=ts.reduce((a,t)=>a+t.pnl,0); return `<div class="rlday"><button class="rldh" data-rlday="${d}"><span class="rlck ${allOn?'on':''}">${allOn?ic('check',13):''}</span><b>${new Date(d+'T12:00:00').toLocaleDateString(locale(),{weekday:'long',day:'numeric',month:'long'})}</b><small>${ts.length} trade${ts.length===1?'':'s'}</small><span class="${net>=0?'pos':'neg'}">${rlM(net,ts[0].ccy,{sign:1})}</span></button>${ts.map(row).join('')}</div>` }).join(''):`<div class="empty" style="padding:30px 0"><div class="ei">${ic('list',22)}</div><h4>${L('Geen live trades gevonden','No live trades found')}</h4><div>${L('Live trades komen uit MT5 of voeg je toe in de Journal.','Live trades come from MT5 or you add them in the Journal.')}</div></div>`}</div>
+    <div class="box rlhist"><h3 style="margin:0 0 10px">${L('Je herbelevingen','Your relives')}</h3>${sess.length?sess.map(s=>{ const its=rlItems(s.relive), done=its.filter(i=>i.verdict).length; return `<div class="rlhs"><div style="flex:1;min-width:0"><b>${esc(s.name)}</b><small>${its.length} trade${its.length===1?'':'s'} · ${done}/${its.length} ${L('beoordeeld','reviewed')}</small><div class="rlhb">${its.slice(0,6).map(i=>reliveBadge(i)).join('')}</div></div><button class="btn btn-g sm" data-rlopen="${s.id}">${ic('play',14)} ${L('Open','Open')}</button></div>` }).join(''):`<div class="muted">${L('Nog geen herbelevingen.','No relives yet.')}</div>`}</div></div>
+    <div class="rlact ${RLP.sel.size?'on':''}"><span><b>${RLP.sel.size}</b> ${L(RLP.sel.size===1?'trade gekozen':'trades gekozen',RLP.sel.size===1?'trade selected':'trades selected')}</span><button class="btn btn-g" data-rlclr>${L('Wissen','Clear')}</button><button class="btn btn-p" data-rlgo>${ic('refresh',15)} ${L('Herbeleven','Relive')}</button></div></div>` }
+function bindRelive(m){ const J=window.TWFJ; const all=J&&J.ready()&&J.liveTrades?J.liveTrades():[];
+  m.querySelectorAll('[data-rlsel]').forEach(b=>b.onclick=()=>{ const k=b.dataset.rlsel; RLP.sel.has(k)?RLP.sel.delete(k):RLP.sel.add(k); const st=m.scrollTop; render(); $('#main').scrollTop=st });
+  m.querySelectorAll('[data-rlday]').forEach(b=>b.onclick=()=>{ const d=b.dataset.rlday, ts=all.filter(t=>new Date(t.date).toISOString().slice(0,10)===d), on=ts.every(t=>RLP.sel.has(String(t.id))); ts.forEach(t=>on?RLP.sel.delete(String(t.id)):RLP.sel.add(String(t.id))); const st=m.scrollTop; render(); $('#main').scrollTop=st });
+  const q=m.querySelector('#rlQ'); if(q) q.oninput=()=>{ RLP.q=q.value; clearTimeout(q._t); q._t=setTimeout(()=>{ render(); const n=$('#rlQ'); if(n){ n.focus(); n.setSelectionRange(n.value.length,n.value.length) } },250) };
+  const mk=m.querySelector('#rlMk'); if(mk) mk.onchange=()=>{ RLP.mk=mk.value; render() };
+  m.querySelectorAll('[data-rlopen]').forEach(b=>b.onclick=()=>reliveOpen(b.dataset.rlopen));
+  const clr=m.querySelector('[data-rlclr]'); if(clr) clr.onclick=()=>{ RLP.sel.clear(); render() };
+  const gob=m.querySelector('[data-rlgo]'); if(gob) gob.onclick=()=>{ const ts=all.filter(t=>RLP.sel.has(String(t.id))); if(ts.length) reliveModal(ts) } }
+/* ---- instellen en starten (één of meer trades) ---- */
+function reliveModal(input){ const ts=(Array.isArray(input)?input:[input]).map(reliveTradeOf).sort((a,b)=>new Date(a.date)-new Date(b.date)); if(!ts.length) return;
+  const one=ts.length===1, t0=ts[0], ccy=t0.ccy||'EUR', closes=ts.map(t=>Math.floor(new Date(t.date).getTime()/1000)), firstT=Math.min(...closes), lastT=Math.max(...closes), net=ts.reduce((a,t)=>a+t.pnl,0);
+  const syms=[...new Set(ts.map(t=>reliveSym(t.pair)).filter(Boolean))];
+  const st={sym:syms[0]||'',look:86400,tf:'5',entryT:one&&t0.openT?t0.openT:'',entry:one&&t0.entry!=null?t0.entry:'',sl:one&&t0.sl!=null?t0.sl:'',tp:one&&t0.tp!=null?t0.tp:'',acc:''};
   const accs=DB.list('accounts').filter(a=>!a.prop); st.acc=(accs.find(a=>a.id===lsGet('twf_lastacc'))||accs[0]||{}).id||'';
   const ov=modal('','sm'), M=ov.querySelector('.modal');
-  const dataOk=()=>{ if(!st.sym) return null; const ym=new Date((closeT-st.look)*1000).toISOString().slice(0,7), ym2=new Date(closeT*1000).toISOString().slice(0,7); let ms=[]; try{ ms=MD.months(st.sym) }catch(e){} return ms.includes(ym)&&ms.includes(ym2) };
+  const dataOk=()=>{ if(!st.sym) return null; let ms=[]; try{ ms=MD.months(st.sym) }catch(e){} const need=new Set(); for(let x=firstT-st.look;x<=lastT;x+=86400*20) need.add(new Date(x*1000).toISOString().slice(0,7)); need.add(new Date(lastT*1000).toISOString().slice(0,7)); return [...need].every(m=>ms.includes(m)) };
   const toLocal=sec=>{ const d=new Date(sec*1000); const z=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}` };
-  const draw=()=>{ const ok=dataOk(), mk=st.sym&&(asset(st.sym)||MKC.find(m=>m.sym===st.sym));
-    M.innerHTML=`<div class="mh"><h3>${RL('Trade herbeleven','Relive trade')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
-      <div class="rlhead"><span class="rld ${t.dir==='long'?'l':'s'}">${t.dir==='long'?'↑':'↓'}</span><div style="flex:1;min-width:0"><b>${esc(t.pair)} · ${t.dir==='long'?'Long':'Short'}</b><small>${RL('Gesloten','Closed')} ${new Date(t.date).toLocaleString(locale(),{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}${t.rr!=null?' · '+(+t.rr).toFixed(2)+'R':''}</small></div><b class="${t.pnl>=0?'pos':'neg'}">${rlM(t.pnl,ccy,{sign:1})}</b></div>
+  const fdt=d=>new Date(d).toLocaleString(locale(),{weekday:'short',day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const draw=()=>{ const ok=dataOk(), mk=st.sym&&(asset(st.sym)||MKC.find(m=>m.sym===st.sym)), span=(lastT-firstT)/86400;
+    M.innerHTML=`<div class="mh"><h3>${one?RL('Trade herbeleven','Relive trade'):RL(ts.length+' trades herbeleven','Relive '+ts.length+' trades')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
+      ${one?`<div class="rlhead"><span class="rld ${t0.dir==='long'?'l':'s'}">${t0.dir==='long'?'↑':'↓'}</span><div style="flex:1;min-width:0"><b>${esc(t0.pair)} · ${t0.dir==='long'?'Long':'Short'}${t0.group?` <span class="rlgrp">${ic('layers',11)} ${RL('groep','group')} · ${t0.group}</span>`:''}</b><small>${RL('Gesloten','Closed')} ${fdt(t0.date)}${t0.rr!=null?' · '+(+t0.rr).toFixed(2)+'R':''}</small></div><b class="${t0.pnl>=0?'pos':'neg'}">${rlM(t0.pnl,ccy,{sign:1})}</b></div>`
+        :`<div class="rlhead"><span class="rld">${ts.length}</span><div style="flex:1;min-width:0"><b>${ts.length} trades · ${[...new Set(ts.map(t=>t.pair))].slice(0,3).map(esc).join(', ')}</b><small>${fdt(ts[0].date)} → ${fdt(ts[ts.length-1].date)}</small></div><b class="${net>=0?'pos':'neg'}">${rlM(net,ccy,{sign:1})}</b></div>
+          <div class="rlmini">${ts.map(t=>`<div><span class="${t.dir==='long'?'pos':'neg'}">${t.dir==='long'?'↑':'↓'}</span> ${esc(t.pair)}${t.group?' ('+t.group+')':''} · ${new Date(t.date).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}<b class="${t.pnl>=0?'pos':'neg'}">${rlM(t.pnl,ccy,{sign:1})}</b></div>`).join('')}</div>`}
+      ${syms.length>1?`<div class="rlwarn">${ic('info',14)} <span>${RL('Je koos trades van verschillende markten. Een herbeleving speelt één markt af; kies hieronder welke.','You picked trades from different markets. A relive replays one market; choose which below.')}</span></div>`:''}
+      ${span>45?`<div class="rlwarn">${ic('info',14)} <span>${RL('Deze trades liggen '+Math.round(span)+' dagen uit elkaar. Dat is een lange replay — overweeg een kleinere selectie.','These trades are '+Math.round(span)+' days apart. That is a long replay — consider a smaller selection.')}</span></div>`:''}
       <div class="field"><label>${RL('Markt in de backtest','Market in the backtest')}</label><select class="inp" id="rlSym"><option value="">${RL('— kies een markt —','— choose a market —')}</option>${MKC.map(m=>`<option value="${m.sym}" ${m.sym===st.sym?'selected':''}>${m.sym} · ${esc(LANG==='en'?m.nameEn:m.name)}</option>`).join('')}</select></div>
-      ${st.sym?(ok?`<div class="rlok">${ic('check',14)} ${RL('Echte koersdata beschikbaar voor deze periode.','Real price data available for this period.')}</div>`:`<div class="rlwarn">${ic('info',14)} <span>${RL('Voor deze periode is nog geen echte koersdata van '+st.sym+'. Je ziet dan testdata, en dat zegt niets over je echte trade. Importeer data via Marktdata of vraag het aan.','No real '+st.sym+' price data for this period yet. You would see test data, which says nothing about your real trade. Import data via Market data or request it.')}</span><button class="btn btn-g sm" data-req>${RL('Data aanvragen','Request data')}</button></div>`):''}
-      <div class="field"><label>${RL('Begin vóór je trade','Start before your trade')}</label><div class="seg" id="rlLook">${[[14400,RL('4 uur','4 hours')],[86400,RL('1 dag','1 day')],[259200,RL('3 dagen','3 days')],[604800,RL('1 week','1 week')]].map(([v,l])=>`<button data-v="${v}" class="${st.look===v?'on':''}">${l}</button>`).join('')}</div></div>
+      ${st.sym?(ok?`<div class="rlok">${ic('check',14)} ${RL('Echte koersdata beschikbaar voor deze periode.','Real price data available for this period.')}</div>`:`<div class="rlwarn">${ic('info',14)} <span>${RL('Voor deze periode is nog geen (volledige) echte koersdata van '+st.sym+'. Je ziet dan testdata, en dat zegt niets over je echte trades. Importeer data via Marktdata of vraag het aan.','No (complete) real '+st.sym+' price data for this period yet. You would see test data, which says nothing about your real trades. Import data via Market data or request it.')}</span><button class="btn btn-g sm" data-req>${RL('Data aanvragen','Request data')}</button></div>`):''}
+      <div class="field"><label>${RL(one?'Begin vóór je trade':'Begin vóór je eerste trade',one?'Start before your trade':'Start before your first trade')}</label><div class="seg" id="rlLook">${[[14400,RL('4 uur','4 hours')],[86400,RL('1 dag','1 day')],[259200,RL('3 dagen','3 days')],[604800,RL('1 week','1 week')]].map(([v,l])=>`<button data-v="${v}" class="${st.look===v?'on':''}">${l}</button>`).join('')}</div></div>
       <div class="field"><label>Timeframe</label><div class="seg" id="rlTf">${[['1','1m'],['5','5m'],['15','15m'],['60','1h']].map(([v,l])=>`<button data-v="${v}" class="${st.tf===v?'on':''}">${l}</button>`).join('')}</div></div>
-      <details class="rlmore" ${st.entryT||st.entry?'open':''}><summary>${RL('Weet je je instap? (optioneel)','Know your entry? (optional)')}</summary>
+      ${one?`${t0.openT||t0.entry!=null?`<div class="rlok">${ic('check',14)} ${RL('Instap uit MT5 overgenomen','Entry taken from MT5')}${t0.entry!=null?' · '+t0.entry:''}${t0.openT?' · '+new Date(t0.openT*1000).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):''}</div>`:''}<details class="rlmore" ${st.entryT||st.entry?'open':''}><summary>${t0.openT||t0.entry!=null?RL('Instap aanpassen','Adjust entry'):RL('Weet je je instap? (optioneel)','Know your entry? (optional)')}</summary>
         <small class="muted">${RL('Dan pauzeert de replay precies op je instapmoment en vraagt: neem je hem opnieuw? MT5 stuurt alleen de sluitingstijd mee.','The replay then pauses exactly at your entry and asks: would you take it again? MT5 only sends the closing time.')}</small>
-        <div class="field" style="margin-top:8px"><label>${RL('Instaptijd','Entry time')}</label><input class="inp" type="datetime-local" id="rlEt" value="${st.entryT?toLocal(st.entryT):''}" max="${toLocal(closeT)}"></div>
-        <div class="three"><div class="field"><label>Entry</label><input class="inp" id="rlEn" type="number" step="any" value="${st.entry}"></div><div class="field"><label>SL</label><input class="inp" id="rlSl" type="number" step="any" value="${st.sl}"></div><div class="field"><label>TP</label><input class="inp" id="rlTp" type="number" step="any" value="${st.tp}"></div></div></details>
+        <div class="field" style="margin-top:8px"><label>${RL('Instaptijd','Entry time')}</label><input class="inp" type="datetime-local" id="rlEt" value="${st.entryT?toLocal(st.entryT):''}" max="${toLocal(lastT)}"></div>
+        <div class="three"><div class="field"><label>Entry</label><input class="inp" id="rlEn" type="number" step="any" value="${st.entry}"></div><div class="field"><label>SL</label><input class="inp" id="rlSl" type="number" step="any" value="${st.sl}"></div><div class="field"><label>TP</label><input class="inp" id="rlTp" type="number" step="any" value="${st.tp}"></div></div></details>`
+        :`<div class="muted" style="font-size:13px;margin:-2px 0 12px">${RL('De replay pauzeert bij elke trade, zodat je ze één voor één beoordeelt.','The replay pauses at each trade so you can review them one by one.')}</div>`}
       <div class="field"><label>${RL('Handelsrekening','Trading account')}</label><select class="inp" id="rlAcc">${accs.map(a=>`<option value="${a.id}" ${a.id===st.acc?'selected':''}>${esc(a.name)} — ${fmtMoney(a.balance,a.currency)}</option>`).join('')}<option value="__new">${RL('+ Nieuwe rekening','+ New account')}</option></select></div>
       <div class="err" id="rlErr"></div></div></div>
       <div class="mf"><button class="btn btn-g" data-x>${RL('Annuleren','Cancel')}</button><button class="btn btn-p" id="rlGo" ${mk?'':'disabled'}>${ic('play',15)} ${RL('Start herbeleving','Start reliving')}</button></div>`;
     M.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
-    const rd=()=>{ const et=M.querySelector('#rlEt').value; st.entryT=et?Math.floor(new Date(et).getTime()/1000):''; ['entry','sl','tp'].forEach((k,i)=>{ st[k]=M.querySelector(['#rlEn','#rlSl','#rlTp'][i]).value }) };
+    const rd=()=>{ if(!one) return; const et=M.querySelector('#rlEt').value; st.entryT=et?Math.floor(new Date(et).getTime()/1000):''; ['entry','sl','tp'].forEach((k,i)=>{ st[k]=M.querySelector(['#rlEn','#rlSl','#rlTp'][i]).value }) };
     M.querySelector('#rlSym').onchange=e=>{ rd(); st.sym=e.target.value; draw() };
     M.querySelectorAll('#rlLook button').forEach(b=>b.onclick=()=>{ rd(); st.look=+b.dataset.v; draw() });
     M.querySelectorAll('#rlTf button').forEach(b=>b.onclick=()=>{ rd(); st.tf=b.dataset.v; draw() });
@@ -5026,50 +5080,73 @@ function reliveModal(t){ const ccy=((window.TWFJ&&TWFJ.summary())||{}).ccy||'EUR
     const rq=M.querySelector('[data-req]'); if(rq) rq.onclick=()=>{ try{ requestData(st.sym) }catch(e){} };
     M.querySelector('#rlGo').onclick=async()=>{ rd(); const err=M.querySelector('#rlErr');
       if(!st.sym){ err.textContent=RL('Kies een markt.','Choose a market.'); return } if(!st.acc){ err.textContent=RL('Kies of maak een handelsrekening.','Choose or create a trading account.'); return }
-      if(st.entryT&&st.entryT>closeT){ err.textContent=RL('Je instaptijd ligt na de sluitingstijd.','Your entry time is after the closing time.'); return }
-      reliveEnsureMarket(st.sym); const acc=DB.get('accounts',st.acc), startT=Math.min(closeT,(st.entryT||closeT))-st.look, p=profile(), num=v=>v===''||v==null?null:+v;
-      const obj={id:uid(),type:'backtest',name:`${RL('Herbeleven','Relive')} · ${t.pair} ${new Date(t.date).toLocaleDateString(locale(),{day:'numeric',month:'short'})}`,account:st.acc,strategy:'',assets:[st.sym],symbol:st.sym,tf:st.tf,
+      if(one&&st.entryT&&st.entryT>lastT){ err.textContent=RL('Je instaptijd ligt na de sluitingstijd.','Your entry time is after the closing time.'); return }
+      reliveEnsureMarket(st.sym); const acc=DB.get('accounts',st.acc), p=profile(), num=v=>v===''||v==null?null:+v;
+      const items=ts.map((t,i)=>({tid:String(t.id),pair:t.pair,dir:t.dir,pnl:t.pnl,rr:t.rr,group:t.group||0,closeT:closes[i],entryT:one?(st.entryT||null):(t.openT||null),entry:one?num(st.entry):t.entry,exit:t.exit,sl:one?num(st.sl):t.sl,tp:one?num(st.tp):t.tp,verdict:null}));
+      const startT=Math.min(firstT,...items.map(i=>i.entryT||i.closeT))-st.look;
+      const nm=one?`${RL('Herbeleven','Relive')} · ${t0.pair} ${new Date(t0.date).toLocaleDateString(locale(),{day:'numeric',month:'short'})}`:`${RL('Herbeleven','Relive')} · ${ts.length} trades ${new Date(ts[0].date).toLocaleDateString(locale(),{day:'numeric',month:'short'})}${firstT!==lastT&&new Date(firstT*1000).toDateString()!==new Date(lastT*1000).toDateString()?' – '+new Date(ts[ts.length-1].date).toLocaleDateString(locale(),{day:'numeric',month:'short'}):''}`;
+      const obj={id:uid(),type:'backtest',name:nm,account:st.acc,strategy:'',assets:[st.sym],symbol:st.sym,tf:st.tf,
         start:new Date(startT*1000).toISOString().slice(0,10),endMode:'auto',end:'',template:p.lastTemplate||p.defaultTemplate||'tv-dark',smooth:false,spreadMode:'real',spread:0.3,comm:7,slip:0,hedge:true,
         balance:+acc.balance,cursor:new Date(startT*1000).toISOString(),trades:[],timeSpent:0,created:new Date().toISOString(),updated:new Date().toISOString(),activity:[new Date().toISOString().slice(0,10)],
-        relive:{tid:String(t.id),pair:t.pair,sym:st.sym,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,ccy,closeT,entryT:st.entryT||null,entry:num(st.entry),sl:num(st.sl),tp:num(st.tp),startT,dataOk:!!dataOk(),verdict:null}};
-      lsSet('twf_lastacc',st.acc); await DB.put('sessions',obj); ov.remove(); toast(RL('Herbeleving klaar','Relive ready'),RL('Trade de markt zoals je toen zou doen. Bij je live trade pauzeert de replay.','Trade the market as you would have. The replay pauses at your live trade.'),'ok',6000); reliveOpen(obj.id) } };
+        relive:{v:2,sym:st.sym,ccy,startT,dataOk:!!dataOk(),items}};
+      lsSet('twf_lastacc',st.acc); await DB.put('sessions',obj); ov.remove(); RLP.sel.clear();
+      toast(RL('Herbeleving klaar','Relive ready'),one?RL('Trade de markt zoals je toen zou doen. Bij je live trade pauzeert de replay.','Trade the market as you would have. The replay pauses at your live trade.'):RL('De replay pauzeert bij elk van je '+ts.length+' trades.','The replay pauses at each of your '+ts.length+' trades.'),'ok',6000); reliveOpen(obj.id) } };
   draw() }
-/* in de sessie */
+/* ---- in de sessie ---- */
 function reliveFmtDur(s){ s=Math.max(0,Math.round(s)); const d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60); return d?`${d}d ${h}u`:h?`${h}u ${m}m`:`${m}m` }
-function reliveBtNet(){ const r=SX.s.relive; const closed=(SX.s.trades||[]).reduce((a,x)=>a+(+x.pnl||0),0), open=SX.pos.length?openPnl():0; return {net:closed+open,n:(SX.s.trades||[]).length+SX.pos.length} }
-function reliveTick(){ if(!SX||!SX.s.relive) return; const r=SX.s.relive, el=$('#rlBar'); const now=nowSec(), target=r.entryT&&!r.seenEntry?r.entryT:r.closeT, ccy=r.ccy||'EUR';
-  if(el){ const done=now>=r.closeT, bt=reliveBtNet();
-    const html=`<span class="rli">${ic('refresh',14)}</span><b>${RL('Herbeleven','Reliving')}</b><span>${esc(r.pair)} ${r.dir==='long'?'Long':'Short'}</span>${done?`<span class="sep"></span><span>Live <b class="${r.pnl>=0?'pos':'neg'}">${rlM(r.pnl,ccy,{sign:1})}</b></span><span>${RL('Jij nu','You now')} <b class="${bt.net>=0?'pos':'neg'}">${bt.n?rlM(bt.net,SX.acc.currency||'USD',{sign:1}):RL('geen trade','no trade')}</b></span>${r.verdict?reliveBadge(SX.s):`<button class="btn btn-p sm" data-rlv>${RL('Beoordelen','Review')}</button>`}`:`<span class="sep"></span><span class="muted">${r.entryT&&!r.seenEntry?RL('Live instap over','Live entry in'):RL('Live trade gesloten over','Live trade closes in')} <b>${reliveFmtDur(target-now)}</b></span>`}`;
-    if(el._h!==html){ el._h=html; el.innerHTML=html; const v=el.querySelector('[data-rlv]'); if(v) v.onclick=()=>reliveVerdict() } }
-  if(r.entryT&&!r.seenEntry&&now>=r.entryT){ r.seenEntry=true; stopPlay(); saveSession(); reliveEntryPrompt() }
-  else if(!r.seenEnd&&now>=r.closeT){ r.seenEnd=true; stopPlay(); saveSession(); setTimeout(()=>{ try{ renderDrawings() }catch(e){} reliveVerdict() },250) } }
-function reliveEntryPrompt(){ const r=SX.s.relive, dec=SYMCFG[SX.sym].dec, f=v=>v==null?'—':(+v).toFixed(dec);
+function rlSorted(){ return rlItems(SX.s.relive).slice().sort((a,b)=>a.closeT-b.closeT) }
+function reliveBtNet(it){ const its=rlSorted(), i=its.indexOf(it), from=i>0?its[i-1].closeT:-Infinity, to=it.closeT;
+  const tr=(SX.s.trades||[]).filter(x=>(x.closeTime||0)>from&&(x.closeTime||0)<=to+60), open=SX.pos.length&&nowSec()<=to+60?openPnl():0;
+  return {net:tr.reduce((a,x)=>a+(+x.pnl||0),0)+open,n:tr.length+(open?SX.pos.length:0)} }
+function reliveTick(){ if(!SX||!SX.s.relive) return; const r=SX.s.relive, its=rlSorted(), el=$('#rlBar'), now=nowSec(), ccy=r.ccy||'EUR', bccy=SX.acc.currency||'USD';
+  if(!r.items){ r.items=[{...r,tid:r.tid}]; ['tid','pair','dir','pnl','rr','closeT','entryT','entry','sl','tp','verdict','note','btNet','btN','at','seenEntry','seenEnd','entryChoice'].forEach(k=>delete r[k]) }  // oud formaat omzetten
+  const next=its.find(i=>!i.seenEnd), k=next?its.indexOf(next)+1:its.length;
+  if(el){ let html;
+    if(next){ const tgt=next.entryT&&!next.seenEntry?next.entryT:next.closeT;
+      html=`<span class="rli">${ic('refresh',14)}</span><b>${RL('Herbeleven','Reliving')}</b>${its.length>1?`<span class="rlpg">${k}/${its.length}</span>`:''}<span>${esc(next.pair)} ${next.dir==='long'?'Long':'Short'}</span><span class="sep"></span><span class="muted">${next.entryT&&!next.seenEntry?RL('Live instap over','Live entry in'):RL('Live trade gesloten over','Live trade closes in')} <b>${reliveFmtDur(tgt-now)}</b></span>${its.some(i=>i.seenEnd&&!i.verdict)?`<button class="btn btn-g sm" data-rlv>${RL('Beoordelen','Review')}</button>`:''}`; }
+    else { const live=its.reduce((a,i)=>a+i.pnl,0), bt=(SX.s.trades||[]).reduce((a,x)=>a+(+x.pnl||0),0)+(SX.pos.length?openPnl():0), done=its.filter(i=>i.verdict).length;
+      html=`<span class="rli">${ic('refresh',14)}</span><b>${RL('Herbeleven','Reliving')}</b><span class="sep"></span><span>Live <b class="${live>=0?'pos':'neg'}">${rlM(live,ccy,{sign:1})}</b></span><span>${RL('Jij nu','You now')} <b class="${bt>=0?'pos':'neg'}">${rlM(bt,bccy,{sign:1})}</b></span>${done<its.length?`<button class="btn btn-p sm" data-rlv>${RL('Beoordelen','Review')} (${its.length-done})</button>`:its.length>1?`<span class="rlpg">${its.filter(i=>i.verdict==='again').length} ${RL('opnieuw','again')} · ${its.filter(i=>i.verdict==='skip').length} ${RL('overgeslagen','skipped')}</span>`:reliveBadge(its[0])}`; }
+    if(el._h!==html){ el._h=html; el.innerHTML=html; const v=el.querySelector('[data-rlv]'); if(v) v.onclick=()=>{ const it=its.find(i=>i.seenEnd&&!i.verdict); if(it) reliveVerdict(it) } } }
+  if(next&&next.entryT&&!next.seenEntry&&now>=next.entryT){ next.seenEntry=true; stopPlay(); saveSession(); reliveEntryPrompt(next) }
+  else if(next&&now>=next.closeT){ next.seenEnd=true; stopPlay(); saveSession(); setTimeout(()=>{ try{ renderDrawings() }catch(e){} reliveVerdict(next) },250) } }
+function reliveEntryPrompt(it){ const dec=SYMCFG[SX.sym].dec, f=v=>v==null?'—':(+v).toFixed(dec);
   const ov=modal(`<div class="rlpop"><div class="rlpi">${ic('target',26)}</div><h3>${RL('Dit is je live instapmoment','This is your live entry moment')}</h3>
-    <p>${RL('Toen ging je','Back then you went')} <b>${r.dir==='long'?'Long':'Short'}</b>${r.entry!=null?` @ <b>${f(r.entry)}</b>`:''}${r.sl!=null?` · SL ${f(r.sl)}`:''}${r.tp!=null?` · TP ${f(r.tp)}`:''}.</p>
+    <p>${RL('Toen ging je','Back then you went')} <b>${it.dir==='long'?'Long':'Short'}</b>${it.entry!=null?` @ <b>${f(it.entry)}</b>`:''}${it.sl!=null?` · SL ${f(it.sl)}`:''}${it.tp!=null?` · TP ${f(it.tp)}`:''}.</p>
     <p class="muted">${RL('Kijk naar de chart zoals hij nu is. Zou je deze trade opnieuw nemen?','Look at the chart as it is now. Would you take this trade again?')}</p>
     <div class="rlpa"><button class="btn btn-g" data-k="skip">${RL('Nee, ik sla over','No, I skip')}</button><button class="btn btn-g" data-k="own">${RL('Ik trade zelf','I trade myself')}</button><button class="btn btn-p" data-k="take">${RL('Ja, neem hem','Yes, take it')}</button></div></div>`,'sm');
-  ov.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{ const k=b.dataset.k; ov.remove(); r.entryChoice=k; saveSession();
-    if(k==='take'){ const side=r.dir==='long'?'buy':'sell', qty=+($('#sxQty')&&$('#sxQty').value)||SPEC[SX.sym].step; placeMarket(side,qty,r.sl,r.tp); toast(RL('Trade geopend','Trade opened'),RL('Zelfde richting als je live trade. Speel verder af.','Same direction as your live trade. Keep replaying.'),'ok') }
+  ov.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{ const k=b.dataset.k; ov.remove(); it.entryChoice=k; saveSession();
+    if(k==='take'){ const side=it.dir==='long'?'buy':'sell', qty=+($('#sxQty')&&$('#sxQty').value)||SPEC[SX.sym].step; placeMarket(side,qty,it.sl,it.tp); toast(RL('Trade geopend','Trade opened'),RL('Zelfde richting als je live trade. Speel verder af.','Same direction as your live trade. Keep replaying.'),'ok') }
     else if(k==='skip') toast(RL('Overgeslagen','Skipped'),RL('Speel verder af en kijk wat de markt deed.','Keep replaying and see what the market did.'),'info') }) }
-function reliveVerdict(){ const r=SX.s.relive, ccy=r.ccy||'EUR', bt=reliveBtNet(), bccy=SX.acc.currency||'USD';
-  const ov=modal(`<div class="mh"><h3>${RL('Had je deze trade opnieuw genomen?','Would you have taken this trade again?')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
-    <div class="rlcmp"><div><small>${RL('Je live trade','Your live trade')}</small><b class="${r.pnl>=0?'pos':'neg'}">${rlM(r.pnl,ccy,{sign:1})}</b><span>${r.dir==='long'?'Long':'Short'}${r.rr!=null?' · '+(+r.rr).toFixed(2)+'R':''}</span></div>
-      <div><small>${RL('Nu in de herbeleving','Now in the relive')}</small><b class="${bt.net>=0?'pos':'neg'}">${bt.n?rlM(bt.net,bccy,{sign:1}):'—'}</b><span>${bt.n?bt.n+' trade'+(bt.n===1?'':'s'):RL('Geen trade genomen','No trade taken')}${r.entryChoice?' · '+(r.entryChoice==='take'?RL('bij instap: genomen','at entry: taken'):r.entryChoice==='skip'?RL('bij instap: overgeslagen','at entry: skipped'):RL('bij instap: zelf getrade','at entry: own trade')):''}</span></div></div>
+function reliveVerdict(it){ const r=SX.s.relive, its=rlSorted(), ccy=r.ccy||'EUR', bt=reliveBtNet(it), bccy=SX.acc.currency||'USD', k=its.indexOf(it)+1;
+  const ov=modal(`<div class="mh"><h3>${its.length>1?`${RL('Trade','Trade')} ${k}/${its.length} · `:''}${RL('Had je deze trade opnieuw genomen?','Would you have taken this trade again?')}</h3><div class="spacer"></div><button class="ib" data-x>${ic('x')}</button></div><div class="mbody single"><div class="mcont">
+    <div class="rlcmp"><div><small>${RL('Je live trade','Your live trade')}</small><b class="${it.pnl>=0?'pos':'neg'}">${rlM(it.pnl,ccy,{sign:1})}</b><span>${esc(it.pair)} · ${it.dir==='long'?'Long':'Short'}${it.rr!=null?' · '+(+it.rr).toFixed(2)+'R':''}${it.group?' · '+RL('groep van ','group of ')+it.group:''}</span></div>
+      <div><small>${RL('Nu in de herbeleving','Now in the relive')}</small><b class="${bt.net>=0?'pos':'neg'}">${bt.n?rlM(bt.net,bccy,{sign:1}):'—'}</b><span>${bt.n?bt.n+' trade'+(bt.n===1?'':'s'):RL('Geen trade genomen','No trade taken')}${it.entryChoice?' · '+(it.entryChoice==='take'?RL('bij instap: genomen','at entry: taken'):it.entryChoice==='skip'?RL('bij instap: overgeslagen','at entry: skipped'):RL('bij instap: zelf getrade','at entry: own trade')):''}</span></div></div>
     <p class="muted" style="margin:12px 0 8px">${RL('Op de chart staat nu een lijn op het moment dat je live trade sloot. Wees eerlijk tegen jezelf:','The chart now shows a line where your live trade closed. Be honest with yourself:')}</p>
-    <div class="rlv">${Object.entries(RL_VERD).map(([k,v])=>`<button data-v="${k}" class="${r.verdict===k?'on':''} ${v[2]}">${RL(v[0],v[1])}</button>`).join('')}</div>
-    <div class="field" style="margin-top:12px"><label>${RL('Wat neem je mee? (optioneel)','What do you take away? (optional)')}</label><textarea class="inp" id="rlNote" rows="3" style="width:100%;resize:vertical">${esc(r.note||'')}</textarea></div></div></div>
-    <div class="mf"><button class="btn btn-g" data-x>${RL('Later','Later')}</button><button class="btn btn-p" id="rlSave" ${r.verdict?'':'disabled'}>${RL('Opslaan','Save')}</button></div>`,'sm');
-  let v=r.verdict; ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
+    <div class="rlv">${Object.entries(RL_VERD).map(([kk,v])=>`<button data-v="${kk}" class="${it.verdict===kk?'on':''} ${v[2]}">${RL(v[0],v[1])}</button>`).join('')}</div>
+    <div class="field" style="margin-top:12px"><label>${RL('Wat neem je mee? (optioneel)','What do you take away? (optional)')}</label><textarea class="inp" id="rlNote" rows="3" style="width:100%;resize:vertical">${esc(it.note||'')}</textarea></div></div></div>
+    <div class="mf"><button class="btn btn-g" data-x>${RL('Later','Later')}</button><button class="btn btn-p" id="rlSave" ${it.verdict?'':'disabled'}>${k<its.length?RL('Opslaan en verder','Save and continue'):RL('Opslaan','Save')}</button></div>`,'sm');
+  let v=it.verdict; ov.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>ov.remove());
   ov.querySelectorAll('.rlv button').forEach(b=>b.onclick=()=>{ v=b.dataset.v; ov.querySelectorAll('.rlv button').forEach(x=>x.classList.toggle('on',x===b)); ov.querySelector('#rlSave').disabled=false });
-  ov.querySelector('#rlSave').onclick=()=>{ r.verdict=v; r.note=ov.querySelector('#rlNote').value.trim(); r.btNet=+bt.net.toFixed(2); r.btN=bt.n; r.at=new Date().toISOString(); saveSession(); ov.remove(); const el=$('#rlBar'); if(el) el._h=''; reliveTick();
-    toast(RL('Opgeslagen','Saved'),RL('Je ziet dit terug bij de trade in je Journal.','You will see this with the trade in your Journal.'),'ok') } }
-/* lijnen op de chart: live instap/sluiting (pas zichtbaar als de replay daar is) */
-function reliveDraw(ctx){ if(!SX||!SX.s.relive) return; const r=SX.s.relive, now=nowSec(), H=ctx.canvas._h||ctx.canvas.height, items=[];
-  if(r.entryT&&now>=r.entryT) items.push([r.entryT,RL('Live instap','Live entry')+(r.entry!=null?' @ '+(+r.entry).toFixed(SYMCFG[SX.sym].dec):''),'#4c74ff']);
-  if(now>=r.closeT) items.push([r.closeT,`Live ${r.dir==='long'?'Long':'Short'} ${rlM(r.pnl,r.ccy||'EUR',{sign:1})}`,r.pnl>=0?'#2fbf71':'#e5534b']);
-  items.forEach(it0=>{ const [t,txt,col]=it0; let x; try{ x=X(t) }catch(e){ x=null } if(x==null||!isFinite(x)) return; ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=1.5; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); ctx.setLineDash([]);
-    ctx.font="700 11.5px -apple-system,BlinkMacSystemFont,sans-serif"; const w=ctx.measureText(txt).width+12, Wc=ctx.canvas._w||ctx.canvas.width, lx=x+4+w>Wc-4?x-4-w:x+4; ctx.fillStyle=col; ctx.beginPath(); const ly=items.indexOf(it0)*24+36; ctx.roundRect?ctx.roundRect(lx,ly,w,20,5):ctx.rect(lx,ly,w,20); ctx.fill(); ctx.fillStyle='#fff'; ctx.textBaseline='middle'; ctx.fillText(txt,lx+6,ly+10); ctx.restore() });
-  if(r.entry!=null&&r.entryT&&now>=r.entryT){ try{ const y=Y(r.entry), x=X(r.entryT); if(isFinite(y)&&isFinite(x)){ ctx.save(); ctx.fillStyle='#4c74ff'; ctx.beginPath(); ctx.arc(x,y,4,0,7); ctx.fill(); ctx.restore() } }catch(e){} } }
+  ov.querySelector('#rlSave').onclick=()=>{ it.verdict=v; it.note=ov.querySelector('#rlNote').value.trim(); it.btNet=+bt.net.toFixed(2); it.btN=bt.n; it.at=new Date().toISOString(); saveSession(); ov.remove(); const el=$('#rlBar'); if(el) el._h=''; reliveTick();
+    const left=its.filter(i=>!i.seenEnd).length;
+    toast(RL('Opgeslagen','Saved'),left?RL('Speel verder af naar je volgende trade ('+left+' te gaan).','Keep replaying to your next trade ('+left+' to go).'):RL('Je ziet dit terug bij Trades herbeleven en in je Journal.','You will see this under Relive trades and in your Journal.'),'ok') } }
+
+function rlArrow(ctx,x,y,up,col,txt){ ctx.save(); ctx.fillStyle=col; ctx.strokeStyle='rgba(0,0,0,.25)'; ctx.lineWidth=1; const s=7, y0=up?y+6:y-6;
+  ctx.beginPath(); if(up){ ctx.moveTo(x,y0); ctx.lineTo(x-s,y0+s*1.4); ctx.lineTo(x-s*.45,y0+s*1.4); ctx.lineTo(x-s*.45,y0+s*2.6); ctx.lineTo(x+s*.45,y0+s*2.6); ctx.lineTo(x+s*.45,y0+s*1.4); ctx.lineTo(x+s,y0+s*1.4) } else { ctx.moveTo(x,y0); ctx.lineTo(x-s,y0-s*1.4); ctx.lineTo(x-s*.45,y0-s*1.4); ctx.lineTo(x-s*.45,y0-s*2.6); ctx.lineTo(x+s*.45,y0-s*2.6); ctx.lineTo(x+s*.45,y0-s*1.4); ctx.lineTo(x+s,y0-s*1.4) } ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.font="800 10.5px -apple-system,BlinkMacSystemFont,sans-serif"; ctx.textAlign='center'; ctx.textBaseline=up?'top':'bottom'; ctx.fillText(txt,x,up?y0+s*2.6+3:y0-s*2.6-3); ctx.restore() }
+function rlBarAt(t){ const B=SX.blist||[]; let lo=0,hi=B.length-1,best=null; while(lo<=hi){ const m=(lo+hi)>>1; if(B[m].time<=t){ best=B[m]; lo=m+1 } else hi=m-1 } return best }
+function reliveArrows(ctx){ if(!SX||!SX.s.relive) return; const now=nowSec();
+  rlSorted().forEach(it=>{ const buy=it.dir==='long', bC='#2962FF', sC='#F23645';
+    // instap: kopen bij long, verkopen bij short
+    if(it.entryT&&now>=it.entryT){ const bar=rlBarAt(it.entryT); const p=it.entry!=null?it.entry:(bar?(buy?bar.low:bar.high):null); if(p!=null){ try{ const x=X(bar?bar.time:it.entryT), y=Y(p); if(isFinite(x)&&isFinite(y)) rlArrow(ctx,x,buy?Math.max(y,Y(bar?bar.low:p)):Math.min(y,Y(bar?bar.high:p)),buy,buy?bC:sC,buy?'Buy':'Sell') }catch(e){} } }
+    // uitstap: tegenovergesteld
+    if(now>=it.closeT){ const bar=rlBarAt(it.closeT); const p=it.exit!=null?it.exit:(bar?(buy?bar.high:bar.low):null); if(p!=null){ try{ const x=X(bar?bar.time:it.closeT), y=Y(p); if(isFinite(x)&&isFinite(y)) rlArrow(ctx,x,buy?Math.min(y,Y(bar?bar.high:p)):Math.max(y,Y(bar?bar.low:p)),!buy,buy?sC:bC,(buy?'Sell':'Buy')+' '+rlM(it.pnl,SX.s.relive.ccy||'EUR',{sign:1})) }catch(e){} } } }) }
+function reliveDraw(ctx){ if(!SX||!SX.s.relive) return; try{ reliveArrows(ctx) }catch(e){} const r=SX.s.relive, now=nowSec(), H=ctx.canvas._h||ctx.canvas.height, Wc=ctx.canvas._w||ctx.canvas.width, items=[];
+  rlSorted().forEach(it=>{ if(it.entryT&&now>=it.entryT) items.push([it.entryT,RL('Live instap','Live entry')+(it.entry!=null?' @ '+(+it.entry).toFixed(SYMCFG[SX.sym].dec):''),'#4c74ff']);
+    if(now>=it.closeT) items.push([it.closeT,`Live ${it.dir==='long'?'Long':'Short'} ${rlM(it.pnl,r.ccy||'EUR',{sign:1})}`,it.pnl>=0?'#2fbf71':'#e5534b']) });
+  items.forEach((it0,n)=>{ const [t,txt,col]=it0; let x; try{ x=X(t) }catch(e){ x=null } if(x==null||!isFinite(x)) return; ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=1.5; ctx.setLineDash([5,4]); ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); ctx.setLineDash([]);
+    ctx.font="700 11.5px -apple-system,BlinkMacSystemFont,sans-serif"; const w=ctx.measureText(txt).width+12, lx=x+4+w>Wc-4?x-4-w:x+4, ly=36+(n%3)*24; ctx.fillStyle=col; ctx.beginPath(); ctx.roundRect?ctx.roundRect(lx,ly,w,20,5):ctx.rect(lx,ly,w,20); ctx.fill(); ctx.fillStyle='#fff'; ctx.textBaseline='middle'; ctx.fillText(txt,lx+6,ly+10); ctx.restore() });
+  rlSorted().forEach(it=>{ if(it.entry!=null&&it.entryT&&now>=it.entryT){ try{ const y=Y(it.entry), x=X(it.entryT); if(isFinite(y)&&isFinite(x)){ ctx.save(); ctx.fillStyle='#4c74ff'; ctx.beginPath(); ctx.arc(x,y,4,0,7); ctx.fill(); ctx.restore() } }catch(e){} } }) }
 
 function walletHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, lev=+SX.acc.leverage||100, bal=SX.s.balance??SX.acc.balance??0, eq=equity(), op=SX.pos.length?openPnl():0, m=SX.pos.length?marginUsed():0, free=eq-m, lvl=m>0?eq/m*100:null, so=+SX.acc.so||50;
   const start=+(SX.s.startBalance??SX.acc.balance)||0, ret=start?(eq-start)/start*100:0;
@@ -7530,6 +7607,7 @@ function haptic(kind){ const now=performance.now(); if(kind==='tick'&&now-_hapAt
     _hapEl.click(); if(kind==='err'){ setTimeout(()=>_hapEl.click(),110); setTimeout(()=>_hapEl.click(),220) } }catch(e){} }
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 IC.lock=IC.lock||'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>';
+IC.refresh=IC.refresh||'<path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/>';
 IC.plug='<path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0V8zM12 17v4"/>';
 IC.faceid='<path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 9v1M15 9v1M12 9v4h-1M9 15.5c1.6 1.3 4.4 1.3 6 0"/>';
 IC.backsp='<path d="M21 6H9l-6 6 6 6h12a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/><path d="M12 10l4 4M16 10l-4 4"/>';
@@ -7583,7 +7661,7 @@ async function fetchSettings(){ const {data,error}=await sb.from('settings').sel
     boeteEnabled:!!data.boete_enabled, boeteBedrag:Number(data.boete_bedrag)||0, goedDoel:data.goed_doel||'', apiKey:data.api_key||'', lockEnabled:data.lock_enabled!==false, lockPin:data.lock_pin||'0000' } }
 async function fetchTrades(){ const {data,error}=await sb.from('trades').select('*').eq('user_id',ME.id).order('date',{ascending:true}); if(error){ console.error(error); D.trades=[]; return }
   D.trades=(data||[]).map(r=>({ id:r.id, pair:r.pair||'', dir:/short|sell/i.test(r.dir||'')?'short':'long', pnl:Number(r.pnl)||0, rr:r.rr!=null&&r.rr!==''?Number(r.rr):null, date:r.date,
-    setup:r.setup||'', note:r.note||'', hadPlan:!!r.had_plan, syncedAt:r.created_at||r.date, photos:photoList(r.photo_url), mt5:(r.setup||'')==='MT5 auto-sync', lots:r.lots!=null?Number(r.lots):null, entry:r.entry!=null?Number(r.entry):null, exitPrice:r.exit_price!=null?Number(r.exit_price):null, account:r.account_id||null })) }
+    setup:r.setup||'', note:r.note||'', hadPlan:!!r.had_plan, syncedAt:r.created_at||r.date, photos:photoList(r.photo_url), mt5:(r.setup||'')==='MT5 auto-sync', lots:r.lots!=null?Number(r.lots):null, entry:r.entry!=null?Number(r.entry):null, exitPrice:r.exit_price!=null?Number(r.exit_price):null, sl:r.sl!=null?Number(r.sl):null, tp:r.tp!=null?Number(r.tp):null, openTime:r.open_time||null, account:r.account_id||null })) }
 async function fetchPayouts(){ const {data,error}=await sb.from('payouts').select('*').eq('user_id',ME.id).order('date',{ascending:false}); D.payouts=error?[]:(data||[]).map(r=>({id:r.id,amount:Number(r.amount)||0,date:r.date,note:r.note||'',account:r.account_id||null})) }
 async function fetchAdjs(){ const {data,error}=await sb.from('adjustments').select('*').eq('user_id',ME.id).order('date',{ascending:false}); if(error){ D.adjs=[]; D.adjMissing=true; return } D.adjMissing=false; D.adjs=(data||[]).map(r=>({id:r.id,kind:r.kind,amount:Number(r.amount)||0,date:r.date,note:r.note||'',account:r.account_id||null})) }
 async function fetchLive(){ try{ const {data,error}=await sb.from('live_accounts').select('*').eq('user_id',ME.id).order('created_at',{ascending:true}); D.live=error?[]:(data||[]); D.liveMissing=!!error }catch(e){ D.live=[]; D.liveMissing=true } }
@@ -7792,18 +7870,18 @@ function findTrade(id){ const A=acct(); return A.trades.find(t=>String(t.id)===S
 function openTrade(id){ const t=findTrade(id); if(!t) return; const A=acct();
   const meta=[[L('Datum','Date'),fmtDate(t.date)+' '+fmtTime(t.date)],[L('Richting','Direction'),t.dir==='long'?'Long':'Short'],['R:R',t.rr!=null?t.rr.toFixed(2)+'R':'—'],
     [L('Plan','Plan'),t.hadPlan?L('Gevolgd ✓','Followed ✓'):L('Geen plan','No plan')],[t.bt?L('Reden','Reason'):'Setup',esc(t.bt?(t.reason||'—'):(t.mt5?'MT5 auto-sync':t.setup||'—'))],[L('Bron','Source'),t.bt?'Backtest':t.mt5?'MT5':L('Handmatig','Manual')]];
-  if(t.lots!=null) meta.push(['Lots',fmtN(t.lots,2)]); if(t.entry!=null) meta.push(['Entry',fmtN(t.entry,2)]); if(t.exitPrice!=null) meta.push(['Exit',fmtN(t.exitPrice,2)]);
+  if(t.lots!=null) meta.push(['Lots',fmtN(t.lots,2)]); if(t.entry!=null) meta.push(['Entry',fmtN(t.entry,2)]); if(t.exitPrice!=null) meta.push(['Exit',fmtN(t.exitPrice,2)]); if(t.sl!=null) meta.push(['SL',fmtN(t.sl,2)]); if(t.tp!=null) meta.push(['TP',fmtN(t.tp,2)]); if(t.openTime&&!t.layers) meta.push([L('Geopend','Opened'),fmtDate(t.openTime)+' '+fmtTime(t.openTime)]);
   const body=`<div class="tdet"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span class="dpill ${t.dir}" style="font-size:12px">${dirArrow(t.dir==='long',13)}${t.dir==='long'?'LONG':'SHORT'}</span><b style="font-size:18px">${esc(t.pair)}</b></div>
     <div class="big mono ${t.pnl>=0?'pos':'neg'}">${fmtM(t.pnl,A.ccy,{sign:1})}</div>
     <div class="mgrid">${meta.map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join('')}</div>
     ${t.layers?`<h4 style="margin:0 0 8px">${t.layers.length} ${L('trades samengevoegd','trades merged')}</h4><div class="tlist" style="margin-bottom:16px">${t.layers.map(tRow).join('')}</div>`:''}
-    ${!t.bt&&!t.layers&&typeof reliveFor==='function'?(()=>{ const rs=reliveFor(t.id), r=rs&&rs.relive; return `<div class="rlbox"><div class="rlbh"><span class="rli">${ic('refresh',15)}</span><div style="flex:1;min-width:0"><b>${L('Herbeleven','Relive')}</b><small>${r&&r.verdict?`${L('Beoordeeld','Reviewed')} ${new Date(r.at).toLocaleDateString(locale(),{day:'numeric',month:'short'})}${r.btN?' · '+L('herbeleving','relive')+' '+fmtM(r.btNet,DB.get('accounts',rs.account)?.currency||'USD',{sign:1}):''}`:r?L('Herbeleving gestart, nog niet beoordeeld.','Relive started, not reviewed yet.'):L('Speel de markt opnieuw af: had je deze trade opnieuw genomen?','Replay the market: would you take this trade again?')}</small></div>${r?reliveBadge(rs):''}</div>${r&&r.note?`<div class="note" style="margin-top:8px">${esc(r.note)}</div>`:''}<div class="rlba">${r?`<button class="btn btn-g sm" data-rlopen="${rs.id}">${ic('play',14)} ${L('Open herbeleving','Open relive')}</button>`:''}<button class="btn ${r?'btn-g':'btn-p'} sm" data-relive>${ic('refresh',14)} ${r?L('Opnieuw herbeleven','Relive again'):L('Herbeleef deze trade','Relive this trade')}</button></div></div>` })():''}
+    ${!t.bt&&typeof reliveItem==='function'?(()=>{ const ri=reliveItem(t.id), r=ri&&ri.it, rs=ri&&ri.s; return `<div class="rlbox"><div class="rlbh"><span class="rli">${ic('refresh',15)}</span><div style="flex:1;min-width:0"><b>${L('Herbeleven','Relive')}</b><small>${r&&r.verdict?`${L('Beoordeeld','Reviewed')} ${new Date(r.at).toLocaleDateString(locale(),{day:'numeric',month:'short'})}${r.btN?' · '+L('herbeleving','relive')+' '+fmtM(r.btNet,(DB.get('accounts',rs.account)||{}).currency||'USD',{sign:1}):''}`:r?L('Herbeleving gestart, nog niet beoordeeld.','Relive started, not reviewed yet.'):L('Speel de markt opnieuw af: had je deze trade opnieuw genomen?','Replay the market: would you take this trade again?')}</small></div>${r?reliveBadge(r):''}</div>${r&&r.note?`<div class="note" style="margin-top:8px">${esc(r.note)}</div>`:''}<div class="rlba">${r?`<button class="btn btn-g sm" data-rlopen="${rs.id}">${ic('play',14)} ${L('Open herbeleving','Open relive')}</button>`:''}<button class="btn ${r?'btn-g':'btn-p'} sm" data-relive>${ic('refresh',14)} ${r?L('Opnieuw herbeleven','Relive again'):L('Herbeleef deze trade','Relive this trade')}</button></div></div>` })():''}
     ${t.note?`<h4 style="margin:0 0 8px">${L('Notitie','Note')}</h4><div class="note">${esc(t.note)}</div>`:''}
     <h4 style="margin:18px 0 8px">Screenshots</h4>${t.photos&&t.photos.length?`<div class="shots">${t.photos.map((u,i)=>`<div class="sh" data-lb="${i}"><img src="${esc(u)}" alt="" loading="lazy"></div>`).join('')}</div>`:`<div class="muted" style="font-size:13.5px">${t.bt?L('Backtest-trades hebben geen screenshots.','Backtest trades have no screenshots.'):L('Nog geen screenshots. Tik op Bewerken om ze toe te voegen.','No screenshots yet. Tap Edit to add some.')}</div>`}</div>`;
   const foot=t.layers?`<button class="btn btn-danger" data-ungroup>${ic('x',16)} ${L('Opheffen','Ungroup')}</button><button class="btn btn-g" data-gplan>${ic('shield',16)} ${t.hadPlan?L('Geen plan','No plan'):L('Plan gevolgd','Plan followed')}</button><button class="btn btn-p" data-x2>${L('Sluiten','Close')}</button>`:t.bt?`<button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-obt>${ic('chart',16)} ${L('Open sessie','Open session')}</button>`:`<button class="btn btn-danger" data-del>${ic('trash',16)}</button><button class="btn btn-g" data-x2>${L('Sluiten','Close')}</button><button class="btn btn-p" data-ed>${ic('edit',16)} ${L('Bewerken','Edit')}</button>`;
   const p=panel(L('Trade','Trade')+' · '+fmtDate(t.date,{day:'numeric',month:'short'}),body,foot,'');
   p.querySelectorAll('[data-lb]').forEach(el=>el.onclick=()=>lightbox(t.photos,+el.dataset.lb));
-  p.querySelectorAll('[data-relive]').forEach(b=>b.onclick=()=>{ try{ p.close() }catch(e){} setTimeout(()=>reliveModal({id:t.id,date:t.date,pair:t.pair,dir:t.dir,pnl:t.pnl,rr:t.rr,entry:t.entry??'',sl:t.sl??'',tp:t.tp??''}),isPhone()?240:0) });
+  p.querySelectorAll('[data-relive]').forEach(b=>b.onclick=()=>{ try{ p.close() }catch(e){} setTimeout(()=>reliveModal({...t,acct:'',ccy:A.ccy}),isPhone()?240:0) });
   p.querySelectorAll('[data-rlopen]').forEach(b=>b.onclick=()=>{ try{ p.close() }catch(e){} reliveOpen(b.dataset.rlopen) });
   p.querySelectorAll('[data-tr]').forEach(b=>b.onclick=()=>{ p.close(); setTimeout(()=>openTrade(b.dataset.tr),isPhone()?240:0) });
   const q=s=>p.querySelector(s);
@@ -8219,7 +8297,7 @@ function summary(){ if(!ME) return null; computeBt(); const s0=S.acct; S.acct='l
   return { name:A.name, uname:SETTINGS.name, ccy:A.ccy, balance:balanceOf(A), ret:retPct(A), today:tday.reduce((s,t)=>s+t.pnl,0), todayN:tday.length, month:tmo.reduce((s,t)=>s+t.pnl,0), monthN:tmo.length,
     planPct:m.planPct, n:m.n, wr:m.wr, pf:m.pf, planDots:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,20).reverse().map(t=>t.hadPlan), accts:['live',...D.live.map(la=>'live:'+la.id)].map(k=>{ const s1=S.acct; S.acct=k; const B=acct(); S.acct=s1; const td=B.trades.filter(t=>dKey(t.date)===dKey(new Date())).reduce((a,t)=>a+t.pnl,0); return {key:k,name:B.name,sub:B.sub,bal:balanceOf(B),today:td,n:B.trades.length,f:(v,o)=>fmtM(v,B.ccy,o)} }), avgR:m.avgR, best:m.best, worst:m.worst, wins:m.wins, losses:m.losses, days:m.days, greenDays:m.greenDays, mdd:m.mdd, fine:SETTINGS.boeteEnabled?tr.filter(t=>!t.hadPlan).length*(SETTINGS.boeteBedrag||0):0, goal:SETTINGS.goedDoel, streak:planStreak(tr),
     last:tr.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4), diary:diaryList().find(d=>!isEmptyEntry(d))||null, spark:pts, mt5:mt5Status(), liveCount:D.live.length+1, fmt:(v,o)=>fmtM(v,A.ccy,o), quote:quote(), greet:greet() } }
-window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, allTrades:()=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.map(t=>({id:t.id,date:t.date,pair:t.pair,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,setup:t.setup||'',plan:!!t.hadPlan,entry:t.entry,exit:t.exitPrice,lots:t.lots})) }, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
+window.TWFJ={ load:jLoad, render, summary, ready:()=>!!ME, liveTrades:()=>{ const s0=S.acct, out=[]; try{ ['live',...D.live.map(l=>'live:'+l.id)].forEach(k=>{ S.acct=k; const A=acct(); A.trades.forEach(t=>out.push({...t,acct:D.live.length?A.name:'',ccy:A.ccy})) }) }finally{ S.acct=s0 } return out }, allTrades:()=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.map(t=>({id:t.id,date:t.date,pair:t.pair,dir:t.dir,pnl:+t.pnl||0,rr:t.rr!=null?+t.rr:null,setup:t.setup||'',plan:!!t.hadPlan,entry:t.entry,exit:t.exitPrice,lots:t.lots})) }, recentTrades:n=>{ const s0=S.acct; S.acct='live'; const A=acct(); S.acct=s0; return A.trades.slice().sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,n).map(t=>({date:t.date,pair:t.pair,dir:t.dir,pnl:+(+t.pnl).toFixed(2),rr:t.rr,setup:t.setup||'',plan:!!t.hadPlan,note:(t.note||'').slice(0,200)})) }, setAcct:k=>{ S.acct=k; lsSet('twfj_acct',k) }, setPage:p=>{ S.page=p; lsSet('twfj_page',p) }, page:()=>S.page,
   addTrade:()=>{ if(acct().kind!=='live'){ S.acct='live'; lsSet('twfj_acct','live') } openEditor() }, addDiary:()=>editDiary(), addMoney:k=>{ if(acct().kind!=='live'){ S.acct='live' } openMoney(k) }, addLive:()=>newLive(),
   openTrade:id=>{ S.acct='live'; openTrade(id) }, openDiary:id=>openDiary(DB.get('diary',id)), importNotion };
 
