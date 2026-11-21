@@ -1922,6 +1922,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 .atsug{display:flex;flex-direction:column;gap:4px;margin-top:-4px}.atsug small{color:var(--ink3);font-size:11.5px;font-weight:700;margin-bottom:2px}
 .atsug button{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);text-align:left;font-weight:600;font-size:13px;color:var(--ink2)}.atsug button:hover{border-color:var(--accent);color:var(--ink)}
 .atsug button span{flex:1}.atsug button.on{border-color:var(--amber);color:var(--ink)}.atsug button em{font-style:normal;font-size:11px;font-weight:800;color:var(--amber)}
+.adm-only{display:none!important}body.is-admin .adm-only{display:flex!important}
 </style>
 </head>
 <body class="">
@@ -2010,6 +2011,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
     <div class="bottom nav">
       <button data-go="markets"><span data-ic="globe"></span><span class="lbl" data-t="nav.markets">Markten</span></button>
       <button data-go="data"><span data-ic="layers"></span><span class="lbl" data-t="nav.data">Marktdata</span></button>
+      <button data-go="admin" class="adm-only"><span data-ic="shield"></span><span class="lbl">Admin</span></button>
       <button data-go="settings"><span data-ic="gear"></span><span class="lbl" data-t="nav.settings">Accountinstellingen</span></button>
       <div class="ver" id="sideVer">Versie · TWF</div>
     </div>
@@ -2041,6 +2043,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
     <div class="msh-grp">TWF</div>
     <button data-go="markets"><span data-ic="globe"></span><span data-t="nav.markets">Markten</span></button>
     <button data-go="data"><span data-ic="layers"></span><span data-t="nav.data">Marktdata</span></button>
+    <button data-go="admin" class="adm-only"><span data-ic="shield"></span><span>Admin</span></button>
     <button data-go="settings"><span data-ic="gear"></span><span data-t="nav.settings">Accountinstellingen</span></button>
   </div>
   <div class="msh-row"><button id="mshTheme"></button><button id="mshLang"></button><button id="mshBell"></button></div>
@@ -2066,7 +2069,7 @@ body.theme-light ::-webkit-scrollbar-thumb{background:rgba(30,40,60,.22);backgro
 const CFG = {
   SUPABASE_URL: 'https://pntyqppxwibvpxqcchoo.supabase.co',
   SUPABASE_ANON_KEY: 'sb_publishable_KFShMCH-HTv6yAiGVPVytQ_LmJaWT6P',
-  VERSION: 'v12.2.5', BUILD: '2026-11-21'
+  VERSION: 'v12.2.6', BUILD: '2026-11-22'
 };
 
 /* ---------------- Icons ---------------- */
@@ -2554,6 +2557,7 @@ function updBoxHtml(){ const L=(nl,en)=>LANG==='en'?en:nl, up=updAvailable();
 function bindUpdBox(){ const g=document.querySelector('#updGo'); if(g) g.onclick=reloadForUpdate; const c=document.querySelector('#updChk'); if(c) c.onclick=async()=>{ c.disabled=true; await checkUpdate(true); const L=(nl,en)=>LANG==='en'?en:nl; if(!updAvailable()) toast(L('Je hebt de nieuwste versie','You are up to date'),CFG.VERSION,'ok',2000); const el=document.querySelector('#updBox'); if(el){ el.outerHTML=updBoxHtml(); bindUpdBox() } } }
 /* v11.1: update-scherm — geen uitloggen, je komt terug waar je was */
 const CHANGELOG={
+  'v12.2.6':{nl:['Nieuwe Admin-pagina (alleen voor de beheerder): AI-sleutel, firm-regels, AI-meldingen, gemelde prop-regels, data-aanvragen, nieuwskalender en markten op één plek'],en:['New Admin page (admin only): AI key, firm rules, AI reports, reported prop rules, data requests, news calendar and markets in one place']},
   'v12.2.5':{nl:['Tekst bij lijnen weer standaard in het midden van de lijn (lijn netjes onderbroken, ook bij Add text)','Opslaan van templates en presets: bestaande namen verschijnen terwijl je typt; kies er één en bevestig om die bij te werken'],en:['Text on lines back in the middle of the line by default (line neatly interrupted, also for Add text)','Saving templates and presets: existing names appear as you type; pick one and confirm to update it']},
   'v12.2.4':{nl:['Tekst bij lijnen staat nu netjes bóven de lijn (Add text glitchte en korte lijnen verdwenen)','Winst in een positie altijd blauw, verlies rood — ook bij een short'],en:['Text on lines now sits neatly above the line (Add text glitched and short lines disappeared)','Profit in a position always blue, loss red — also for a short']},
   'v12.2.3':{nl:['Koop/verkoop-blok staat altijd netjes onder de marktnaam en koersen, ook op de iPhone'],en:['Buy/sell block always sits neatly below the symbol name and prices, also on iPhone']},
@@ -2913,9 +2917,9 @@ function render(){
   const m=$('#main');
   document.body.dataset.area=areaOf(S.page);
   if(S.page==='journal'&&JX()){ if(!JX().ready()) journalLoad(); JX().render(); return }
-  const pages={home:pageHome,start:pageStart,testing:pageTesting,relive:pageRelive,accounts:pageAccounts,strategies:pageStrategies,settings:pageSettings,data:pageData,markets:pageMarkets,prop:pageProp};
+  const pages={home:pageHome,start:pageStart,testing:pageTesting,relive:pageRelive,admin:pageAdmin,accounts:pageAccounts,strategies:pageStrategies,settings:pageSettings,data:pageData,markets:pageMarkets,prop:pageProp};
   m.innerHTML=(pages[S.page]||pageHome)(); m.scrollTop=0;
-  wrapTables(m); bindPage(); if(S.page==='home') bindHome(m); if(S.page==='relive') bindRelive(m);
+  wrapTables(m); bindPage(); if(S.page==='home') bindHome(m); if(S.page==='relive') bindRelive(m); if(S.page==='admin'&&IS_ADMIN) bindAdmin(m);
 }
 
 /* =========================================================
@@ -3651,7 +3655,7 @@ function pageProp(){
   const L=(nl,en)=>LANG==='en'?en:nl, pf=(profile().prefs||{}).propStrict||'normal', ss=DB.list('sessions').filter(s=>s.type==='propfirm').sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
   const bar=(v,max,neg)=>`<div class="pbar ${neg?'neg':''}"><i style="width:${Math.max(0,Math.min(100,max?v/max*100:0))}%"></i></div>`;
   return `<div class="phead"><div class="row" style="align-items:flex-end"><div><h1>Prop firms</h1><div class="psub">${L('Oefen een challenge alsof het echt is — met dezelfde regels als de prop firm.','Practise a challenge like it is real — with the same rules as the prop firm.')}</div></div><div class="spacer"></div>
-     <button class="btn btn-g" id="pfAi">${ic('spark',15)} ${L('AI-adviseur','AI advisor')}</button>${IS_ADMIN&&DB.sb?`<button class="btn btn-g" id="pfAiRules">${ic('check',15)} ${L('Regels controleren','Check rules')}</button>`:''}
+     <button class="btn btn-g" id="pfAi">${ic('spark',15)} ${L('AI-adviseur','AI advisor')}</button>${false?`<button class="btn btn-g" id="pfAiRules">${ic('check',15)} ${L('Regels controleren','Check rules')}</button>`:''}
      <button class="btn btn-g" id="pfNewFirm">${ic('plus',15)} ${L('Eigen prop firm','Custom prop firm')}</button><button class="btn btn-p" id="pfNew">${ic('plus',15)} ${L('Prop firm-sessie','Prop firm session')}</button></div></div>
    <div class="pbody">
     <div class="pfhow">${[[ic('trophy',20),L('1. Kies een prop firm','1. Pick a prop firm'),L('Neem een bekende firm of maak je eigen regels.','Use a known firm or create your own rules.')],[ic('play',20),L('2. Trade de challenge','2. Trade the challenge'),L('Dagverlies en drawdown worden live bewaakt; bij overschrijden ben je gezakt.','Daily loss and drawdown are watched live; breach them and you fail.')],[ic('check',20),L('3. Regelcheck & payout','3. Rule check & payout'),L('Elke trade wordt gecontroleerd. Bij een funded fase zie je of je payout zou worden goedgekeurd.','Every trade is checked. In a funded phase you see if your payout would be approved.')]].map(([i,a,b])=>`<div class="box"><span class="ci">${i}</span><b>${a}</b><small>${b}</small></div>`).join('')}</div>
@@ -3918,7 +3922,7 @@ function aiSettingsHtml(ROW){ const L=(nl,en)=>LANG==='en'?en:nl, last=AI.lastMo
   <div class="box"><div class="aihero"><span class="ai-logo big">${ic('spark',24)}</span><div><b>${L('Je eigen trading-coach','Your own trading coach')}</b><small>${L('TWF AI kijkt mee naar je eigen journal, backtests en prop-challenges en geeft eerlijke coaching op basis van jouw cijfers.','TWF AI looks at your own journal, backtests and prop challenges and gives honest coaching based on your numbers.')}</small></div></div>
     ${ROW(L('TWF AI openen','Open TWF AI'),L('Of gebruik de AI-knop op Home of in het ＋-menu.','Or use the AI button on Home or in the ＋ menu.'),`<button class="btn btn-p" data-aiopen>${ic('spark',15)} ${L('Openen','Open')}</button>`)}
     <div class="srow"><div class="stx"><b>${L('Dagboek delen met de AI','Share diary with the AI')}</b><small>${L('Uit = je dagboek blijft privé. Aan = de AI mag je laatste 25 notities lezen om verbanden te leggen.','Off = your diary stays private. On = the AI may read your last 25 entries to find links.')}</small></div><span class="sw ${aiDiaryOn()?'on':''}" data-aidiary2></span></div>
-    ${IS_ADMIN?ROW(L('AI-sleutel (beheerder)','AI key (admin)'),L('Gratis Gemini-sleutel (aistudio.google.com) of Groq-sleutel (console.groq.com). Wordt veilig op de server bewaard.','Free Gemini key (aistudio.google.com) or Groq key (console.groq.com). Stored safely on the server.'),`<button class="btn btn-g" data-aikey2>${ic('gear',15)} ${L('Instellen','Set up')}</button>`):''}</div>
+    ${false?ROW(L('AI-sleutel (beheerder)','AI key (admin)'),L('Gratis Gemini-sleutel (aistudio.google.com) of Groq-sleutel (console.groq.com). Wordt veilig op de server bewaard.','Free Gemini key (aistudio.google.com) or Groq key (console.groq.com). Stored safely on the server.'),`<button class="btn btn-g" data-aikey2>${ic('gear',15)} ${L('Instellen','Set up')}</button>`):''}</div>
   <div class="box"><h3>${L('Welke AI gebruikt TWF?','Which AI does TWF use?')}</h3>
     <p class="aip">${L('TWF gebruikt gratis AI-modellen van <b>Google Gemini</b> (en <b>Groq</b> als die is ingesteld). Bij elke vraag vraagt TWF een paar modellen tegelijk en gebruikt het model dat het snelst antwoordt. Daardoor kan het model per vraag verschillen.','TWF uses free AI models from <b>Google Gemini</b> (and <b>Groq</b> if set up). For every question TWF asks a few models at once and uses the one that answers first, so the model can differ per question.')}</p>
     ${last?`<p class="aip muted">${L('Laatst gebruikt:','Last used:')} <code>${esc(last)}</code></p>`:''}
@@ -4052,7 +4056,7 @@ function firmModal(f){
 const BUILTIN_SYMS=ASSETS.map(a=>a.sym);
 const MKCATS=[['Metals','Commodities'],['Forex','Forex'],['Indices','Indices'],['Futures','Futures'],['Crypto','Crypto'],['Stocks','Stocks'],['Energy','Energy'],['Other','Other']];
 let MARKETS={}, IS_ADMIN=false;
-async function checkAdmin(){ if(!DB.sb){ IS_ADMIN=true; return } try{ const {data}=await DB.sb.from('bt_admins').select('user_id').eq('user_id',DB.uid); IS_ADMIN=!!(data&&data.length) }catch(e){ IS_ADMIN=false } }
+async function checkAdmin(){ try{ setTimeout(()=>document.body.classList.toggle('is-admin',!!IS_ADMIN),0) }catch(e){} if(!DB.sb){ IS_ADMIN=true; document.body.classList.add('is-admin'); return } try{ const {data}=await DB.sb.from('bt_admins').select('user_id').eq('user_id',DB.uid); IS_ADMIN=!!(data&&data.length); document.body.classList.toggle('is-admin',IS_ADMIN) }catch(e){ IS_ADMIN=false } }
 function applyMarkets(m){
   MARKETS=m||{};
   for(const sym in MARKETS){ const x=MARKETS[sym]; if(!x) continue;
@@ -6387,9 +6391,6 @@ function pageData(){
     <td style="text-align:right">${r?`<button class="btn btn-g" data-mddel="${a.sym}" style="height:34px">${ic('trash',14)}</button>`:''}</td></tr>`}).join('');
   return `<div class="phead"><h1>${t('md.title')}</h1><div style="color:var(--ink2);margin:-12px 0 24px">${t('md.sub')}</div></div>
   <div class="pbody"><div class="dash">
-   ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="newsBox"><h3 style="margin-bottom:10px">${LANG==='en'?'News calendar (ForexFactory)':'Nieuws-kalender (ForexFactory)'}</h3><div class="muted" style="margin-bottom:10px">${LANG==='en'?'This week syncs automatically from ForexFactory and is kept from then on. For older backtests, import a historical calendar as CSV (columns: datetime UTC, currency, impact, title).':'Deze week wordt automatisch van ForexFactory gehaald en vanaf dan bewaard. Voor oudere backtests importeer je een historische kalender als CSV (kolommen: datum-tijd UTC, valuta, impact, titel).'}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-g" id="newsSync">${ic('refresh',15)} ${LANG==='en'?'Sync now':'Nu synchroniseren'}</button><button class="btn btn-g" id="newsCsv">${ic('upload',15)} ${LANG==='en'?'Import CSV':'CSV importeren'}</button><span class="pill" id="newsCount">…</span></div></div>`:''}
-   ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="aiRepBox"><h3 style="margin-bottom:10px">${LANG==='en'?'AI reports':'AI-meldingen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
-   ${IS_ADMIN&&DB.sb?`<div class="box" style="grid-column:1/-1" id="drBox"><h3 style="margin-bottom:10px">${LANG==='en'?'Data requests':'Data-aanvragen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
    <div class="box" style="grid-column:span 7"><h3 style="margin-bottom:14px">${t('md.markets')}</h3><table class="tbl"><thead><tr><th></th><th>${t('markets')}</th><th>${t('md.source')}</th><th>${t('period')}</th><th>${t('md.months')}</th><th></th></tr></thead><tbody>${rows}</tbody></table>
      <div class="hint" style="margin-top:12px">${MD.cloud()?t('md.cloudon'):t('md.cloudoff')}</div></div>
    <div class="box" style="grid-column:span 5"><h3 style="margin-bottom:14px">${t('md.import')}</h3>
@@ -6404,7 +6405,7 @@ async function loadAiReports(){ const box=$('#aiRepBox'); if(!box||!DB.sb) retur
   const {data,error}=await DB.sb.from('ai_feedback').select('*').eq('rating',-1).order('created_at',{ascending:false}).limit(50);
   if(error){ box.innerHTML=`<h3>${L('AI-meldingen','AI reports')}</h3><div class="muted">${esc(error.message)}</div>`; return }
   const rows=data||[];
-  box.innerHTML=`<h3 style="margin-bottom:10px">${L('AI-meldingen','AI reports')} ${rows.length?`<span class="pill">${rows.length}</span>`:''}</h3>`+(rows.length?`<div class="airep">${rows.map(r=>`<div class="airep-r"><div class="airep-h"><b>${esc(r.reason||L('Gemeld','Reported'))}</b><small>${new Date(r.created_at).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}${r.model?' · '+esc(r.model):''}</small><button class="ib" data-airdel="${r.id}" title="${L('Afgehandeld','Done')}">${ic('check',15)}</button></div><div class="airep-q">${esc((r.q||'').slice(0,300))}</div><div class="airep-a">${esc((r.a||'').slice(0,600))}</div></div>`).join('')}</div>`:`<div class="muted">${L('Geen meldingen. 👍','No reports. 👍')}</div>`);
+  box.innerHTML=`<h3 style="margin-bottom:10px">${L('AI-meldingen','AI reports')} ${rows.length?`<span class="pill">${rows.length}</span>`:''}</h3>`+(rows.length?`<div class="airep">${rows.map(r=>`<div class="airep-r"><div class="airep-h"><b>${esc(r.reason||L('Gemeld','Reported'))}</b><small>${new Date(r.created_at).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}${r.model?' · '+esc(r.model):''}</small><button class="ib" data-airdel="${r.id}" title="${L('Afgehandeld','Done')}">${ic('check',15)}</button></div><div class="airep-q">${esc((r.q||'').slice(0,300))}</div><div class="airep-a">${esc((r.a||'').slice(0,600))}</div></div>`).join('')}</div>`:`<div class="muted">${L('Geen meldingen.','No reports.')}</div>`);
   box.querySelectorAll('[data-airdel]').forEach(b=>b.onclick=async()=>{ b.disabled=true; await DB.sb.from('ai_feedback').delete().eq('id',b.dataset.airdel); loadAiReports() }) }
 async function loadDataRequests(){ const box=$('#drBox'); if(!box||!DB.sb) return; const L=(nl,en)=>LANG==='en'?en:nl;
   const {data,error}=await DB.sb.from('data_requests').select('*').eq('status','open').order('created_at',{ascending:false});
@@ -6413,15 +6414,45 @@ async function loadDataRequests(){ const box=$('#drBox'); if(!box||!DB.sb) retur
   const syms=Object.keys(by).sort((a,b)=>by[b].length-by[a].length);
   box.innerHTML=`<h3 style="margin-bottom:10px">${L('Data-aanvragen','Data requests')} ${syms.length?`<span class="pill">${syms.length}</span>`:''}</h3>`+(syms.length?`<div class="drlist">${syms.map(sy=>`<div class="drrow">${symBadge(sy)}<div style="flex:1;min-width:0"><b>${sy}</b><small>${by[sy].length} ${L(by[sy].length===1?'aanvraag':'aanvragen',by[sy].length===1?'request':'requests')} · ${L('laatste','latest')} ${fmtDate(by[sy][0].created_at)}</small></div><button class="btn btn-g" data-drdone="${sy}">${ic('check',14)} ${L('Afgehandeld','Done')}</button></div>`).join('')}</div>`:`<div class="muted">${L('Geen openstaande aanvragen.','No open requests.')}</div>`);
   box.querySelectorAll('[data-drdone]').forEach(b=>b.onclick=async()=>{ b.disabled=true; await DB.sb.from('data_requests').update({status:'done'}).eq('sym',b.dataset.drdone).eq('status','open'); loadDataRequests() }) }
-function bindData(m){
+function bindAdminBoxes(m){
   try{ loadDataRequests() }catch(e){}
   try{ loadAiReports() }catch(e){}
+  try{ loadRuleReports() }catch(e){}
   try{ const nc=m.querySelector('#newsCount'); if(nc&&DB.sb) DB.sb.from('news_events').select('id',{count:'exact',head:true}).then(r=>{ nc.textContent=(r.count||0)+(LANG==='en'?' events':' events') });
     const ns=m.querySelector('#newsSync'); if(ns) ns.onclick=async()=>{ ns.disabled=true; try{ const {data,error}=await DB.sb.functions.invoke('twf-news?force=1',{body:{}}); if(error) throw error; toast(LANG==='en'?'Synced':'Gesynchroniseerd',(data&&data.n!=null?data.n:0)+' events','ok') }catch(e){ toast('Sync',String(e.message||e),'bad') } ns.disabled=false; render() };
     const nv=m.querySelector('#newsCsv'); if(nv) nv.onclick=()=>{ const inp=document.createElement('input'); inp.type='file'; inp.accept='.csv,text/csv'; inp.onchange=async()=>{ const f=inp.files[0]; if(!f) return; const txt=await f.text(); const rows=[];
       txt.split(/\r?\n/).forEach((ln,i)=>{ if(!ln.trim()) return; const c=ln.match(/("([^"]|"")*"|[^,]*)(,|$)/g).map(x=>x.replace(/,$/,'').replace(/^"|"$/g,'').replace(/""/g,'"').trim()); const d=new Date(c[0].includes('T')||c[0].endsWith('Z')?c[0]:c[0]+'Z'); if(isNaN(d)) return; const imp=(c[2]||'').toLowerCase(); rows.push({id:`${d.toISOString()}|${c[1]}|${c[3]}`.slice(0,200),ts:d.toISOString(),ccy:(c[1]||'').toUpperCase(),impact:/high|hoog|3/.test(imp)?'high':/med|2/.test(imp)?'medium':'low',title:c[3]||'',src:'csv'}) });
       if(!rows.length){ toast('CSV',LANG==='en'?'No valid rows':'Geen geldige regels','bad'); return } for(let i=0;i<rows.length;i+=500){ const {error}=await DB.sb.from('news_events').upsert(rows.slice(i,i+500),{onConflict:'id'}); if(error){ toast('CSV',error.message,'bad'); return } }
       NEWS.from=Infinity; NEWS.to=-Infinity; toast(LANG==='en'?'Imported':'Geïmporteerd',rows.length+' events','ok'); render() }; inp.click() } }catch(e){}
+}
+/* ===== Admin: alles wat alleen de beheerder ziet ===== */
+async function loadRuleReports(){ const box=$('#rrBox'); if(!box||!DB.sb) return; const L=(nl,en)=>LANG==='en'?en:nl;
+  const {data,error}=await DB.sb.from('rule_reports').select('*').eq('status','open').order('created_at',{ascending:false}).limit(50);
+  if(error){ box.innerHTML=`<h3>${L('Gemelde prop-regels','Reported prop rules')}</h3><div class="muted">${esc(error.message)}</div>`; return }
+  const rows=data||[], fn=id=>{ const f=allFirms().find(x=>x.id===id); return f?f.name:id };
+  box.innerHTML=`<h3 style="margin-bottom:6px">${L('Gemelde prop-regels','Reported prop rules')} ${rows.length?`<span class="pill">${rows.length}</span>`:''}</h3><div class="muted" style="margin-bottom:10px">${L('Wat gebruikers melden via “Klopt deze regel niet?” in het regelrapport.','What users report via “Is this rule wrong?” in the rule report.')}</div>`+(rows.length?`<div class="airep">${rows.map(r=>`<div class="airep-r"><div class="airep-h"><b>${esc(fn(r.firm))}${r.prog?' · '+esc(r.prog):''} · ${esc(r.rule||'')}</b><small>${new Date(r.created_at).toLocaleString(locale(),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</small><button class="ib" data-rrdone="${r.id}" title="${L('Afgehandeld','Done')}">${ic('check',15)}</button></div><div class="airep-a">${esc(r.note||'')}</div></div>`).join('')}</div>`:`<div class="muted">${L('Geen open meldingen.','No open reports.')}</div>`);
+  box.querySelectorAll('[data-rrdone]').forEach(b=>b.onclick=async()=>{ b.disabled=true; await DB.sb.from('rule_reports').update({status:'done'}).eq('id',b.dataset.rrdone); loadRuleReports() }) }
+function pageAdmin(){ const L=(nl,en)=>LANG==='en'?en:nl;
+  if(!IS_ADMIN) return pageHome();
+  return `<div class="phead"><h1>Admin</h1><div style="color:var(--ink2);margin:-12px 0 24px">${L('Alleen zichtbaar voor jou als beheerder — klanten zien deze pagina niet.','Only visible to you as admin — customers never see this page.')}</div></div>
+  <div class="pbody"><div class="dash">
+   <div class="box" style="grid-column:1/-1"><h3 style="margin-bottom:10px">TWF AI</h3>
+     <div class="srow"><div class="stx"><b>${L('AI-sleutel','AI key')}</b><small id="admKey">${L('Status controleren…','Checking status…')}</small></div><button class="btn btn-g" id="admKeyBtn">${ic('gear',15)} ${L('Sleutel instellen','Set key')}</button></div>
+     <div class="srow"><div class="stx"><b>${L('Firm-regels controleren','Check firm rules')}</b><small>${L('Laat de AI de actuele regels en prijzen van prop firms opzoeken; jij keurt wijzigingen goed.','Let the AI look up current prop firm rules and prices; you approve changes.')}</small></div><button class="btn btn-g" id="admRules">${ic('check',15)} ${L('Controleren','Check')}</button></div>
+     <div class="srow"><div class="stx"><b>${L('Data-aanvragen samenvatten','Summarise data requests')}</b><small>${L('De AI zet alle open aanvragen op een rij.','The AI lists all open requests.')}</small></div><button class="btn btn-g" id="admDrAi">${ic('spark',15)} ${L('Samenvatten','Summarise')}</button></div></div>
+   ${DB.sb?`<div class="box" style="grid-column:1/-1" id="newsBox"><h3 style="margin-bottom:10px">${LANG==='en'?'News calendar (ForexFactory)':'Nieuws-kalender (ForexFactory)'}</h3><div class="muted" style="margin-bottom:10px">${LANG==='en'?'This week syncs automatically from ForexFactory and is kept from then on. For older backtests, import a historical calendar as CSV (columns: datetime UTC, currency, impact, title).':'Deze week wordt automatisch van ForexFactory gehaald en vanaf dan bewaard. Voor oudere backtests importeer je een historische kalender als CSV (kolommen: datum-tijd UTC, valuta, impact, titel).'}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-g" id="newsSync">${ic('refresh',15)} ${LANG==='en'?'Sync now':'Nu synchroniseren'}</button><button class="btn btn-g" id="newsCsv">${ic('upload',15)} ${LANG==='en'?'Import CSV':'CSV importeren'}</button><span class="pill" id="newsCount">…</span></div></div>`:''}
+   ${DB.sb?`<div class="box" style="grid-column:1/-1" id="aiRepBox"><h3 style="margin-bottom:10px">${LANG==='en'?'AI reports':'AI-meldingen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
+   ${DB.sb?`<div class="box" style="grid-column:1/-1" id="drBox"><h3 style="margin-bottom:10px">${LANG==='en'?'Data requests':'Data-aanvragen'}</h3><div class="muted">${LANG==='en'?'Loading…':'Laden…'}</div></div>`:''}
+   <div class="box" style="grid-column:1/-1"><h3 style="margin-bottom:10px">${L('Markten','Markets')}</h3><div class="srow"><div class="stx"><b>${L('Markten beheren','Manage markets')}</b><small>${L('Nieuwe markten toevoegen en instellingen aanpassen.','Add new markets and adjust settings.')}</small></div><button class="btn btn-g" data-gs="markets">${ic('globe',15)} ${L('Open Markten','Open Markets')}</button></div></div>
+   <div class="box" style="grid-column:1/-1" id="rrBox"><h3>${L('Gemelde prop-regels','Reported prop rules')}</h3><div class="muted">${L('Laden…','Loading…')}</div></div>
+  </div></div>` }
+function bindAdmin(m){ bindAdminBoxes(m); const L=(nl,en)=>LANG==='en'?en:nl;
+  const k=m.querySelector('#admKey'); if(k&&DB.sb) DB.sb.rpc('ai_key_set').then(r=>{ k.textContent=r.data?L('Ingesteld ✓ — de AI werkt voor alle gebruikers.','Set ✓ — the AI works for all users.'):L('Nog niet ingesteld.','Not set yet.') }).catch(()=>{ k.textContent='—' });
+  const kb=m.querySelector('#admKeyBtn'); if(kb) kb.onclick=()=>{ aiOpen(); AI.msgs=AI.msgs.filter(x=>!x.setup); AI.msgs.push({role:'assistant',content:LANG==='en'?'Paste a new AI key here.':'Plak hier een (nieuwe) AI-sleutel.',err:true,setup:true}); aiRender() };
+  const rb=m.querySelector('#admRules'); if(rb) rb.onclick=()=>aiRulesPicker();
+  const da=m.querySelector('#admDrAi'); if(da) da.onclick=()=>aiDataRequests();
+  m.querySelectorAll('[data-gs]').forEach(b=>b.onclick=()=>go(b.dataset.gs)) }
+function bindData(m){
   const inp=m.querySelector('#mdFile'), drop=m.querySelector('#mdDrop');
   const run=async files=>{ if(!files.length) return; const sym=m.querySelector('#mdSym').value, tz=m.querySelector('#mdTz').value;
     m.querySelector('#mdProg').classList.remove('hide'); let tot={count:0,months:0,bad:0,bytes:0};
